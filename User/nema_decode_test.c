@@ -106,16 +106,16 @@ int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude,
 					*v_speed = info.speed;
 					*v_bearing = info.direction;
 
-					printf("纬度：%ld\r\n",m_lat);
-					printf("经度: %ld\r\n",m_lon);
+					printf("纬度：%ld \r\n",m_lat);
+					printf("经度: %ld \r\n",m_lon);
 					printf("海拔: %d 米 \r\n", m_alt);
 					printf("速度：%d km/h \r\n", m_speed);
-					printf("航向：%d 度\r\n", m_bearing);
-					printf("时间: %02d-%02d-%02d  %02d:%02d:%02d\r\n", ((beiJingTime.year+1900)%2000), beiJingTime.mon,beiJingTime.day,beiJingTime.hour,beiJingTime.min,beiJingTime.sec);
+					printf("航向：%d 度 \r\n", m_bearing);
+					printf("时间: %02d-%02d-%02d  %02d:%02d:%02d \r\n", ((beiJingTime.year+1900)%2000), beiJingTime.mon,beiJingTime.day,beiJingTime.hour,beiJingTime.min,beiJingTime.sec);
 					
 					//char *bufTime=(char *)malloc(64);
-					sprintf(bufTime,"%02d%02d%02d%02d%02d%02d\r\n",((beiJingTime.year+1900)%2000), beiJingTime.mon,beiJingTime.day,beiJingTime.hour,beiJingTime.min,beiJingTime.sec);
-					printf("bufTime: %s\r\n",bufTime);
+					sprintf(bufTime,"%02d%02d%02d%02d%02d%02d \r\n",((beiJingTime.year+1900)%2000), beiJingTime.mon,beiJingTime.day,beiJingTime.hour,beiJingTime.min,beiJingTime.sec);
+					printf("bufTime: %s \r\n",bufTime);
 					memset(v_timestamp, 0, 13);
 					memcpy(v_timestamp, bufTime, 12);
 					//free(bufTime);

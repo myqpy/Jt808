@@ -54,12 +54,12 @@
 "..\..\output\location_report.o"
 "..\..\output\terminal_register.o"
 "..\..\output\util.o"
+"..\..\output\setting_parameter.o"
 "..\..\output\diskio.o"
 "..\..\output\ff.o"
 "..\..\output\fatfs_flash_spi.o"
 "..\..\output\fatfs_sd_sdio.o"
 "..\..\output\ccsbcs.o"
-"..\..\output\syscall.o"
 --library_type=microlib --strict --scatter "..\..\Output\Template.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

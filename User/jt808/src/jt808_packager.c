@@ -1,8 +1,8 @@
 #include "jt808_packager.h"
 #include "./internal_flash/bsp_internal_flash.h"
-//#include <memory.h>
 #include "ff.h"
 #include "util.h"
+#include "terminal_parameter.h"
 
 // 所有终端数据打包命令.
 unsigned short kTerminalPackagerCMD[PACKAGER_NUM] = {
@@ -114,18 +114,18 @@ int handle_kTerminalRegister(struct ProtocolParameter *para)
 {
 		int msg_len;
 		union U16ToU8Array u16converter;
-		unsigned char read_buf[50] = {0};
-		struct ReadInfo readFlashInfo;
+		unsigned char read_buf[64] = {0};
+		//struct ReadInfo readFlashInfo;
+		//struct TerminalParameters readFlashInfo;
 		
-		
-    printf("[%s] 终端注册 msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalRegister);
+    printf("[%s] 终端注册 msg_id = 0x%04x \r\n", __FUNCTION__, kTerminalRegister);
 			
 		Internal_ReadFlash(((uint32_t)0x08008000) , read_buf , sizeof(read_buf));
-		memset(&readFlashInfo,0,sizeof(readFlashInfo));
-		memcpy(&readFlashInfo, read_buf, sizeof(read_buf));
+		memset(&para->parse.terminal_parameters,0,sizeof(para->parse.terminal_parameters));
+		memcpy(&para->parse.terminal_parameters, read_buf, sizeof(read_buf));
 
 		
-    initRegisterInfo(para, readFlashInfo); //初始化注册参数
+    initRegisterInfo(para, para->parse.terminal_parameters); //初始化注册参数
 		
 
     msg_len= 37;
@@ -268,7 +268,7 @@ int jt808FrameBodyPackage(struct ProtocolParameter *para)
 {
     unsigned short msg_id = para->msg_head.msg_id;
 		int result = -1;
-    printf("[jt808消息体打包] current msg_id: 0x%04x\r\n", para->msg_head.msg_id);
+    printf("[jt808消息体打包] 现在的 msg_id: 0x%04x\r\n", para->msg_head.msg_id);
     
 
     switch (msg_id)
@@ -440,7 +440,7 @@ int jt808FramePackage(struct ProtocolParameter *para)
     clearBufferSend();
     // 0、设置头标志位
     jt808SetFrameFlagHeader();
-    printf("[jt808头标志位] OK !\n");
+    printf("[jt808头标志位] OK !\r\n");
 
     // 1、生成消息头
     if (jt808FrameHeadPackage(&(para->msg_head)) < 0)

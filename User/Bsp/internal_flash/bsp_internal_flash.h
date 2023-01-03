@@ -20,15 +20,19 @@ struct WriteInfo
 
 	unsigned short write_city_id;
 
-	unsigned char write_manufacturer_id[5];
+	//unsigned char write_manufacturer_id[5];
 
-	unsigned char write_terminal_model[20];
+	//unsigned char write_terminal_model[20];
 
-	unsigned char write_terminal_id[7];
+	//unsigned char write_terminal_id[7];
 
 	unsigned char write_car_plate_color;
 
 	unsigned char write_car_plate_num[12];
+	
+	int write_time_interval;
+	
+	int write_heartBeatInterval;
 };
 
 struct ReadInfo
@@ -37,15 +41,19 @@ struct ReadInfo
 
 	unsigned short read_city_id;
 
-	unsigned char read_manufacturer_id[5];
+	//unsigned char read_manufacturer_id[5];
 
-	unsigned char read_terminal_model[20];
+	//unsigned char read_terminal_model[20];
 
-	unsigned char read_terminal_id[7];
+	//unsigned char read_terminal_id[7];
 
 	unsigned char read_car_plate_color;
 
 	unsigned char read_car_plate_num[12];
+	
+	int read_time_interval;
+	
+	int read_heartBeatInterval;
 };
 
 

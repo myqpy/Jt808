@@ -14,6 +14,7 @@
 #include "./gps/gps_config.h"
 #include "nmea/nmea.h"
 #include "./usart/usart.h"
+#include "./usart2/usart2.h"
 
 
 /* DMAΩ” ’ª∫≥Â  */
@@ -86,6 +87,7 @@ static void GPS_Interrupt_Config(void)
 	NVIC_Init(&NVIC_InitStructure);
 
 }
+
 
 
 

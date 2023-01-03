@@ -705,6 +705,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\User\jt808\src\util.c</FilePath>
             </File>
+            <File>
+              <FileName>set_terminal_parameter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\jt808\src\set_terminal_parameter.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -734,11 +739,6 @@
               <FileName>ccsbcs.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\FATFS\option\ccsbcs.c</FilePath>
-            </File>
-            <File>
-              <FileName>syscall.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\FATFS\option\syscall.c</FilePath>
             </File>
           </Files>
         </Group>

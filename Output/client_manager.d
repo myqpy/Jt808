@@ -11,8 +11,11 @@
 ..\..\output\client_manager.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
 ..\..\output\client_manager.o: D:\MDK5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\client_manager.o: ..\..\User\jt808\include\terminal_control.h
-..\..\output\client_manager.o: ..\..\User\jt808\include\jt808_packager.h
-..\..\output\client_manager.o: ..\..\User\jt808\include\terminal_register.h
+..\..\output\client_manager.o: ..\..\User\jt808\include\set_terminal_parameter.h
+..\..\output\client_manager.o: ..\..\User\jt808\include\bcd.h
+..\..\output\client_manager.o: ..\..\User\FATFS\ff.h
+..\..\output\client_manager.o: ..\..\User\FATFS\integer.h
+..\..\output\client_manager.o: ..\..\User\FATFS\ffconf.h
 ..\..\output\client_manager.o: ..\..\User\Bsp\./internal_flash/bsp_internal_flash.h
 ..\..\output\client_manager.o: ..\..\Libraries\CMSIS\stm32f10x.h
 ..\..\output\client_manager.o: ..\..\Libraries\CMSIS\core_cm3.h
@@ -42,8 +45,6 @@
 ..\..\output\client_manager.o: ..\..\Libraries\FWlib\inc\stm32f10x_usart.h
 ..\..\output\client_manager.o: ..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h
 ..\..\output\client_manager.o: ..\..\Libraries\FWlib\inc\misc.h
-..\..\output\client_manager.o: ..\..\User\jt808\include\bcd.h
-..\..\output\client_manager.o: ..\..\User\FATFS\ff.h
-..\..\output\client_manager.o: ..\..\User\FATFS\integer.h
-..\..\output\client_manager.o: ..\..\User\FATFS\ffconf.h
+..\..\output\client_manager.o: ..\..\User\jt808\include\jt808_packager.h
+..\..\output\client_manager.o: ..\..\User\jt808\include\terminal_register.h
 ..\..\output\client_manager.o: ..\..\User\jt808\include\jt808_parser.h

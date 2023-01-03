@@ -1,6 +1,7 @@
 
 #include "client_manager.h"
 #include "protocol_parameter.h"
+#include "set_terminal_parameter.h"
 #include "jt808_packager.h"
 #include "jt808_parser.h"
 #include "util.h"
@@ -110,80 +111,95 @@ int findMsgIDFromTerminalPackagerCMD(unsigned int msg_id)
     return result;
 }
 
+int findParameterIDFromArray(unsigned int para_id)
+{
+    int result = 0;
+		int i;
+    for (i = 0; i < PARA_SETTING_LIMIT; ++i)
+    {
+        if (kParameterSettingCMD[i] == para_id)
+        {
+            result = 1;
+        }
+    }
+    return result;
+}
+
+
 int parsingMessage(const unsigned char *in, unsigned int in_len)
 {
 		unsigned short msg_id;
     if (jt808FrameParse(in, in_len, &parameter_) < 0)
     {
-        printf("error parsing\r\n");
+        printf("解析时出现错误\r\n");
         return -1;
     }
 
 //    printf("ok parsing\r\n");
     msg_id = parameter_.parse.msg_head.msg_id;
-    printf("%s[%d]: [Message Accepted after parsing] ID msg_id = 0x%02x\r\n", __FUNCTION__, __LINE__, msg_id);
+    printf("%s[%d]: [解析后的信息id] msg_id = 0x%02x \r\n", __FUNCTION__, __LINE__, msg_id);
     switch (msg_id)
     {
     // +平台通用应答.
     case kPlatformGeneralResponse:
     {
-        printf("%s[%d]: 执行【 平台通用应答 】后的操作\r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: 【 平台通用应答 】解析完成 \r\n", __FUNCTION__, __LINE__);
     }
     break;
 
     //  补传分包请求.
     case kFillPacketRequest:
     {
-        printf("%s[%d]: 执行【 补传分包请求 】后的操作\r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: 【 补传分包请求 】解析完成 \r\n", __FUNCTION__, __LINE__);
     }
     break;
 
     // 终端注册应答..
     case kTerminalRegisterResponse:
     {
-        printf("%s[%d]: Execute After[RegisterResponse]\r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: 【 终端注册请求 】解析完成 \r\n", __FUNCTION__, __LINE__);
     }
     break;
 
     // 设置终端参数..
     case kSetTerminalParameters:
     {
-        printf("%s[%d]: 执行【 设置终端参数 】后的操作\r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: 【 设置终端参数 】解析完成 \r\n", __FUNCTION__, __LINE__);
     }
     break;
 
     // 查询终端参数..
     case kGetTerminalParameters:
     {
-        printf("%s[%d]: 执行【 查询终端参数 】后的操作\r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: 【 查询终端参数 】解析完成 \r\n", __FUNCTION__, __LINE__);
     }
     break;
 
     //查询指定终端参数..
     case kGetSpecificTerminalParameters:
     {
-        printf("%s[%d]: 执行【 查询指定终端参数 】后的操作\r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: 【 查询指定终端参数 】解析完成 \r\n", __FUNCTION__, __LINE__);
     }
     break;
 
     // 终端控制
     case kTerminalControl:
     {
-        printf("%s[%d]: 执行【 终端控制 】后的操作\r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: 【 终端控制 】解析完成 \r\n", __FUNCTION__, __LINE__);
     }
     break;
 
     // 下发终端升级包.
     case kTerminalUpgrade:
     {
-        printf("%s[%d]: 执行【 下发终端升级包 】后的操作\r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: 【 下发终端升级包 】解析完成\r\n", __FUNCTION__, __LINE__);
     }
     break;
 
     //  位置信息查询..
     case kGetLocationInformation:
     {
-        printf("%s[%d]: 执行【 位置信息查询 】后的操作\r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: 【 位置信息查询 】解析完成\r\n", __FUNCTION__, __LINE__);
     }
     break;
 

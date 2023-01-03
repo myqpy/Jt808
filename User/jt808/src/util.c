@@ -68,7 +68,7 @@ int ReverseEscape_C(unsigned char *in, unsigned int inlen, unsigned char *out, u
   // memset(out, 0, *outlen);
 	unsigned int i;
 	int offset_num;
-  printf("[ReverseEscape_C]\n");
+  printf("[逆转义ReverseEscape_C]:");
 
   offset_num = 0;
   for (i = 0; i < inlen; ++i)
@@ -91,7 +91,7 @@ int ReverseEscape_C(unsigned char *in, unsigned int inlen, unsigned char *out, u
       printf("%02x ", out[i - offset_num]);
     }
   }
-  printf("\n\r");
+  printf("\r\n");
 
   *outlen = inlen - offset_num;
 

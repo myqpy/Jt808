@@ -1,7 +1,7 @@
 #include "jt808_parser.h"
-
+#include "set_terminal_parameter.h"
+#include "client_manager.h"
 #include "util.h"
-//#include <memory.h>
 #include "ff.h"
 #include "bcd.h"
 
@@ -27,36 +27,29 @@ unsigned int RealBufferReceiveSize = 0;
 // 解析消息头.
 int jt808FrameHeadParse(const unsigned char *in, unsigned int in_len, struct MsgHead *msg_head)
 {
-//	  static int isPhoneMalloc;
     if (msg_head == NULL || in_len < 15)
         return -1;
     // 消息ID.
-    // msg_head->msg_id = in[1] * 256 + in[2];
     msg_head->msg_id = (in[1] << 8) + in[2];
-    printf("[jt808FrameHeadParse] msg_head->msg_id = 0x%02x\r\n", msg_head->msg_id);
+    printf("[jt808消息头解析] msg_head->msg_id = 0x%02x\r\n", msg_head->msg_id);
 
     // 消息体属性.
     msg_head->msgbody_attr.u16val = (in[3] << 8) + in[4];
-    printf("[jt808FrameHeadParse] msg_head->msgbody_attr.u16val = 0x%02x\r\n", msg_head->msgbody_attr.u16val);
+    printf("[jt808消息头解析] msg_head->msgbody_attr.u16val = 0x%02x\r\n", msg_head->msgbody_attr.u16val);
 
     // 终端手机号.
-//    isPhoneMalloc = 0;
-//    if (isPhoneMalloc == 0)
-//    {
-//        
-//			msg_head->phone_num = (unsigned char *)malloc(12 * sizeof(unsigned char));
-//    }
+
     memset(msg_head->phone_num, 0, 12);
 
     if (jt808BcdToStringCompress((&(in[5])), msg_head->phone_num, 6) == NULL)
     {
         return -1;
     }
-    printf("[jt808FrameHeadParse] msg_head->phone_num = %s !!!\r\n", msg_head->phone_num);
+    printf("[jt808消息头解析] msg_head->phone_num = %s !!!\r\n", msg_head->phone_num);
 
     // 消息流水号.
     msg_head->msg_flow_num = (in[11] << 8) + in[12];
-    printf("[jt808FrameHeadParse] msg_head->msg_flow_num = 0x%02x !!!\r\n", msg_head->msg_flow_num);
+    printf("[jt808消息头解析] msg_head->msg_flow_num = 0x%02x !!!\r\n", msg_head->msg_flow_num);
 
     // 出现封包.
     if ((msg_head->msgbody_attr.bit.packet == 1) &&
@@ -89,11 +82,11 @@ int handle_kPlatformGeneralResponse(struct ProtocolParameter *para)
 
     // 应答消息ID.
     para->parse.respone_msg_id = (BufferReceive[pos + 2] << 8) + BufferReceive[pos + 3];
-    printf("[%s] 平台通用应答 应答流水号 = 0x%04x\r\n", __FUNCTION__, para->parse.respone_msg_id);
+    printf("[%s] 平台通用应答 应答消息ID = 0x%04x\r\n", __FUNCTION__, para->parse.respone_msg_id);
 
     // 应答结果.
     para->parse.respone_result = BufferReceive[pos + 4];
-    printf("[%s] 平台通用应答 应答流水号 = 0x%04x\r\n", __FUNCTION__, para->parse.respone_result);
+    printf("[%s] 平台通用应答 应答结果 = 0x%04x\r\n", __FUNCTION__, para->parse.respone_result);
 
     return 0;
 }
@@ -121,10 +114,10 @@ int handle_kTerminalRegisterResponse(struct ProtocolParameter *para)
         pos = MSGBODY_PACKET_POS;
     // 应答流水号.
     para->parse.respone_flow_num = (BufferReceive[pos] << 8) + BufferReceive[pos + 1];
-    printf("[%s] TerminalRegisterResponseFlow#  = 0x%04x\r\n", __FUNCTION__, para->parse.respone_flow_num);
+    printf("[%s]终端注册应答流水号  = 0x%04x\r\n", __FUNCTION__, para->parse.respone_flow_num);
     // 应答结果.
     para->parse.respone_result = BufferReceive[pos + 2];
-    printf("[%s] TerminalRegisterResponseResult  = 0x%02x\r\n", __FUNCTION__, para->parse.respone_result);
+    printf("[%s] 终端注册应答结果  = 0x%02x\r\n", __FUNCTION__, para->parse.respone_result);
     // 应答结果为0(成功)时解析出附加的鉴权码.
     if (para->parse.respone_result == 0)
     {
@@ -132,7 +125,7 @@ int handle_kTerminalRegisterResponse(struct ProtocolParameter *para)
         para->parse.authentication_code = (unsigned char *)malloc((len_code + 1) * sizeof(unsigned char));
         memcpy(para->parse.authentication_code, &(BufferReceive[pos + 3]), len_code);
 
-        printf("[%s] TerminalRegisterResponseAuthenticationCode = %s\r\n", __FUNCTION__, para->parse.authentication_code);
+        printf("[%s] 终端注册应答鉴权码 = %s\r\n", __FUNCTION__, para->parse.authentication_code);
     }
 
     return 0;
@@ -141,46 +134,58 @@ int handle_kTerminalRegisterResponse(struct ProtocolParameter *para)
 // 设置终端参数..
 int handle_kSetTerminalParameters(struct ProtocolParameter *para)
 {
-		uint16_t pos;
-		unsigned short msg_len;
-		unsigned char cnt;
-		union U32ToU8Array u32converter;
-		unsigned int id;
-			
-    printf("[%s] 设置终端参数 msg_id = 0x%04x\r\n", __FUNCTION__, kSetTerminalParameters);
-    if (para == NULL)
-        return -1;
-    pos = MSGBODY_NOPACKET_POS;
-    if (para->parse.msg_head.msgbody_attr.bit.packet == 1)
-        pos = MSGBODY_PACKET_POS;
-    msg_len = para->parse.msg_head.msgbody_attr.bit.msglen;
-    if (msg_len < 1)
-        return -1;
-    // 设置的参数总个数.
-    cnt = BufferReceive[pos];
-    ++pos;
+	uint16_t pos;
+	unsigned short msg_len;
+	unsigned int p_id;
+	unsigned char cnt;
+	union U32ToU8Array u32converter;
+	int isFind=0, i;
+	unsigned len;
+		
+	printf("[%s] 设置终端参数 msg_id = 0x%04x\r\n", __FUNCTION__, kSetTerminalParameters);
+	if (para == NULL){
+			return -1;
+	}
+	pos = MSGBODY_NOPACKET_POS;
+	if (para->parse.msg_head.msgbody_attr.bit.packet == 1){
+			pos = MSGBODY_PACKET_POS;
+	}
+	msg_len = para->parse.msg_head.msgbody_attr.bit.msglen;
+	if (msg_len < 1){
+			return -1;
+	}
+	// 解析设置的参数总个数.
+	cnt = BufferReceive[pos];
+	pos++;
 
-    
-    // 设置的参数项.
-    id = 0;
+	if(cnt<=0)
+	{
+		return -1;
+	}
 
-    // std::vector<uint8_t> value;
-    // auto &paras = para->parse.terminal_parameters;
-    // paras.clear();
+	for(i=0;i<cnt;++i)
+	{
+		//查找参数项的参数ID
+		memcpy(u32converter.u8array,(BufferReceive+pos),4);
+		p_id=EndianSwap32(u32converter.u32val);
+		pos+=4;
+		//从已支持的参数项数组中查找是否有当前参数ID
+		isFind=findParameterIDFromArray(p_id);
+		len=BufferReceive[pos];
+		pos++;
+		if(isFind==1)
+		{
+			jt808ParameterSettingParse(p_id,(BufferReceive+pos),len,para);
+		}
+		pos+=len;
+	}
 
-    // for (int i = 0; i < cnt; ++i)
-    // {
-    //     // 参数ID.
-    //     memcpy(u32converter.u8array, &(in[pos]), 4);
-    //     id = EndianSwap32(u32converter.u32val);
-    //     pos += 4;
-    //     // 参数值.
-    //     value.assign(in.begin() + pos + 1, in.begin() + pos + 1 + in[pos]);
-    //     paras.insert({id, value});
-    //     pos += 1 + in[pos];
-    // }
-
-    return 0;
+	/*
+		平台修改终端参数后重启设备
+	*/
+	
+	
+	return 0;
 }
 
 // 查询终端参数..
@@ -228,7 +233,7 @@ int jt808FrameBodyParse(struct ProtocolParameter *para)
     unsigned short msg_id = para->parse.msg_head.msg_id;
     
     int result = -1;
-		printf("[jt808FrameBodyParse] current msg_id: 0x%04x\r\n", msg_id);
+		printf("[jt808消息体解析] current msg_id: 0x%04x\r\n", msg_id);
 	
     switch (msg_id)
     {
@@ -323,17 +328,17 @@ int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct Protoco
     if (ReverseEscape_C(BufferReceive, RealBufferReceiveSize, outBuffer, &outBufferSize) < 0)
         return -1;
     RealBufferReceiveSize = outBufferSize;
-    printf("%s[%d]: ReverseEscape_C.  outBufferSize = %d  !!!\r\n", __FUNCTION__, __LINE__, outBufferSize);
+    printf("%s[%d]: 逆转义ReverseEscape_C.  outBufferSize = %d  !!!\r\n", __FUNCTION__, __LINE__, outBufferSize);
 
     // 异或校验检查.
     if (BccCheckSum(&(outBuffer[1]), (outBufferSize - 3)) != *(outBuffer + outBufferSize - 2))
         return -1;
-    printf("%s[%d]: BccCheckSum. -->3 !!!\r\n", __FUNCTION__, __LINE__);
+    printf("%s[%d]: 异或校验BccCheckSum. -->3 !!!\r\n", __FUNCTION__, __LINE__);
 
     // 解析消息头.
     if (jt808FrameHeadParse(outBuffer, outBufferSize, &(para->parse.msg_head)) != 0)
         return -1;
-    printf("%s[%d]: FrameHeadParse. -->4 !!!\r\n", __FUNCTION__, __LINE__);
+    printf("%s[%d]:  解析消息头. -->4 !!!\r\n", __FUNCTION__, __LINE__);
     memcpy(para->msg_head.phone_num, para->parse.msg_head.phone_num, 11);
 //		para->msg_head.phone_num = para->parse.msg_head.phone_num;
 

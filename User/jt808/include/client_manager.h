@@ -36,7 +36,7 @@ int packagingMessage(unsigned int msg_id);
  * @author: ZTL
  *******************************************************************************/
 int findMsgIDFromTerminalPackagerCMD(unsigned int msg_id);
-
+int findParameterIDFromArray(unsigned int para_id);
 int parsingMessage(const unsigned char *in, unsigned int in_len);
 
 void setStatusBit(void);

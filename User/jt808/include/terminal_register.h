@@ -58,9 +58,7 @@ void setRegister_car_plate_num(const char *car_plate_num, unsigned int car_plate
 /// @return
 //const char *getRegister_car_plate_num(void);
 
-//void initRegisterInfo(struct ProtocolParameter *para);
-void initRegisterInfo(struct ProtocolParameter *para, struct ReadInfo readFlashInfo);
-
+void initRegisterInfo(struct ProtocolParameter *para);
 
 #endif  //JT808_TERMINAL_REGISTER_H_
 

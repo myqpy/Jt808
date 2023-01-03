@@ -45,3 +45,4 @@
 ..\..\output\gps_config.o: ..\..\User\Bsp\./usart/usart.h
 ..\..\output\gps_config.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\..\output\gps_config.o: ..\..\system\./sys/sys.h
+..\..\output\gps_config.o: ..\..\User\Bsp\./usart2/usart2.h

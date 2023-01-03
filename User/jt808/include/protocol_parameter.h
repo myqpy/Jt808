@@ -240,7 +240,7 @@ struct ProtocolParameter
   // 平台随机生成鉴权码.
   unsigned char *authentication_code;
   // 设置终端参数项.
-  // TerminalParameters terminal_parameters;
+  //enum TerminalParameters terminal_parameters;
   // 查询终端参数ID列表.
   // std::vector<unsigned  int> terminal_parameter_ids;
   // 位置上报时填充位置基本信息, 必须项.
@@ -275,7 +275,7 @@ struct ProtocolParameter
     // 平台随机生成鉴权码.
     unsigned char *authentication_code;
     // 解析出的设置终端参数项.
-    // TerminalParameters terminal_parameters;
+    struct TerminalParameters terminal_parameters;
     // 解析出的查询终端参数ID列表.
     // std::vector<unsigned  int> terminal_parameter_ids;
     // 解析出的位置基本信息.
