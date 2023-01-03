@@ -38,9 +38,10 @@ int packagingMessage(unsigned int msg_id);
 int findMsgIDFromTerminalPackagerCMD(unsigned int msg_id);
 int findParameterIDFromArray(unsigned int para_id);
 int parsingMessage(const unsigned char *in, unsigned int in_len);
-
+int jt808TerminalRegister(int isRegistered);
+int jt808TerminalAuthentication(int isAuthenticated);
 void setStatusBit(void);
-
+void initSystemParameters(void);
 void initLocationInfo(unsigned int v_alarm_value, unsigned int v_status_value);
 void updateLocation(double const v_latitude, double const v_longitude, float const v_altitude,
                     float const v_speed, float const v_bearing, unsigned char *v_timestamp);

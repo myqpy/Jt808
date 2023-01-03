@@ -48,3 +48,6 @@
 ..\..\output\client_manager.o: ..\..\User\jt808\include\jt808_packager.h
 ..\..\output\client_manager.o: ..\..\User\jt808\include\terminal_register.h
 ..\..\output\client_manager.o: ..\..\User\jt808\include\jt808_parser.h
+..\..\output\client_manager.o: ..\..\system\./delay/delay.h
+..\..\output\client_manager.o: ..\..\system\./sys/sys.h
+..\..\output\client_manager.o: ..\..\User\Bsp\./usart2/usart2.h

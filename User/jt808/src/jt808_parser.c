@@ -105,7 +105,7 @@ int handle_kTerminalRegisterResponse(struct ProtocolParameter *para)
 		unsigned short pos;
 		unsigned short len_code;
 	
-    printf("[%s] TerminalRegisterResponse msg_id = 0x%04x\r\n", __FUNCTION__, kPlatformGeneralResponse);
+    printf("[%s] 终端注册应答 msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalRegisterResponse);
 
     if (para == NULL)
         return -1;
@@ -114,12 +114,12 @@ int handle_kTerminalRegisterResponse(struct ProtocolParameter *para)
         pos = MSGBODY_PACKET_POS;
     // 应答流水号.
     para->parse.respone_flow_num = (BufferReceive[pos] << 8) + BufferReceive[pos + 1];
-    printf("[%s]终端注册应答流水号  = 0x%04x\r\n", __FUNCTION__, para->parse.respone_flow_num);
+    printf("[%s] 终端注册应答流水号  = 0x%04x\r\n", __FUNCTION__, para->parse.respone_flow_num);
     // 应答结果.
     para->parse.respone_result = BufferReceive[pos + 2];
     printf("[%s] 终端注册应答结果  = 0x%02x\r\n", __FUNCTION__, para->parse.respone_result);
     // 应答结果为0(成功)时解析出附加的鉴权码.
-    if (para->parse.respone_result == 0)
+    if (para->parse.respone_result == kRegisterSuccess)
     {
         len_code = para->parse.msg_head.msgbody_attr.bit.msglen - 3;
         para->parse.authentication_code = (unsigned char *)malloc((len_code + 1) * sizeof(unsigned char));
@@ -313,7 +313,7 @@ int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct Protoco
 		unsigned int outBufferSize;
 		unsigned char *outBuffer;
 	
-    printf("%s[%d]: JT808FrameParse -->1 !!!\r\n", __FUNCTION__, __LINE__);
+    printf("%s[%d]: JT808消息头解析 -->1 !!! \r\n", __FUNCTION__, __LINE__);
     if (para == NULL)
         return -1;
     memcpy(BufferReceive, in, in_len);

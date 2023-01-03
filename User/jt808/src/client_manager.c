@@ -5,11 +5,29 @@
 #include "jt808_packager.h"
 #include "jt808_parser.h"
 #include "util.h"
+#include "./delay/delay.h"
 #include "bcd.h"
 #include "ff.h"
 #include "jt808_parser.h"
+#include "./usart2/usart2.h"
+#include "./internal_flash/bsp_internal_flash.h" 
 
 struct ProtocolParameter parameter_;
+
+void initSystemParameters(void)
+{
+	unsigned char read_buf[64] = {0};
+	
+	Internal_ReadFlash(((uint32_t)0x08008000) , read_buf , sizeof(read_buf));
+	memset(&parameter_.parse.terminal_parameters,0,sizeof(parameter_.parse.terminal_parameters));
+	memcpy(&parameter_.parse.terminal_parameters, read_buf, sizeof(read_buf));
+
+	printf("\r\n");
+	printf("系统参数初始化成功！！！!\r\n");
+	printf("\r\n");
+}
+
+
 
 /// @brief 设置终端手机号
 /// @param phone
@@ -125,6 +143,88 @@ int findParameterIDFromArray(unsigned int para_id)
     return result;
 }
 
+int jt808TerminalRegister(int isRegistered)
+{
+	int i=0;
+	while(i<3)
+	{
+		packagingMessage(kTerminalRegister);
+		delay_ms(1000);
+		Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+
+		delay_ms(100);
+		if(USART2_RX_STA&0X8000)    //接收到数据
+		{
+			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
+			
+			parsingMessage(USART2_RX_BUF, USART2_RX_STA);//校验
+//			printf("0x%02x \r\n",parameter_.parse.respone_result);
+//			printf("0x%02x \r\n",parameter_.parse.msg_head.msg_id);
+			if((parameter_.parse.respone_result == kRegisterSuccess)&&(parameter_.parse.msg_head.msg_id==kTerminalRegisterResponse))
+			{
+				isRegistered = 1;
+				printf("\r\n");
+				printf("注册成功！！！!\r\n");
+				printf("\r\n");
+				USART2_RX_STA=0;
+				break;
+			}
+		}
+//		printf("Client receive bytes: %d\r\n", USART2_RX_STA);
+		USART2_RX_STA=0;
+		i++;	
+	}
+	
+	
+	return isRegistered;
+}
+
+
+int jt808TerminalAuthentication(int isAuthenticated)
+{
+	int i=0;
+	while(i<3)
+	{
+		packagingMessage(kTerminalAuthentication);
+		delay_ms(1000);
+		Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+
+		delay_ms(100);
+		if(USART2_RX_STA&0X8000)    //接收到数据
+		{
+			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
+			
+			parsingMessage(USART2_RX_BUF, USART2_RX_STA);//校验
+//			printf("0x%02x \r\n",parameter_.parse.respone_result);
+//			printf("0x%02x \r\n",parameter_.parse.msg_head.msg_id);
+			if((parameter_.parse.respone_result	 == kRegisterSuccess)&&(parameter_.parse.respone_msg_id==kTerminalAuthentication))
+			{
+				isAuthenticated = 1;
+				printf("\r\n");
+				printf("终端鉴权成功！！！!\r\n");
+				printf("\r\n");
+				USART2_RX_STA=0;
+				break;
+			}
+		}
+		USART2_RX_STA=0;
+		i++;	
+	}
+	
+	
+	return isAuthenticated;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 int parsingMessage(const unsigned char *in, unsigned int in_len)
 {
@@ -135,7 +235,7 @@ int parsingMessage(const unsigned char *in, unsigned int in_len)
         return -1;
     }
 
-//    printf("ok parsing\r\n");
+    printf("ok parsing\r\n");
     msg_id = parameter_.parse.msg_head.msg_id;
     printf("%s[%d]: [解析后的信息id] msg_id = 0x%02x \r\n", __FUNCTION__, __LINE__, msg_id);
     switch (msg_id)

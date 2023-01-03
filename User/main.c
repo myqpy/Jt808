@@ -22,6 +22,9 @@ void TIM3_IRQHandler(void);
 int main(void)
 {
 	int i;
+	int isTCPconnected=0;
+	int isRegistered=0;
+	int isAuthenticated=0;
 	unsigned int v_alarm_value = 0;
 	unsigned int v_status_value = 0;
 //  double  v_latitude = 34.741348;
@@ -32,28 +35,8 @@ int main(void)
 	float  v_speed = 15;
 	float  v_bearing = 132;
 	unsigned char v_timestamp[] = "221127212855";
-	unsigned char write_buf[50] = {0};
-	
-		/*
-	struct WriteInfo flashWriteInfo;
-	
+	unsigned char write_buf[64] = {0};
 
-	flashWriteInfo.write_province_id = 0x0029;
-	flashWriteInfo.write_city_id = 0x0066;
-	//memcpy(flashWriteInfo.write_manufacturer_id, "XINDA", 5);
-	//memcpy(flashWriteInfo.write_terminal_model, "ZXIAT-CZ05", 10);
-	//memcpy(flashWriteInfo.write_terminal_id, "221203", 7);
-	flashWriteInfo.write_car_plate_color = 0x02;
-	memcpy(flashWriteInfo.write_car_plate_num, "测试123", 7);
-	
-	
-	memset(write_buf,0,sizeof(write_buf));
-	memcpy(write_buf, &flashWriteInfo, sizeof(flashWriteInfo));
-	
-	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));
-	*/
-	
-	
 	
 //	LED_GPIO_Config();	//LED 端口初始化
 //  
@@ -65,120 +48,110 @@ int main(void)
   USART2_Init(115200);
   GPS_Config();
 	
-	//Connecting Server;
-	while(1)
-	{
-		if(ec20_init() == SUCCESS)
-		{	
-			printf("server connected\r\n");
-			break;
-		}
-		delay_ms(2000);
-	}
-  setTerminalPhoneNumber("11111111113", 11);
-
+	initSystemParameters();
 	
-	packagingMessage(kTerminalRegister);
-	delay_ms(1000);
-	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
-
 	while(1)
 	{
-		delay_ms(100);
-		if(USART2_RX_STA&0X8000)    //接收到数据
+		//Connecting Server;
+		if(isTCPconnected == 0)
 		{
-			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
-			//开始校验
-			parsingMessage(USART2_RX_BUF, USART2_RX_STA);
-			printf("Register done!\r\n");
-			printf("Client receive bytes: %d\r\n", USART2_RX_STA);
-			USART2_RX_STA=0;
-			break;
+			if(ec20_init() == SUCCESS)
+			{	
+				printf("server connected\r\n");
+				isTCPconnected=1;
+				delay_ms(2000);
+				continue;
+			}
+		}
+
+		
+		setTerminalPhoneNumber("11111111113", 11);
+
+		
+		if(isRegistered == 0)
+		{
+			isRegistered = jt808TerminalRegister(isRegistered);
 			
+			if(isRegistered==0)
+			{
+				isTCPconnected=0;
+				continue;
+			}
+			continue;
 		}
-	}
-  packagingMessage(kTerminalAuthentication);
 
-//  printf("RealBufferSendSize = %d \n", RealBufferSendSize);
-//  delay_ms(1000);
-//  for (i = 0; i < RealBufferSendSize; ++i)
-//  {
-//    printf("%02X ", BufferSend[i]);
-//  }
-//  printf("\r\n");
-	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
-	while(1)
-	{
-		delay_ms(100);
-		if(USART2_RX_STA&0X8000)    //接收到数据
+		
+		if(isAuthenticated == 0)
 		{
-			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
-			//开始校验
-			parsingMessage(USART2_RX_BUF, USART2_RX_STA);
-			printf("Authentication done!\r\n");
-			printf("Client receive bytes: %d\r\n", USART2_RX_STA);
-			USART2_RX_STA=0;
-			break;
+			isAuthenticated =jt808TerminalAuthentication(isAuthenticated);		
+			
+			if(isAuthenticated==0)
+			{
+				isRegistered=0;
+				isTCPconnected=0;
+				continue;
+			}
+			continue;
 		}
-	}
-	
-	initLocationInfo(v_alarm_value, v_status_value);
-	setStatusBit();
-	
-	updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
 
-	packagingMessage(kLocationReport);
-	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
-	while(1)
-	{
-		delay_ms(100);
-		if(USART2_RX_STA&0X8000)    //接收到数据
-		{
-			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
-			//开始校验
-			parsingMessage(USART2_RX_BUF, USART2_RX_STA);
-			printf("update location done!\r\n");
-			printf("Client receive bytes: %d\r\n", USART2_RX_STA);
-			USART2_RX_STA=0;
-			break;
-		}
-	}
-	
-//	nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp);
-//	updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
-	
-	while(1)
-	{
-		nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp);
+		initLocationInfo(v_alarm_value, v_status_value);
+		setStatusBit();
+		
 		updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
-			
-//		if(flashWriteInfo.write_time_interval>0 && flashWriteInfo.write_time_interval<=30)
-//		{
-//			Tim3_Int_Init(flashWriteInfo.write_time_interval*10000-1,7199);
-//		}	
-		
-		
-		
-		if(USART2_RX_STA&0X8000)    //接收到数据
+
+		packagingMessage(kLocationReport);
+		Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+										
+		while(1)
 		{
-			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
-			//开始校验
-			parsingMessage(USART2_RX_BUF, USART2_RX_STA);
-			USART2_RX_STA=0;
+			delay_ms(100);
+			if(USART2_RX_STA&0X8000)    //接收到数据
+			{
+				USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
+				//开始校验
+				parsingMessage(USART2_RX_BUF, USART2_RX_STA);
+				printf("update location done!\r\n");
+				printf("Client receive bytes: %d\r\n", USART2_RX_STA);
+				USART2_RX_STA=0;
+				break;
+			}
 		}
-//		if(flashWriteInfo.write_time_interval>0 && flashWriteInfo.write_time_interval<=30)
-//		{
-//			nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp);
-//		 
-//			updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
-//			packagingMessage(kLocationReport);
-//			printf("RealBufferSendSize = %d \r\n", RealBufferSendSize);
+									
+								//	nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp);
+								//	updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
+									
+									while(1)
+									{
+										nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp);
+										updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
+											
+								//		if(flashWriteInfo.write_time_interval>0 && flashWriteInfo.write_time_interval<=30)
+								//		{
+								//			Tim3_Int_Init(flashWriteInfo.write_time_interval*10000-1,7199);
+								//		}	
+										
+										
+										
+										if(USART2_RX_STA&0X8000)    //接收到数据
+										{
+											USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
+											//开始校验
+											parsingMessage(USART2_RX_BUF, USART2_RX_STA);
+											USART2_RX_STA=0;
+										}
+								//		if(flashWriteInfo.write_time_interval>0 && flashWriteInfo.write_time_interval<=30)
+								//		{
+								//			nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp);
+								//		 
+								//			updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
+								//			packagingMessage(kLocationReport);
+								//			printf("RealBufferSendSize = %d \r\n", RealBufferSendSize);
 
-//			//Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
-//		}
+								//			//Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+								//		}
 
-		//delay_ms(100);
-
+										//delay_ms(100);
+									}
 	}
 }
 

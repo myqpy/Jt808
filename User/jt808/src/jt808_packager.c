@@ -114,15 +114,15 @@ int handle_kTerminalRegister(struct ProtocolParameter *para)
 {
 		int msg_len;
 		union U16ToU8Array u16converter;
-		unsigned char read_buf[64] = {0};
+		//unsigned char read_buf[64] = {0};
 		//struct ReadInfo readFlashInfo;
 		//struct TerminalParameters readFlashInfo;
 		
     printf("[%s] 终端注册 msg_id = 0x%04x \r\n", __FUNCTION__, kTerminalRegister);
 			
-		Internal_ReadFlash(((uint32_t)0x08008000) , read_buf , sizeof(read_buf));
-		memset(&para->parse.terminal_parameters,0,sizeof(para->parse.terminal_parameters));
-		memcpy(&para->parse.terminal_parameters, read_buf, sizeof(read_buf));
+//		Internal_ReadFlash(((uint32_t)0x08008000) , read_buf , sizeof(read_buf));
+//		memset(&para->parse.terminal_parameters,0,sizeof(para->parse.terminal_parameters));
+//		memcpy(&para->parse.terminal_parameters, read_buf, sizeof(read_buf));
 
 		
     initRegisterInfo(para); //初始化注册参数
@@ -177,7 +177,7 @@ int handle_kTerminalAuthentication(struct ProtocolParameter *para)
     
 
     int msg_len = strlen(para->parse.authentication_code);
-		printf("[%s] 终端鉴权 msg_id = 0x%04x\n", __FUNCTION__, kTerminalAuthentication);
+		printf("[%s] 终端鉴权 msg_id = 0x%04x \r\n", __FUNCTION__, kTerminalAuthentication);
     // 鉴权码.
     bufferSendPushBytes(para->parse.authentication_code, msg_len);
 
