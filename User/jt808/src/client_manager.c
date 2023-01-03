@@ -13,6 +13,13 @@
 #include "./usart2/usart2.h"
 #include "./internal_flash/bsp_internal_flash.h" 
 
+double  v_latitude = 34.824788;
+double  v_longitude = 113.558408;
+float  v_altitude = 107;
+float  v_speed = 15;
+float  v_bearing = 132;
+unsigned char v_timestamp[] = "221127212855";
+extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude, float  *v_speed, float *v_bearing, unsigned char *v_timestamp);
 struct ProtocolParameter parameter_;
 
 void initSystemParameters(void)
@@ -268,13 +275,31 @@ int jt808TerminalAuthentication(int isAuthenticated)
 	return isAuthenticated;
 }
 
-int jt808LocationReport(void)
+int jt808LocationReport(int LocationReportCounter)
 {
+		nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp);
+		updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
 		packagingMessage(kLocationReport);
 		Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
-		printf("位置上报完成!\r\n");								
+		printf("位置上报完成!\r\n");
+		LocationReportCounter++;
 
-		return 0;
+	
+		if(USART2_RX_STA&0X8000)    //接收到数据
+		{
+			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
+			parsingMessage(USART2_RX_BUF, USART2_RX_STA);//校验	
+			if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kLocationReport))
+			{
+				LocationReportCounter = 0;
+				printf("\r\n");
+				printf("位置上报平台应答解析 成功！！！!\r\n");
+				printf("\r\n");
+				USART2_RX_STA=0;
+			}
+			USART2_RX_STA=0;
+		}
+		return LocationReportCounter;
 }
 
 

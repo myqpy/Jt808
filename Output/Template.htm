@@ -3,11 +3,11 @@
 <title>Static Call Graph - [..\..\Output\Template.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\..\Output\Template.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Mon Dec 19 17:05:18 2022
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Thu Dec 22 11:28:04 2022
 <BR><P>
-<H3>Maximum Stack Usage =       4448 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =       4360 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-main &rArr; nmea_decode_test &rArr; nmea_parse &rArr; nmea_parser_push &rArr; nmea_parser_real_push &rArr; nmea_parse_GPRMC &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
+main &rArr; jt808LocationReport &rArr; nmea_decode_test &rArr; nmea_parse &rArr; nmea_parser_push &rArr; nmea_parser_real_push &rArr; nmea_parse_GPRMC &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
 <P>
 <H3>
 Mutually Recursive functions
@@ -317,13 +317,13 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsr
 <LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsl
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
-<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+<BR>[Called By]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
 <P><STRONG><a name="[58]"></a>__rt_ctype_table</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, ctype_o.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<BR><BR>[Called By]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
 <LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isspace
 <LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
 </UL>
@@ -335,44 +335,44 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> strtod.o(.text)
 </UL>
-<P><STRONG><a name="[d8]"></a>__aeabi_memcpy</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, memcpya.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateLocation
-<LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setTerminalPhoneNumber
-<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initRegisterInfo
-<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808MsgEscape
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
+<P><STRONG><a name="[d7]"></a>__aeabi_memcpy</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, memcpya.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setTerminalPhoneNumber
+<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initRegisterInfo
+<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808MsgEscape
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
+<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateLocation
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_atof
 <LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_real_push
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
 <LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_atoi
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ServerPort
-<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ProvinceID
-<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MaxSpeed
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MainServerAddress
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_HeartBeatInterval
-<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_DefaultTimeReportTimeInterval
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CornerPointRetransmissionAngle
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CityID
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateNum
-<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateColor
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegisterResponse
+<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ServerPort
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ProvinceID
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MaxSpeed
+<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MainServerAddress
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_HeartBeatInterval
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_DefaultTimeReportTimeInterval
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CornerPointRetransmissionAngle
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CityID
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateNum
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateColor
+<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegisterResponse
 </UL>
 
-<P><STRONG><a name="[d9]"></a>__aeabi_memcpy4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initSystemParameters
+<P><STRONG><a name="[d8]"></a>__aeabi_memcpy4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initSystemParameters
 <LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_GPRMC2info
 <LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_GNZDA2info
 <LI><a href="#[116]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_GNRMC2info
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ServerPort
-<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ProvinceID
-<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MaxSpeed
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MainServerAddress
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_HeartBeatInterval
-<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_DefaultTimeReportTimeInterval
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CornerPointRetransmissionAngle
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CityID
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateNum
-<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateColor
+<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ServerPort
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ProvinceID
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MaxSpeed
+<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MainServerAddress
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_HeartBeatInterval
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_DefaultTimeReportTimeInterval
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CornerPointRetransmissionAngle
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CityID
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateNum
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateColor
 </UL>
 
 <P><STRONG><a name="[14e]"></a>__aeabi_memcpy8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text), UNUSED)
@@ -389,20 +389,19 @@ Global Symbols
 <P><STRONG><a name="[59]"></a>__aeabi_memclr</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, memseta.o(.text))
 <BR><BR>[Calls]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
 </UL>
-<BR>[Called By]<UL><LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setTerminalPhoneNumber
-<LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
-<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initRegisterInfo
+<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
+<LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setTerminalPhoneNumber
+<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initRegisterInfo
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Escape_C
-<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clearBufferSend
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clearBufferSend
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
 </UL>
 
-<P><STRONG><a name="[d2]"></a>__aeabi_memclr4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text))
+<P><STRONG><a name="[d1]"></a>__aeabi_memclr4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_zero_INFO
 <LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_init
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initSystemParameters
-<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_init
-<LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initSystemParameters
+<LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_init
 <LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_GPVTG
 <LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_GPRMC
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_GPGSV
@@ -415,16 +414,16 @@ Global Symbols
 <LI><a href="#[135]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_GNGGA
 <LI><a href="#[134]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_BDGSV
 <LI><a href="#[132]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_BDGSA
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ServerPort
-<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ProvinceID
-<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MaxSpeed
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MainServerAddress
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_HeartBeatInterval
-<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_DefaultTimeReportTimeInterval
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CornerPointRetransmissionAngle
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CityID
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateNum
-<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateColor
+<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ServerPort
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ProvinceID
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MaxSpeed
+<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MainServerAddress
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_HeartBeatInterval
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_DefaultTimeReportTimeInterval
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CornerPointRetransmissionAngle
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CityID
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateNum
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateColor
 </UL>
 
 <P><STRONG><a name="[151]"></a>__aeabi_memclr8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
@@ -433,18 +432,18 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
 </UL>
 
-<P><STRONG><a name="[cf]"></a>strstr</STRONG> (Thumb, 36 bytes, Stack size 12 bytes, strstr.o(.text))
+<P><STRONG><a name="[ce]"></a>strstr</STRONG> (Thumb, 36 bytes, Stack size 12 bytes, strstr.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = strstr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_check_cmd
+<BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_check_cmd
 </UL>
 
-<P><STRONG><a name="[ed]"></a>strlen</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, strlen.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;u2_printf
-<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadPackage
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalAuthentication
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
+<P><STRONG><a name="[ec]"></a>strlen</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, strlen.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;u2_printf
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadPackage
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalAuthentication
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
 <LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_GPRMC
 <LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_GPGGA
 <LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_GNZDA
@@ -454,7 +453,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[142]"></a>memchr</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, memchr.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<BR><BR>[Called By]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
 </UL>
 
 <P><STRONG><a name="[126]"></a>memcmp</STRONG> (Thumb, 26 bytes, Stack size 12 bytes, memcmp.o(.text))
@@ -476,7 +475,7 @@ Global Symbols
 <P><STRONG><a name="[147]"></a>__aeabi_fmul</STRONG> (Thumb, 100 bytes, Stack size 8 bytes, fmul.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_fmul
 </UL>
-<BR>[Called By]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateLocation
+<BR>[Called By]<UL><LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateLocation
 </UL>
 
 <P><STRONG><a name="[5f]"></a>__aeabi_dadd</STRONG> (Thumb, 322 bytes, Stack size 48 bytes, dadd.o(.text))
@@ -490,7 +489,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 <LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
 <LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_ndeg2degree
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
 </UL>
 
 <P><STRONG><a name="[63]"></a>__aeabi_dsub</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, dadd.o(.text), UNUSED)
@@ -511,11 +510,11 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_ndeg2degree
-<LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateLocation
-<LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
+<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateLocation
 <LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_GPRMC2info
 <LI><a href="#[116]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_GNRMC2info
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
 <LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_value
 </UL>
 
@@ -525,7 +524,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_round
 </UL>
 <BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_ndeg2degree
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
 <LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_value
 </UL>
 
@@ -538,7 +537,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[146]"></a>__aeabi_f2uiz</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, ffixui.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateLocation
+<BR><BR>[Called By]<UL><LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateLocation
 </UL>
 
 <P><STRONG><a name="[68]"></a>__aeabi_d2iz</STRONG> (Thumb, 62 bytes, Stack size 16 bytes, dfixi.o(.text))
@@ -547,7 +546,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsr
 </UL>
 <BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_ndeg2degree
-<LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
 </UL>
 
 <P><STRONG><a name="[69]"></a>__aeabi_d2uiz</STRONG> (Thumb, 50 bytes, Stack size 8 bytes, dfixui.o(.text))
@@ -555,11 +554,11 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateLocation
+<BR>[Called By]<UL><LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateLocation
 </UL>
 
-<P><STRONG><a name="[be]"></a>__aeabi_cdrcmple</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, cdrcmple.o(.text), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
+<P><STRONG><a name="[bd]"></a>__aeabi_cdrcmple</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, cdrcmple.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
 </UL>
 
 <P><STRONG><a name="[6a]"></a>__aeabi_d2f</STRONG> (Thumb, 56 bytes, Stack size 8 bytes, d2f.o(.text))
@@ -567,14 +566,14 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_round
 </UL>
-<BR>[Called By]<UL><LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
+<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
 <LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_scanf_really_real
 </UL>
 
 <P><STRONG><a name="[152]"></a>__aeabi_uidiv</STRONG> (Thumb, 0 bytes, Stack size 12 bytes, uidiv.o(.text), UNUSED)
 
-<P><STRONG><a name="[c6]"></a>__aeabi_uidivmod</STRONG> (Thumb, 44 bytes, Stack size 12 bytes, uidiv.o(.text), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+<P><STRONG><a name="[c5]"></a>__aeabi_uidivmod</STRONG> (Thumb, 44 bytes, Stack size 12 bytes, uidiv.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
 <P><STRONG><a name="[57]"></a>__aeabi_llsl</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, llshl.o(.text))
@@ -652,7 +651,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsr
 <LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsl
 </UL>
-<BR>[Called By]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
+<BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
 </UL>
 
 <P><STRONG><a name="[54]"></a>__scatterload</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, init.o(.text))
@@ -691,15 +690,15 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_value
 </UL>
 
-<P><STRONG><a name="[108]"></a>BccCheckSum</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, util.o(i.BccCheckSum))
+<P><STRONG><a name="[107]"></a>BccCheckSum</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, util.o(i.BccCheckSum))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = BccCheckSum
 </UL>
-<BR>[Called By]<UL><LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
-<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
+<BR>[Called By]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
+<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
 </UL>
 
-<P><STRONG><a name="[100]"></a>BcdToHex</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, bcd.o(i.BcdToHex))
-<BR><BR>[Called By]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808BcdToStringCompress
+<P><STRONG><a name="[ff]"></a>BcdToHex</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, bcd.o(i.BcdToHex))
+<BR><BR>[Called By]<UL><LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808BcdToStringCompress
 </UL>
 
 <P><STRONG><a name="[4]"></a>BusFault_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.BusFault_Handler))
@@ -721,12 +720,12 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[89]"></a>DMA_Cmd</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f10x_dma.o(i.DMA_Cmd))
-<BR><BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMA_Enable
+<BR><BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMA_Enable
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPS_DMA_Config
 </UL>
 
-<P><STRONG><a name="[a7]"></a>DMA_DeInit</STRONG> (Thumb, 238 bytes, Stack size 0 bytes, stm32f10x_dma.o(i.DMA_DeInit))
-<BR><BR>[Called By]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMA_Config
+<P><STRONG><a name="[a6]"></a>DMA_DeInit</STRONG> (Thumb, 238 bytes, Stack size 0 bytes, stm32f10x_dma.o(i.DMA_DeInit))
+<BR><BR>[Called By]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMA_Config
 </UL>
 
 <P><STRONG><a name="[8d]"></a>DMA_GetITStatus</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f10x_dma.o(i.DMA_GetITStatus))
@@ -740,34 +739,34 @@ Global Symbols
 <P><STRONG><a name="[86]"></a>DMA_Init</STRONG> (Thumb, 58 bytes, Stack size 12 bytes, stm32f10x_dma.o(i.DMA_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = DMA_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMA_Config
+<BR>[Called By]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMA_Config
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPS_DMA_Config
 </UL>
 
-<P><STRONG><a name="[a9]"></a>DMA_SetCurrDataCounter</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_dma.o(i.DMA_SetCurrDataCounter))
-<BR><BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMA_Enable
+<P><STRONG><a name="[a8]"></a>DMA_SetCurrDataCounter</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_dma.o(i.DMA_SetCurrDataCounter))
+<BR><BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMA_Enable
 </UL>
 
 <P><STRONG><a name="[7]"></a>DebugMon_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.DebugMon_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[dd]"></a>EndianSwap16</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, util.o(i.EndianSwap16))
-<BR><BR>[Called By]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808MsgBodyLengthFix
-<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadPackage
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
-<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ProvinceID
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CityID
+<P><STRONG><a name="[dc]"></a>EndianSwap16</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, util.o(i.EndianSwap16))
+<BR><BR>[Called By]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808MsgBodyLengthFix
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadPackage
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ProvinceID
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CityID
 </UL>
 
-<P><STRONG><a name="[df]"></a>EndianSwap32</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, util.o(i.EndianSwap32))
-<BR><BR>[Called By]<UL><LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ServerPort
-<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MaxSpeed
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_HeartBeatInterval
-<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_DefaultTimeReportTimeInterval
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CornerPointRetransmissionAngle
-<LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kSetTerminalParameters
+<P><STRONG><a name="[de]"></a>EndianSwap32</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, util.o(i.EndianSwap32))
+<BR><BR>[Called By]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
+<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ServerPort
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MaxSpeed
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_HeartBeatInterval
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_DefaultTimeReportTimeInterval
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CornerPointRetransmissionAngle
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kSetTerminalParameters
 </UL>
 
 <P><STRONG><a name="[77]"></a>Escape_C</STRONG> (Thumb, 108 bytes, Stack size 32 bytes, util.o(i.Escape_C))
@@ -775,7 +774,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808MsgEscape
+<BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808MsgEscape
 </UL>
 
 <P><STRONG><a name="[7e]"></a>FLASH_ClearFlag</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f10x_flash.o(i.FLASH_ClearFlag))
@@ -828,16 +827,16 @@ Global Symbols
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ErasePage
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ClearFlag
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ServerPort
-<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ProvinceID
-<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MaxSpeed
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MainServerAddress
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_HeartBeatInterval
-<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_DefaultTimeReportTimeInterval
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CornerPointRetransmissionAngle
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CityID
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateNum
-<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateColor
+<BR>[Called By]<UL><LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ServerPort
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ProvinceID
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MaxSpeed
+<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MainServerAddress
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_HeartBeatInterval
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_DefaultTimeReportTimeInterval
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CornerPointRetransmissionAngle
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CityID
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateNum
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateColor
 </UL>
 
 <P><STRONG><a name="[80]"></a>GMTconvert</STRONG> (Thumb, 324 bytes, Stack size 32 bytes, gps_config.o(i.GMTconvert))
@@ -845,15 +844,15 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsLeapYear
 </UL>
-<BR>[Called By]<UL><LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
+<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
 </UL>
 
 <P><STRONG><a name="[91]"></a>GPIO_Init</STRONG> (Thumb, 166 bytes, Stack size 24 bytes, stm32f10x_gpio.o(i.GPIO_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = GPIO_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPS_USART_Config
-<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
+<LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
 </UL>
 
 <P><STRONG><a name="[95]"></a>GPIO_ReadInputDataBit</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, stm32f10x_gpio.o(i.GPIO_ReadInputDataBit))
@@ -884,12 +883,12 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[10d]"></a>HexToBcd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, bcd.o(i.HexToBcd))
-<BR><BR>[Called By]<UL><LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808StringToBcdCompress
+<P><STRONG><a name="[110]"></a>HexToBcd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, bcd.o(i.HexToBcd))
+<BR><BR>[Called By]<UL><LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808StringToBcdCompress
 </UL>
 
-<P><STRONG><a name="[fe]"></a>Internal_ReadFlash</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, bsp_internal_flash.o(i.Internal_ReadFlash))
-<BR><BR>[Called By]<UL><LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initSystemParameters
+<P><STRONG><a name="[fd]"></a>Internal_ReadFlash</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, bsp_internal_flash.o(i.Internal_ReadFlash))
+<BR><BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initSystemParameters
 </UL>
 
 <P><STRONG><a name="[94]"></a>KEY_Scan</STRONG> (Thumb, 160 bytes, Stack size 24 bytes, key.o(i.KEY_Scan))
@@ -898,7 +897,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ReadInputDataBit
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_send_cmd
+<BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_send_cmd
 </UL>
 
 <P><STRONG><a name="[3]"></a>MemManage_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.MemManage_Handler))
@@ -920,10 +919,10 @@ Global Symbols
 <P><STRONG><a name="[8c]"></a>NVIC_Init</STRONG> (Thumb, 96 bytes, Stack size 16 bytes, misc.o(i.NVIC_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = NVIC_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Init
+<BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Init
 <LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPS_Interrupt_Config
-<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
+<LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
 </UL>
 
 <P><STRONG><a name="[8b]"></a>NVIC_PriorityGroupConfig</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, misc.o(i.NVIC_PriorityGroupConfig))
@@ -935,31 +934,31 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
 <P><STRONG><a name="[85]"></a>RCC_AHBPeriphClockCmd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f10x_rcc.o(i.RCC_AHBPeriphClockCmd))
-<BR><BR>[Called By]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMA_Config
+<BR><BR>[Called By]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMA_Config
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPS_DMA_Config
 </UL>
 
 <P><STRONG><a name="[90]"></a>RCC_APB1PeriphClockCmd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f10x_rcc.o(i.RCC_APB1PeriphClockCmd))
-<BR><BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Init
+<BR><BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Init
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPS_USART_Config
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
 </UL>
 
-<P><STRONG><a name="[b0]"></a>RCC_APB1PeriphResetCmd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f10x_rcc.o(i.RCC_APB1PeriphResetCmd))
-<BR><BR>[Called By]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_DeInit
+<P><STRONG><a name="[af]"></a>RCC_APB1PeriphResetCmd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f10x_rcc.o(i.RCC_APB1PeriphResetCmd))
+<BR><BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_DeInit
 </UL>
 
 <P><STRONG><a name="[8f]"></a>RCC_APB2PeriphClockCmd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f10x_rcc.o(i.RCC_APB2PeriphClockCmd))
 <BR><BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPS_USART_Config
-<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
+<LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
 </UL>
 
-<P><STRONG><a name="[af]"></a>RCC_APB2PeriphResetCmd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f10x_rcc.o(i.RCC_APB2PeriphResetCmd))
-<BR><BR>[Called By]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_DeInit
+<P><STRONG><a name="[ae]"></a>RCC_APB2PeriphResetCmd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f10x_rcc.o(i.RCC_APB2PeriphResetCmd))
+<BR><BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_DeInit
 </UL>
 
-<P><STRONG><a name="[b1]"></a>RCC_GetClocksFreq</STRONG> (Thumb, 154 bytes, Stack size 8 bytes, stm32f10x_rcc.o(i.RCC_GetClocksFreq))
+<P><STRONG><a name="[b0]"></a>RCC_GetClocksFreq</STRONG> (Thumb, 154 bytes, Stack size 8 bytes, stm32f10x_rcc.o(i.RCC_GetClocksFreq))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = RCC_GetClocksFreq
 </UL>
 <BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init
@@ -970,14 +969,14 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
+<BR>[Called By]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
 </UL>
 
 <P><STRONG><a name="[6]"></a>SVC_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.SVC_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[cd]"></a>SysTick_CLKSourceConfig</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, misc.o(i.SysTick_CLKSourceConfig))
-<BR><BR>[Called By]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_init
+<P><STRONG><a name="[cc]"></a>SysTick_CLKSourceConfig</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, misc.o(i.SysTick_CLKSourceConfig))
+<BR><BR>[Called By]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_init
 </UL>
 
 <P><STRONG><a name="[47]"></a>SystemInit</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, system_stm32f10x.o(i.SystemInit))
@@ -987,11 +986,10 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(.text)
 </UL>
-<P><STRONG><a name="[27]"></a>TIM3_IRQHandler</STRONG> (Thumb, 34 bytes, Stack size 8 bytes, main.o(i.TIM3_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = TIM3_IRQHandler &rArr; jt808LocationReport &rArr; packagingMessage &rArr; jt808FramePackage &rArr; jt808FrameBodyPackage &rArr; handle_kTerminalRegister &rArr; initRegisterInfo &rArr; __2printf
+<P><STRONG><a name="[27]"></a>TIM3_IRQHandler</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, main.o(i.TIM3_IRQHandler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = TIM3_IRQHandler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808LocationReport
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_GetITStatus
+<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_GetITStatus
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_ClearITPendingBit
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
@@ -999,41 +997,41 @@ Global Symbols
 <P><STRONG><a name="[28]"></a>TIM4_IRQHandler</STRONG> (Thumb, 94 bytes, Stack size 8 bytes, usart2.o(i.TIM4_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = TIM4_IRQHandler &rArr; TIM4_SetARR
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_SetARR
-<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Set
+<BR>[Calls]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_SetARR
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Set
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_GetITStatus
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_ClearITPendingBit
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[a1]"></a>TIM4_Init</STRONG> (Thumb, 82 bytes, Stack size 32 bytes, usart2.o(i.TIM4_Init))
+<P><STRONG><a name="[a0]"></a>TIM4_Init</STRONG> (Thumb, 82 bytes, Stack size 32 bytes, usart2.o(i.TIM4_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = TIM4_Init &rArr; NVIC_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_TimeBaseInit
-<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_ITConfig
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_TimeBaseInit
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_ITConfig
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
+<BR>[Called By]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
 </UL>
 
-<P><STRONG><a name="[9f]"></a>TIM4_Set</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, usart2.o(i.TIM4_Set))
+<P><STRONG><a name="[9e]"></a>TIM4_Set</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, usart2.o(i.TIM4_Set))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = TIM4_Set
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCounter
-<LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_Cmd
+<BR>[Calls]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCounter
+<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_Cmd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[30]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
 <LI><a href="#[28]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_IRQHandler
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
 </UL>
 
-<P><STRONG><a name="[a0]"></a>TIM4_SetARR</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, usart2.o(i.TIM4_SetARR))
+<P><STRONG><a name="[9f]"></a>TIM4_SetARR</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, usart2.o(i.TIM4_SetARR))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = TIM4_SetARR
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCounter
+<BR>[Calls]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCounter
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_send_cmd
+<BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_send_cmd
 <LI><a href="#[28]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_IRQHandler
 </UL>
 
@@ -1042,8 +1040,8 @@ Global Symbols
 <LI><a href="#[27]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM3_IRQHandler
 </UL>
 
-<P><STRONG><a name="[a5]"></a>TIM_Cmd</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_Cmd))
-<BR><BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Set
+<P><STRONG><a name="[a4]"></a>TIM_Cmd</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_Cmd))
+<BR><BR>[Called By]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Set
 </UL>
 
 <P><STRONG><a name="[9c]"></a>TIM_GetITStatus</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_GetITStatus))
@@ -1051,72 +1049,72 @@ Global Symbols
 <LI><a href="#[27]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM3_IRQHandler
 </UL>
 
-<P><STRONG><a name="[a3]"></a>TIM_ITConfig</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_ITConfig))
-<BR><BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Init
+<P><STRONG><a name="[a2]"></a>TIM_ITConfig</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_ITConfig))
+<BR><BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Init
 </UL>
 
-<P><STRONG><a name="[a4]"></a>TIM_SetCounter</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_SetCounter))
+<P><STRONG><a name="[a3]"></a>TIM_SetCounter</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_SetCounter))
 <BR><BR>[Called By]<UL><LI><a href="#[30]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
-<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_SetARR
-<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Set
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_SetARR
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Set
 </UL>
 
-<P><STRONG><a name="[a2]"></a>TIM_TimeBaseInit</STRONG> (Thumb, 114 bytes, Stack size 12 bytes, stm32f10x_tim.o(i.TIM_TimeBaseInit))
+<P><STRONG><a name="[a1]"></a>TIM_TimeBaseInit</STRONG> (Thumb, 114 bytes, Stack size 12 bytes, stm32f10x_tim.o(i.TIM_TimeBaseInit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = TIM_TimeBaseInit
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Init
+<BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Init
 </UL>
 
-<P><STRONG><a name="[a6]"></a>UART_DMA_Config</STRONG> (Thumb, 66 bytes, Stack size 64 bytes, usart2.o(i.UART_DMA_Config))
+<P><STRONG><a name="[a5]"></a>UART_DMA_Config</STRONG> (Thumb, 66 bytes, Stack size 64 bytes, usart2.o(i.UART_DMA_Config))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = UART_DMA_Config &rArr; DMA_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_Init
-<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_DeInit
+<LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_DeInit
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_AHBPeriphClockCmd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
+<BR>[Called By]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
 </UL>
 
-<P><STRONG><a name="[a8]"></a>UART_DMA_Enable</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, usart2.o(i.UART_DMA_Enable))
+<P><STRONG><a name="[a7]"></a>UART_DMA_Enable</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, usart2.o(i.UART_DMA_Enable))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = UART_DMA_Enable
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_SetCurrDataCounter
+<BR>[Calls]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_SetCurrDataCounter
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_Cmd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;u2_printf
+<BR>[Called By]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;u2_printf
 </UL>
 
 <P><STRONG><a name="[2f]"></a>USART1_IRQHandler</STRONG> (Thumb, 92 bytes, Stack size 16 bytes, usart.o(i.USART1_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = USART1_IRQHandler &rArr; USART_GetITStatus
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ReceiveData
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetITStatus
+<BR>[Calls]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ReceiveData
+<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetITStatus
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
 <P><STRONG><a name="[30]"></a>USART2_IRQHandler</STRONG> (Thumb, 74 bytes, Stack size 16 bytes, usart2.o(i.USART2_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = USART2_IRQHandler &rArr; USART_GetITStatus
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Set
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ReceiveData
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetITStatus
-<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCounter
+<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Set
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ReceiveData
+<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetITStatus
+<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCounter
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[ac]"></a>USART2_Init</STRONG> (Thumb, 208 bytes, Stack size 48 bytes, usart2.o(i.USART2_Init))
+<P><STRONG><a name="[ab]"></a>USART2_Init</STRONG> (Thumb, 208 bytes, Stack size 48 bytes, usart2.o(i.USART2_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 124<LI>Call Chain = USART2_Init &rArr; UART_DMA_Config &rArr; DMA_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
-<LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMA_Config
-<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Set
-<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Init
+<LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMA_Config
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Set
+<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_Init
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init
-<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ITConfig
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_DeInit
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ITConfig
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_DeInit
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_DMACmd
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Cmd
 </UL>
@@ -1125,60 +1123,60 @@ Global Symbols
 
 <P><STRONG><a name="[93]"></a>USART_Cmd</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f10x_usart.o(i.USART_Cmd))
 <BR><BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPS_USART_Config
-<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
+<LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
 </UL>
 
 <P><STRONG><a name="[8a]"></a>USART_DMACmd</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, stm32f10x_usart.o(i.USART_DMACmd))
 <BR><BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPS_DMA_Config
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
 </UL>
 
-<P><STRONG><a name="[ad]"></a>USART_DeInit</STRONG> (Thumb, 144 bytes, Stack size 8 bytes, stm32f10x_usart.o(i.USART_DeInit))
+<P><STRONG><a name="[ac]"></a>USART_DeInit</STRONG> (Thumb, 144 bytes, Stack size 8 bytes, stm32f10x_usart.o(i.USART_DeInit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USART_DeInit
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphResetCmd
-<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphResetCmd
+<BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphResetCmd
+<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphResetCmd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
-</UL>
-
-<P><STRONG><a name="[b4]"></a>USART_GetFlagStatus</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, stm32f10x_usart.o(i.USART_GetFlagStatus))
-<BR><BR>[Called By]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart_SendByte
+<BR>[Called By]<UL><LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
 </UL>
 
-<P><STRONG><a name="[aa]"></a>USART_GetITStatus</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, stm32f10x_usart.o(i.USART_GetITStatus))
+<P><STRONG><a name="[b3]"></a>USART_GetFlagStatus</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, stm32f10x_usart.o(i.USART_GetFlagStatus))
+<BR><BR>[Called By]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart_SendByte
+</UL>
+
+<P><STRONG><a name="[a9]"></a>USART_GetITStatus</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, stm32f10x_usart.o(i.USART_GetITStatus))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = USART_GetITStatus
 </UL>
 <BR>[Called By]<UL><LI><a href="#[30]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
 <LI><a href="#[2f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
-<P><STRONG><a name="[ae]"></a>USART_ITConfig</STRONG> (Thumb, 54 bytes, Stack size 8 bytes, stm32f10x_usart.o(i.USART_ITConfig))
+<P><STRONG><a name="[ad]"></a>USART_ITConfig</STRONG> (Thumb, 54 bytes, Stack size 8 bytes, stm32f10x_usart.o(i.USART_ITConfig))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USART_ITConfig
 </UL>
-<BR>[Called By]<UL><LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
+<BR>[Called By]<UL><LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
 </UL>
 
 <P><STRONG><a name="[92]"></a>USART_Init</STRONG> (Thumb, 182 bytes, Stack size 32 bytes, stm32f10x_usart.o(i.USART_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = USART_Init &rArr; RCC_GetClocksFreq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_GetClocksFreq
+<BR>[Calls]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_GetClocksFreq
 </UL>
 <BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPS_USART_Config
-<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
+<LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
 </UL>
 
-<P><STRONG><a name="[ab]"></a>USART_ReceiveData</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f10x_usart.o(i.USART_ReceiveData))
+<P><STRONG><a name="[aa]"></a>USART_ReceiveData</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f10x_usart.o(i.USART_ReceiveData))
 <BR><BR>[Called By]<UL><LI><a href="#[30]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
 <LI><a href="#[2f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
-<P><STRONG><a name="[b3]"></a>USART_SendData</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f10x_usart.o(i.USART_SendData))
-<BR><BR>[Called By]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart_SendByte
+<P><STRONG><a name="[b2]"></a>USART_SendData</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f10x_usart.o(i.USART_SendData))
+<BR><BR>[Called By]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart_SendByte
 </UL>
 
 <P><STRONG><a name="[5]"></a>UsageFault_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.UsageFault_Handler))
@@ -1188,34 +1186,34 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[b5]"></a>Usart_SendStr_length</STRONG> (Thumb, 30 bytes, Stack size 24 bytes, usart2.o(i.Usart_SendStr_length))
+<P><STRONG><a name="[b4]"></a>Usart_SendStr_length</STRONG> (Thumb, 30 bytes, Stack size 24 bytes, usart2.o(i.Usart_SendStr_length))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = Usart_SendStr_length &rArr; Usart_SendByte
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart_SendByte
+<BR>[Calls]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart_SendByte
 </UL>
-<BR>[Called By]<UL><LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalRegister
-<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalAuthentication
-<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808LocationReport
+<BR>[Called By]<UL><LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalRegister
+<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalAuthentication
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808LocationReport
 </UL>
 
-<P><STRONG><a name="[b6]"></a>__0printf</STRONG> (Thumb, 22 bytes, Stack size 24 bytes, printfa.o(i.__0printf), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+<P><STRONG><a name="[b5]"></a>__0printf</STRONG> (Thumb, 22 bytes, Stack size 24 bytes, printfa.o(i.__0printf), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
 <P><STRONG><a name="[159]"></a>__1printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0printf), UNUSED)
 
 <P><STRONG><a name="[15a]"></a>__2printf$full</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0printf), UNUSED)
 
-<P><STRONG><a name="[d5]"></a>__c89printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0printf))
+<P><STRONG><a name="[d4]"></a>__c89printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0printf))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __c89printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_send_cmd
+<BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_send_cmd
 </UL>
 
 <P><STRONG><a name="[15b]"></a>printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0printf), UNUSED)
 
-<P><STRONG><a name="[b8]"></a>__0printf$8</STRONG> (Thumb, 22 bytes, Stack size 24 bytes, printf8.o(i.__0printf$8), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+<P><STRONG><a name="[b7]"></a>__0printf$8</STRONG> (Thumb, 22 bytes, Stack size 24 bytes, printf8.o(i.__0printf$8), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
 <P><STRONG><a name="[15c]"></a>__1printf$8</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf8.o(i.__0printf$8), UNUSED)
@@ -1223,63 +1221,63 @@ Global Symbols
 <P><STRONG><a name="[99]"></a>__2printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf8.o(i.__0printf$8))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_send_cmd
+<BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_send_cmd
 <LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trace
 <LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gps_info
 <LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;error
-<LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateLocation
-<LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parsingMessage
-<LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
-<LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalRegister
-<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalAuthentication
-<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808LocationReport
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initSystemParameters
-<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initLocationInfo
-<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_init
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
+<LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalRegister
+<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalAuthentication
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808LocationReport
+<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initSystemParameters
+<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initLocationInfo
+<LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_init
 <LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initRegisterInfo
-<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
-<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalUpgradeResultReport
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
-<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalLogOut
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalHeartBeat
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalAuthentication
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
-<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetTerminalParametersResponse
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetLocationInformationResponse
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
-<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
-<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;packagingMessage
+<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initRegisterInfo
+<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
+<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalUpgradeResultReport
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
+<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalLogOut
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalHeartBeat
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalAuthentication
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
+<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetTerminalParametersResponse
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetLocationInformationResponse
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
+<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
+<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateLocation
+<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parsingMessage
+<LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;packagingMessage
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReverseEscape_C
-<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadParse
-<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
-<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalUpgrade
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegisterResponse
-<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalControl
-<LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kSetTerminalParameters
-<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kPlatformGeneralResponse
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetTerminalParameters
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetSpecificTerminalParameters
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetLocationInformation
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kFillPacketRequest
+<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadParse
+<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
+<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalUpgrade
+<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegisterResponse
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalControl
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kSetTerminalParameters
+<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kPlatformGeneralResponse
+<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetTerminalParameters
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetSpecificTerminalParameters
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetLocationInformation
+<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kFillPacketRequest
 </UL>
 
-<P><STRONG><a name="[ba]"></a>__0sprintf$8</STRONG> (Thumb, 34 bytes, Stack size 24 bytes, printf8.o(i.__0sprintf$8), UNUSED)
+<P><STRONG><a name="[b9]"></a>__0sprintf$8</STRONG> (Thumb, 34 bytes, Stack size 24 bytes, printf8.o(i.__0sprintf$8), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sputc
-<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
 <P><STRONG><a name="[15d]"></a>__1sprintf$8</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf8.o(i.__0sprintf$8), UNUSED)
 
-<P><STRONG><a name="[d3]"></a>__2sprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf8.o(i.__0sprintf$8))
+<P><STRONG><a name="[d2]"></a>__2sprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf8.o(i.__0sprintf$8))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __2sprintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
-<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_init
+<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
+<LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_init
 </UL>
 
-<P><STRONG><a name="[bb]"></a>__0vsnprintf</STRONG> (Thumb, 40 bytes, Stack size 24 bytes, printfa.o(i.__0vsnprintf), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+<P><STRONG><a name="[ba]"></a>__0vsnprintf</STRONG> (Thumb, 40 bytes, Stack size 24 bytes, printfa.o(i.__0vsnprintf), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
 <P><STRONG><a name="[15e]"></a>__1vsnprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0vsnprintf), UNUSED)
@@ -1290,14 +1288,14 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __c89vsnprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_info
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
 </UL>
 
 <P><STRONG><a name="[160]"></a>vsnprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0vsnprintf), UNUSED)
 
-<P><STRONG><a name="[bc]"></a>__0vsprintf</STRONG> (Thumb, 30 bytes, Stack size 24 bytes, printfa.o(i.__0vsprintf), UNUSED)
+<P><STRONG><a name="[bb]"></a>__0vsprintf</STRONG> (Thumb, 30 bytes, Stack size 24 bytes, printfa.o(i.__0vsprintf), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sputc
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
 <P><STRONG><a name="[161]"></a>__1vsprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0vsprintf), UNUSED)
@@ -1307,7 +1305,7 @@ Global Symbols
 <P><STRONG><a name="[145]"></a>__c89vsprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0vsprintf))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __c89vsprintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;u2_printf
+<BR>[Called By]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;u2_printf
 </UL>
 
 <P><STRONG><a name="[163]"></a>vsprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0vsprintf), UNUSED)
@@ -1329,11 +1327,11 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_scanf_really_real
 </UL>
 
-<P><STRONG><a name="[bf]"></a>_nmea_parse_time</STRONG> (Thumb, 94 bytes, Stack size 32 bytes, parse.o(i._nmea_parse_time))
+<P><STRONG><a name="[be]"></a>_nmea_parse_time</STRONG> (Thumb, 94 bytes, Stack size 32 bytes, parse.o(i._nmea_parse_time))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1112<LI>Call Chain = _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<BR>[Calls]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_GPRMC
 <LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_GPGGA
@@ -1343,107 +1341,107 @@ Global Symbols
 <LI><a href="#[135]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_GNGGA
 </UL>
 
-<P><STRONG><a name="[10c]"></a>bufferSendChangeByte</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, jt808_packager.o(i.bufferSendChangeByte))
+<P><STRONG><a name="[10f]"></a>bufferSendChangeByte</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, jt808_packager.o(i.bufferSendChangeByte))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = bufferSendChangeByte
 </UL>
-<BR>[Called By]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808SetFrameFlagHeader
+<BR>[Called By]<UL><LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808SetFrameFlagHeader
 </UL>
 
-<P><STRONG><a name="[c8]"></a>bufferSendPushByte</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, jt808_packager.o(i.bufferSendPushByte))
-<BR><BR>[Called By]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
-<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushBytes
-<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
+<P><STRONG><a name="[c7]"></a>bufferSendPushByte</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, jt808_packager.o(i.bufferSendPushByte))
+<BR><BR>[Called By]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushBytes
+<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
 </UL>
 
-<P><STRONG><a name="[c7]"></a>bufferSendPushBytes</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, jt808_packager.o(i.bufferSendPushBytes))
+<P><STRONG><a name="[c6]"></a>bufferSendPushBytes</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, jt808_packager.o(i.bufferSendPushBytes))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = bufferSendPushBytes
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushByte
+<BR>[Calls]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushByte
 </UL>
-<BR>[Called By]<UL><LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadPackage
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalAuthentication
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
-<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;copyU32ToU8ArrayToBufferSend
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;copyU16ToU8ArrayToBufferSend
+<BR>[Called By]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadPackage
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalAuthentication
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
+<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;copyU32ToU8ArrayToBufferSend
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;copyU16ToU8ArrayToBufferSend
 </UL>
 
-<P><STRONG><a name="[c9]"></a>clearBufferSend</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, jt808_packager.o(i.clearBufferSend))
+<P><STRONG><a name="[c8]"></a>clearBufferSend</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, jt808_packager.o(i.clearBufferSend))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = clearBufferSend
 </UL>
 <BR>[Calls]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
+<BR>[Called By]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
 </UL>
 
-<P><STRONG><a name="[ca]"></a>copyU16ToU8ArrayToBufferSend</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, jt808_packager.o(i.copyU16ToU8ArrayToBufferSend))
+<P><STRONG><a name="[c9]"></a>copyU16ToU8ArrayToBufferSend</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, jt808_packager.o(i.copyU16ToU8ArrayToBufferSend))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = copyU16ToU8ArrayToBufferSend &rArr; bufferSendPushBytes
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushBytes
+<BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushBytes
 </UL>
-<BR>[Called By]<UL><LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadPackage
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
+<BR>[Called By]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadPackage
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
 </UL>
 
-<P><STRONG><a name="[cb]"></a>copyU32ToU8ArrayToBufferSend</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, jt808_packager.o(i.copyU32ToU8ArrayToBufferSend))
+<P><STRONG><a name="[ca]"></a>copyU32ToU8ArrayToBufferSend</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, jt808_packager.o(i.copyU32ToU8ArrayToBufferSend))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = copyU32ToU8ArrayToBufferSend &rArr; bufferSendPushBytes
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushBytes
+<BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushBytes
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
+<BR>[Called By]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
 </UL>
 
-<P><STRONG><a name="[cc]"></a>delay_init</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, delay.o(i.delay_init))
+<P><STRONG><a name="[cb]"></a>delay_init</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, delay.o(i.delay_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = delay_init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_CLKSourceConfig
+<BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_CLKSourceConfig
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[96]"></a>delay_ms</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, delay.o(i.delay_ms))
-<BR><BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_send_cmd
+<BR><BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_send_cmd
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KEY_Scan
-<LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalRegister
-<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalAuthentication
-<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_init
+<LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalRegister
+<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalAuthentication
+<LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_init
 <LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[ce]"></a>ec20_check_cmd</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, ec20.o(i.ec20_check_cmd))
+<P><STRONG><a name="[cd]"></a>ec20_check_cmd</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, ec20.o(i.ec20_check_cmd))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = ec20_check_cmd &rArr; strstr
 </UL>
-<BR>[Calls]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strstr
+<BR>[Calls]<UL><LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strstr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_send_cmd
+<BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_send_cmd
 </UL>
 
-<P><STRONG><a name="[d0]"></a>ec20_init</STRONG> (Thumb, 292 bytes, Stack size 2080 bytes, client_manager.o(i.ec20_init))
+<P><STRONG><a name="[cf]"></a>ec20_init</STRONG> (Thumb, 292 bytes, Stack size 2080 bytes, client_manager.o(i.ec20_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 2168<LI>Call Chain = ec20_init &rArr; ec20_send_cmd &rArr; u2_printf &rArr; __c89vsprintf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_send_cmd
+<BR>[Calls]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_send_cmd
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[d1]"></a>ec20_send_cmd</STRONG> (Thumb, 204 bytes, Stack size 40 bytes, ec20.o(i.ec20_send_cmd))
+<P><STRONG><a name="[d0]"></a>ec20_send_cmd</STRONG> (Thumb, 204 bytes, Stack size 40 bytes, ec20.o(i.ec20_send_cmd))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = ec20_send_cmd &rArr; u2_printf &rArr; __c89vsprintf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_check_cmd
-<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;u2_printf
-<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_SetARR
+<BR>[Calls]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_check_cmd
+<LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;u2_printf
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM4_SetARR
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KEY_Scan
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__c89printf
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__c89printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_init
+<BR>[Called By]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_init
 </UL>
 
 <P><STRONG><a name="[51]"></a>error</STRONG> (Thumb, 42 bytes, Stack size 16 bytes, gps_config.o(i.error))
@@ -1456,36 +1454,36 @@ Global Symbols
 <P><STRONG><a name="[144]"></a>findMsgIDFromTerminalPackagerCMD</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, client_manager.o(i.findMsgIDFromTerminalPackagerCMD))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = findMsgIDFromTerminalPackagerCMD
 </UL>
-<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;packagingMessage
+<BR>[Called By]<UL><LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;packagingMessage
 </UL>
 
-<P><STRONG><a name="[f1]"></a>findParameterIDFromArray</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, client_manager.o(i.findParameterIDFromArray))
+<P><STRONG><a name="[f0]"></a>findParameterIDFromArray</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, client_manager.o(i.findParameterIDFromArray))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = findParameterIDFromArray
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kSetTerminalParameters
+<BR>[Called By]<UL><LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kSetTerminalParameters
 </UL>
 
 <P><STRONG><a name="[4c]"></a>fputc</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, usart.o(i.fputc))
 <BR>[Address Reference Count : 2]<UL><LI> printf8.o(i.__0printf$8)
 <LI> printfa.o(i.__0printf)
 </UL>
-<P><STRONG><a name="[db]"></a>free</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, malloc.o(i.free))
+<P><STRONG><a name="[da]"></a>free</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, malloc.o(i.free))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = free
 </UL>
 <BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse
-<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808MsgEscape
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
+<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808MsgEscape
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
 <LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_real_push
 <LI><a href="#[131]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_pop
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ServerPort
-<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ProvinceID
-<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MaxSpeed
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MainServerAddress
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_HeartBeatInterval
-<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_DefaultTimeReportTimeInterval
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CornerPointRetransmissionAngle
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CityID
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateNum
+<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ServerPort
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ProvinceID
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MaxSpeed
+<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MainServerAddress
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_HeartBeatInterval
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_DefaultTimeReportTimeInterval
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CornerPointRetransmissionAngle
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CityID
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateNum
 </UL>
 
 <P><STRONG><a name="[52]"></a>gps_info</STRONG> (Thumb, 42 bytes, Stack size 16 bytes, gps_config.o(i.gps_info))
@@ -1495,300 +1493,300 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> nema_decode_test.o(i.nmea_decode_test)
 </UL>
-<P><STRONG><a name="[d6]"></a>handle_CarPlateColor</STRONG> (Thumb, 84 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_CarPlateColor))
+<P><STRONG><a name="[d5]"></a>handle_CarPlateColor</STRONG> (Thumb, 84 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_CarPlateColor))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_CarPlateColor &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
+<BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[da]"></a>handle_CarPlateNum</STRONG> (Thumb, 108 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_CarPlateNum))
+<P><STRONG><a name="[d9]"></a>handle_CarPlateNum</STRONG> (Thumb, 108 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_CarPlateNum))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_CarPlateNum &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
+<BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[dc]"></a>handle_CityID</STRONG> (Thumb, 106 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_CityID))
+<P><STRONG><a name="[db]"></a>handle_CityID</STRONG> (Thumb, 106 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_CityID))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_CityID &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap16
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap16
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
+<BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[de]"></a>handle_CornerPointRetransmissionAngle</STRONG> (Thumb, 104 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_CornerPointRetransmissionAngle))
+<P><STRONG><a name="[dd]"></a>handle_CornerPointRetransmissionAngle</STRONG> (Thumb, 104 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_CornerPointRetransmissionAngle))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_CornerPointRetransmissionAngle &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap32
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap32
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
+<BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[e0]"></a>handle_DefaultTimeReportTimeInterval</STRONG> (Thumb, 104 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_DefaultTimeReportTimeInterval))
+<P><STRONG><a name="[df]"></a>handle_DefaultTimeReportTimeInterval</STRONG> (Thumb, 104 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_DefaultTimeReportTimeInterval))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_DefaultTimeReportTimeInterval &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap32
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap32
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
+<BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[e1]"></a>handle_HeartBeatInterval</STRONG> (Thumb, 104 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_HeartBeatInterval))
+<P><STRONG><a name="[e0]"></a>handle_HeartBeatInterval</STRONG> (Thumb, 104 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_HeartBeatInterval))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_HeartBeatInterval &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap32
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap32
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
+<BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[e2]"></a>handle_MainServerAddress</STRONG> (Thumb, 108 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_MainServerAddress))
+<P><STRONG><a name="[e1]"></a>handle_MainServerAddress</STRONG> (Thumb, 108 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_MainServerAddress))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_MainServerAddress &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
+<BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[e3]"></a>handle_MaxSpeed</STRONG> (Thumb, 104 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_MaxSpeed))
+<P><STRONG><a name="[e2]"></a>handle_MaxSpeed</STRONG> (Thumb, 104 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_MaxSpeed))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_MaxSpeed &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap32
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap32
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
+<BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[e4]"></a>handle_ProvinceID</STRONG> (Thumb, 106 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_ProvinceID))
+<P><STRONG><a name="[e3]"></a>handle_ProvinceID</STRONG> (Thumb, 106 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_ProvinceID))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_ProvinceID &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap16
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap16
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
+<BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[e5]"></a>handle_ServerPort</STRONG> (Thumb, 104 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_ServerPort))
+<P><STRONG><a name="[e4]"></a>handle_ServerPort</STRONG> (Thumb, 104 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_ServerPort))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_ServerPort &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap32
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap32
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
+<BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[e6]"></a>handle_kFillPacketRequest</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_parser.o(i.handle_kFillPacketRequest))
+<P><STRONG><a name="[e5]"></a>handle_kFillPacketRequest</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_parser.o(i.handle_kFillPacketRequest))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = handle_kFillPacketRequest &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
+<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
 </UL>
 
-<P><STRONG><a name="[e7]"></a>handle_kGetLocationInformation</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_parser.o(i.handle_kGetLocationInformation))
+<P><STRONG><a name="[e6]"></a>handle_kGetLocationInformation</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_parser.o(i.handle_kGetLocationInformation))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = handle_kGetLocationInformation &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
+<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
 </UL>
 
-<P><STRONG><a name="[e8]"></a>handle_kGetLocationInformationResponse</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_packager.o(i.handle_kGetLocationInformationResponse))
+<P><STRONG><a name="[e7]"></a>handle_kGetLocationInformationResponse</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_packager.o(i.handle_kGetLocationInformationResponse))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = handle_kGetLocationInformationResponse &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
+<BR>[Called By]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
 </UL>
 
-<P><STRONG><a name="[e9]"></a>handle_kGetSpecificTerminalParameters</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_parser.o(i.handle_kGetSpecificTerminalParameters))
+<P><STRONG><a name="[e8]"></a>handle_kGetSpecificTerminalParameters</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_parser.o(i.handle_kGetSpecificTerminalParameters))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = handle_kGetSpecificTerminalParameters &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
+<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
 </UL>
 
-<P><STRONG><a name="[ea]"></a>handle_kGetTerminalParameters</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_parser.o(i.handle_kGetTerminalParameters))
+<P><STRONG><a name="[e9]"></a>handle_kGetTerminalParameters</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_parser.o(i.handle_kGetTerminalParameters))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = handle_kGetTerminalParameters &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
+<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
 </UL>
 
-<P><STRONG><a name="[eb]"></a>handle_kGetTerminalParametersResponse</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_packager.o(i.handle_kGetTerminalParametersResponse))
+<P><STRONG><a name="[ea]"></a>handle_kGetTerminalParametersResponse</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_packager.o(i.handle_kGetTerminalParametersResponse))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = handle_kGetTerminalParametersResponse &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
+<BR>[Called By]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
 </UL>
 
-<P><STRONG><a name="[ec]"></a>handle_kLocationReport</STRONG> (Thumb, 230 bytes, Stack size 24 bytes, jt808_packager.o(i.handle_kLocationReport))
+<P><STRONG><a name="[eb]"></a>handle_kLocationReport</STRONG> (Thumb, 230 bytes, Stack size 24 bytes, jt808_packager.o(i.handle_kLocationReport))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = handle_kLocationReport &rArr; __2printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap32
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap16
-<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;copyU32ToU8ArrayToBufferSend
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;copyU16ToU8ArrayToBufferSend
-<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushBytes
-<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushByte
-<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808StringToBcdCompress
+<BR>[Calls]<UL><LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap32
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap16
+<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;copyU32ToU8ArrayToBufferSend
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;copyU16ToU8ArrayToBufferSend
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushBytes
+<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushByte
+<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808StringToBcdCompress
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
-<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
+<BR>[Called By]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
 </UL>
 
-<P><STRONG><a name="[ef]"></a>handle_kPlatformGeneralResponse</STRONG> (Thumb, 98 bytes, Stack size 16 bytes, jt808_parser.o(i.handle_kPlatformGeneralResponse))
+<P><STRONG><a name="[ee]"></a>handle_kPlatformGeneralResponse</STRONG> (Thumb, 98 bytes, Stack size 16 bytes, jt808_parser.o(i.handle_kPlatformGeneralResponse))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = handle_kPlatformGeneralResponse &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
+<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
 </UL>
 
-<P><STRONG><a name="[f0]"></a>handle_kSetTerminalParameters</STRONG> (Thumb, 142 bytes, Stack size 40 bytes, jt808_parser.o(i.handle_kSetTerminalParameters))
+<P><STRONG><a name="[ef]"></a>handle_kSetTerminalParameters</STRONG> (Thumb, 142 bytes, Stack size 40 bytes, jt808_parser.o(i.handle_kSetTerminalParameters))
 <BR><BR>[Stack]<UL><LI>Max Depth = 176<LI>Call Chain = handle_kSetTerminalParameters &rArr; jt808ParameterSettingParse &rArr; handle_ServerPort &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
-<BR>[Calls]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap32
-<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;findParameterIDFromArray
-<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
+<BR>[Calls]<UL><LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap32
+<LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;findParameterIDFromArray
+<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
+<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
 </UL>
 
-<P><STRONG><a name="[f3]"></a>handle_kTerminalAuthentication</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, jt808_packager.o(i.handle_kTerminalAuthentication))
+<P><STRONG><a name="[f2]"></a>handle_kTerminalAuthentication</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, jt808_packager.o(i.handle_kTerminalAuthentication))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = handle_kTerminalAuthentication &rArr; __2printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushBytes
+<BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushBytes
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
-<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
+<BR>[Called By]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
 </UL>
 
-<P><STRONG><a name="[f4]"></a>handle_kTerminalControl</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_parser.o(i.handle_kTerminalControl))
+<P><STRONG><a name="[f3]"></a>handle_kTerminalControl</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_parser.o(i.handle_kTerminalControl))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = handle_kTerminalControl &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
+<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
 </UL>
 
-<P><STRONG><a name="[f5]"></a>handle_kTerminalHeartBeat</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, jt808_packager.o(i.handle_kTerminalHeartBeat))
+<P><STRONG><a name="[f4]"></a>handle_kTerminalHeartBeat</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, jt808_packager.o(i.handle_kTerminalHeartBeat))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = handle_kTerminalHeartBeat &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
+<BR>[Called By]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
 </UL>
 
-<P><STRONG><a name="[f6]"></a>handle_kTerminalLogOut</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, jt808_packager.o(i.handle_kTerminalLogOut))
+<P><STRONG><a name="[f5]"></a>handle_kTerminalLogOut</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, jt808_packager.o(i.handle_kTerminalLogOut))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = handle_kTerminalLogOut &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
+<BR>[Called By]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
 </UL>
 
-<P><STRONG><a name="[f7]"></a>handle_kTerminalRegister</STRONG> (Thumb, 122 bytes, Stack size 16 bytes, jt808_packager.o(i.handle_kTerminalRegister))
+<P><STRONG><a name="[f6]"></a>handle_kTerminalRegister</STRONG> (Thumb, 122 bytes, Stack size 16 bytes, jt808_packager.o(i.handle_kTerminalRegister))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = handle_kTerminalRegister &rArr; initRegisterInfo &rArr; __2printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initRegisterInfo
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap16
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;copyU16ToU8ArrayToBufferSend
-<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushBytes
-<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushByte
+<BR>[Calls]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initRegisterInfo
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap16
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;copyU16ToU8ArrayToBufferSend
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushBytes
+<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushByte
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
-<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
+<BR>[Called By]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
 </UL>
 
-<P><STRONG><a name="[f9]"></a>handle_kTerminalRegisterResponse</STRONG> (Thumb, 126 bytes, Stack size 16 bytes, jt808_parser.o(i.handle_kTerminalRegisterResponse))
+<P><STRONG><a name="[f8]"></a>handle_kTerminalRegisterResponse</STRONG> (Thumb, 126 bytes, Stack size 16 bytes, jt808_parser.o(i.handle_kTerminalRegisterResponse))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = handle_kTerminalRegisterResponse &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
 </UL>
-<BR>[Called By]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
+<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
 </UL>
 
-<P><STRONG><a name="[fa]"></a>handle_kTerminalUpgrade</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_parser.o(i.handle_kTerminalUpgrade))
+<P><STRONG><a name="[f9]"></a>handle_kTerminalUpgrade</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_parser.o(i.handle_kTerminalUpgrade))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = handle_kTerminalUpgrade &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
+<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
 </UL>
 
-<P><STRONG><a name="[fb]"></a>handle_kTerminalUpgradeResultReport</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_packager.o(i.handle_kTerminalUpgradeResultReport))
+<P><STRONG><a name="[fa]"></a>handle_kTerminalUpgradeResultReport</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, jt808_packager.o(i.handle_kTerminalUpgradeResultReport))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = handle_kTerminalUpgradeResultReport &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
+<BR>[Called By]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
 </UL>
 
-<P><STRONG><a name="[fc]"></a>initLocationInfo</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, client_manager.o(i.initLocationInfo))
+<P><STRONG><a name="[fb]"></a>initLocationInfo</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, client_manager.o(i.initLocationInfo))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = initLocationInfo &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
@@ -1796,251 +1794,249 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[f8]"></a>initRegisterInfo</STRONG> (Thumb, 180 bytes, Stack size 16 bytes, terminal_register.o(i.initRegisterInfo))
+<P><STRONG><a name="[f7]"></a>initRegisterInfo</STRONG> (Thumb, 180 bytes, Stack size 16 bytes, terminal_register.o(i.initRegisterInfo))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = initRegisterInfo &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 <LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
+<BR>[Called By]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
 </UL>
 
-<P><STRONG><a name="[fd]"></a>initSystemParameters</STRONG> (Thumb, 64 bytes, Stack size 72 bytes, client_manager.o(i.initSystemParameters))
+<P><STRONG><a name="[fc]"></a>initSystemParameters</STRONG> (Thumb, 64 bytes, Stack size 72 bytes, client_manager.o(i.initSystemParameters))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = initSystemParameters &rArr; __2printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Internal_ReadFlash
+<BR>[Calls]<UL><LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Internal_ReadFlash
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[ff]"></a>jt808BcdToStringCompress</STRONG> (Thumb, 66 bytes, Stack size 20 bytes, bcd.o(i.jt808BcdToStringCompress))
+<P><STRONG><a name="[fe]"></a>jt808BcdToStringCompress</STRONG> (Thumb, 66 bytes, Stack size 20 bytes, bcd.o(i.jt808BcdToStringCompress))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = jt808BcdToStringCompress
 </UL>
-<BR>[Calls]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BcdToHex
+<BR>[Calls]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BcdToHex
 </UL>
-<BR>[Called By]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadParse
+<BR>[Called By]<UL><LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadParse
 </UL>
 
-<P><STRONG><a name="[101]"></a>jt808FrameBodyPackage</STRONG> (Thumb, 166 bytes, Stack size 16 bytes, jt808_packager.o(i.jt808FrameBodyPackage))
+<P><STRONG><a name="[100]"></a>jt808FrameBodyPackage</STRONG> (Thumb, 166 bytes, Stack size 16 bytes, jt808_packager.o(i.jt808FrameBodyPackage))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = jt808FrameBodyPackage &rArr; handle_kTerminalRegister &rArr; initRegisterInfo &rArr; __2printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalUpgradeResultReport
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
-<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalLogOut
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalHeartBeat
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalAuthentication
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
-<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetTerminalParametersResponse
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetLocationInformationResponse
+<BR>[Calls]<UL><LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalUpgradeResultReport
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
+<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalLogOut
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalHeartBeat
+<LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalAuthentication
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
+<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetTerminalParametersResponse
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetLocationInformationResponse
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
+<BR>[Called By]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
 </UL>
 
-<P><STRONG><a name="[102]"></a>jt808FrameBodyParse</STRONG> (Thumb, 166 bytes, Stack size 16 bytes, jt808_parser.o(i.jt808FrameBodyParse))
+<P><STRONG><a name="[101]"></a>jt808FrameBodyParse</STRONG> (Thumb, 166 bytes, Stack size 16 bytes, jt808_parser.o(i.jt808FrameBodyParse))
 <BR><BR>[Stack]<UL><LI>Max Depth = 192<LI>Call Chain = jt808FrameBodyParse &rArr; handle_kSetTerminalParameters &rArr; jt808ParameterSettingParse &rArr; handle_ServerPort &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
-<BR>[Calls]<UL><LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalUpgrade
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegisterResponse
-<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalControl
-<LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kSetTerminalParameters
-<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kPlatformGeneralResponse
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetTerminalParameters
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetSpecificTerminalParameters
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetLocationInformation
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kFillPacketRequest
+<BR>[Calls]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalUpgrade
+<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegisterResponse
+<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalControl
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kSetTerminalParameters
+<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kPlatformGeneralResponse
+<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetTerminalParameters
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetSpecificTerminalParameters
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kGetLocationInformation
+<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kFillPacketRequest
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
+<BR>[Called By]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
 </UL>
 
-<P><STRONG><a name="[103]"></a>jt808FrameHeadPackage</STRONG> (Thumb, 124 bytes, Stack size 24 bytes, jt808_packager.o(i.jt808FrameHeadPackage))
+<P><STRONG><a name="[102]"></a>jt808FrameHeadPackage</STRONG> (Thumb, 124 bytes, Stack size 24 bytes, jt808_packager.o(i.jt808FrameHeadPackage))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = jt808FrameHeadPackage &rArr; copyU16ToU8ArrayToBufferSend &rArr; bufferSendPushBytes
 </UL>
-<BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap16
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;copyU16ToU8ArrayToBufferSend
-<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushBytes
-<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808StringToBcdCompress
-<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<BR>[Calls]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap16
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;copyU16ToU8ArrayToBufferSend
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushBytes
+<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808StringToBcdCompress
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
+<BR>[Called By]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
 </UL>
 
-<P><STRONG><a name="[104]"></a>jt808FrameHeadParse</STRONG> (Thumb, 162 bytes, Stack size 24 bytes, jt808_parser.o(i.jt808FrameHeadParse))
+<P><STRONG><a name="[103]"></a>jt808FrameHeadParse</STRONG> (Thumb, 162 bytes, Stack size 24 bytes, jt808_parser.o(i.jt808FrameHeadParse))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = jt808FrameHeadParse &rArr; __2printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808BcdToStringCompress
+<BR>[Calls]<UL><LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808BcdToStringCompress
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
+<BR>[Called By]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
 </UL>
 
-<P><STRONG><a name="[105]"></a>jt808FramePackage</STRONG> (Thumb, 108 bytes, Stack size 16 bytes, jt808_packager.o(i.jt808FramePackage))
+<P><STRONG><a name="[104]"></a>jt808FramePackage</STRONG> (Thumb, 108 bytes, Stack size 16 bytes, jt808_packager.o(i.jt808FramePackage))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = jt808FramePackage &rArr; jt808FrameBodyPackage &rArr; handle_kTerminalRegister &rArr; initRegisterInfo &rArr; __2printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BccCheckSum
-<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808SetFrameFlagHeader
-<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808MsgEscape
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808MsgBodyLengthFix
-<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadPackage
-<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
-<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clearBufferSend
-<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushByte
+<BR>[Calls]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BccCheckSum
+<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808SetFrameFlagHeader
+<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808MsgEscape
+<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808MsgBodyLengthFix
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadPackage
+<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyPackage
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clearBufferSend
+<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendPushByte
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;packagingMessage
+<BR>[Called By]<UL><LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;packagingMessage
 </UL>
 
-<P><STRONG><a name="[10a]"></a>jt808FrameParse</STRONG> (Thumb, 228 bytes, Stack size 24 bytes, jt808_parser.o(i.jt808FrameParse))
+<P><STRONG><a name="[109]"></a>jt808FrameParse</STRONG> (Thumb, 228 bytes, Stack size 24 bytes, jt808_parser.o(i.jt808FrameParse))
 <BR><BR>[Stack]<UL><LI>Max Depth = 216<LI>Call Chain = jt808FrameParse &rArr; jt808FrameBodyParse &rArr; handle_kSetTerminalParameters &rArr; jt808ParameterSettingParse &rArr; handle_ServerPort &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
-<BR>[Calls]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BccCheckSum
+<BR>[Calls]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BccCheckSum
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReverseEscape_C
-<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadParse
-<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
+<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadParse
+<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 <LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
-<BR>[Called By]<UL><LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parsingMessage
+<BR>[Called By]<UL><LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parsingMessage
 </UL>
 
-<P><STRONG><a name="[9e]"></a>jt808LocationReport</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, client_manager.o(i.jt808LocationReport))
-<BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = jt808LocationReport &rArr; packagingMessage &rArr; jt808FramePackage &rArr; jt808FrameBodyPackage &rArr; handle_kTerminalRegister &rArr; initRegisterInfo &rArr; __2printf
+<P><STRONG><a name="[10a]"></a>jt808LocationReport</STRONG> (Thumb, 156 bytes, Stack size 40 bytes, client_manager.o(i.jt808LocationReport))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4360<LI>Call Chain = jt808LocationReport &rArr; nmea_decode_test &rArr; nmea_parse &rArr; nmea_parser_push &rArr; nmea_parser_real_push &rArr; nmea_parse_GPRMC &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart_SendStr_length
-<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;packagingMessage
+<BR>[Calls]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart_SendStr_length
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
+<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateLocation
+<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parsingMessage
+<LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;packagingMessage
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[27]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM3_IRQHandler
 </UL>
 
-<P><STRONG><a name="[107]"></a>jt808MsgBodyLengthFix</STRONG> (Thumb, 54 bytes, Stack size 16 bytes, jt808_packager.o(i.jt808MsgBodyLengthFix))
+<P><STRONG><a name="[106]"></a>jt808MsgBodyLengthFix</STRONG> (Thumb, 54 bytes, Stack size 16 bytes, jt808_packager.o(i.jt808MsgBodyLengthFix))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = jt808MsgBodyLengthFix
 </UL>
-<BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap16
+<BR>[Calls]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndianSwap16
 </UL>
-<BR>[Called By]<UL><LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
+<BR>[Called By]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
 </UL>
 
-<P><STRONG><a name="[109]"></a>jt808MsgEscape</STRONG> (Thumb, 88 bytes, Stack size 16 bytes, jt808_packager.o(i.jt808MsgEscape))
+<P><STRONG><a name="[108]"></a>jt808MsgEscape</STRONG> (Thumb, 88 bytes, Stack size 16 bytes, jt808_packager.o(i.jt808MsgEscape))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = jt808MsgEscape &rArr; Escape_C
 </UL>
 <BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Escape_C
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
-<BR>[Called By]<UL><LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
+<BR>[Called By]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
 </UL>
 
-<P><STRONG><a name="[f2]"></a>jt808ParameterSettingParse</STRONG> (Thumb, 136 bytes, Stack size 8 bytes, set_terminal_parameter.o(i.jt808ParameterSettingParse))
+<P><STRONG><a name="[f1]"></a>jt808ParameterSettingParse</STRONG> (Thumb, 136 bytes, Stack size 8 bytes, set_terminal_parameter.o(i.jt808ParameterSettingParse))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = jt808ParameterSettingParse &rArr; handle_ServerPort &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ServerPort
-<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ProvinceID
-<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MaxSpeed
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MainServerAddress
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_HeartBeatInterval
-<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_DefaultTimeReportTimeInterval
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CornerPointRetransmissionAngle
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CityID
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateNum
-<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateColor
+<BR>[Calls]<UL><LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ServerPort
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ProvinceID
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MaxSpeed
+<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MainServerAddress
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_HeartBeatInterval
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_DefaultTimeReportTimeInterval
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CornerPointRetransmissionAngle
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CityID
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateNum
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateColor
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kSetTerminalParameters
+<BR>[Called By]<UL><LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kSetTerminalParameters
 </UL>
 
-<P><STRONG><a name="[106]"></a>jt808SetFrameFlagHeader</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, jt808_packager.o(i.jt808SetFrameFlagHeader))
+<P><STRONG><a name="[105]"></a>jt808SetFrameFlagHeader</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, jt808_packager.o(i.jt808SetFrameFlagHeader))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = jt808SetFrameFlagHeader &rArr; bufferSendChangeByte
 </UL>
-<BR>[Calls]<UL><LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendChangeByte
+<BR>[Calls]<UL><LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bufferSendChangeByte
 </UL>
-<BR>[Called By]<UL><LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
+<BR>[Called By]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
 </UL>
 
-<P><STRONG><a name="[ee]"></a>jt808StringToBcdCompress</STRONG> (Thumb, 68 bytes, Stack size 12 bytes, bcd.o(i.jt808StringToBcdCompress))
+<P><STRONG><a name="[ed]"></a>jt808StringToBcdCompress</STRONG> (Thumb, 68 bytes, Stack size 12 bytes, bcd.o(i.jt808StringToBcdCompress))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = jt808StringToBcdCompress
 </UL>
-<BR>[Calls]<UL><LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HexToBcd
+<BR>[Calls]<UL><LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HexToBcd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadPackage
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
+<BR>[Called By]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadPackage
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kLocationReport
 </UL>
 
-<P><STRONG><a name="[10e]"></a>jt808TerminalAuthentication</STRONG> (Thumb, 148 bytes, Stack size 40 bytes, client_manager.o(i.jt808TerminalAuthentication))
+<P><STRONG><a name="[111]"></a>jt808TerminalAuthentication</STRONG> (Thumb, 148 bytes, Stack size 40 bytes, client_manager.o(i.jt808TerminalAuthentication))
 <BR><BR>[Stack]<UL><LI>Max Depth = 264<LI>Call Chain = jt808TerminalAuthentication &rArr; parsingMessage &rArr; jt808FrameParse &rArr; jt808FrameBodyParse &rArr; handle_kSetTerminalParameters &rArr; jt808ParameterSettingParse &rArr; handle_ServerPort &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart_SendStr_length
-<LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parsingMessage
+<BR>[Calls]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart_SendStr_length
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;packagingMessage
+<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parsingMessage
+<LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;packagingMessage
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[110]"></a>jt808TerminalRegister</STRONG> (Thumb, 148 bytes, Stack size 40 bytes, client_manager.o(i.jt808TerminalRegister))
+<P><STRONG><a name="[112]"></a>jt808TerminalRegister</STRONG> (Thumb, 148 bytes, Stack size 40 bytes, client_manager.o(i.jt808TerminalRegister))
 <BR><BR>[Stack]<UL><LI>Max Depth = 264<LI>Call Chain = jt808TerminalRegister &rArr; parsingMessage &rArr; jt808FrameParse &rArr; jt808FrameBodyParse &rArr; handle_kSetTerminalParameters &rArr; jt808ParameterSettingParse &rArr; handle_ServerPort &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart_SendStr_length
-<LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parsingMessage
+<BR>[Calls]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart_SendStr_length
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;packagingMessage
+<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parsingMessage
+<LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;packagingMessage
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[46]"></a>main</STRONG> (Thumb, 292 bytes, Stack size 128 bytes, main.o(i.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4448<LI>Call Chain = main &rArr; nmea_decode_test &rArr; nmea_parse &rArr; nmea_parser_push &rArr; nmea_parser_real_push &rArr; nmea_parse_GPRMC &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
+<P><STRONG><a name="[46]"></a>main</STRONG> (Thumb, 158 bytes, Stack size 0 bytes, main.o(i.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4360<LI>Call Chain = main &rArr; jt808LocationReport &rArr; nmea_decode_test &rArr; nmea_parse &rArr; nmea_parser_push &rArr; nmea_parser_real_push &rArr; nmea_parse_GPRMC &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateLocation
-<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
-<LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setTerminalPhoneNumber
-<LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setStatusBit
-<LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parsingMessage
-<LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
-<LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalRegister
-<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalAuthentication
-<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808LocationReport
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initSystemParameters
-<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initLocationInfo
-<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_init
+<BR>[Calls]<UL><LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
+<LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setTerminalPhoneNumber
+<LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setStatusBit
+<LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalRegister
+<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalAuthentication
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808LocationReport
+<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initSystemParameters
+<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initLocationInfo
+<LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_init
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_init
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
+<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_init
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Init
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Configuration
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPS_Config
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
 </UL>
-<P><STRONG><a name="[d7]"></a>malloc</STRONG> (Thumb, 92 bytes, Stack size 20 bytes, malloc.o(i.malloc))
+<P><STRONG><a name="[d6]"></a>malloc</STRONG> (Thumb, 92 bytes, Stack size 20 bytes, malloc.o(i.malloc))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = malloc
 </UL>
-<BR>[Called By]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808MsgEscape
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
+<BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808MsgEscape
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
 <LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_real_push
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ServerPort
-<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ProvinceID
-<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MaxSpeed
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MainServerAddress
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_HeartBeatInterval
-<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_DefaultTimeReportTimeInterval
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CornerPointRetransmissionAngle
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CityID
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateNum
-<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateColor
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegisterResponse
+<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ServerPort
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ProvinceID
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MaxSpeed
+<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MainServerAddress
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_HeartBeatInterval
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_DefaultTimeReportTimeInterval
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CornerPointRetransmissionAngle
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CityID
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateNum
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateColor
+<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegisterResponse
 </UL>
 
 <P><STRONG><a name="[130]"></a>nmea_BDGSA2info</STRONG> (Thumb, 112 bytes, Stack size 24 bytes, parse.o(i.nmea_BDGSA2info))
@@ -2067,7 +2063,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = nmea_GNRMC2info &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse
 </UL>
@@ -2079,7 +2075,7 @@ Global Symbols
 <P><STRONG><a name="[117]"></a>nmea_GNZDA2info</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, parse.o(i.nmea_GNZDA2info))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = nmea_GNZDA2info
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<BR>[Calls]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse
 </UL>
@@ -2104,7 +2100,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = nmea_GPRMC2info &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse
 </UL>
@@ -2124,23 +2120,23 @@ Global Symbols
 <P><STRONG><a name="[11b]"></a>nmea_atof</STRONG> (Thumb, 44 bytes, Stack size 272 bytes, tok.o(i.nmea_atof))
 <BR><BR>[Stack]<UL><LI>Max Depth = 488<LI>Call Chain = nmea_atof &rArr; strtod &rArr; __strtod_int &rArr; _local_sscanf &rArr; _scanf_real
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<BR>[Calls]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtod
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<BR>[Called By]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
 </UL>
 
 <P><STRONG><a name="[11d]"></a>nmea_atoi</STRONG> (Thumb, 46 bytes, Stack size 272 bytes, tok.o(i.nmea_atoi))
 <BR><BR>[Stack]<UL><LI>Max Depth = 344<LI>Call Chain = nmea_atoi &rArr; strtol &rArr; _strtoul
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<BR>[Calls]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<BR>[Called By]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
 <LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_find_tail
 </UL>
 
-<P><STRONG><a name="[115]"></a>nmea_decode_test</STRONG> (Thumb, 534 bytes, Stack size 2784 bytes, nema_decode_test.o(i.nmea_decode_test))
+<P><STRONG><a name="[10b]"></a>nmea_decode_test</STRONG> (Thumb, 534 bytes, Stack size 2784 bytes, nema_decode_test.o(i.nmea_decode_test))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4320<LI>Call Chain = nmea_decode_test &rArr; nmea_parse &rArr; nmea_parser_push &rArr; nmea_parser_real_push &rArr; nmea_parse_GPRMC &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_zero_INFO
@@ -2152,14 +2148,14 @@ Global Symbols
 <LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
 <LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 <LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GMTconvert
-<LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 <LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808LocationReport
 </UL>
 
-<P><STRONG><a name="[c0]"></a>nmea_error</STRONG> (Thumb, 62 bytes, Stack size 1056 bytes, context.o(i.nmea_error))
+<P><STRONG><a name="[bf]"></a>nmea_error</STRONG> (Thumb, 62 bytes, Stack size 1056 bytes, context.o(i.nmea_error))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1080<LI>Call Chain = nmea_error &rArr; __c89vsnprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_property
@@ -2179,7 +2175,7 @@ Global Symbols
 <LI><a href="#[135]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_GNGGA
 <LI><a href="#[134]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_BDGSV
 <LI><a href="#[132]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_BDGSA
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_nmea_parse_time
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_nmea_parse_time
 </UL>
 
 <P><STRONG><a name="[124]"></a>nmea_find_tail</STRONG> (Thumb, 124 bytes, Stack size 32 bytes, parse.o(i.nmea_find_tail))
@@ -2209,7 +2205,7 @@ Global Symbols
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
 </UL>
-<BR>[Called By]<UL><LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
+<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
 </UL>
 
 <P><STRONG><a name="[125]"></a>nmea_pack_type</STRONG> (Thumb, 254 bytes, Stack size 16 bytes, parse.o(i.nmea_pack_type))
@@ -2238,18 +2234,18 @@ Global Symbols
 <LI><a href="#[12c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_GNGGA2info
 <LI><a href="#[12f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_BDGSV2info
 <LI><a href="#[130]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_BDGSA2info
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
-<BR>[Called By]<UL><LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
+<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
 </UL>
 
 <P><STRONG><a name="[132]"></a>nmea_parse_BDGSA</STRONG> (Thumb, 130 bytes, Stack size 80 bytes, parse.o(i.nmea_parse_BDGSA))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1160<LI>Call Chain = nmea_parse_BDGSA &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_trace_buff
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_real_push
 </UL>
@@ -2258,9 +2254,9 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1168<LI>Call Chain = nmea_parse_BDGSV &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_trace_buff
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_real_push
 </UL>
@@ -2269,11 +2265,11 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1440<LI>Call Chain = nmea_parse_GNGGA &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_trace_buff
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_nmea_parse_time
-<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_nmea_parse_time
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_real_push
 </UL>
@@ -2282,11 +2278,11 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1408<LI>Call Chain = nmea_parse_GNGLL &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_trace_buff
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_nmea_parse_time
-<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_nmea_parse_time
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_real_push
 </UL>
@@ -2295,11 +2291,11 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1440<LI>Call Chain = nmea_parse_GNRMC &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_trace_buff
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_nmea_parse_time
-<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_nmea_parse_time
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_real_push
 </UL>
@@ -2308,9 +2304,9 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1128<LI>Call Chain = nmea_parse_GNVTG &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_trace_buff
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_real_push
 </UL>
@@ -2319,11 +2315,11 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1416<LI>Call Chain = nmea_parse_GNZDA &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_trace_buff
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_nmea_parse_time
-<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_nmea_parse_time
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_real_push
 </UL>
@@ -2332,11 +2328,11 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1440<LI>Call Chain = nmea_parse_GPGGA &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_trace_buff
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_nmea_parse_time
-<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_nmea_parse_time
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_real_push
 </UL>
@@ -2345,9 +2341,9 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1160<LI>Call Chain = nmea_parse_GPGSA &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_trace_buff
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_real_push
 </UL>
@@ -2356,9 +2352,9 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1168<LI>Call Chain = nmea_parse_GPGSV &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_trace_buff
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_real_push
 </UL>
@@ -2367,11 +2363,11 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1440<LI>Call Chain = nmea_parse_GPRMC &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_trace_buff
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_nmea_parse_time
-<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_nmea_parse_time
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_real_push
 </UL>
@@ -2380,8 +2376,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1112<LI>Call Chain = nmea_parse_GPTXT &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_trace_buff
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_real_push
 </UL>
@@ -2390,9 +2386,9 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1128<LI>Call Chain = nmea_parse_GPVTG &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_trace_buff
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_scanf
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_real_push
 </UL>
@@ -2405,15 +2401,15 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = nmea_parser_init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_property
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
-<BR>[Called By]<UL><LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
+<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
 </UL>
 
 <P><STRONG><a name="[131]"></a>nmea_parser_pop</STRONG> (Thumb, 36 bytes, Stack size 8 bytes, parser.o(i.nmea_parser_pop))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = nmea_parser_pop &rArr; free
 </UL>
-<BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<BR>[Calls]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
 <BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse
 </UL>
@@ -2429,7 +2425,7 @@ Global Symbols
 <P><STRONG><a name="[140]"></a>nmea_parser_real_push</STRONG> (Thumb, 988 bytes, Stack size 48 bytes, parser.o(i.nmea_parser_real_push))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1488<LI>Call Chain = nmea_parser_real_push &rArr; nmea_parse_GPRMC &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
+<BR>[Calls]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
 <LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_buff_clear
 <LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_GPVTG
 <LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_GPTXT
@@ -2446,9 +2442,9 @@ Global Symbols
 <LI><a href="#[132]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_BDGSA
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_pack_type
 <LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_find_tail
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
 <BR>[Called By]<UL><LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_push
 </UL>
@@ -2456,18 +2452,18 @@ Global Symbols
 <P><STRONG><a name="[11e]"></a>nmea_property</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, context.o(i.nmea_property))
 <BR><BR>[Called By]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_trace_buff
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_info
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_error
 <LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parser_init
-<LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
 </UL>
 
-<P><STRONG><a name="[c1]"></a>nmea_scanf</STRONG> (Thumb, 436 bytes, Stack size 56 bytes, tok.o(i.nmea_scanf))
+<P><STRONG><a name="[c0]"></a>nmea_scanf</STRONG> (Thumb, 436 bytes, Stack size 56 bytes, tok.o(i.nmea_scanf))
 <BR><BR>[Stack]<UL><LI>Max Depth = 544<LI>Call Chain = nmea_scanf &rArr; nmea_atof &rArr; strtod &rArr; __strtod_int &rArr; _local_sscanf &rArr; _scanf_real
 </UL>
 <BR>[Calls]<UL><LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_atof
 <LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_atoi
 <LI><a href="#[142]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memchr
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_ctype_table
 </UL>
 <BR>[Called By]<UL><LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_GPVTG
@@ -2483,7 +2479,7 @@ Global Symbols
 <LI><a href="#[135]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_GNGGA
 <LI><a href="#[134]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_BDGSV
 <LI><a href="#[132]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_parse_BDGSA
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_nmea_parse_time
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_nmea_parse_time
 </UL>
 
 <P><STRONG><a name="[143]"></a>nmea_time_now</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, time.o(i.nmea_time_now))
@@ -2514,43 +2510,43 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = nmea_zero_INFO
 </UL>
 <BR>[Calls]<UL><LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_time_now
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
-<BR>[Called By]<UL><LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
+<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
 </UL>
 
-<P><STRONG><a name="[10b]"></a>packagingMessage</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, client_manager.o(i.packagingMessage))
+<P><STRONG><a name="[10d]"></a>packagingMessage</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, client_manager.o(i.packagingMessage))
 <BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = packagingMessage &rArr; jt808FramePackage &rArr; jt808FrameBodyPackage &rArr; handle_kTerminalRegister &rArr; initRegisterInfo &rArr; __2printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
+<BR>[Calls]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
 <LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;findMsgIDFromTerminalPackagerCMD
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalRegister
-<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalAuthentication
-<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808LocationReport
+<BR>[Called By]<UL><LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalRegister
+<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalAuthentication
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808LocationReport
 </UL>
 
-<P><STRONG><a name="[10f]"></a>parsingMessage</STRONG> (Thumb, 232 bytes, Stack size 8 bytes, client_manager.o(i.parsingMessage))
+<P><STRONG><a name="[10e]"></a>parsingMessage</STRONG> (Thumb, 232 bytes, Stack size 8 bytes, client_manager.o(i.parsingMessage))
 <BR><BR>[Stack]<UL><LI>Max Depth = 224<LI>Call Chain = parsingMessage &rArr; jt808FrameParse &rArr; jt808FrameBodyParse &rArr; handle_kSetTerminalParameters &rArr; jt808ParameterSettingParse &rArr; handle_ServerPort &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
-<BR>[Calls]<UL><LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
+<BR>[Calls]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameParse
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalRegister
-<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalAuthentication
-<LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalRegister
+<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalAuthentication
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808LocationReport
 </UL>
 
-<P><STRONG><a name="[113]"></a>setStatusBit</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, client_manager.o(i.setStatusBit))
+<P><STRONG><a name="[115]"></a>setStatusBit</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, client_manager.o(i.setStatusBit))
 <BR><BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[112]"></a>setTerminalPhoneNumber</STRONG> (Thumb, 30 bytes, Stack size 16 bytes, client_manager.o(i.setTerminalPhoneNumber))
+<P><STRONG><a name="[114]"></a>setTerminalPhoneNumber</STRONG> (Thumb, 30 bytes, Stack size 16 bytes, client_manager.o(i.setTerminalPhoneNumber))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = setTerminalPhoneNumber
 </UL>
 <BR>[Calls]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -2570,31 +2566,31 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> nema_decode_test.o(i.nmea_decode_test)
 </UL>
-<P><STRONG><a name="[d4]"></a>u2_printf</STRONG> (Thumb, 50 bytes, Stack size 24 bytes, usart2.o(i.u2_printf))
+<P><STRONG><a name="[d3]"></a>u2_printf</STRONG> (Thumb, 50 bytes, Stack size 24 bytes, usart2.o(i.u2_printf))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = u2_printf &rArr; __c89vsprintf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMA_Enable
-<LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<BR>[Calls]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMA_Enable
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 <LI><a href="#[145]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__c89vsprintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_send_cmd
+<BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_send_cmd
 </UL>
 
-<P><STRONG><a name="[111]"></a>uart_init</STRONG> (Thumb, 156 bytes, Stack size 48 bytes, usart.o(i.uart_init))
+<P><STRONG><a name="[113]"></a>uart_init</STRONG> (Thumb, 156 bytes, Stack size 48 bytes, usart.o(i.uart_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = uart_init &rArr; USART_Init &rArr; RCC_GetClocksFreq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init
-<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ITConfig
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_DeInit
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ITConfig
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_DeInit
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Cmd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[114]"></a>updateLocation</STRONG> (Thumb, 164 bytes, Stack size 40 bytes, client_manager.o(i.updateLocation))
+<P><STRONG><a name="[10c]"></a>updateLocation</STRONG> (Thumb, 164 bytes, Stack size 40 bytes, client_manager.o(i.updateLocation))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = updateLocation &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
@@ -2602,9 +2598,9 @@ Global Symbols
 <LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2uiz
 <LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2uiz
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808LocationReport
 </UL>
 <P>
 <H3>
@@ -2656,73 +2652,73 @@ Local Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GMTconvert
 </UL>
 
-<P><STRONG><a name="[b2]"></a>Usart_SendByte</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, usart2.o(i.Usart_SendByte))
+<P><STRONG><a name="[b1]"></a>Usart_SendByte</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, usart2.o(i.Usart_SendByte))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Usart_SendByte
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SendData
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetFlagStatus
+<BR>[Calls]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SendData
+<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetFlagStatus
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart_SendStr_length
+<BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart_SendStr_length
 </UL>
 
-<P><STRONG><a name="[b9]"></a>_printf_core</STRONG> (Thumb, 996 bytes, Stack size 104 bytes, printf8.o(i._printf_core), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_pre_padding
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_post_padding
+<P><STRONG><a name="[b8]"></a>_printf_core</STRONG> (Thumb, 996 bytes, Stack size 104 bytes, printf8.o(i._printf_core), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_pre_padding
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_post_padding
 <LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0sprintf$8
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0printf$8
+<BR>[Called By]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0sprintf$8
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0printf$8
 </UL>
 
-<P><STRONG><a name="[c3]"></a>_printf_post_padding</STRONG> (Thumb, 36 bytes, Stack size 24 bytes, printf8.o(i._printf_post_padding), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+<P><STRONG><a name="[c2]"></a>_printf_post_padding</STRONG> (Thumb, 36 bytes, Stack size 24 bytes, printf8.o(i._printf_post_padding), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
-<P><STRONG><a name="[c2]"></a>_printf_pre_padding</STRONG> (Thumb, 46 bytes, Stack size 24 bytes, printf8.o(i._printf_pre_padding), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+<P><STRONG><a name="[c1]"></a>_printf_pre_padding</STRONG> (Thumb, 46 bytes, Stack size 24 bytes, printf8.o(i._printf_pre_padding), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
 <P><STRONG><a name="[4d]"></a>_sputc</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, printf8.o(i._sputc))
-<BR><BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0sprintf$8
+<BR><BR>[Called By]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0sprintf$8
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> printf8.o(i.__0sprintf$8)
 </UL>
-<P><STRONG><a name="[bd]"></a>_fp_digits</STRONG> (Thumb, 366 bytes, Stack size 64 bytes, printfa.o(i._fp_digits), UNUSED)
+<P><STRONG><a name="[bc]"></a>_fp_digits</STRONG> (Thumb, 366 bytes, Stack size 64 bytes, printfa.o(i._fp_digits), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
-<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2ulz
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+<BR>[Called By]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
-<P><STRONG><a name="[b7]"></a>_printf_core</STRONG> (Thumb, 1744 bytes, Stack size 136 bytes, printfa.o(i._printf_core), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_pre_padding
-<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_post_padding
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
+<P><STRONG><a name="[b6]"></a>_printf_core</STRONG> (Thumb, 1744 bytes, Stack size 136 bytes, printfa.o(i._printf_core), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_pre_padding
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_post_padding
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
 <LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
+<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0printf
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0vsprintf
-<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0vsnprintf
-</UL>
-
-<P><STRONG><a name="[c5]"></a>_printf_post_padding</STRONG> (Thumb, 36 bytes, Stack size 24 bytes, printfa.o(i._printf_post_padding), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+<BR>[Called By]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0printf
+<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0vsprintf
+<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0vsnprintf
 </UL>
 
-<P><STRONG><a name="[c4]"></a>_printf_pre_padding</STRONG> (Thumb, 46 bytes, Stack size 24 bytes, printfa.o(i._printf_pre_padding), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+<P><STRONG><a name="[c4]"></a>_printf_post_padding</STRONG> (Thumb, 36 bytes, Stack size 24 bytes, printfa.o(i._printf_post_padding), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+</UL>
+
+<P><STRONG><a name="[c3]"></a>_printf_pre_padding</STRONG> (Thumb, 46 bytes, Stack size 24 bytes, printfa.o(i._printf_pre_padding), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
 <P><STRONG><a name="[4e]"></a>_snputc</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, printfa.o(i._snputc))
 <BR>[Address Reference Count : 1]<UL><LI> printfa.o(i.__0vsnprintf)
 </UL>
 <P><STRONG><a name="[4f]"></a>_sputc</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, printfa.o(i._sputc))
-<BR><BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0vsprintf
+<BR><BR>[Called By]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0vsprintf
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> printfa.o(i.__0vsprintf)
 </UL>

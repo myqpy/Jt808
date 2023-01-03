@@ -40,7 +40,7 @@ int findParameterIDFromArray(unsigned int para_id);
 int parsingMessage(const unsigned char *in, unsigned int in_len);
 int jt808TerminalRegister(int isRegistered);
 int jt808TerminalAuthentication(int isAuthenticated);
-int jt808LocationReport(void);
+int jt808LocationReport(int LocationReportCounter);
 void setStatusBit(void);
 ErrorStatus ec20_init(void);
 void initSystemParameters(void);

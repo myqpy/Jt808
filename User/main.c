@@ -13,29 +13,18 @@
 #include <stdio.h>
 #include <stdint.h>
 
-
-
-extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude, float  *v_speed, float *v_bearing, unsigned char *v_timestamp);
 void Tim3_Int_Init(u16 arr,u16 psc);
 void TIM3_IRQHandler(void);
 
 int main(void)
 {
-	int i;
+	int i=0;
 	int isTCPconnected=0;
 	int isRegistered=0;
 	int isAuthenticated=0;
 	unsigned int v_alarm_value = 0;
 	unsigned int v_status_value = 0;
-//  double  v_latitude = 34.741348;
-//	double  v_longitude = 113.701872;
-	double  v_latitude = 34.824788;
-	double  v_longitude = 113.558408;
-	float  v_altitude = 107;
-	float  v_speed = 15;
-	float  v_bearing = 132;
-	unsigned char v_timestamp[] = "221127212855";
-//	unsigned char write_buf[64] = {0};
+
 
 	
 //	LED_GPIO_Config();	//LED 端口初始化
@@ -52,7 +41,7 @@ int main(void)
 	
 	while(1)
 	{
-		//Connecting Server;
+		//连接服务器
 		if(isTCPconnected == 0)
 		{
 			if(ec20_init() == SUCCESS)
@@ -64,10 +53,10 @@ int main(void)
 			}
 		}
 
-		
-		setTerminalPhoneNumber("15637142115", 11);
+		//设置手机号（唯一识别id）
+		setTerminalPhoneNumber("15637142116", 11);
 
-		
+		//终端注册
 		if(isRegistered == 0)	
 		{
 			isRegistered = jt808TerminalRegister(isRegistered);
@@ -80,7 +69,7 @@ int main(void)
 			continue;
 		}
 
-		
+		//终端鉴权
 		if(isAuthenticated == 0)
 		{
 			isAuthenticated =jt808TerminalAuthentication(isAuthenticated);		
@@ -93,30 +82,26 @@ int main(void)
 			}
 			continue;
 		}
-
+		
+		//设置位置上报警报位、状态位
 		initLocationInfo(v_alarm_value, v_status_value);
 		setStatusBit();
-		
-		updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
-		jt808LocationReport();							
+						
 		while(1)
 		{
-			nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp);
-			updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
-			jt808LocationReport();	
-
-	//			Tim3_Int_Init(flashWriteInfo.write_time_interval*10000-1,7199);
-			
-			if(USART2_RX_STA&0X8000)    //接收到数据
+			//位置上报 现行逻辑位如果上报10次未收到平台响应消息则重新连接服务器
+			i = jt808LocationReport(i);
+			printf("%d \r\n",i);
+			if(i>10)
 			{
-				USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
-				//开始校验
-				parsingMessage(USART2_RX_BUF, USART2_RX_STA);
-				USART2_RX_STA=0;
+				isRegistered=0;
+				isTCPconnected=0;
+				isAuthenticated=0;
+				break;
 			}
 
-
-			//delay_ms(100);
+	//			Tim3_Int_Init(flashWriteInfo.write_time_interval*10000-1,7199);
+		
 		}
 	}
 }
@@ -154,7 +139,7 @@ void TIM3_IRQHandler(void)
 	if(TIM_GetITStatus(TIM3,TIM_IT_Update) == 1)
 	{
 		TIM_ClearITPendingBit(TIM3,TIM_IT_Update);
-		jt808LocationReport();
+		//jt808LocationReport();
 	}
 	
 }
