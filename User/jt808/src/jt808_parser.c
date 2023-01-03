@@ -35,11 +35,12 @@ int jt808FrameHeadParse(const unsigned char *in, unsigned int in_len, struct Msg
         
     // 消息ID.
     msg_head->msg_id = (in[1] << 8) + in[2];
-    printf("[jt808FrameHeadParse] msg_head->msg_id = 0x%02x\r\n", msg_head->msg_id);
+		
+    
 
     // 消息体属性.
     msg_head->msgbody_attr.u16val = (in[3] << 8) + in[4];
-    printf("[jt808FrameHeadParse] msg_head->msgbody_attr.u16val = 0x%02x\r\n", msg_head->msgbody_attr.u16val);
+    
 
     // 终端手机号.
 
@@ -50,11 +51,11 @@ int jt808FrameHeadParse(const unsigned char *in, unsigned int in_len, struct Msg
 			printf("jt808BcdToStringCompress error");
       return -1;
     }
-    printf("[jt808FrameHeadParse] msg_head->phone_num = %s !!!\r\n", msg_head->phone_num);
+    
 
     // 消息流水号.
     msg_head->msg_flow_num = (in[11] << 8) + in[12];
-    printf("[jt808FrameHeadParse] msg_head->msg_flow_num = 0x%02x !!!\r\n", msg_head->msg_flow_num);
+    
 
     // 出现封包.
     if ((msg_head->msgbody_attr.bit.packet == 1) &&
@@ -68,6 +69,15 @@ int jt808FrameHeadParse(const unsigned char *in, unsigned int in_len, struct Msg
         msg_head->total_packet = 0;
         msg_head->packet_seq = 0;
     }
+		
+		#ifdef JT808_DEBUG
+		printf("[jt808FrameHeadParse] msg_head->msg_id = 0x%02x\r\n", msg_head->msg_id);
+		printf("[jt808FrameHeadParse] msg_head->msgbody_attr.u16val = 0x%02x\r\n", msg_head->msgbody_attr.u16val);
+		printf("[jt808FrameHeadParse] msg_head->phone_num = %s !!!\r\n", msg_head->phone_num);
+		printf("[jt808FrameHeadParse] msg_head->msg_flow_num = 0x%02x !!!\r\n", msg_head->msg_flow_num);
+		#endif
+		
+		
     return 0;
 }
 
@@ -75,7 +85,9 @@ int jt808FrameHeadParse(const unsigned char *in, unsigned int in_len, struct Msg
 int handle_kPlatformGeneralResponse(struct ProtocolParameter *para)
 {
 		uint16_t pos;
-    printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kPlatformGeneralResponse);
+		#ifdef JT808_DEBUG
+			printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kPlatformGeneralResponse);
+	  #endif
     if (para == NULL)
         return -1;
     pos = MSGBODY_NOPACKET_POS;
@@ -83,15 +95,20 @@ int handle_kPlatformGeneralResponse(struct ProtocolParameter *para)
         pos = MSGBODY_PACKET_POS;
     // 应答流水号.
     para->parse.respone_flow_num = (BufferReceive[pos] << 8) + BufferReceive[pos + 1];
-    printf("[%s]  respone_flow_num = 0x%04x\r\n", __FUNCTION__, para->parse.respone_flow_num);
+    
 
     // 应答消息ID.
     para->parse.respone_msg_id = (BufferReceive[pos + 2] << 8) + BufferReceive[pos + 3];
-    printf("[%s] respone_msg_id = 0x%04x\r\n", __FUNCTION__, para->parse.respone_msg_id);
+    
 
     // 应答结果.
     para->parse.respone_result = BufferReceive[pos + 4];
+		
+		#ifdef JT808_DEBUG
+		printf("[%s]  respone_flow_num = 0x%04x\r\n", __FUNCTION__, para->parse.respone_flow_num);
+		printf("[%s] respone_msg_id = 0x%04x\r\n", __FUNCTION__, para->parse.respone_msg_id);
     printf("[%s] respone_result = 0x%04x\r\n", __FUNCTION__, para->parse.respone_result);
+		#endif
 
     return 0;
 }
@@ -237,7 +254,10 @@ int jt808FrameBodyParse(struct ProtocolParameter *para)
     unsigned short msg_id = para->parse.msg_head.msg_id;
     
     int result = -1;
+	
+		#ifdef JT808_DEBUG
 		printf("[%s] current msg_id: 0x%04x\r\n",__FUNCTION__, msg_id);
+		#endif
 	
     switch (msg_id)
     {
@@ -317,7 +337,9 @@ int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct Protoco
 		unsigned int outBufferSize;
 		unsigned char *outBuffer;
 	
-    printf("%s[%d]: jt808FrameParse -->1 !!! \r\n", __FUNCTION__, __LINE__);
+		#ifdef JT808_DEBUG
+			printf("%s[%d]: jt808FrameParse -->1 !!! \r\n", __FUNCTION__, __LINE__);
+		#endif
     if (para == NULL)
 		{
 			printf("para == NULL");
@@ -329,8 +351,10 @@ int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct Protoco
     outBuffer = (unsigned char *)malloc(outBufferSize * sizeof(unsigned char));
     memset(outBuffer, 0, outBufferSize);
 
-    printf("%s[%d]: outBufferSize = %d \r\n", __FUNCTION__, __LINE__, outBufferSize);
-
+		#ifdef JT808_DEBUG
+			printf("%s[%d]: outBufferSize = %d \r\n", __FUNCTION__, __LINE__, outBufferSize);
+		#endif
+		
     // 逆转义.
     if (ReverseEscape_C(BufferReceive, RealBufferReceiveSize, outBuffer, &outBufferSize) < 0)
 		{
@@ -339,23 +363,30 @@ int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct Protoco
 		}
         
     RealBufferReceiveSize = outBufferSize;
-    printf("%s[%d]: ReverseEscape_C.  outBufferSize = %d  !!!\r\n", __FUNCTION__, __LINE__, outBufferSize);
-
+		
+		#ifdef JT808_DEBUG
+			printf("%s[%d]: ReverseEscape_C.  outBufferSize = %d  !!!\r\n", __FUNCTION__, __LINE__, outBufferSize);
+		#endif 
+		
     // 异或校验检查.
     if (BccCheckSum(&(outBuffer[1]), (outBufferSize - 3)) != *(outBuffer + outBufferSize - 2))
 		{
 			printf("BccCheckSum ERROR\r\n");
 			return -1;
 		}
-    printf("%s[%d]: BccCheckSum. -->3 !!!\r\n", __FUNCTION__, __LINE__);
-
+		
+		#ifdef JT808_DEBUG
+			printf("%s[%d]: BccCheckSum. -->3 !!!\r\n", __FUNCTION__, __LINE__);
+		#endif
     // 解析消息头.
     if (jt808FrameHeadParse(outBuffer, outBufferSize, &(para->parse.msg_head)) != 0)
     {
 			printf("jt808FrameHeadParse ERROR\r\n");
 			return -1;
 		}
-    printf("%s[%d]:  jt808FrameHeadParse. -->4 !!!\r\n", __FUNCTION__, __LINE__);
+		#ifdef JT808_DEBUG
+			printf("%s[%d]:  jt808FrameHeadParse. -->4 !!!\r\n", __FUNCTION__, __LINE__);
+		#endif 
     memcpy(para->msg_head.phone_num, para->parse.msg_head.phone_num, 11);
 
     // 解析消息内容.

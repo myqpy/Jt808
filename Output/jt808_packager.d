@@ -45,3 +45,5 @@
 ..\..\output\jt808_packager.o: ..\..\User\FATFS\ff.h
 ..\..\output\jt808_packager.o: ..\..\User\FATFS\integer.h
 ..\..\output\jt808_packager.o: ..\..\User\FATFS\ffconf.h
+..\..\output\jt808_packager.o: ..\..\User\jt808\include\client_manager.h
+..\..\output\jt808_packager.o: ..\..\system\./sys/sys.h

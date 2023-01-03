@@ -75,7 +75,7 @@ enum SupportedCommands
 // 车牌颜色.
 enum VehiclePlateColor
 {
-  kVin = 0x0, // 车辆未上牌.
+  kVin 	= 0x0, // 车辆未上牌.
   kBlue,
   kYellow,
   kBlack,
@@ -86,21 +86,21 @@ enum VehiclePlateColor
 // 通用应答结果.
 enum GeneralResponseResult
 {
-  kSuccess = 0x0,             // 成功/确认.
-  kFailure,                   // 失败.
-  kMessageHasWrong,           // 消息有误.
-  kNotSupport,                // 不支持.
-  kAlarmHandlingConfirmation, // 报警处理确认, 仅平台应答使用.
+  kSuccess = 0x0,             				// 成功/确认.
+  kFailure = 0x1,                   	// 失败.
+  kMessageHasWrong =0x2,           		// 消息有误.
+  kNotSupport = 0x3,                	// 不支持.
+  kAlarmHandlingConfirmation = 0x4, 	// 报警处理确认, 仅平台应答使用.
 };
 
 // 注册应答结果.
 enum RegisterResponseResult
 {
   kRegisterSuccess = 0x0,       // 成功.
-  kVehiclesHaveBeenRegistered,  // 车辆已被注册.
-  kNoSuchVehicleInTheDatabase,  // 数据库中无该车辆.
-  kTerminalHaveBeenRegistered,  // 终端已被注册.
-  kNoSuchTerminalInTheDatabase, // 数据库中无该终端.
+  kVehiclesHaveBeenRegistered = 0x1,  // 车辆已被注册.
+  kNoSuchVehicleInTheDatabase =0x2,  // 数据库中无该车辆.
+  kTerminalHaveBeenRegistered = 0x3,  // 终端已被注册.
+  kNoSuchTerminalInTheDatabase = 0x4, // 数据库中无该终端.
 };
 
 // 消息体属性.

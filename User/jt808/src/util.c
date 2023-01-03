@@ -5,6 +5,7 @@
 
 #include "util.h"
 #include "protocol_parameter.h"
+#include "client_manager.h"
 //#include <memory.h>
 
 union U16ToU8Array u16converter;
@@ -33,7 +34,7 @@ int Escape_C(unsigned char *in, unsigned int inlen, unsigned char *out, unsigned
 	int offset_num;
   if ((out == NULL) || ((*outlen) < 2 * inlen))
 	{
-		printf("[%s] FAILED",__FUNCTION__);
+		printf("[%s] FAILED \r\n",__FUNCTION__);
 		return -1;
 		
 	}
@@ -73,7 +74,9 @@ int ReverseEscape_C(unsigned char *in, unsigned int inlen, unsigned char *out, u
   // memset(out, 0, *outlen);
 	unsigned int i;
 	int offset_num;
+	#ifdef JT808_DEBUG
   printf("[ReverseEscape_C]:");
+	#endif
 
   offset_num = 0;
   for (i = 0; i < inlen; ++i)
@@ -93,7 +96,9 @@ int ReverseEscape_C(unsigned char *in, unsigned int inlen, unsigned char *out, u
     else
     {
       out[i - offset_num] = in[i];
+			#ifdef JT808_DEBUG
       printf("%02x ", out[i - offset_num]);
+			#endif
     }
   }
   printf("\r\n");
@@ -112,7 +117,9 @@ unsigned char BccCheckSum(const unsigned char *src, unsigned long len)
   {
     checksum = checksum ^ src[i];
   }
-	printf("[%s] OK !\r\n", __FUNCTION__);
+	#ifdef JT808_DEBUG
+		printf("[%s] OK !\r\n", __FUNCTION__);
+	#endif
   return checksum;
 	
 	

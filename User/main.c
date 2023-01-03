@@ -46,6 +46,7 @@ int main(void)
 	nmea_parser_init(&parser);
 	
 	NVIC_Configuration(); 	//设置NVIC中断分组2:2位抢占优先级，2位响应优先级
+	
 	delay_init();	 					//延时函数初始化
 	
 	PC1_Config(&GPIO_InitStructure);
@@ -55,7 +56,12 @@ int main(void)
   USART2_Init(115200);
   GPS_Config();
 	LED_GPIO_Config(&GPIO_InitStructure);	//LED 端口初始化
-	
+
+	printf("\r\n");
+	printf("SYSTEM INIT COMPLETE\r\n");
+	printf("\r\n");
+
+
 	while(1)
 	{
 		HeartBeatCounter = 0;
@@ -81,7 +87,7 @@ int main(void)
 		}
 
 		//设置手机号（唯一识别id）
-		setTerminalPhoneNumber("15637142115", 11);
+		setTerminalPhoneNumber("13526580393", 11);
 
 		//终端注册
 		if(isRegistered == 0)	
@@ -89,7 +95,9 @@ int main(void)
 			jt808TerminalRegister(&isRegistered);
 			if(isRegistered==0)
 			{
-				isTCPconnected=0;
+				//isTCPconnected=0;
+				__set_FAULTMASK(1); 
+				NVIC_SystemReset();
 				continue;
 			}
 		}
@@ -100,8 +108,12 @@ int main(void)
 			jt808TerminalAuthentication(&isAuthenticated);			
 			if(isAuthenticated==0)
 			{
-				isRegistered=0;
-				isTCPconnected=0;
+//				isRegistered=0;
+//				isTCPconnected=0;
+//				parameter_.msg_head.msg_flow_num=0;
+//				parameter_.respone_flow_num=0;
+				__set_FAULTMASK(1); 
+				NVIC_SystemReset();
 				continue;
 			}
 		}
@@ -114,41 +126,42 @@ int main(void)
 		while(1)
 		{
 
-				if(GPS_HalfTransferEnd)     /* 接收到GPS_RBUFF_SIZE一半的数据 */
-				{
-					/* 进行nmea格式解码 */
-					nmea_parse(&parser, (const char*)&gps_rbuff[0], HALF_GPS_RBUFF_SIZE, &info);
-					
-					GPS_HalfTransferEnd = 0;   //清空标志位
-					new_parse = 1;             //设置解码消息标志
-				}
-				else if(GPS_TransferEnd)    /* 接收到另一半数据 */
-				{
-					/* 进行nmea格式解码 */
-					nmea_parse(&parser, (const char*)&gps_rbuff[HALF_GPS_RBUFF_SIZE], HALF_GPS_RBUFF_SIZE, &info);
-				 
-					GPS_TransferEnd = 0;
-					new_parse = 1;
-				}
+			if(GPS_HalfTransferEnd)     /* 接收到GPS_RBUFF_SIZE一半的数据 */
+			{
+				/* 进行nmea格式解码 */
+				nmea_parse(&parser, (const char*)&gps_rbuff[0], HALF_GPS_RBUFF_SIZE, &info);
+				
+				GPS_HalfTransferEnd = 0;   //清空标志位
+				new_parse = 1;             //设置解码消息标志
+			}
+			else if(GPS_TransferEnd)    /* 接收到另一半数据 */
+			{
+				/* 进行nmea格式解码 */
+				nmea_parse(&parser, (const char*)&gps_rbuff[HALF_GPS_RBUFF_SIZE], HALF_GPS_RBUFF_SIZE, &info);
+			 
+				GPS_TransferEnd = 0;
+				new_parse = 1;
+			}
 		
 
 
 			if(new_parse == 1)
 			{
-				//位置上报 
+				//位置数据更新
 				isNewLocationParse = nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp, info, new_parse);
 				updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
 				new_parse = 0;
 			}
 			
 			//拐弯时上报位置数据
+			//需修改 协议为连续3s角度大于15上报
 			if((fabs(v_bearing - m_bearing)) >= parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle)
 			{
 				m_bearing = v_bearing;
 				jt808LocationReport();
 				printf("fabs(v_bearing - m_bearing)) > %d trigger LocationReport SUCCESS\r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
 				LocationReportCounter++;
-				printf("m_bearing ===== %f  \r\n", m_bearing);				
+//				printf("m_bearing ===== %f  \r\n", m_bearing);				
 			}
 
 
@@ -204,19 +217,31 @@ int main(void)
 						USART2_RX_STA=0;
 					}
 					
-					
 					if(parameter_.parse.msg_head.msg_id==kSetTerminalParameters)
 					{
 						printf("\r\n");
 						printf("SetTerminalParameters parse SUCCESS!!!!\r\n ");
 						printf("\r\n");
-						isRegistered=0;
-						isTCPconnected=0;
-						isAuthenticated=0;
-						USART2_RX_STA=0;
-						LocationReportCounter = 0;
+//						isRegistered=0;
+//						isTCPconnected=0;
+//						isAuthenticated=0;
+//						USART2_RX_STA=0;
+//						LocationReportCounter = 0;
+						jt808TerminalLogOut();
 						break;
 					}
+					
+										
+					if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kTerminalLogOut))
+					{
+						printf("\r\n");
+						printf("jt808TerminalLogOut parse SUCCESS!!!! \r\n ");
+						printf("\r\n");
+						USART2_RX_STA=0;
+						__set_FAULTMASK(1); 
+						NVIC_SystemReset();
+					}
+					
 				}
 				
 				USART2_RX_STA=0;
@@ -228,12 +253,14 @@ int main(void)
 			{
 				printf("LocationReportCounter == %d \r\n",LocationReportCounter);
 				printf("HeartBeatCounter == %d \r\n",HeartBeatCounter);
-				isRegistered=0;
-				isTCPconnected=0;
-				isAuthenticated=0;
-				HeartBeatCounter = 0;
-				LocationReportCounter = 0;
-				time_1s = 0;
+//				isRegistered=0;
+//				isTCPconnected=0;
+//				isAuthenticated=0;
+//				HeartBeatCounter = 0;
+//				LocationReportCounter = 0;
+//				time_1s = 0;
+				__set_FAULTMASK(1); 
+				NVIC_SystemReset();
 				break;
 			}
 		

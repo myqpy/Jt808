@@ -7,7 +7,6 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <string.h>
-
 // #include <vector>
 
 // namespace libjt808

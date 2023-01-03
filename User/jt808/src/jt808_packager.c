@@ -3,6 +3,7 @@
 #include "ff.h"
 #include "util.h"
 #include "terminal_parameter.h"
+#include "client_manager.h"
 
 // 所有终端数据打包命令.
 unsigned short kTerminalPackagerCMD[PACKAGER_NUM] = {
@@ -158,7 +159,7 @@ int handle_kTerminalRegister(struct ProtocolParameter *para)
 // 终端注销.
 int handle_kTerminalLogOut(struct ProtocolParameter *para)
 {
-    printf("[%s] <no message body> msg_id = 0x%04x\n", __FUNCTION__, kTerminalLogOut);
+    printf("[%s] <no message body> msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalLogOut);
 
     // 空消息体.
     return 0;
@@ -197,7 +198,9 @@ int handle_kLocationReport(struct ProtocolParameter *para)
 		union U32ToU8Array u32converter;
 		union U16ToU8Array u16converter;
 		
+		#ifdef JT808_DEBUG
 		printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kLocationReport);
+		#endif
 
     // 报警标志.
     u32converter.u32val = EndianSwap32(para->location_info.alarm.value);
@@ -351,7 +354,10 @@ int jt808MsgBodyLengthFix(struct MsgHead *msg_head, unsigned int msgBody_len)
     u16converter.u16val = EndianSwap16(msgbody_attr.u16val);
     BufferSend[3] = u16converter.u8array[0];
     BufferSend[4] = u16converter.u8array[1];
-		printf("[%s] OK !\r\n",__FUNCTION__);
+		
+		#ifdef JT808_DEBUG
+			printf("[%s] OK !\r\n",__FUNCTION__);
+		#endif
     return 0;
 }
 
@@ -368,7 +374,7 @@ int jt808MsgEscape()
 
     if (Escape_C(BufferSend, RealBufferSendSize, outBuffer, &outBufferSize) < 0)
 		{
-			printf("[%s] FAILED",__FUNCTION__);
+			printf("[%s] FAILED \r\n",__FUNCTION__);
 			return -1;
 		}
        
@@ -385,7 +391,9 @@ int jt808MsgEscape()
         outBuffer = NULL;
 				
     }
+		#ifdef JT808_DEBUG
 		printf("[%s] OK !\r\n",__FUNCTION__);
+		#endif
     return 0;
 }
 
@@ -441,18 +449,24 @@ int jt808FramePackage(struct ProtocolParameter *para)
     clearBufferSend();
     // 0、设置头标志位
     jt808SetFrameFlagHeader();
-    printf("[jt808SetFrameFlagHeader] OK !\r\n");
 
+		#ifdef JT808_DEBUG
+		{
+			printf("[jt808SetFrameFlagHeader] OK !\r\n");
+		}
+		#endif
+	
     // 1、生成消息头
     if (jt808FrameHeadPackage(&(para->msg_head)) < 0)
 		{
-			printf("jt808FrameHeadPackage FAILED");
+			printf("jt808FrameHeadPackage FAILED \r\n");
 			return -1;
 		}
         
-
+		#ifdef JT808_DEBUG
     printf("[jt808FrameHeadPackage] OK !\r\n");
-
+		#endif
+		
     // 2、封装消息内容.
     ret = jt808FrameBodyPackage(para);
 
@@ -461,7 +475,7 @@ int jt808FramePackage(struct ProtocolParameter *para)
         // 3、修正消息长度.
         if (jt808MsgBodyLengthFix(&(para->msg_head), ret) < 0)
 				{
-					printf("jt808FrameHeadPackage FAILED");
+					printf("jt808FrameHeadPackage FAILED \r\n");
 					return -1;
 				}
 
@@ -472,8 +486,9 @@ int jt808FramePackage(struct ProtocolParameter *para)
 
         // 5、写入发送缓存结束标识位.
         bufferSendPushByte(PROTOCOL_SIGN);
+				#ifdef JT808_DEBUG
 				printf("[Write buffersend end PROTOCOL_SIGN] OK !\r\n");
-
+				#endif
         // 6、处理转义.
         if (jt808MsgEscape() < 0)
 				{

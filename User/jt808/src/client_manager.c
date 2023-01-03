@@ -188,6 +188,7 @@ void setStatusBit()
 
 void initLocationInfo(unsigned int v_alarm_value, unsigned int v_status_value)
 {
+		
 		printf("\n\r[InitLocationInfo] OK !\r\n");	
     //报警标志
     parameter_.location_info.alarm.value = v_alarm_value;
@@ -228,20 +229,21 @@ void updateLocation(double const v_latitude, double const v_longitude, float con
 
 int packagingMessage(unsigned int msg_id)
 {
+		
     //查找当前msgID是否存在于待打包消息ID数组中
     if (0 == findMsgIDFromTerminalPackagerCMD(msg_id))
     {
-        printf("[findMsgIDFromTerminalPackagerCMD] no msg_id \r\n");
-        return -1;
+			printf("[findMsgIDFromTerminalPackagerCMD] no msg_id \r\n");
+			return -1;
     }
-
+		#ifdef JT808_DEBUG
     printf("[findMsgIDFromTerminalPackagerCMD] OK !\r\n");
-
+		#endif
     parameter_.msg_head.msg_id = msg_id; // 设置消息ID.
     if (jt808FramePackage(&parameter_) < 0)
     {
-        printf("[jt808FramePackage]: FAILED !!!\r\n");
-        return -1;
+			printf("[jt808FramePackage]: FAILED !!!\r\n");
+			return -1;
     }
     ++parameter_.msg_head.msg_flow_num; // 每正确生成一条命令, 消息流水号增加1.
     return 0;
@@ -355,9 +357,19 @@ int jt808TerminalHeartBeat()
 	packagingMessage(kTerminalHeartBeat);
 	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
 	printf("jt808TerminalHeartBeat report SUCCESS!\r\n");
-	delay_ms(1000);
 	return 0;
 }
+
+
+int jt808TerminalLogOut()
+{
+	packagingMessage(kTerminalLogOut);
+	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	printf("jt808TerminalLogOut report SUCCESS!!! \r\n");
+	return 0;
+}
+
+
 
 int jt808TerminalGeneralResponse()
 {
@@ -374,11 +386,14 @@ int parsingMessage(const unsigned char *in, unsigned int in_len)
 		unsigned short msg_id;
     if (jt808FrameParse(in, in_len, &parameter_) < 0)
     {
-        printf("jt808FrameParse ERROR\r\n");
-        return -1;
-    }
+				printf("jt808FrameParse ERROR\r\n");
 
+			return -1;
+    }
+		#ifdef JT808_DEBUG
     printf("ok parsing\r\n");
+		#endif
+		
     msg_id = parameter_.parse.msg_head.msg_id;
     printf("%s[%d]: [parameter_.parse.msg_head.msg_id] msg_id = 0x%02x \r\n", __FUNCTION__, __LINE__, msg_id);
     switch (msg_id)

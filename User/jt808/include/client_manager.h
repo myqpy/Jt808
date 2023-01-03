@@ -3,12 +3,13 @@
 #ifndef JT808_CLIENT_MANAGER_H_
 #define JT808_CLIENT_MANAGER_H_
 
+//#define JT808_DEBUG
+
 #include <stdio.h>
 #include <stdint.h>
 #include "./sys/sys.h"
 #include <stdlib.h>
 #include "ff.h"
-
 extern struct ProtocolParameter parameter_;
 
 void setTerminalPhoneNumber(const char *phone_num, unsigned int phoneSize);
@@ -42,6 +43,7 @@ int parsingMessage(const unsigned char *in, unsigned int in_len);
 int jt808TerminalRegister(int *isRegistered);
 int jt808TerminalAuthentication(int *isAuthenticated);
 int jt808LocationReport(void);
+int jt808TerminalLogOut(void);
 int jt808TerminalHeartBeat(void);
 int jt808TerminalGeneralResponse(void);
 void setStatusBit(void);
