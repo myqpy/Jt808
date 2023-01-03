@@ -14,6 +14,7 @@
 
 
 //#define __JT808_DEBUG
+#define FLASH_ADDR (uint32_t)0x0800f000
 
 
 

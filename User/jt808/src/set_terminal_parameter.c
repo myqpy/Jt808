@@ -1,5 +1,6 @@
 #include "set_terminal_parameter.h"
 #include "terminal_parameter.h"
+#include "client_manager.h"
 #include "ff.h"
 
 unsigned short kParameterSettingCMD[PARA_SETTING_LIMIT] = {
@@ -105,7 +106,7 @@ void handle_HeartBeatInterval(unsigned char *buf,unsigned char buf_len,struct Pr
 	memset(write_buf,0,sizeof(write_buf));
 	memcpy(write_buf, &para->parse.terminal_parameters, sizeof(para->parse.terminal_parameters));
 	printf("handle_HeartBeatInterval ==== %d \r\n",para->parse.terminal_parameters.HeartBeatInterval);
-	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));
+	FLASH_WriteByte(FLASH_ADDR , write_buf , sizeof(write_buf));
 	
 	free(p);
 	
@@ -128,7 +129,7 @@ void handle_MainServerAddress(unsigned char *buf,unsigned char buf_len,struct Pr
 	memcpy(para->parse.terminal_parameters.MainServerAddress,p,buf_len);
 	memset(write_buf,0,sizeof(write_buf));
 	memcpy(write_buf, &para->parse.terminal_parameters, sizeof(para->parse.terminal_parameters));
-	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));	
+	FLASH_WriteByte(FLASH_ADDR , write_buf , sizeof(write_buf));	
 	printf("handle_MainServerAddress ==== %s \r\n",para->parse.terminal_parameters.MainServerAddress);
 	free(p);
 	
@@ -155,7 +156,7 @@ void handle_ServerPort(unsigned char *buf,unsigned char buf_len,struct ProtocolP
 	para->parse.terminal_parameters.ServerPort = serverPort;
 	memset(write_buf,0,sizeof(write_buf));
 	memcpy(write_buf, &para->parse.terminal_parameters, sizeof(para->parse.terminal_parameters));
-	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));
+	FLASH_WriteByte(FLASH_ADDR , write_buf , sizeof(write_buf));
 	printf("handle_ServerPort ==== %d \r\n",para->parse.terminal_parameters.ServerPort);
 	free(p);
 	
@@ -184,7 +185,7 @@ void handle_DefaultTimeReportTimeInterval(unsigned char *buf, unsigned char buf_
 	para->parse.terminal_parameters.DefaultTimeReportTimeInterval = DefaultTimeReportTimeInterval;
 	memset(write_buf,0,sizeof(write_buf));
 	memcpy(write_buf, &para->parse.terminal_parameters, sizeof(para->parse.terminal_parameters));
-	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));
+	FLASH_WriteByte(FLASH_ADDR , write_buf , sizeof(write_buf));
 	printf("handle_DefaultTimeReportTimeInterval ==== %d \r\n",para->parse.terminal_parameters.DefaultTimeReportTimeInterval);
 	free(p);
 	
@@ -210,7 +211,7 @@ void handle_CornerPointRetransmissionAngle(unsigned char *buf, unsigned char buf
 	para->parse.terminal_parameters.CornerPointRetransmissionAngle = CornerPointRetransmissionAngle;
 	memset(write_buf,0,sizeof(write_buf));
 	memcpy(write_buf, &para->parse.terminal_parameters, sizeof(para->parse.terminal_parameters));
-	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));
+	FLASH_WriteByte(FLASH_ADDR , write_buf , sizeof(write_buf));
 	printf("handle_DefaultTimeReportTimeInterval ==== %d \r\n",para->parse.terminal_parameters.DefaultTimeReportTimeInterval);
 	free(p);
 	
@@ -236,7 +237,7 @@ void handle_MaxSpeed(unsigned char *buf,unsigned char buf_len,struct ProtocolPar
 	para->parse.terminal_parameters.MaxSpeed = MaxSpeed;
 	memset(write_buf,0,sizeof(write_buf));
 	memcpy(write_buf, &para->parse.terminal_parameters, sizeof(para->parse.terminal_parameters));
-	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));
+	FLASH_WriteByte(FLASH_ADDR, write_buf , sizeof(write_buf));
 	printf("handle_MaxSpeed ==== %d \r\n",para->parse.terminal_parameters.MaxSpeed);
 	free(p);
 	
@@ -262,7 +263,7 @@ void handle_ProvinceID(unsigned char *buf,unsigned char buf_len,struct ProtocolP
 	para->parse.terminal_parameters.ProvinceID = ProvinceID;
 	memset(write_buf,0,sizeof(write_buf));
 	memcpy(write_buf, &para->parse.terminal_parameters, sizeof(para->parse.terminal_parameters));
-	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));
+	FLASH_WriteByte(FLASH_ADDR , write_buf , sizeof(write_buf));
 	printf("handle_ProvinceID ==== %d \r\n",para->parse.terminal_parameters.ProvinceID);
 	free(p);
 	
@@ -288,7 +289,7 @@ void handle_CityID(unsigned char *buf,unsigned char buf_len,struct ProtocolParam
 	para->parse.terminal_parameters.CityID = CityID;
 	memset(write_buf,0,sizeof(write_buf));
 	memcpy(write_buf, &para->parse.terminal_parameters, sizeof(para->parse.terminal_parameters));
-	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));
+	FLASH_WriteByte(FLASH_ADDR, write_buf , sizeof(write_buf));
 	printf("handle_CityID ==== %d \r\n",para->parse.terminal_parameters.CityID);
 	free(p);
 	
@@ -310,7 +311,7 @@ void handle_CarPlateNum(unsigned char *buf,unsigned char buf_len,struct Protocol
 	memcpy(para->parse.terminal_parameters.CarPlateNum,p,buf_len);
 	memset(write_buf,0,sizeof(write_buf));
 	memcpy(write_buf, &para->parse.terminal_parameters, sizeof(para->parse.terminal_parameters));
-	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));
+	FLASH_WriteByte(FLASH_ADDR , write_buf , sizeof(write_buf));
 	printf("handle_CarPlateNum ==== %s \r\n",para->parse.terminal_parameters.CarPlateNum);
 	free(p);
 	
@@ -329,7 +330,7 @@ void handle_CarPlateColor(unsigned char *buf,unsigned char buf_len,struct Protoc
 	para->parse.terminal_parameters.CarPlateColor = *p;
 	memset(write_buf,0,sizeof(write_buf));
 	memcpy(write_buf, &para->parse.terminal_parameters, sizeof(para->parse.terminal_parameters));
-	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));
+	FLASH_WriteByte(FLASH_ADDR , write_buf , sizeof(write_buf));
 	printf("handle_CarPlateColor ==== 0x%02x \r\n",para->parse.terminal_parameters.CarPlateColor);
 	free(p);
 	

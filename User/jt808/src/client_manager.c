@@ -27,7 +27,7 @@ void initSystemParameters(void)
 {
 	unsigned char read_buf[64] = {0};
 
-	Internal_ReadFlash(((uint32_t)0x0800f000) , read_buf , sizeof(read_buf));
+	Internal_ReadFlash(FLASH_ADDR , read_buf , sizeof(read_buf));
 	memset(&parameter_.parse.terminal_parameters,0,sizeof(parameter_.parse.terminal_parameters));
 	memcpy(&parameter_.parse.terminal_parameters, read_buf, sizeof(read_buf));
 //	parameter_.parse.terminal_parameters.initFactoryParameters = 0;
@@ -92,7 +92,7 @@ int FlashWrite()
 	
 	
 	
-	FLASH_WriteByte(((uint32_t)0x0800f000) , write_buf , sizeof(write_buf));	
+	FLASH_WriteByte(FLASH_ADDR , write_buf , sizeof(write_buf));	
 	printf("FLASH_Write SUCCESS!!!!!!\r\n");
 	printf("initFactoryParameters == %d \r\n",parameter_.parse.terminal_parameters.initFactoryParameters);
 
@@ -113,7 +113,7 @@ int IPFlashWrite()
 	memset(write_buf,0,sizeof(write_buf));
 	memcpy(write_buf, &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
 	
-	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));	
+	FLASH_WriteByte(FLASH_ADDR , write_buf , sizeof(write_buf));	
 	printf("FLASH_Write SUCCESS!!!!!!\r\n");
 
 	return 0;

@@ -44,3 +44,5 @@
 ..\..\output\set_terminal_parameter.o: ..\..\Libraries\FWlib\inc\stm32f10x_usart.h
 ..\..\output\set_terminal_parameter.o: ..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h
 ..\..\output\set_terminal_parameter.o: ..\..\Libraries\FWlib\inc\misc.h
+..\..\output\set_terminal_parameter.o: ..\..\User\jt808\include\client_manager.h
+..\..\output\set_terminal_parameter.o: ..\..\system\./sys/sys.h
