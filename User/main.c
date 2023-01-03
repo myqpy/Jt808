@@ -57,9 +57,9 @@ int main(void)
   GPS_Config();
 	LED_GPIO_Config(&GPIO_InitStructure);	//LED 端口初始化
 
-	printf("\r\n");
-	printf("SYSTEM INIT COMPLETE\r\n");
-	printf("\r\n");
+	printf(" \r\n ");
+	printf("SYSTEM INIT SUCCESS\r\n");
+	printf(" \r\n ");
 
 
 	while(1)
@@ -87,7 +87,7 @@ int main(void)
 		}
 
 		//设置手机号（唯一识别id）
-		setTerminalPhoneNumber("13526580393", 11);
+		setTerminalPhoneNumber("19149421105", 11);
 
 		//终端注册
 		if(isRegistered == 0)	

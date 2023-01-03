@@ -16,7 +16,7 @@
 ..\..\output\jt808_parser.o: ..\..\User\FATFS\ffconf.h
 ..\..\output\jt808_parser.o: ..\..\User\jt808\include\set_terminal_parameter.h
 ..\..\output\jt808_parser.o: ..\..\User\jt808\include\bcd.h
-..\..\output\jt808_parser.o: ..\..\User\Bsp\./internal_flash/bsp_internal_flash.h
+..\..\output\jt808_parser.o: ..\..\User\./internal_flash/bsp_internal_flash.h
 ..\..\output\jt808_parser.o: ..\..\Libraries\CMSIS\stm32f10x.h
 ..\..\output\jt808_parser.o: ..\..\Libraries\CMSIS\core_cm3.h
 ..\..\output\jt808_parser.o: ..\..\Libraries\CMSIS\system_stm32f10x.h

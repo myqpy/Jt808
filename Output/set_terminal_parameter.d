@@ -15,7 +15,7 @@
 ..\..\output\set_terminal_parameter.o: ..\..\User\FATFS\ff.h
 ..\..\output\set_terminal_parameter.o: ..\..\User\FATFS\integer.h
 ..\..\output\set_terminal_parameter.o: ..\..\User\FATFS\ffconf.h
-..\..\output\set_terminal_parameter.o: ..\..\User\Bsp\./internal_flash/bsp_internal_flash.h
+..\..\output\set_terminal_parameter.o: ..\..\User\./internal_flash/bsp_internal_flash.h
 ..\..\output\set_terminal_parameter.o: ..\..\Libraries\CMSIS\stm32f10x.h
 ..\..\output\set_terminal_parameter.o: ..\..\Libraries\CMSIS\core_cm3.h
 ..\..\output\set_terminal_parameter.o: ..\..\Libraries\CMSIS\system_stm32f10x.h

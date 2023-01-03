@@ -46,9 +46,9 @@
 ..\..\output\client_manager.o: ..\..\User\jt808\include\terminal_control.h
 ..\..\output\client_manager.o: ..\..\User\jt808\include\set_terminal_parameter.h
 ..\..\output\client_manager.o: ..\..\User\jt808\include\bcd.h
-..\..\output\client_manager.o: ..\..\User\Bsp\./internal_flash/bsp_internal_flash.h
+..\..\output\client_manager.o: ..\..\User\./internal_flash/bsp_internal_flash.h
 ..\..\output\client_manager.o: ..\..\User\jt808\include\jt808_parser.h
-..\..\output\client_manager.o: ..\..\system\./delay/delay.h
+..\..\output\client_manager.o: ..\..\User\./delay/delay.h
 ..\..\output\client_manager.o: ..\..\User\jt808\include\jt808_packager.h
 ..\..\output\client_manager.o: ..\..\User\jt808\include\terminal_register.h
 ..\..\output\client_manager.o: ..\..\User\Bsp\./usart/usart.h

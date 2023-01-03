@@ -12,7 +12,7 @@
 ..\..\output\jt808_packager.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
 ..\..\output\jt808_packager.o: ..\..\User\jt808\include\terminal_control.h
 ..\..\output\jt808_packager.o: ..\..\User\jt808\include\terminal_register.h
-..\..\output\jt808_packager.o: ..\..\User\Bsp\./internal_flash/bsp_internal_flash.h
+..\..\output\jt808_packager.o: ..\..\User\./internal_flash/bsp_internal_flash.h
 ..\..\output\jt808_packager.o: ..\..\Libraries\CMSIS\stm32f10x.h
 ..\..\output\jt808_packager.o: ..\..\Libraries\CMSIS\core_cm3.h
 ..\..\output\jt808_packager.o: ..\..\Libraries\CMSIS\system_stm32f10x.h

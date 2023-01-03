@@ -30,4 +30,4 @@
 ..\..\output\key.o: ..\..\Libraries\FWlib\inc\stm32f10x_usart.h
 ..\..\output\key.o: ..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h
 ..\..\output\key.o: ..\..\Libraries\FWlib\inc\misc.h
-..\..\output\key.o: ..\..\system\./delay/delay.h
+..\..\output\key.o: ..\..\User\./delay/delay.h

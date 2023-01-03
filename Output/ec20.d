@@ -32,7 +32,7 @@
 ..\..\output\ec20.o: ..\..\Libraries\FWlib\inc\misc.h
 ..\..\output\ec20.o: ..\..\User\Bsp\./usart/usart.h
 ..\..\output\ec20.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
-..\..\output\ec20.o: ..\..\system\./delay/delay.h
+..\..\output\ec20.o: ..\..\User\./delay/delay.h
 ..\..\output\ec20.o: ..\..\User\Bsp\./led/bsp_led.h
 ..\..\output\ec20.o: ..\..\User\Bsp\./key/key.h
 ..\..\output\ec20.o: D:\MDK5\ARM\ARMCC\Bin\..\include\string.h
