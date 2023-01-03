@@ -27,10 +27,10 @@ int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude,
 		double deg_lat;//转换成[degree].[degree]格式的纬度
 		double deg_lon;//转换成[degree].[degree]格式的经度
 	  long m_lat=0;
-		long m_lon;
-		int m_alt;
-		int m_speed;
-		int m_bearing;
+		long m_lon=0;
+		int m_alt=0;
+		int m_speed=0;
+		int m_bearing=0;
 	
     nmeaINFO info;          //GPS解码后得到的信息
     nmeaPARSER parser;      //解码时使用的数据结构  
@@ -87,26 +87,11 @@ int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude,
       {    
         /* 对解码后的时间进行转换，转换成北京时间 */
         GMTconvert(&info.utc,&beiJingTime,8,1);
-        
-        /* 输出解码得到的信息 */
-				printf("\r\n时间%02d-%02d-%02d  %02d:%02d:%02d\r\n", ((beiJingTime.year+1900)%2000), beiJingTime.mon,beiJingTime.day,beiJingTime.hour,beiJingTime.min,beiJingTime.sec);
-				//printf("\r\n时间%d-%02d-%02d,%d:%d:%d\r\n", beiJingTime.year+1900, beiJingTime.mon,beiJingTime.day,beiJingTime.hour,beiJingTime.min,beiJingTime.sec);
-				
+        		
 				//info.lat lon中的格式为[degree][min].[sec/60]，使用以下函数转换成[degree].[degree]格式
 				deg_lat = nmea_ndeg2degree(info.lat);
 				deg_lon = nmea_ndeg2degree(info.lon);
-				
-//				printf("\r\n纬度：%f,经度%f\r\n",deg_lat,deg_lon);
-//        printf("\r\n海拔高度：%f 米 ", info.elv);
-//        printf("\r\n速度：%f km/h ", info.speed);
-//        printf("\r\n航向：%f 度", info.direction);
-//				
-//				printf("\r\n正在使用的GPS卫星：%d,可见GPS卫星：%d",info.satinfo.inuse,info.satinfo.inview);
 
-//				printf("\r\n正在使用的北斗卫星：%d,可见北斗卫星：%d",info.BDsatinfo.inuse,info.BDsatinfo.inview);
-//				printf("\r\nPDOP：%f,HDOP：%f，VDOP：%f\n\n",info.PDOP,info.HDOP,info.VDOP);
-				
-	
 				m_lat=(long)(deg_lat*(1e6));
 				m_lon=(long)(deg_lon*1000000);
 				m_alt=(int)(info.elv);
@@ -121,19 +106,6 @@ int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude,
 					*v_speed = info.speed;
 					*v_bearing = info.direction;
 
-					printf("纬度：%ld \r\n",m_lat);
-					printf("经度: %ld \r\n",m_lon);
-					printf("海拔: %d 米 \r\n", m_alt);
-					printf("速度：%d km/h \r\n", m_speed);
-					printf("航向：%d 度 \r\n", m_bearing);
-					printf("时间: %02d-%02d-%02d  %02d:%02d:%02d \r\n", ((beiJingTime.year+1900)%2000), beiJingTime.mon,beiJingTime.day,beiJingTime.hour,beiJingTime.min,beiJingTime.sec);
-					
-					//char *bufTime=(char *)malloc(64);
-					sprintf(bufTime,"%02d%02d%02d%02d%02d%02d \r\n",((beiJingTime.year+1900)%2000), beiJingTime.mon,beiJingTime.day,beiJingTime.hour,beiJingTime.min,beiJingTime.sec);
-					printf("bufTime: %s \r\n",bufTime);
-					memset(v_timestamp, 0, 13);
-					memcpy(v_timestamp, bufTime, 12);
-					//free(bufTime);
 					return 1;
 				}
 

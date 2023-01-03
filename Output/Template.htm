@@ -3,9 +3,9 @@
 <title>Static Call Graph - [..\..\Output\Template.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\..\Output\Template.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Tue Dec 27 16:50:35 2022
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Wed Dec 28 17:10:56 2022
 <BR><P>
-<H3>Maximum Stack Usage =       4392 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =       4368 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 main &rArr; nmea_decode_test &rArr; nmea_parse &rArr; nmea_parser_push &rArr; nmea_parser_real_push &rArr; nmea_parse_GPRMC &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
 <P>
@@ -389,7 +389,6 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
 </UL>
 <BR>[Called By]<UL><LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setTerminalPhoneNumber
-<LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
 <LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initRegisterInfo
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Escape_C
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clearBufferSend
@@ -884,8 +883,8 @@ Global Symbols
 <LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateColor
 </UL>
 
-<P><STRONG><a name="[86]"></a>FlashWrite</STRONG> (Thumb, 148 bytes, Stack size 88 bytes, client_manager.o(i.FlashWrite))
-<BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = FlashWrite &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
+<P><STRONG><a name="[86]"></a>FlashWrite</STRONG> (Thumb, 108 bytes, Stack size 72 bytes, client_manager.o(i.FlashWrite))
+<BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = FlashWrite &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
 <LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -1286,7 +1285,6 @@ Global Symbols
 <LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;error
 <LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateLocation
 <LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parsingMessage
-<LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
 <LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalRegister
 <LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalHeartBeat
 <LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808TerminalAuthentication
@@ -1313,6 +1311,16 @@ Global Symbols
 <LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FramePackage
 <LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;packagingMessage
 <LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FlashWrite
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ServerPort
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_ProvinceID
+<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MaxSpeed
+<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_MainServerAddress
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_HeartBeatInterval
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_DefaultTimeReportTimeInterval
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CornerPointRetransmissionAngle
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CityID
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateNum
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_CarPlateColor
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReverseEscape_C
 <LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameHeadParse
 <LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808FrameBodyParse
@@ -1345,8 +1353,7 @@ Global Symbols
 <P><STRONG><a name="[d6]"></a>__2sprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0sprintf))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __2sprintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_decode_test
-<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_init
+<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ec20_init
 </UL>
 
 <P><STRONG><a name="[15f]"></a>__c89sprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0sprintf), UNUSED)
@@ -1571,7 +1578,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> nema_decode_test.o(i.nmea_decode_test)
 </UL>
-<P><STRONG><a name="[d9]"></a>handle_CarPlateColor</STRONG> (Thumb, 90 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_CarPlateColor))
+<P><STRONG><a name="[d9]"></a>handle_CarPlateColor</STRONG> (Thumb, 100 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_CarPlateColor))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_CarPlateColor &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
@@ -1580,11 +1587,12 @@ Global Symbols
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[dd]"></a>handle_CarPlateNum</STRONG> (Thumb, 108 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_CarPlateNum))
+<P><STRONG><a name="[dd]"></a>handle_CarPlateNum</STRONG> (Thumb, 120 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_CarPlateNum))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_CarPlateNum &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
@@ -1593,11 +1601,12 @@ Global Symbols
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[de]"></a>handle_CityID</STRONG> (Thumb, 106 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_CityID))
+<P><STRONG><a name="[de]"></a>handle_CityID</STRONG> (Thumb, 116 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_CityID))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_CityID &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
@@ -1607,11 +1616,12 @@ Global Symbols
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[e0]"></a>handle_CornerPointRetransmissionAngle</STRONG> (Thumb, 104 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_CornerPointRetransmissionAngle))
+<P><STRONG><a name="[e0]"></a>handle_CornerPointRetransmissionAngle</STRONG> (Thumb, 114 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_CornerPointRetransmissionAngle))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_CornerPointRetransmissionAngle &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
@@ -1621,11 +1631,12 @@ Global Symbols
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[e2]"></a>handle_DefaultTimeReportTimeInterval</STRONG> (Thumb, 104 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_DefaultTimeReportTimeInterval))
+<P><STRONG><a name="[e2]"></a>handle_DefaultTimeReportTimeInterval</STRONG> (Thumb, 114 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_DefaultTimeReportTimeInterval))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_DefaultTimeReportTimeInterval &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
@@ -1635,11 +1646,12 @@ Global Symbols
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[e3]"></a>handle_HeartBeatInterval</STRONG> (Thumb, 104 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_HeartBeatInterval))
+<P><STRONG><a name="[e3]"></a>handle_HeartBeatInterval</STRONG> (Thumb, 114 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_HeartBeatInterval))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_HeartBeatInterval &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
@@ -1649,11 +1661,12 @@ Global Symbols
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[e4]"></a>handle_MainServerAddress</STRONG> (Thumb, 112 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_MainServerAddress))
+<P><STRONG><a name="[e4]"></a>handle_MainServerAddress</STRONG> (Thumb, 124 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_MainServerAddress))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_MainServerAddress &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
@@ -1662,11 +1675,12 @@ Global Symbols
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[e5]"></a>handle_MaxSpeed</STRONG> (Thumb, 104 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_MaxSpeed))
+<P><STRONG><a name="[e5]"></a>handle_MaxSpeed</STRONG> (Thumb, 114 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_MaxSpeed))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_MaxSpeed &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
@@ -1676,11 +1690,12 @@ Global Symbols
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[e6]"></a>handle_ProvinceID</STRONG> (Thumb, 106 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_ProvinceID))
+<P><STRONG><a name="[e6]"></a>handle_ProvinceID</STRONG> (Thumb, 116 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_ProvinceID))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_ProvinceID &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
@@ -1690,11 +1705,12 @@ Global Symbols
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
 
-<P><STRONG><a name="[e7]"></a>handle_ServerPort</STRONG> (Thumb, 104 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_ServerPort))
+<P><STRONG><a name="[e7]"></a>handle_ServerPort</STRONG> (Thumb, 114 bytes, Stack size 88 bytes, set_terminal_parameter.o(i.handle_ServerPort))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = handle_ServerPort &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WriteByte
@@ -1704,6 +1720,7 @@ Global Symbols
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jt808ParameterSettingParse
 </UL>
@@ -1883,8 +1900,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
 </UL>
 
-<P><STRONG><a name="[ff]"></a>initSystemParameters</STRONG> (Thumb, 166 bytes, Stack size 72 bytes, client_manager.o(i.initSystemParameters))
-<BR><BR>[Stack]<UL><LI>Max Depth = 200<LI>Call Chain = initSystemParameters &rArr; FlashWrite &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
+<P><STRONG><a name="[ff]"></a>initSystemParameters</STRONG> (Thumb, 178 bytes, Stack size 72 bytes, client_manager.o(i.initSystemParameters))
+<BR><BR>[Stack]<UL><LI>Max Depth = 184<LI>Call Chain = initSystemParameters &rArr; FlashWrite &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Internal_ReadFlash
 <LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FlashWrite
@@ -2090,7 +2107,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[46]"></a>main</STRONG> (Thumb, 590 bytes, Stack size 72 bytes, main.o(i.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4392<LI>Call Chain = main &rArr; nmea_decode_test &rArr; nmea_parse &rArr; nmea_parser_push &rArr; nmea_parser_real_push &rArr; nmea_parse_GPRMC &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
+<BR><BR>[Stack]<UL><LI>Max Depth = 4368<LI>Call Chain = main &rArr; nmea_decode_test &rArr; nmea_parse &rArr; nmea_parser_push &rArr; nmea_parser_real_push &rArr; nmea_parse_GPRMC &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateLocation
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
@@ -2235,8 +2252,8 @@ Global Symbols
 <LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_find_tail
 </UL>
 
-<P><STRONG><a name="[117]"></a>nmea_decode_test</STRONG> (Thumb, 602 bytes, Stack size 2784 bytes, nema_decode_test.o(i.nmea_decode_test))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4320<LI>Call Chain = nmea_decode_test &rArr; nmea_parse &rArr; nmea_parser_push &rArr; nmea_parser_real_push &rArr; nmea_parse_GPRMC &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
+<P><STRONG><a name="[117]"></a>nmea_decode_test</STRONG> (Thumb, 324 bytes, Stack size 2760 bytes, nema_decode_test.o(i.nmea_decode_test))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4296<LI>Call Chain = nmea_decode_test &rArr; nmea_parse &rArr; nmea_parser_push &rArr; nmea_parser_real_push &rArr; nmea_parse_GPRMC &rArr; _nmea_parse_time &rArr; nmea_error &rArr; __c89vsnprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_zero_INFO
 <LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_property
@@ -2247,9 +2264,6 @@ Global Symbols
 <LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GMTconvert
-<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
-<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
-<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>

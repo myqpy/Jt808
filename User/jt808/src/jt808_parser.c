@@ -184,10 +184,6 @@ int handle_kSetTerminalParameters(struct ProtocolParameter *para)
 		}
 		pos+=len;
 	}
-
-	/*
-		平台修改终端参数后重启设备
-	*/
 	
 	
 	return 0;
@@ -358,7 +354,6 @@ int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct Protoco
 		}
     printf("%s[%d]:  jt808FrameHeadParse. -->4 !!!\r\n", __FUNCTION__, __LINE__);
     memcpy(para->msg_head.phone_num, para->parse.msg_head.phone_num, 11);
-//		para->msg_head.phone_num = para->parse.msg_head.phone_num;
 
     // 解析消息内容.
     ret = jt808FrameBodyParse(para);

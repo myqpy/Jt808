@@ -11,7 +11,7 @@
 #include "./usart/usart.h"
 #include "./usart2/usart2.h"
 #include "./internal_flash/bsp_internal_flash.h" 
-
+#include "ff.h"
 
 struct ProtocolParameter parameter_;
 
@@ -22,7 +22,7 @@ void initSystemParameters(void)
 	Internal_ReadFlash(((uint32_t)0x08008000) , read_buf , sizeof(read_buf));
 	memset(&parameter_.parse.terminal_parameters,0,sizeof(parameter_.parse.terminal_parameters));
 	memcpy(&parameter_.parse.terminal_parameters, read_buf, sizeof(read_buf));
-//	parameter_.parse.terminal_parameters.initFactoryParameters = 0;
+	parameter_.parse.terminal_parameters.initFactoryParameters = 0;
 	
 	printf("initFactoryParameters == %d \r\n",parameter_.parse.terminal_parameters.initFactoryParameters);
 	
@@ -40,6 +40,7 @@ void initSystemParameters(void)
 	printf("ProvinceID == %d \r\n",parameter_.parse.terminal_parameters.ProvinceID);
 	printf("CityID == %d \r\n",parameter_.parse.terminal_parameters.CityID);
 	printf("CarPlateNum == %s \r\n",parameter_.parse.terminal_parameters.CarPlateNum);
+	printf("CarPlateColor == %02x \r\n",parameter_.parse.terminal_parameters.CarPlateColor);
 	printf("\r\n");
 	printf("initSystemParameters SUCCESS!!!!!!\r\n");
 	printf("\r\n");
@@ -56,20 +57,20 @@ int FlashWrite()
 
 	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
-	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 8;
+//	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 8;
 
 	parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle = 10;
 
-	parameter_.parse.terminal_parameters.MaxSpeed = 30;
+	parameter_.parse.terminal_parameters.MaxSpeed = 60;
 
-	parameter_.parse.terminal_parameters.ProvinceID = 0x0029;
+//	parameter_.parse.terminal_parameters.ProvinceID = 0x0029;
 
-	parameter_.parse.terminal_parameters.CityID = 0x0066;
+//	parameter_.parse.terminal_parameters.CityID = 0x0066;
 
-	memset(parameter_.parse.terminal_parameters.CarPlateNum,0,sizeof(parameter_.parse.terminal_parameters.CarPlateNum));
-	memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "测1227", 7);
+//	memset(parameter_.parse.terminal_parameters.CarPlateNum,0,sizeof(parameter_.parse.terminal_parameters.CarPlateNum));
+//	memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "测1229", 7);
 
-	parameter_.parse.terminal_parameters.CarPlateColor = 0x02;
+//	parameter_.parse.terminal_parameters.CarPlateColor = 0x02;
 	
 	parameter_.parse.terminal_parameters.initFactoryParameters = 1;
 
