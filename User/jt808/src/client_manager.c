@@ -2,24 +2,17 @@
 #include "client_manager.h"
 #include "protocol_parameter.h"
 #include "set_terminal_parameter.h"
-#include "jt808_packager.h"
 #include "jt808_parser.h"
 #include "util.h"
 #include "./delay/delay.h"
 #include "bcd.h"
-#include "ff.h"
+#include "jt808_packager.h"
 #include "jt808_parser.h"
 #include "./usart/usart.h"
 #include "./usart2/usart2.h"
 #include "./internal_flash/bsp_internal_flash.h" 
 
-double  v_latitude = 34.824788;
-double  v_longitude = 113.558408;
-float  v_altitude = 107;
-float  v_speed = 15;
-float  v_bearing = 132;
-unsigned char v_timestamp[] = "221127212855";
-extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude, float  *v_speed, float *v_bearing, unsigned char *v_timestamp);
+
 struct ProtocolParameter parameter_;
 
 void initSystemParameters(void)
@@ -29,23 +22,26 @@ void initSystemParameters(void)
 	Internal_ReadFlash(((uint32_t)0x08008000) , read_buf , sizeof(read_buf));
 	memset(&parameter_.parse.terminal_parameters,0,sizeof(parameter_.parse.terminal_parameters));
 	memcpy(&parameter_.parse.terminal_parameters, read_buf, sizeof(read_buf));
-	parameter_.parse.terminal_parameters.initFactoryParameters = 0;
+//	parameter_.parse.terminal_parameters.initFactoryParameters = 0;
+	
+	printf("initFactoryParameters == %d \r\n",parameter_.parse.terminal_parameters.initFactoryParameters);
+	
 	if(parameter_.parse.terminal_parameters.initFactoryParameters == 0)
 	{
 		FlashWrite();
 	}
-//	printf("%d \r\n",parameter_.parse.terminal_parameters.initFactoryParameters);
-	printf("终端心跳发送间隔 == %d \r\n",parameter_.parse.terminal_parameters.HeartBeatInterval);
-	printf("主服务器地址 == \"%s\" \r\n",parameter_.parse.terminal_parameters.MainServerAddress);
-	printf("服务器 TCP 端口 == %d \r\n",parameter_.parse.terminal_parameters.ServerPort);
-	printf("缺省时间汇报间隔 == %d \r\n",parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval);
-	printf("拐点补传角度 == %d \r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
-	printf("最高速度 == %d \r\n",parameter_.parse.terminal_parameters.MaxSpeed);
-	printf("车辆所在的省域 ID == %d \r\n",parameter_.parse.terminal_parameters.ProvinceID);
-	printf("车辆所在的市域 ID == %d \r\n",parameter_.parse.terminal_parameters.CityID);
-	printf("机动车号牌 == %s \r\n",parameter_.parse.terminal_parameters.CarPlateNum);
+  
+	printf("HeartBeatInterval == %d \r\n",parameter_.parse.terminal_parameters.HeartBeatInterval);
+	printf("MainServerAddress == \"%s\" \r\n",parameter_.parse.terminal_parameters.MainServerAddress);
+	printf("ServerPort == %d \r\n",parameter_.parse.terminal_parameters.ServerPort);
+	printf("DefaultTimeReportTimeInterval == %d \r\n",parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval);
+	printf("CornerPointRetransmissionAngle == %d \r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
+	printf("MaxSpeed == %d \r\n",parameter_.parse.terminal_parameters.MaxSpeed);
+	printf("ProvinceID == %d \r\n",parameter_.parse.terminal_parameters.ProvinceID);
+	printf("CityID == %d \r\n",parameter_.parse.terminal_parameters.CityID);
+	printf("CarPlateNum == %s \r\n",parameter_.parse.terminal_parameters.CarPlateNum);
 	printf("\r\n");
-	printf("系统参数初始化成功！！！!\r\n");
+	printf("initSystemParameters SUCCESS!!!!!!\r\n");
 	printf("\r\n");
 	
 }
@@ -82,7 +78,10 @@ int FlashWrite()
 	
 	
 	
-	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));
+	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));	
+	printf("FLASH_Write SUCCESS!!!!!!\r\n");
+	printf("initFactoryParameters == %d \r\n",parameter_.parse.terminal_parameters.initFactoryParameters);
+
 	return 0;
 }
 
@@ -209,16 +208,16 @@ int packagingMessage(unsigned int msg_id)
     //查找当前msgID是否存在于待打包消息ID数组中
     if (0 == findMsgIDFromTerminalPackagerCMD(msg_id))
     {
-        printf("[查找当前msgID是否存在于待打包消息ID数组中] 暂无 msg_id \r\n");
+        printf("[findMsgIDFromTerminalPackagerCMD] no msg_id \r\n");
         return -1;
     }
 
-    printf("[查找当前msgID是否存在于待打包消息ID数组中] OK !\r\n");
+    printf("[findMsgIDFromTerminalPackagerCMD] OK !\r\n");
 
     parameter_.msg_head.msg_id = msg_id; // 设置消息ID.
     if (jt808FramePackage(&parameter_) < 0)
     {
-        printf("[jt808消息帧打包]: 失败 !!!\r\n");
+        printf("[jt808FramePackage]: FAILED !!!\r\n");
         return -1;
     }
     ++parameter_.msg_head.msg_flow_num; // 每正确生成一条命令, 消息流水号增加1.
@@ -270,7 +269,7 @@ int jt808TerminalRegister(int isRegistered)
 			{
 				isRegistered = 1;
 				printf("\r\n");
-				printf("注册成功！！！!\r\n");
+				printf("TerminalRegister SUCCESS!!!!!!!!!!\r\n");
 				printf("\r\n");
 				USART2_RX_STA=0;
 				break;
@@ -278,7 +277,7 @@ int jt808TerminalRegister(int isRegistered)
 		}
 		USART2_RX_STA=0;
 		printf("\r\n");
-		printf("注册失败 重注册中！！！!\r\n");
+		printf("TerminalRegister SUCCESS!!!!!!\r\n");
 		printf("\r\n");		
 		i++;	
 	}
@@ -305,7 +304,7 @@ int jt808TerminalAuthentication(int isAuthenticated)
 			{
 				isAuthenticated = 1;
 				printf("\r\n");
-				printf("终端鉴权成功！！！!\r\n");
+				printf("TerminalAuthentication SUCCESS!!!!!!!!\r\n");
 				printf("\r\n");
 				USART2_RX_STA=0;
 				break;
@@ -314,7 +313,7 @@ int jt808TerminalAuthentication(int isAuthenticated)
 		USART2_RX_STA=0;
 		i++;	
 		printf("\r\n");
-		printf("鉴权失败 重鉴权中！！！!\r\n");
+		printf("TerminalAuthentication FAILED RETRY!!!!!!!!\r\n");
 		printf("\r\n");		
 	}
 	return isAuthenticated;
@@ -322,19 +321,19 @@ int jt808TerminalAuthentication(int isAuthenticated)
 
 int jt808LocationReport()
 {
-		nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp);
-		updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
-		packagingMessage(kLocationReport);
-		Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
-		printf("位置上报完成!\r\n");
-		return 0;
+	packagingMessage(kLocationReport);
+	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	printf("jt808LocationReport SUCCESS!\r\n");
+	return 0;
 }
 
 int jt808TerminalHeartBeat()
 {
 	packagingMessage(kTerminalHeartBeat);
 	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	printf("jt808TerminalHeartBeat report SUCCESS!\r\n");
 	delay_ms(1000);
+	return 0;
 }
 
 int parsingMessage(const unsigned char *in, unsigned int in_len)
@@ -342,75 +341,75 @@ int parsingMessage(const unsigned char *in, unsigned int in_len)
 		unsigned short msg_id;
     if (jt808FrameParse(in, in_len, &parameter_) < 0)
     {
-        printf("消息帧解析时出现错误\r\n");
+        printf("jt808FrameParse ERROR\r\n");
         return -1;
     }
 
     printf("ok parsing\r\n");
     msg_id = parameter_.parse.msg_head.msg_id;
-    printf("%s[%d]: [解析后的信息id] msg_id = 0x%02x \r\n", __FUNCTION__, __LINE__, msg_id);
+    printf("%s[%d]: [parameter_.parse.msg_head.msg_id] msg_id = 0x%02x \r\n", __FUNCTION__, __LINE__, msg_id);
     switch (msg_id)
     {
     // +平台通用应答.
     case kPlatformGeneralResponse:
     {
-        printf("%s[%d]: 【 平台通用应答 】解析完成 \r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: [ kPlatformGeneralResponse ] parse done \r\n", __FUNCTION__, __LINE__);
     }
     break;
 
     //  补传分包请求.
     case kFillPacketRequest:
     {
-        printf("%s[%d]: 【 补传分包请求 】解析完成 \r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: [ kFillPacketRequest ] parse done \r\n", __FUNCTION__, __LINE__);
     }
     break;
 
     // 终端注册应答..
     case kTerminalRegisterResponse:
     {
-        printf("%s[%d]: 【 终端注册请求 】解析完成 \r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: [ kTerminalRegisterResponse ] parse done \r\n", __FUNCTION__, __LINE__);
     }
     break;
 
     // 设置终端参数..
     case kSetTerminalParameters:
     {
-        printf("%s[%d]: 【 设置终端参数 】解析完成 \r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: [ kSetTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
     }
     break;
 
     // 查询终端参数..
     case kGetTerminalParameters:
     {
-        printf("%s[%d]: 【 查询终端参数 】解析完成 \r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: [ kGetTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
     }
     break;
 
     //查询指定终端参数..
     case kGetSpecificTerminalParameters:
     {
-        printf("%s[%d]: 【 查询指定终端参数 】解析完成 \r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: [ kGetSpecificTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
     }
     break;
 
     // 终端控制
-    case kTerminalControl:
+    case kTerminalControl: 
     {
-        printf("%s[%d]: 【 终端控制 】解析完成 \r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: [ kTerminalControl ] parse done \r\n", __FUNCTION__, __LINE__);
     }
     break;
 
     // 下发终端升级包.
     case kTerminalUpgrade:
     {
-        printf("%s[%d]: 【 下发终端升级包 】解析完成\r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: [ kTerminalUpgrade ] parse done\r\n", __FUNCTION__, __LINE__);
     }
     break;
 
     //  位置信息查询..
     case kGetLocationInformation:
     {
-        printf("%s[%d]: 【 位置信息查询 】解析完成\r\n", __FUNCTION__, __LINE__);
+        printf("%s[%d]: [ kGetLocationInformation ] parse done\r\n", __FUNCTION__, __LINE__);
     }
     break;
 

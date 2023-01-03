@@ -33,6 +33,9 @@
 ..\..\output\client_manager.o: ..\..\User\jt808\include\client_manager.h
 ..\..\output\client_manager.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\..\output\client_manager.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\..\output\client_manager.o: ..\..\User\FATFS\ff.h
+..\..\output\client_manager.o: ..\..\User\FATFS\integer.h
+..\..\output\client_manager.o: ..\..\User\FATFS\ffconf.h
 ..\..\output\client_manager.o: ..\..\User\jt808\include\protocol_parameter.h
 ..\..\output\client_manager.o: ..\..\User\jt808\include\location_report.h
 ..\..\output\client_manager.o: ..\..\User\jt808\include\terminal_parameter.h
@@ -43,13 +46,10 @@
 ..\..\output\client_manager.o: ..\..\User\jt808\include\terminal_control.h
 ..\..\output\client_manager.o: ..\..\User\jt808\include\set_terminal_parameter.h
 ..\..\output\client_manager.o: ..\..\User\jt808\include\bcd.h
-..\..\output\client_manager.o: ..\..\User\FATFS\ff.h
-..\..\output\client_manager.o: ..\..\User\FATFS\integer.h
-..\..\output\client_manager.o: ..\..\User\FATFS\ffconf.h
 ..\..\output\client_manager.o: ..\..\User\Bsp\./internal_flash/bsp_internal_flash.h
-..\..\output\client_manager.o: ..\..\User\jt808\include\jt808_packager.h
-..\..\output\client_manager.o: ..\..\User\jt808\include\terminal_register.h
 ..\..\output\client_manager.o: ..\..\User\jt808\include\jt808_parser.h
 ..\..\output\client_manager.o: ..\..\system\./delay/delay.h
+..\..\output\client_manager.o: ..\..\User\jt808\include\jt808_packager.h
+..\..\output\client_manager.o: ..\..\User\jt808\include\terminal_register.h
 ..\..\output\client_manager.o: ..\..\User\Bsp\./usart/usart.h
 ..\..\output\client_manager.o: ..\..\User\Bsp\./usart2/usart2.h

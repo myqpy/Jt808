@@ -3,29 +3,38 @@
 #include "./led/bsp_led.h"
 #include "./gps/gps_config.h"
 #include "./delay/delay.h"
-#include "./ec20/ec20.h"
 #include "./sys/sys.h"
-#include "string.h"
+#include "math.h"
 #include "client_manager.h"
 #include "jt808_packager.h"
-#include "./internal_flash/bsp_internal_flash.h"  
 #include "ff.h"
-#include <stdio.h>
-#include <stdint.h>
 
+
+extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude, float  *v_speed, 
+														float *v_bearing, unsigned char *v_timestamp);
 void Tim3_Int_Init(u16 arr,u16 psc);
 void TIM3_IRQHandler(void);
-int TIM3_IT_FLAG = 0;
+bool TIM3_IT_FLAG = 0;
 
 int main(void)
 {
 	
-	int isTCPconnected=0;
-	int isRegistered=0;
-	int isAuthenticated=0;
-	int LocationReportCounter=0;
-	unsigned int v_alarm_value = 0;
-	unsigned int v_status_value = 0;
+	int 					isTCPconnected=0;
+	int 					isRegistered=0;
+	int 					isAuthenticated=0;
+	int 					LocationReportCounter=0;
+	
+	unsigned int 	v_alarm_value = 0;
+	unsigned int 	v_status_value = 0;
+	
+	
+	double 				v_latitude = 34.824788;
+	double 				v_longitude = 113.558408;
+	float 				v_altitude = 107;
+	float 				v_speed = 15;
+	float 				v_bearing = 120;
+	float 				m_bearing = 140;
+	unsigned char v_timestamp[] = "700101000000"; // 1970-01-01-00-00-00.
 
 
 	
@@ -94,7 +103,21 @@ int main(void)
 		Tim3_Int_Init(parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval*10000-1,7199);
 		while(1)
 		{
-			//位置上报 现行逻辑位如果上报5次未收到平台响应消息则重新连接服务器
+			//位置上报 
+			nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp);
+			updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
+			
+			//拐弯时上报位置数据
+			if((fabs(v_bearing - m_bearing)) >= parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle)
+			{
+				m_bearing = v_bearing;
+				jt808LocationReport();
+				printf("fabs(v_bearing - m_bearing)) > %d LocationReport SUCCESS\r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
+				LocationReportCounter++; 
+			}
+			printf("m_bearing ===== %f  \r\n", m_bearing);
+			
+			//当计时器达到缺省时间上报间隔时上报位置数据
 			if(TIM3_IT_FLAG == 1)
 			{
 				jt808LocationReport();
@@ -120,7 +143,7 @@ int main(void)
 				if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kTerminalHeartBeat))
 				{
 					printf("\r\n");
-					printf("jt808TerminalHeartBeat SEND COMPLETE!!!! \r\n ");
+					printf("jt808TerminalHeartBeat SEND SUCCESS!!!! \r\n ");
 					printf("\r\n");
 					USART2_RX_STA=0;
 				}
@@ -129,7 +152,7 @@ int main(void)
 				if(parameter_.parse.msg_head.msg_id==kSetTerminalParameters)
 				{
 					printf("\r\n");
-					printf("SetTerminalParameters parse COMPLETE!!!!\r\n ");
+					printf("SetTerminalParameters parse SUCCESS!!!!\r\n ");
 					printf("\r\n");
 					isRegistered=0;
 					isTCPconnected=0;
@@ -142,7 +165,7 @@ int main(void)
 				USART2_RX_STA=0;
 			}
 			
-			
+			//现行逻辑位如果上报5次未收到平台响应消息则重新连接服务器
 			printf("%d \r\n",LocationReportCounter);
 			if(LocationReportCounter>=5)
 			{

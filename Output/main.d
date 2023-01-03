@@ -48,11 +48,14 @@
 ..\..\output\main.o: ..\..\User\nmea_decode\include\nmea/./parser.h
 ..\..\output\main.o: ..\..\User\nmea_decode\include\nmea/./context.h
 ..\..\output\main.o: ..\..\system\./delay/delay.h
-..\..\output\main.o: ..\..\User\Bsp\./ec20/ec20.h
-..\..\output\main.o: D:\MDK5\ARM\ARMCC\Bin\..\include\string.h
+..\..\output\main.o: D:\MDK5\ARM\ARMCC\Bin\..\include\math.h
 ..\..\output\main.o: ..\..\User\jt808\include\client_manager.h
 ..\..\output\main.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\..\output\main.o: ..\..\User\FATFS\ff.h
+..\..\output\main.o: ..\..\User\FATFS\integer.h
+..\..\output\main.o: ..\..\User\FATFS\ffconf.h
 ..\..\output\main.o: ..\..\User\jt808\include\jt808_packager.h
+..\..\output\main.o: D:\MDK5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\main.o: ..\..\User\jt808\include\protocol_parameter.h
 ..\..\output\main.o: ..\..\User\jt808\include\location_report.h
 ..\..\output\main.o: ..\..\User\jt808\include\terminal_parameter.h
@@ -63,6 +66,3 @@
 ..\..\output\main.o: ..\..\User\jt808\include\terminal_register.h
 ..\..\output\main.o: ..\..\User\Bsp\./internal_flash/bsp_internal_flash.h
 ..\..\output\main.o: ..\..\User\jt808\include\bcd.h
-..\..\output\main.o: ..\..\User\FATFS\ff.h
-..\..\output\main.o: ..\..\User\FATFS\integer.h
-..\..\output\main.o: ..\..\User\FATFS\ffconf.h

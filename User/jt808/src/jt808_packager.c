@@ -86,7 +86,7 @@ int handle_kTerminalGeneralResponse(struct ProtocolParameter *para)
 
     int msg_len = 5;
     union U16ToU8Array u16converter;
-		printf("[%s] 终端通用应答 msg_id = 0x%04x\n", __FUNCTION__, kTerminalGeneralResponse);
+		printf("[%s]  msg_id = 0x%04x\n", __FUNCTION__, kTerminalGeneralResponse);
     // 应答消息流水号.
     u16converter.u16val = EndianSwap16(para->parse.msg_head.msg_flow_num);
     copyU16ToU8ArrayToBufferSend(u16converter.u8array);
@@ -104,7 +104,7 @@ int handle_kTerminalGeneralResponse(struct ProtocolParameter *para)
 // 终端心跳.
 int handle_kTerminalHeartBeat(struct ProtocolParameter *para)
 {
-    printf("[%s] 终端心跳 <消息体为空>  msg_id = 0x%04x \r\n ", __FUNCTION__, kTerminalHeartBeat);
+    printf("[%s] <no message body>  msg_id = 0x%04x \r\n ", __FUNCTION__, kTerminalHeartBeat);
 
     return 0;
 }
@@ -115,7 +115,7 @@ int handle_kTerminalRegister(struct ProtocolParameter *para)
 		int msg_len;
 		union U16ToU8Array u16converter;
 	
-    printf("[%s] 终端注册 msg_id = 0x%04x \r\n", __FUNCTION__, kTerminalRegister);
+    printf("[%s] msg_id = 0x%04x \r\n", __FUNCTION__, kTerminalRegister);
 
     initRegisterInfo(para); //初始化注册参数
 
@@ -156,7 +156,7 @@ int handle_kTerminalRegister(struct ProtocolParameter *para)
 // 终端注销.
 int handle_kTerminalLogOut(struct ProtocolParameter *para)
 {
-    printf("[%s] 终端注销 <消息体为空> msg_id = 0x%04x\n", __FUNCTION__, kTerminalLogOut);
+    printf("[%s] <no message body> msg_id = 0x%04x\n", __FUNCTION__, kTerminalLogOut);
 
     // 空消息体.
     return 0;
@@ -165,10 +165,8 @@ int handle_kTerminalLogOut(struct ProtocolParameter *para)
 // 终端鉴权.
 int handle_kTerminalAuthentication(struct ProtocolParameter *para)
 {
-    
-
     int msg_len = strlen(para->parse.authentication_code);
-		printf("[%s] 终端鉴权 msg_id = 0x%04x \r\n", __FUNCTION__, kTerminalAuthentication);
+		printf("[%s] msg_id = 0x%04x \r\n", __FUNCTION__, kTerminalAuthentication);
     // 鉴权码.
     bufferSendPushBytes(para->parse.authentication_code, msg_len);
 
@@ -259,7 +257,7 @@ int jt808FrameBodyPackage(struct ProtocolParameter *para)
 {
     unsigned short msg_id = para->msg_head.msg_id;
 		int result = -1;
-    printf("[jt808消息体打包] 现在的 msg_id: 0x%04x\r\n", para->msg_head.msg_id);
+    printf("[jt808FrameBodyPackage] msg_id: 0x%04x\r\n", para->msg_head.msg_id);
     
 
     switch (msg_id)
@@ -351,7 +349,7 @@ int jt808MsgBodyLengthFix(struct MsgHead *msg_head, unsigned int msgBody_len)
     u16converter.u16val = EndianSwap16(msgbody_attr.u16val);
     BufferSend[3] = u16converter.u8array[0];
     BufferSend[4] = u16converter.u8array[1];
-		printf("[jt808消息内容长度修正] OK !\r\n");
+		printf("[%s] OK !\r\n",__FUNCTION__);
     return 0;
 }
 
@@ -367,7 +365,11 @@ int jt808MsgEscape()
     outBuffer = (unsigned char *)malloc(outBufferSize);
 
     if (Escape_C(BufferSend, RealBufferSendSize, outBuffer, &outBufferSize) < 0)
-        return -1;
+		{
+			printf("[%s] FAILED",__FUNCTION__);
+			return -1;
+		}
+       
 
     *(outBuffer + 0) = PROTOCOL_SIGN;
     *(outBuffer + (outBufferSize - 1)) = PROTOCOL_SIGN;
@@ -380,7 +382,7 @@ int jt808MsgEscape()
         free(outBuffer);
         outBuffer = NULL;
     }
-		printf("[JT808协议转义] OK !\r\n");
+		printf("[%s] OK !\r\n",__FUNCTION__);
     return 0;
 }
 
@@ -436,13 +438,13 @@ int jt808FramePackage(struct ProtocolParameter *para)
     clearBufferSend();
     // 0、设置头标志位
     jt808SetFrameFlagHeader();
-    printf("[jt808头标志位] OK !\r\n");
+    printf("[jt808SetFrameFlagHeader] OK !\r\n");
 
     // 1、生成消息头
     if (jt808FrameHeadPackage(&(para->msg_head)) < 0)
         return -1;
 
-    printf("[jt808消息头] OK !\r\n");
+    printf("[jt808FrameHeadPackage] OK !\r\n");
 
     // 2、封装消息内容.
     ret = jt808FrameBodyPackage(para);
@@ -460,11 +462,15 @@ int jt808FramePackage(struct ProtocolParameter *para)
 
         // 5、写入发送缓存结束标识位.
         bufferSendPushByte(PROTOCOL_SIGN);
-				printf("[写入发送缓存结束标识位] OK !\r\n");
+				printf("[Write buffersend end PROTOCOL_SIGN] OK !\r\n");
 
         // 6、处理转义.
         if (jt808MsgEscape() < 0)
-            return -1;
+				{
+					printf("[%s] FAILED",__FUNCTION__);
+					return -1;
+				}
+            
         return 0;
     }
 

@@ -33,7 +33,7 @@ int Escape_C(unsigned char *in, unsigned int inlen, unsigned char *out, unsigned
 	int offset_num;
   if ((out == NULL) || ((*outlen) < 2 * inlen))
 	{
-		printf("转义函数出现错误 \r\n");
+		printf("[%s] FAILED",__FUNCTION__);
 		return -1;
 		
 	}
@@ -73,7 +73,7 @@ int ReverseEscape_C(unsigned char *in, unsigned int inlen, unsigned char *out, u
   // memset(out, 0, *outlen);
 	unsigned int i;
 	int offset_num;
-  printf("[逆转义ReverseEscape_C]:");
+  printf("[ReverseEscape_C]:");
 
   offset_num = 0;
   for (i = 0; i < inlen; ++i)
@@ -112,7 +112,7 @@ unsigned char BccCheckSum(const unsigned char *src, unsigned long len)
   {
     checksum = checksum ^ src[i];
   }
-	printf("[奇偶校验] OK !\r\n");
+	printf("[%s] OK !\r\n", __FUNCTION__);
   return checksum;
 	
 	

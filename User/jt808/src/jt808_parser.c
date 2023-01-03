@@ -70,7 +70,7 @@ int jt808FrameHeadParse(const unsigned char *in, unsigned int in_len, struct Msg
 int handle_kPlatformGeneralResponse(struct ProtocolParameter *para)
 {
 		uint16_t pos;
-    printf("[%s] 平台通用应答 msg_id = 0x%04x\r\n", __FUNCTION__, kPlatformGeneralResponse);
+    printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kPlatformGeneralResponse);
     if (para == NULL)
         return -1;
     pos = MSGBODY_NOPACKET_POS;
@@ -78,15 +78,15 @@ int handle_kPlatformGeneralResponse(struct ProtocolParameter *para)
         pos = MSGBODY_PACKET_POS;
     // 应答流水号.
     para->parse.respone_flow_num = (BufferReceive[pos] << 8) + BufferReceive[pos + 1];
-    printf("[%s] 平台通用应答 应答流水号 = 0x%04x\r\n", __FUNCTION__, para->parse.respone_flow_num);
+    printf("[%s]  respone_flow_num = 0x%04x\r\n", __FUNCTION__, para->parse.respone_flow_num);
 
     // 应答消息ID.
     para->parse.respone_msg_id = (BufferReceive[pos + 2] << 8) + BufferReceive[pos + 3];
-    printf("[%s] 平台通用应答 应答消息ID = 0x%04x\r\n", __FUNCTION__, para->parse.respone_msg_id);
+    printf("[%s] respone_msg_id = 0x%04x\r\n", __FUNCTION__, para->parse.respone_msg_id);
 
     // 应答结果.
     para->parse.respone_result = BufferReceive[pos + 4];
-    printf("[%s] 平台通用应答 应答结果 = 0x%04x\r\n", __FUNCTION__, para->parse.respone_result);
+    printf("[%s] respone_result = 0x%04x\r\n", __FUNCTION__, para->parse.respone_result);
 
     return 0;
 }
@@ -105,7 +105,7 @@ int handle_kTerminalRegisterResponse(struct ProtocolParameter *para)
 		unsigned short pos;
 		unsigned short len_code;
 	
-    printf("[%s] 终端注册应答 msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalRegisterResponse);
+    printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalRegisterResponse);
 
     if (para == NULL)
         return -1;
@@ -114,10 +114,10 @@ int handle_kTerminalRegisterResponse(struct ProtocolParameter *para)
         pos = MSGBODY_PACKET_POS;
     // 应答流水号.
     para->parse.respone_flow_num = (BufferReceive[pos] << 8) + BufferReceive[pos + 1];
-    printf("[%s] 终端注册应答流水号  = 0x%04x\r\n", __FUNCTION__, para->parse.respone_flow_num);
+    printf("[%s] respone_flow_num  = 0x%04x\r\n", __FUNCTION__, para->parse.respone_flow_num);
     // 应答结果.
     para->parse.respone_result = BufferReceive[pos + 2];
-    printf("[%s] 终端注册应答结果  = 0x%02x\r\n", __FUNCTION__, para->parse.respone_result);
+    printf("[%s] respone_result  = 0x%02x\r\n", __FUNCTION__, para->parse.respone_result);
     // 应答结果为0(成功)时解析出附加的鉴权码.
     if (para->parse.respone_result == kRegisterSuccess)
     {
@@ -125,7 +125,7 @@ int handle_kTerminalRegisterResponse(struct ProtocolParameter *para)
         para->parse.authentication_code = (unsigned char *)malloc((len_code + 1) * sizeof(unsigned char));
         memcpy(para->parse.authentication_code, &(BufferReceive[pos + 3]), len_code);
 
-        printf("[%s] 终端注册应答鉴权码 = %s\r\n", __FUNCTION__, para->parse.authentication_code);
+        printf("[%s] authentication_code = %s\r\n", __FUNCTION__, para->parse.authentication_code);
     }
 
     return 0;
@@ -142,7 +142,7 @@ int handle_kSetTerminalParameters(struct ProtocolParameter *para)
 	int isFind=0, i;
 	unsigned len;
 		
-	printf("[%s] 设置终端参数 msg_id = 0x%04x\r\n", __FUNCTION__, kSetTerminalParameters);
+	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kSetTerminalParameters);
 	if (para == NULL){
 			return -1;
 	}
@@ -191,7 +191,7 @@ int handle_kSetTerminalParameters(struct ProtocolParameter *para)
 // 查询终端参数..
 int handle_kGetTerminalParameters(struct ProtocolParameter *para)
 {
-    printf("[%s] 查询终端参数 msg_id = 0x%04x\r\n", __FUNCTION__, kGetTerminalParameters);
+    printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kGetTerminalParameters);
 
     return 0;
 }
@@ -199,7 +199,7 @@ int handle_kGetTerminalParameters(struct ProtocolParameter *para)
 //查询指定终端参数..
 int handle_kGetSpecificTerminalParameters(struct ProtocolParameter *para)
 {
-    printf("[%s] 查询指定终端参数 msg_id = 0x%04x\r\n", __FUNCTION__, kGetSpecificTerminalParameters);
+    printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kGetSpecificTerminalParameters);
 
     return 0;
 }
@@ -207,7 +207,7 @@ int handle_kGetSpecificTerminalParameters(struct ProtocolParameter *para)
 // 终端控制
 int handle_kTerminalControl(struct ProtocolParameter *para)
 {
-    printf("[%s] 终端控制 msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalControl);
+    printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalControl);
 
     return 0;
 }
@@ -215,7 +215,7 @@ int handle_kTerminalControl(struct ProtocolParameter *para)
 // 下发终端升级包.
 int handle_kTerminalUpgrade(struct ProtocolParameter *para)
 {
-    printf("[%s] 下发终端升级包 msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalUpgrade);
+    printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalUpgrade);
 
     return 0;
 }
@@ -223,7 +223,7 @@ int handle_kTerminalUpgrade(struct ProtocolParameter *para)
 //  位置信息查询..
 int handle_kGetLocationInformation(struct ProtocolParameter *para)
 {
-    printf("[%s] 位置信息查询 msg_id = 0x%04x\r\n", __FUNCTION__, kGetLocationInformation);
+    printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kGetLocationInformation);
 
     return 0;
 }
@@ -233,7 +233,7 @@ int jt808FrameBodyParse(struct ProtocolParameter *para)
     unsigned short msg_id = para->parse.msg_head.msg_id;
     
     int result = -1;
-		printf("[jt808消息体解析] current msg_id: 0x%04x\r\n", msg_id);
+		printf("[%s] current msg_id: 0x%04x\r\n",__FUNCTION__, msg_id);
 	
     switch (msg_id)
     {
@@ -313,9 +313,12 @@ int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct Protoco
 		unsigned int outBufferSize;
 		unsigned char *outBuffer;
 	
-    printf("%s[%d]: JT808消息头解析 -->1 !!! \r\n", __FUNCTION__, __LINE__);
+    printf("%s[%d]: jt808FrameParse -->1 !!! \r\n", __FUNCTION__, __LINE__);
     if (para == NULL)
-        return -1;
+		{
+			printf("para == NULL");
+			return -1;
+		}
     memcpy(BufferReceive, in, in_len);
     RealBufferReceiveSize = in_len;
     outBufferSize = RealBufferReceiveSize;
@@ -328,17 +331,17 @@ int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct Protoco
     if (ReverseEscape_C(BufferReceive, RealBufferReceiveSize, outBuffer, &outBufferSize) < 0)
         return -1;
     RealBufferReceiveSize = outBufferSize;
-    printf("%s[%d]: 逆转义ReverseEscape_C.  outBufferSize = %d  !!!\r\n", __FUNCTION__, __LINE__, outBufferSize);
+    printf("%s[%d]: ReverseEscape_C.  outBufferSize = %d  !!!\r\n", __FUNCTION__, __LINE__, outBufferSize);
 
     // 异或校验检查.
     if (BccCheckSum(&(outBuffer[1]), (outBufferSize - 3)) != *(outBuffer + outBufferSize - 2))
         return -1;
-    printf("%s[%d]: 异或校验BccCheckSum. -->3 !!!\r\n", __FUNCTION__, __LINE__);
+    printf("%s[%d]: BccCheckSum. -->3 !!!\r\n", __FUNCTION__, __LINE__);
 
     // 解析消息头.
     if (jt808FrameHeadParse(outBuffer, outBufferSize, &(para->parse.msg_head)) != 0)
         return -1;
-    printf("%s[%d]:  解析消息头. -->4 !!!\r\n", __FUNCTION__, __LINE__);
+    printf("%s[%d]:  jt808FrameHeadParse. -->4 !!!\r\n", __FUNCTION__, __LINE__);
     memcpy(para->msg_head.phone_num, para->parse.msg_head.phone_num, 11);
 //		para->msg_head.phone_num = para->parse.msg_head.phone_num;
 
