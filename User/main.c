@@ -18,7 +18,7 @@ void TIM3_IRQHandler(void);
 
 int main(void)
 {
-	int i=0;
+	int LocationReportCounter=0;
 	int isTCPconnected=0;
 	int isRegistered=0;
 	int isAuthenticated=0;
@@ -37,10 +37,11 @@ int main(void)
   USART2_Init(115200);
   GPS_Config();
 	
-	initSystemParameters();
+	
 	
 	while(1)
 	{
+		initSystemParameters();
 		//连接服务器
 		if(isTCPconnected == 0)
 		{
@@ -54,7 +55,7 @@ int main(void)
 		}
 
 		//设置手机号（唯一识别id）
-		setTerminalPhoneNumber("15637142116", 11);
+		setTerminalPhoneNumber("15637142117", 11);
 
 		//终端注册
 		if(isRegistered == 0)	
@@ -86,21 +87,55 @@ int main(void)
 		//设置位置上报警报位、状态位
 		initLocationInfo(v_alarm_value, v_status_value);
 		setStatusBit();
-						
+		
+//		Tim3_Int_Init(parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval*10000-1,7199);
 		while(1)
 		{
 			//位置上报 现行逻辑位如果上报10次未收到平台响应消息则重新连接服务器
-			i = jt808LocationReport(i);
-			printf("%d \r\n",i);
-			if(i>10)
+			jt808LocationReport();
+			LocationReportCounter++; 
+			
+			if(USART2_RX_STA&0X8000)    //接收到数据
+			{
+				USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
+				parsingMessage(USART2_RX_BUF, USART2_RX_STA);//开始校验
+				if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kLocationReport))
+				{
+					LocationReportCounter = 0;
+					printf("\r\n");
+					printf("Platform general response location report parse SUCCESS!!!!\r\n");
+					printf("\r\n");
+					USART2_RX_STA=0;
+				}
+				
+				if(parameter_.parse.msg_head.msg_id==kSetTerminalParameters)
+				{
+					printf("\r\n");
+					printf("SetTerminalParameters parse COMPLETE!!!!\r\n");
+					printf("\r\n");
+					isRegistered=0;
+					isTCPconnected=0;
+					isAuthenticated=0;
+					USART2_RX_STA=0;
+					LocationReportCounter = 0;
+					break;
+				}
+				
+				USART2_RX_STA=0;
+			}
+			
+			
+			printf("%d \r\n",LocationReportCounter);
+			if(LocationReportCounter>10)
 			{
 				isRegistered=0;
 				isTCPconnected=0;
 				isAuthenticated=0;
+				LocationReportCounter = 0;
 				break;
 			}
 
-	//			Tim3_Int_Init(flashWriteInfo.write_time_interval*10000-1,7199);
+
 		
 		}
 	}
@@ -139,7 +174,7 @@ void TIM3_IRQHandler(void)
 	if(TIM_GetITStatus(TIM3,TIM_IT_Update) == 1)
 	{
 		TIM_ClearITPendingBit(TIM3,TIM_IT_Update);
-		//jt808LocationReport();
+		jt808LocationReport();
 	}
 	
 }

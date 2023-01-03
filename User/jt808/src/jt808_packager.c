@@ -340,7 +340,11 @@ int jt808MsgBodyLengthFix(struct MsgHead *msg_head, unsigned int msgBody_len)
 		union U16ToU8Array u16converter;
 		union MsgBodyAttribute msgbody_attr;
     if (RealBufferSendSize < 12)
-        return -1;
+		{
+			printf("%d \r\n", RealBufferSendSize);
+			return -1;
+		}
+        
     msgbody_attr = msg_head->msgbody_attr;
     msgbody_attr.bit.msglen = msgBody_len;
     //union U16ToU8Array u16converter;

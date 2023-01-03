@@ -327,5 +327,8 @@ void handle_CarPlateColor(unsigned char *buf,unsigned char buf_len,struct Protoc
 	memcpy(write_buf, &para->parse.terminal_parameters, sizeof(para->parse.terminal_parameters));
 	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));
 	//memcpy(para->parse.terminal_parameters.CarPlateColor,p,1);
+	free(p);
+	
+	return ;
 }
 

@@ -72,6 +72,9 @@ struct TerminalParameters
 	
 	//车牌颜色，按照 JT/T415-2006 的 5.4.12
 	unsigned char CarPlateColor;
+	
+	//	DWORD, 判断是否已经进行出厂化参数设置
+	unsigned int initFactoryParameters;
 };
 
 

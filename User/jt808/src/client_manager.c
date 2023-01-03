@@ -25,19 +25,57 @@ struct ProtocolParameter parameter_;
 void initSystemParameters(void)
 {
 	unsigned char read_buf[64] = {0};
-	
+
 	Internal_ReadFlash(((uint32_t)0x08008000) , read_buf , sizeof(read_buf));
 	memset(&parameter_.parse.terminal_parameters,0,sizeof(parameter_.parse.terminal_parameters));
 	memcpy(&parameter_.parse.terminal_parameters, read_buf, sizeof(read_buf));
 
-	
-	//printf("%s \r\n",parameter_.parse.terminal_parameters.MainServerAddress);
-	//printf("%d \r\n",parameter_.parse.terminal_parameters.ServerPort);
+	if(parameter_.parse.terminal_parameters.initFactoryParameters == 0)
+	{
+		FlashWrite();
+	}
+//	printf("%d \r\n",parameter_.parse.terminal_parameters.initFactoryParameters);
 	printf("\r\n");
 	printf("系统参数初始化成功！！！!\r\n");
 	printf("\r\n");
+	
 }
 
+int FlashWrite()
+{
+	unsigned char write_buf[64] = {0};
+	parameter_.parse.terminal_parameters.HeartBeatInterval = 1;
+
+	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
+	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
+
+	parameter_.parse.terminal_parameters.ServerPort = 7611;
+
+	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 5;
+
+	parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle = 15;
+
+	parameter_.parse.terminal_parameters.MaxSpeed = 30;
+
+	parameter_.parse.terminal_parameters.ProvinceID = 0x0029;
+
+	parameter_.parse.terminal_parameters.CityID = 0x0066;
+
+	memset(parameter_.parse.terminal_parameters.CarPlateNum,0,sizeof(parameter_.parse.terminal_parameters.CarPlateNum));
+	memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "测1222", 7);
+
+	parameter_.parse.terminal_parameters.CarPlateColor = 0x02;
+	
+	parameter_.parse.terminal_parameters.initFactoryParameters = 1;
+
+	memset(write_buf,0,sizeof(write_buf));
+	memcpy(write_buf, &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
+	
+	
+	
+	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));
+	return 0;
+}
 
 ErrorStatus ec20_init(void)
 {
@@ -171,7 +209,7 @@ int packagingMessage(unsigned int msg_id)
     parameter_.msg_head.msg_id = msg_id; // 设置消息ID.
     if (jt808FramePackage(&parameter_) < 0)
     {
-        printf("[jt808消息头打包]: 失败 !!!\r\n");
+        printf("[jt808消息帧打包]: 失败 !!!\r\n");
         return -1;
     }
     ++parameter_.msg_head.msg_flow_num; // 每正确生成一条命令, 消息流水号增加1.
@@ -275,31 +313,32 @@ int jt808TerminalAuthentication(int isAuthenticated)
 	return isAuthenticated;
 }
 
-int jt808LocationReport(int LocationReportCounter)
+int jt808LocationReport()
 {
 		nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp);
 		updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
 		packagingMessage(kLocationReport);
 		Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
 		printf("位置上报完成!\r\n");
-		LocationReportCounter++;
+//		LocationReportCounter++;
 
 	
-		if(USART2_RX_STA&0X8000)    //接收到数据
-		{
-			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
-			parsingMessage(USART2_RX_BUF, USART2_RX_STA);//校验	
-			if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kLocationReport))
-			{
-				LocationReportCounter = 0;
-				printf("\r\n");
-				printf("位置上报平台应答解析 成功！！！!\r\n");
-				printf("\r\n");
-				USART2_RX_STA=0;
-			}
-			USART2_RX_STA=0;
-		}
-		return LocationReportCounter;
+//		if(USART2_RX_STA&0X8000)    //接收到数据
+//		{
+//			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
+//			parsingMessage(USART2_RX_BUF, USART2_RX_STA);//校验	
+//			if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kLocationReport))
+//			{
+//				LocationReportCounter = 0;
+//				printf("\r\n");
+//				printf("位置上报平台应答解析 成功！！！!\r\n");
+//				printf("\r\n");
+//				USART2_RX_STA=0;
+//			}
+//			USART2_RX_STA=0;
+//		}
+//		return LocationReportCounter;
+		return 0;
 }
 
 
@@ -309,7 +348,7 @@ int parsingMessage(const unsigned char *in, unsigned int in_len)
 		unsigned short msg_id;
     if (jt808FrameParse(in, in_len, &parameter_) < 0)
     {
-        printf("解析时出现错误\r\n");
+        printf("消息帧解析时出现错误\r\n");
         return -1;
     }
 
