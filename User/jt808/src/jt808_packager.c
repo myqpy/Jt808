@@ -125,7 +125,7 @@ int handle_kTerminalRegister(struct ProtocolParameter *para)
 		memcpy(&para->parse.terminal_parameters, read_buf, sizeof(read_buf));
 
 		
-    initRegisterInfo(para, para->parse.terminal_parameters); //初始化注册参数
+    initRegisterInfo(para); //初始化注册参数
 		
 
     msg_len= 37;

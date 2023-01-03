@@ -169,7 +169,7 @@ int main(void)
 //		if(flashWriteInfo.write_time_interval>0 && flashWriteInfo.write_time_interval<=30)
 //		{
 //			nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp);
-//		
+//		 
 //			updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
 //			packagingMessage(kLocationReport);
 //			printf("RealBufferSendSize = %d \r\n", RealBufferSendSize);

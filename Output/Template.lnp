@@ -54,7 +54,7 @@
 "..\..\output\location_report.o"
 "..\..\output\terminal_register.o"
 "..\..\output\util.o"
-"..\..\output\setting_parameter.o"
+"..\..\output\set_terminal_parameter.o"
 "..\..\output\diskio.o"
 "..\..\output\ff.o"
 "..\..\output\fatfs_flash_spi.o"
