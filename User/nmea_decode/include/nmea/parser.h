@@ -25,7 +25,7 @@ typedef struct _nmeaPARSER
 {
     void *top_node;
     void *end_node;
-    unsigned char *buffer;
+    unsigned char buffer[1024];
     int buff_size;
     int buff_use;
 

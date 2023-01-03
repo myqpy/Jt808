@@ -145,7 +145,7 @@ struct LocationBasicInformation
   unsigned short bearing;
   // 时间, "YYMMDDhhmmss"(GMT+8时间, 本标准之后涉及的时间均采用此时区).12B
   // std::string time;
-  const char *time;
+  unsigned char time[13];
 };
 
 // 扩展车辆信号状态位

@@ -3,11 +3,10 @@
 #ifndef JT808_PARSER_H_
 #define JT808_PARSER_H_
 
-//#include <stdio.h>
-//#include <stdint.h>
-#include "./sys/sys.h"
+#include <stdio.h>
+#include <stdint.h>
 #include <string.h>
-//#include <stdlib.h>
+#include <stdlib.h>
 #include "protocol_parameter.h"
 
 #define PARSER_NUM 9

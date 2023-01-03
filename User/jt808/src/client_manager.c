@@ -13,7 +13,9 @@ struct ProtocolParameter parameter_;
 /// @param phone
 void setTerminalPhoneNumber(const char *phone_num, unsigned int phoneSize)
 {
-    parameter_.msg_head.phone_num = (unsigned char *)phone_num;
+  memset(parameter_.msg_head.phone_num, 0, 13);
+	memcpy(parameter_.msg_head.phone_num, phone_num, phoneSize);  
+//	parameter_.msg_head.phone_num = (unsigned char *)phone_num;
 }
 
 int packagingAndSendMessage(unsigned int msg_id)
@@ -66,8 +68,9 @@ void updateLocation(double const v_latitude, double const v_longitude, float con
     parameter_.location_info.bearing = v_bearing;
     printf("para->bearing = %d\r\n", parameter_.location_info.bearing);
 
-    parameter_.location_info.time = v_timestamp;
-    printf("para->time = %s\r\n", parameter_.location_info.time);
+    //parameter_.location_info.time = v_timestamp;
+    memcpy(parameter_.location_info.time, v_timestamp, 13);
+		printf("para->time = %s\r\n", parameter_.location_info.time);
 }
 
 
@@ -89,7 +92,6 @@ int packagingMessage(unsigned int msg_id)
         return -1;
     }
     ++parameter_.msg_head.msg_flow_num; // 每正确生成一条命令, 消息流水号增加1.
-
     return 0;
 }
 
@@ -116,7 +118,7 @@ int parsingMessage(const unsigned char *in, unsigned int in_len)
         return -1;
     }
 
-    printf("ok parsing\r\n");
+//    printf("ok parsing\r\n");
     msg_id = parameter_.parse.msg_head.msg_id;
     printf("%s[%d]: [Message Accepted after parsing] ID msg_id = 0x%02x\r\n", __FUNCTION__, __LINE__, msg_id);
     switch (msg_id)

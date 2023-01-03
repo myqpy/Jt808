@@ -55,7 +55,7 @@ void setRegister_car_plate_num(const char *car_plate_num, unsigned int car_plate
 
 /// @brief 获取终端型号
 /// @return
-const char *getRegister_car_plate_num(void);
+//const char *getRegister_car_plate_num(void);
 
 void initRegisterInfo(struct ProtocolParameter *para);
 

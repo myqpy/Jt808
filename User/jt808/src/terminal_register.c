@@ -1,4 +1,5 @@
 #include "terminal_register.h"
+#include "./internal_flash/bsp_internal_flash.h"
 
 struct RegisterInfo registerInfo_;
 
@@ -54,7 +55,7 @@ const char *getRegister_manufacturer_id()
 
 // 终端型号, 固定20个字节, 位数不足后补0x00.
 //const char *terminal_model_ = "ZXIAT-CZ01";
-char terminal_model_ [40] = "ZXIAT-CZ01";
+unsigned char terminal_model_ [40] = "ZXIAT-CZ02";
 void setRegister_terminal_model(const char *terminalModel, unsigned int terminalModel_size)
 {
     unsigned int len_limit = 20;
@@ -72,8 +73,7 @@ const char *getRegister_terminal_model()
 }
 
 // 终端ID, 固定7个字节, 位数不足后补0x00.
-//const char *terminal_id_ = "17737702736";
-char terminal_id_ [20]= "17737702736";
+char terminal_id_ [20]= "0200001";
 void setRegister_terminal_id(const char *terminal_id, unsigned int terminal_id_size)
 {
     unsigned int len_limit = 7;
@@ -106,7 +106,7 @@ unsigned char getRegister_car_plate_color()
 
 // 车辆标识, 仅在上牌时使用.
 //const char *car_plate_num_ = "豫778899";
-char car_plate_num_ [20] = "豫ASTM32";
+unsigned char car_plate_num_ [12] = "豫Aab111";
 
 void setRegister_car_plate_num(const char *car_plate_num, unsigned int car_plate_num_size)
 {
@@ -131,6 +131,9 @@ void initRegisterInfo(struct ProtocolParameter *para)
 		const char *ptr_terminal_model;
 		const char *ptr_terminal_id;
     printf("\n\r[initRegisterInfo] OK !\n");
+		//unsigned char buf_info[37] = {0};
+		//struct register_info **info;
+		//struct para register_info *info;
     //省域ID
     para->register_info.province_id = getRegisterProvinceId();
     printf("para->register_info.province_id = %d\r\n", para->register_info.province_id);
@@ -222,8 +225,10 @@ void initRegisterInfo(struct ProtocolParameter *para)
     //车牌号
     if (para->register_info.car_plate_color != 0x00)
     {
-        para->register_info.car_plate_num = getRegister_car_plate_num();
+        memcpy(para->register_info.car_plate_num, car_plate_num_, 12);
         printf("para->register_info.car_plate_num = %s\r\n", para->register_info.car_plate_num);
     }
     printf("\r\n ");
+		
+//		memcpy(buf_info, para->register_info, 37);
 }

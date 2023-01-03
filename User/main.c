@@ -1,18 +1,3 @@
-/**
-  ******************************************************************************
-  * @file    main.c
-  * @author  WJSHM
-  * @version V1.0
-  * @date    2013-xx-xx
-  * @brief   对GPS模块传输的数据进行解码，获取定位信息。
-  ******************************************************************************
-  * @attention
-  *
-  *
-  ******************************************************************************
-  */
-
-//#include "stm32f10x.h"
 #include "./usart/usart.h"
 #include "./usart2/usart2.h"
 #include "./led/bsp_led.h"
@@ -23,32 +8,88 @@
 #include "string.h"
 #include "client_manager.h"
 #include "jt808_packager.h"
-
+#include "./internal_flash/bsp_internal_flash.h"   
+//#include <stdio.h>
+//#include <stdlib.h>
 //#define IPSERVER "121.5.140.126"
 //#define PORTSERVER 8089
 
 #define IPSERVER "121.5.140.126"
 #define PORTSERVER 7611
-extern int nmea_decode_test(void);
+extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude, float  *v_speed, float *v_bearing, unsigned char *v_timestamp);
 ErrorStatus ec20_init(void);
+
 
 int main(void)
 {
+	
+	struct RegisterInfo
+	{
+		unsigned short province_id;
+
+		unsigned short city_id;
+
+		unsigned char manufacturer_id[5];
+
+		unsigned char terminal_model[20];
+
+		unsigned char terminal_id[7];
+
+		unsigned char car_plate_color;
+
+		unsigned char car_plate_num[12];
+	};
+	unsigned char buf_info[37] = {0};
+	
+	
+	struct RegisterInfo *info;
+	info->province_id = 0x0029;
+	info->city_id = 0x0066;
+	uart_init(115200);
+	//info->manufacturer_id = "XINDA";
+	memcpy(info->manufacturer_id, "XINDA", 5);
+	//info->terminal_model = "ZXIAT-CZ02";
+	memcpy(info->terminal_model, "ZXIAT-CZ02", 10);
+	//info->terminal_id = "0200001";
+	memcpy(info->terminal_id, "0200001", 7);
+	info->car_plate_color = 0x02;
+	//info->car_plate_num = "AAab111";
+	memcpy(info->car_plate_num, "AAab111", 7);
+	
+	memcpy(buf_info, info, 37);
+	
+	uart_init(115200);
+	if(InternalFlash_Test((uint32_t)(buf_info))== PASSED)
+	{
+		printf("读写内部FLASH测试成功\r\n");
+
+	}
+	else
+	{
+		printf("读写内部FLASH测试失败\r\n");
+	}
+	while(1);
+}
+
+/*
+int main(void)
+{
 	int i;
-		
 	unsigned int v_alarm_value = 0;
 	unsigned int v_status_value = 0;
-	double const v_latitude = 34.824788;
-	double const v_longitude = 113.558408;
-	float const v_altitude = 107;
-	float const v_speed = 15;
-	float const v_bearing = 132;
-	unsigned char *v_timestamp = "221127212855";
+//  double  v_latitude = 34.741348;
+//	double  v_longitude = 113.701872;
+	double  v_latitude = 34.824788;
+	double  v_longitude = 113.558408;
+	float  v_altitude = 107;
+	float  v_speed = 15;
+	float  v_bearing = 132;
+	unsigned char v_timestamp[] = "221127212855";
 	
-	
-	LED_GPIO_Config();	//LED 端口初始化
-  
-  GPIO_SetBits(GPIOD,GPIO_Pin_2);
+
+//	LED_GPIO_Config();	//LED 端口初始化
+//  
+//  GPIO_SetBits(GPIOD,GPIO_Pin_2);
 
 	NVIC_Configuration(); 	//设置NVIC中断分组2:2位抢占优先级，2位响应优先级
 	delay_init();	    	 		//延时函数初始化
@@ -66,62 +107,36 @@ int main(void)
 		}
 		delay_ms(2000);
 	}
-  setTerminalPhoneNumber("15637142115", 11);
-	printf("will send !\r\n");
-	
-	printf("RealBufferSendSize = %d \r\n", RealBufferSendSize);
-	delay_ms(1000);
+  setTerminalPhoneNumber("20220200001", 11);
 	packagingMessage(kTerminalRegister);
 	delay_ms(1000);
-	printf("RealBufferSendSize = %d \r\n", RealBufferSendSize);
-	
-	for (i = 0; i < RealBufferSendSize; i++)
-	{
-		printf("%02x ",BufferSend[i]);
-	}
-	printf("\r\n");
 	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
-	
-	printf("send ok!\r\n");			
-	printf("sendbytes: %d\r\n", RealBufferSendSize);
-	printf("send done !\r\n");
 
-	printf("will recv !\r\n");
-	
 	while(1)
 	{
-		//printf("1");
 		delay_ms(100);
 		if(USART2_RX_STA&0X8000)    //接收到数据
 		{
 			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
 			//开始校验
 			parsingMessage(USART2_RX_BUF, USART2_RX_STA);
-			printf("recv done!\r\n");
+			printf("Register done!\r\n");
 			printf("Client receive bytes: %d\r\n", USART2_RX_STA);
 			USART2_RX_STA=0;
 			break;
+			
 		}
 	}
-	
-	
   packagingMessage(kTerminalAuthentication);
 
-  printf("RealBufferSendSize = %d \n", RealBufferSendSize);
-  delay_ms(1000);
-  for (i = 0; i < RealBufferSendSize; ++i)
-  {
-    printf("%02X ", BufferSend[i]);
-  }
-  printf("\r\n");
-  // sleep(1);
+//  printf("RealBufferSendSize = %d \n", RealBufferSendSize);
+//  delay_ms(1000);
+//  for (i = 0; i < RealBufferSendSize; ++i)
+//  {
+//    printf("%02X ", BufferSend[i]);
+//  }
+//  printf("\r\n");
 	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
-	printf("send ok!\r\n");
-	printf("sendbytes: %d\r\n", RealBufferSendSize);
-  printf("send done !\r\n");
-
-  printf("will recv !\r\n");
-	
 	while(1)
 	{
 		delay_ms(100);
@@ -130,7 +145,7 @@ int main(void)
 			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
 			//开始校验
 			parsingMessage(USART2_RX_BUF, USART2_RX_STA);
-			printf("recv done!\r\n");
+			printf("Authentication done!\r\n");
 			printf("Client receive bytes: %d\r\n", USART2_RX_STA);
 			USART2_RX_STA=0;
 			break;
@@ -140,28 +155,34 @@ int main(void)
 	initLocationInfo(v_alarm_value, v_status_value);
 	setStatusBit();
 	
-	
+	updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
+
+	packagingMessage(kLocationReport);
+	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
 	while(1)
 	{
 		delay_ms(100);
+		if(USART2_RX_STA&0X8000)    //接收到数据
+		{
+			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
+			//开始校验
+			parsingMessage(USART2_RX_BUF, USART2_RX_STA);
+			printf("updata location done!\r\n");
+			printf("Client receive bytes: %d\r\n", USART2_RX_STA);
+			USART2_RX_STA=0;
+			break;
+		}
+	}
+	
+	while(1)
+	{
+		nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp);
+		
 		updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
-		printf("will send !\r\n");
-		printf("RealBufferSendSize = %d \r\n", RealBufferSendSize);
-		delay_ms(1000);
 		packagingMessage(kLocationReport);
-		delay_ms(1000);
 		printf("RealBufferSendSize = %d \r\n", RealBufferSendSize);
 
-		for (i = 0; i < RealBufferSendSize; i++)
-		{
-			printf("%02x ",BufferSend[i]);
-		}
-		printf("\r\n");
 		Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
-		
-		printf("send ok!\r\n");			
-		printf("sendbytes: %d\r\n", RealBufferSendSize);
-		printf("send done !\r\n");
 		while(1)
 		{
 			delay_ms(100);
@@ -170,19 +191,11 @@ int main(void)
 				USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
 				//开始校验
 				parsingMessage(USART2_RX_BUF, USART2_RX_STA);
-				printf("recv done!\r\n");
-				printf("Client receive bytes: %d\r\n", USART2_RX_STA);
 				USART2_RX_STA=0;
-				nmea_decode_test();
 				break;
 			}
 		}
 	}
-  //nmea_decode_test(); //GPS解码测试
-  
-  while(1);
-
-
 }
 
 ErrorStatus ec20_init(void)
@@ -236,6 +249,7 @@ ErrorStatus ec20_init(void)
         return ERROR;
     }
 } 
+*/
 /*
 void Delay(__IO uint32_t nCount)	 //简单的延时函数
 {

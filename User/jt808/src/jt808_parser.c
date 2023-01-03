@@ -26,7 +26,7 @@ unsigned int RealBufferReceiveSize = 0;
 // 解析消息头.
 int jt808FrameHeadParse(const unsigned char *in, unsigned int in_len, struct MsgHead *msg_head)
 {
-		static int isPhoneMalloc;
+//	  static int isPhoneMalloc;
     if (msg_head == NULL || in_len < 15)
         return -1;
     // 消息ID.
@@ -39,11 +39,12 @@ int jt808FrameHeadParse(const unsigned char *in, unsigned int in_len, struct Msg
     printf("[jt808FrameHeadParse] msg_head->msgbody_attr.u16val = 0x%02x\r\n", msg_head->msgbody_attr.u16val);
 
     // 终端手机号.
-    isPhoneMalloc = 0;
-    if (isPhoneMalloc == 0)
-    {
-        msg_head->phone_num = (unsigned char *)malloc(12 * sizeof(unsigned char));
-    }
+//    isPhoneMalloc = 0;
+//    if (isPhoneMalloc == 0)
+//    {
+//        
+//			msg_head->phone_num = (unsigned char *)malloc(12 * sizeof(unsigned char));
+//    }
     memset(msg_head->phone_num, 0, 12);
 
     if (jt808BcdToStringCompress((&(in[5])), msg_head->phone_num, 6) == NULL)
@@ -332,7 +333,8 @@ int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct Protoco
     if (jt808FrameHeadParse(outBuffer, outBufferSize, &(para->parse.msg_head)) != 0)
         return -1;
     printf("%s[%d]: FrameHeadParse. -->4 !!!\r\n", __FUNCTION__, __LINE__);
-    para->msg_head.phone_num = para->parse.msg_head.phone_num;
+    memcpy(para->msg_head.phone_num, para->parse.msg_head.phone_num, 11);
+//		para->msg_head.phone_num = para->parse.msg_head.phone_num;
 
     // 解析消息内容.
     ret = jt808FrameBodyParse(para);

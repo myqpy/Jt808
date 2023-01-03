@@ -350,8 +350,8 @@ int jt808MsgBodyLengthFix(struct MsgHead *msg_head, unsigned int msgBody_len)
 // JT808协议转义.
 int jt808MsgEscape()
 {
-		unsigned int outBufferSize;
-		unsigned char *outBuffer;
+	unsigned int outBufferSize;
+	unsigned char *outBuffer;
     BufferSend[0] = 0x00;
     BufferSend[RealBufferSendSize - 1] = 0x00;
 

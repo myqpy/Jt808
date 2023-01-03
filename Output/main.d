@@ -51,14 +51,15 @@
 ..\..\output\main.o: ..\..\User\Bsp\./ec20/ec20.h
 ..\..\output\main.o: D:\MDK5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\main.o: ..\..\User\jt808\include\client_manager.h
+..\..\output\main.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\..\output\main.o: ..\..\User\jt808\include\jt808_packager.h
 ..\..\output\main.o: ..\..\User\jt808\include\protocol_parameter.h
 ..\..\output\main.o: ..\..\User\jt808\include\location_report.h
 ..\..\output\main.o: ..\..\User\jt808\include\terminal_parameter.h
 ..\..\output\main.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdbool.h
 ..\..\output\main.o: ..\..\User\jt808\include\util.h
-..\..\output\main.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\..\output\main.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
 ..\..\output\main.o: ..\..\User\jt808\include\terminal_control.h
 ..\..\output\main.o: ..\..\User\jt808\include\terminal_register.h
 ..\..\output\main.o: ..\..\User\jt808\include\bcd.h
+..\..\output\main.o: ..\..\User\./internal_flash/bsp_internal_flash.h

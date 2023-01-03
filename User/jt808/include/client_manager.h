@@ -3,10 +3,10 @@
 #ifndef JT808_CLIENT_MANAGER_H_
 #define JT808_CLIENT_MANAGER_H_
 
-//#include <stdio.h>
-//#include <stdint.h>
-#include "./sys/sys.h"
-//#include <stdlib.h>
+#include <stdio.h>
+#include <stdint.h>
+
+#include <stdlib.h>
 
 extern struct ProtocolParameter parameter_;
 

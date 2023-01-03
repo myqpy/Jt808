@@ -1,10 +1,10 @@
 #ifndef JT808_PROTOCOL_PARAMETER_H_
 #define JT808_PROTOCOL_PARAMETER_H_
 
-//#include <stdio.h>
-//#include <stdint.h>
-//#include <stdlib.h>
-#include <./sys/sys.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+
 #include "location_report.h"
 #include "terminal_parameter.h"
 #include "terminal_control.h"
@@ -145,7 +145,7 @@ struct MsgHead
   // 消息体属性.
   union MsgBodyAttribute msgbody_attr;
   // 终端手机号.
-  unsigned char *phone_num;
+  unsigned char phone_num[13];
   // 消息流水号.
   unsigned short msg_flow_num;
   // 总包数, 分包情况下使用.
@@ -176,7 +176,7 @@ struct RegisterInfo
   unsigned char car_plate_color;
 
   // 车辆标识, 仅在上牌时使用.
-  const char *car_plate_num;
+  unsigned char car_plate_num[12];
 };
 
 // 升级类型.

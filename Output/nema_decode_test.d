@@ -45,4 +45,7 @@
 ..\..\output\nema_decode_test.o: ..\..\User\nmea_decode\include\nmea/./parse.h
 ..\..\output\nema_decode_test.o: ..\..\User\nmea_decode\include\nmea/./parser.h
 ..\..\output\nema_decode_test.o: ..\..\User\nmea_decode\include\nmea/./context.h
+..\..\output\nema_decode_test.o: ..\..\User\FATFS\ff.h
+..\..\output\nema_decode_test.o: ..\..\User\FATFS\integer.h
+..\..\output\nema_decode_test.o: ..\..\User\FATFS\ffconf.h
 ..\..\output\nema_decode_test.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h

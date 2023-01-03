@@ -10,6 +10,7 @@
       <TargetName>GPS</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pArmCC>5060300::V5.06 update 3 (build 300)::ARMCC</pArmCC>
       <pCCUsed>5060300::V5.06 update 3 (build 300)::ARMCC</pCCUsed>
       <TargetOption>
         <TargetCommonOption>
@@ -553,6 +554,11 @@
               <FileName>nema_decode_test.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\nema_decode_test.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_internal_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\internal_flash\bsp_internal_flash.c</FilePath>
             </File>
           </Files>
         </Group>

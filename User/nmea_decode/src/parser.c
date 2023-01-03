@@ -40,24 +40,23 @@ typedef struct _nmeaParserNODE
  */
 int nmea_parser_init(nmeaPARSER *parser)
 {
-    int resv = 0;
+    int resv = 1;
     int buff_size = nmea_property()->parse_buff_size;
 
     NMEA_ASSERT(parser);
 
-    if(buff_size < NMEA_MIN_PARSEBUFF)
-        buff_size = NMEA_MIN_PARSEBUFF;
+//    if(buff_size < NMEA_MIN_PARSEBUFF)
+//        buff_size = NMEA_MIN_PARSEBUFF;
 
     memset(parser, 0, sizeof(nmeaPARSER));
-
-    if(0 == (parser->buffer = malloc(buff_size)))
-        nmea_error("Insufficient memory!");
-    else
-    {
-        parser->buff_size = buff_size;
-        resv = 1;
-    }    
-
+		parser->buff_size = buff_size;
+//    if(0 == (parser->buffer = malloc(buff_size)))
+//        nmea_error("Insufficient memory!");
+//    else
+//    {
+//        
+//        resv = 1;
+//    }    
     return resv;
 }
 

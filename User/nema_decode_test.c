@@ -15,13 +15,13 @@
 #include "stm32f10x.h"
 #include "./usart/usart.h"
 #include "./gps/gps_config.h"
-//#include "ff.h"
+#include "ff.h"
 #include "nmea/nmea.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 char bufTime[12]={0};
-int nmea_decode_test(void)
+int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude, float  *v_speed, float *v_bearing, unsigned char *v_timestamp)
 {
 		double deg_lat;//转换成[degree].[degree]格式的纬度
 		double deg_lon;//转换成[degree].[degree]格式的经度
@@ -80,16 +80,17 @@ int nmea_decode_test(void)
 				deg_lat = nmea_ndeg2degree(info.lat);
 				deg_lon = nmea_ndeg2degree(info.lon);
 				
-				printf("\r\n纬度：%f,经度%f\r\n",deg_lat,deg_lon);
-        printf("\r\n海拔高度：%f 米 ", info.elv);
-        printf("\r\n速度：%f km/h ", info.speed);
-        printf("\r\n航向：%f 度", info.direction);
-				
-				printf("\r\n正在使用的GPS卫星：%d,可见GPS卫星：%d",info.satinfo.inuse,info.satinfo.inview);
+//				printf("\r\n纬度：%f,经度%f\r\n",deg_lat,deg_lon);
+//        printf("\r\n海拔高度：%f 米 ", info.elv);
+//        printf("\r\n速度：%f km/h ", info.speed);
+//        printf("\r\n航向：%f 度", info.direction);
+//				
+//				printf("\r\n正在使用的GPS卫星：%d,可见GPS卫星：%d",info.satinfo.inuse,info.satinfo.inview);
 
-				printf("\r\n正在使用的北斗卫星：%d,可见北斗卫星：%d",info.BDsatinfo.inuse,info.BDsatinfo.inview);
-				printf("\r\nPDOP：%f,HDOP：%f，VDOP：%f\n\n",info.PDOP,info.HDOP,info.VDOP);
+//				printf("\r\n正在使用的北斗卫星：%d,可见北斗卫星：%d",info.BDsatinfo.inuse,info.BDsatinfo.inview);
+//				printf("\r\nPDOP：%f,HDOP：%f，VDOP：%f\n\n",info.PDOP,info.HDOP,info.VDOP);
 				
+	
 				m_lat=(long)(deg_lat*(1e6));
 				m_lon=(long)(deg_lon*1000000);
 				m_alt=(int)(info.elv);
@@ -98,6 +99,12 @@ int nmea_decode_test(void)
 				
 				if(m_lat!=0)
 				{
+					*v_latitude = deg_lat;
+					*v_longitude = deg_lon;
+					*v_altitude = info.elv;
+					*v_speed = info.speed;
+					*v_bearing = info.direction;
+
 					printf("纬度：%ld\n",m_lat);
 					printf("经度: %ld\n",m_lon);
 					printf("海拔: %d 米 \n", m_alt);
@@ -108,6 +115,8 @@ int nmea_decode_test(void)
 					//char *bufTime=(char *)malloc(64);
 					sprintf(bufTime,"%02d%02d%02d%02d%02d%02d",((beiJingTime.year+1900)%2000), beiJingTime.mon,beiJingTime.day,beiJingTime.hour,beiJingTime.min,beiJingTime.sec);
 					printf("bufTime: %s\n",bufTime);
+					memset(v_timestamp, 0, 13);
+					memcpy(v_timestamp, bufTime, 12);
 					//free(bufTime);
 				}
 
@@ -117,11 +126,8 @@ int nmea_decode_test(void)
       }
 	
 	}
-
     /* 释放GPS数据结构 */
-     nmea_parser_destroy(&parser);
-
-    
+//     nmea_parser_destroy(&parser);
 		return 0;
 }
 

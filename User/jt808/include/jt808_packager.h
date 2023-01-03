@@ -1,8 +1,7 @@
-//#include <stdio.h>
-//#include <stdint.h>
-//#include <string.h>
-//#include <stdlib.h>
-#include "./sys/sys.h"
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include <stdlib.h>
 
 #define PACKAGER_NUM 9        //终端打包器命令相应消息ID数量
 #define BUFFER_SIZE_SEND 1024 // buffer size 发送缓存大小
