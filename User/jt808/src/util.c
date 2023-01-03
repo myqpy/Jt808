@@ -32,7 +32,12 @@ int Escape_C(unsigned char *in, unsigned int inlen, unsigned char *out, unsigned
 	unsigned int i;
 	int offset_num;
   if ((out == NULL) || ((*outlen) < 2 * inlen))
-    return -1;
+	{
+		printf("转义函数出现错误 \r\n");
+		return -1;
+		
+	}
+    
   memset(out, 0, *outlen);
 
   offset_num = 0;
@@ -107,7 +112,10 @@ unsigned char BccCheckSum(const unsigned char *src, unsigned long len)
   {
     checksum = checksum ^ src[i];
   }
+	printf("[奇偶校验] OK !\r\n");
   return checksum;
+	
+	
 }
 
 // } // namespace libjt808

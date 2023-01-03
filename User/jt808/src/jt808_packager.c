@@ -104,7 +104,7 @@ int handle_kTerminalGeneralResponse(struct ProtocolParameter *para)
 // 终端心跳.
 int handle_kTerminalHeartBeat(struct ProtocolParameter *para)
 {
-    printf("[%s] 终端心跳 <消息体为空>  msg_id = 0x%04x\n", __FUNCTION__, kTerminalHeartBeat);
+    printf("[%s] 终端心跳 <消息体为空>  msg_id = 0x%04x \r\n ", __FUNCTION__, kTerminalHeartBeat);
 
     return 0;
 }
@@ -351,6 +351,7 @@ int jt808MsgBodyLengthFix(struct MsgHead *msg_head, unsigned int msgBody_len)
     u16converter.u16val = EndianSwap16(msgbody_attr.u16val);
     BufferSend[3] = u16converter.u8array[0];
     BufferSend[4] = u16converter.u8array[1];
+		printf("[jt808消息内容长度修正] OK !\r\n");
     return 0;
 }
 
@@ -379,7 +380,7 @@ int jt808MsgEscape()
         free(outBuffer);
         outBuffer = NULL;
     }
-
+		printf("[JT808协议转义] OK !\r\n");
     return 0;
 }
 
@@ -459,6 +460,7 @@ int jt808FramePackage(struct ProtocolParameter *para)
 
         // 5、写入发送缓存结束标识位.
         bufferSendPushByte(PROTOCOL_SIGN);
+				printf("[写入发送缓存结束标识位] OK !\r\n");
 
         // 6、处理转义.
         if (jt808MsgEscape() < 0)

@@ -15,13 +15,15 @@
 
 void Tim3_Int_Init(u16 arr,u16 psc);
 void TIM3_IRQHandler(void);
+int TIM3_IT_FLAG = 0;
 
 int main(void)
 {
-	int LocationReportCounter=0;
+	
 	int isTCPconnected=0;
 	int isRegistered=0;
 	int isAuthenticated=0;
+	int LocationReportCounter=0;
 	unsigned int v_alarm_value = 0;
 	unsigned int v_status_value = 0;
 
@@ -55,7 +57,7 @@ int main(void)
 		}
 
 		//设置手机号（唯一识别id）
-		setTerminalPhoneNumber("15637142117", 11);
+		setTerminalPhoneNumber("19149421105", 11);
 
 		//终端注册
 		if(isRegistered == 0)	
@@ -88,12 +90,19 @@ int main(void)
 		initLocationInfo(v_alarm_value, v_status_value);
 		setStatusBit();
 		
-//		Tim3_Int_Init(parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval*10000-1,7199);
+		
+		Tim3_Int_Init(parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval*10000-1,7199);
 		while(1)
 		{
-			//位置上报 现行逻辑位如果上报10次未收到平台响应消息则重新连接服务器
-			jt808LocationReport();
-			LocationReportCounter++; 
+			//位置上报 现行逻辑位如果上报5次未收到平台响应消息则重新连接服务器
+			if(TIM3_IT_FLAG == 1)
+			{
+				jt808LocationReport();
+				LocationReportCounter++; 
+			}
+
+//			jt808TerminalHeartBeat();
+			
 			
 			if(USART2_RX_STA&0X8000)    //接收到数据
 			{
@@ -103,15 +112,24 @@ int main(void)
 				{
 					LocationReportCounter = 0;
 					printf("\r\n");
-					printf("Platform general response location report parse SUCCESS!!!!\r\n");
+					printf("Platform general response location report parse SUCCESS!!!!\r\n ");
 					printf("\r\n");
 					USART2_RX_STA=0;
 				}
 				
+				if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kTerminalHeartBeat))
+				{
+					printf("\r\n");
+					printf("jt808TerminalHeartBeat SEND COMPLETE!!!! \r\n ");
+					printf("\r\n");
+					USART2_RX_STA=0;
+				}
+				
+				
 				if(parameter_.parse.msg_head.msg_id==kSetTerminalParameters)
 				{
 					printf("\r\n");
-					printf("SetTerminalParameters parse COMPLETE!!!!\r\n");
+					printf("SetTerminalParameters parse COMPLETE!!!!\r\n ");
 					printf("\r\n");
 					isRegistered=0;
 					isTCPconnected=0;
@@ -126,7 +144,7 @@ int main(void)
 			
 			
 			printf("%d \r\n",LocationReportCounter);
-			if(LocationReportCounter>10)
+			if(LocationReportCounter>=5)
 			{
 				isRegistered=0;
 				isTCPconnected=0;
@@ -173,8 +191,8 @@ void TIM3_IRQHandler(void)
 {
 	if(TIM_GetITStatus(TIM3,TIM_IT_Update) == 1)
 	{
+		TIM3_IT_FLAG = 1;
 		TIM_ClearITPendingBit(TIM3,TIM_IT_Update);
-		jt808LocationReport();
 	}
 	
 }

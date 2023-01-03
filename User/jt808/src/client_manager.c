@@ -29,12 +29,21 @@ void initSystemParameters(void)
 	Internal_ReadFlash(((uint32_t)0x08008000) , read_buf , sizeof(read_buf));
 	memset(&parameter_.parse.terminal_parameters,0,sizeof(parameter_.parse.terminal_parameters));
 	memcpy(&parameter_.parse.terminal_parameters, read_buf, sizeof(read_buf));
-
+	parameter_.parse.terminal_parameters.initFactoryParameters = 0;
 	if(parameter_.parse.terminal_parameters.initFactoryParameters == 0)
 	{
 		FlashWrite();
 	}
 //	printf("%d \r\n",parameter_.parse.terminal_parameters.initFactoryParameters);
+	printf("终端心跳发送间隔 == %d \r\n",parameter_.parse.terminal_parameters.HeartBeatInterval);
+	printf("主服务器地址 == \"%s\" \r\n",parameter_.parse.terminal_parameters.MainServerAddress);
+	printf("服务器 TCP 端口 == %d \r\n",parameter_.parse.terminal_parameters.ServerPort);
+	printf("缺省时间汇报间隔 == %d \r\n",parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval);
+	printf("拐点补传角度 == %d \r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
+	printf("最高速度 == %d \r\n",parameter_.parse.terminal_parameters.MaxSpeed);
+	printf("车辆所在的省域 ID == %d \r\n",parameter_.parse.terminal_parameters.ProvinceID);
+	printf("车辆所在的市域 ID == %d \r\n",parameter_.parse.terminal_parameters.CityID);
+	printf("机动车号牌 == %s \r\n",parameter_.parse.terminal_parameters.CarPlateNum);
 	printf("\r\n");
 	printf("系统参数初始化成功！！！!\r\n");
 	printf("\r\n");
@@ -62,7 +71,7 @@ int FlashWrite()
 	parameter_.parse.terminal_parameters.CityID = 0x0066;
 
 	memset(parameter_.parse.terminal_parameters.CarPlateNum,0,sizeof(parameter_.parse.terminal_parameters.CarPlateNum));
-	memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "测1222", 7);
+	memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "测1226", 7);
 
 	parameter_.parse.terminal_parameters.CarPlateColor = 0x02;
 	
@@ -250,10 +259,9 @@ int jt808TerminalRegister(int isRegistered)
 	while(i<3)
 	{
 		packagingMessage(kTerminalRegister);
-		delay_ms(1000);
 		Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
-
-		delay_ms(100);
+		delay_ms(1000);
+		
 		if(USART2_RX_STA&0X8000)    //接收到数据
 		{
 			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
@@ -285,11 +293,10 @@ int jt808TerminalAuthentication(int isAuthenticated)
 	int i=0;
 	while(i<3)
 	{
-		packagingMessage(kTerminalAuthentication);
-		delay_ms(1000);
+		packagingMessage(kTerminalAuthentication);	
 		Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
-
-		delay_ms(100);
+		delay_ms(1000);
+		
 		if(USART2_RX_STA&0X8000)    //接收到数据
 		{
 			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
@@ -320,28 +327,15 @@ int jt808LocationReport()
 		packagingMessage(kLocationReport);
 		Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
 		printf("位置上报完成!\r\n");
-//		LocationReportCounter++;
-
-	
-//		if(USART2_RX_STA&0X8000)    //接收到数据
-//		{
-//			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
-//			parsingMessage(USART2_RX_BUF, USART2_RX_STA);//校验	
-//			if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kLocationReport))
-//			{
-//				LocationReportCounter = 0;
-//				printf("\r\n");
-//				printf("位置上报平台应答解析 成功！！！!\r\n");
-//				printf("\r\n");
-//				USART2_RX_STA=0;
-//			}
-//			USART2_RX_STA=0;
-//		}
-//		return LocationReportCounter;
 		return 0;
 }
 
-
+int jt808TerminalHeartBeat()
+{
+	packagingMessage(kTerminalHeartBeat);
+	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	delay_ms(1000);
+}
 
 int parsingMessage(const unsigned char *in, unsigned int in_len)
 {

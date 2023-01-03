@@ -41,6 +41,7 @@ int parsingMessage(const unsigned char *in, unsigned int in_len);
 int jt808TerminalRegister(int isRegistered);
 int jt808TerminalAuthentication(int isAuthenticated);
 int jt808LocationReport(void);
+int jt808TerminalHeartBeat(void);
 void setStatusBit(void);
 int FlashWrite(void);
 ErrorStatus ec20_init(void);
