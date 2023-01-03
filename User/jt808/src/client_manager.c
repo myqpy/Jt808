@@ -49,16 +49,16 @@ void initSystemParameters(void)
 int FlashWrite()
 {
 	unsigned char write_buf[64] = {0};
-	parameter_.parse.terminal_parameters.HeartBeatInterval = 1;
+	parameter_.parse.terminal_parameters.HeartBeatInterval = 2;
 
 	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
 	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
 
 	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
-	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 5;
+	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 8;
 
-	parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle = 15;
+	parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle = 10;
 
 	parameter_.parse.terminal_parameters.MaxSpeed = 30;
 
@@ -67,7 +67,7 @@ int FlashWrite()
 	parameter_.parse.terminal_parameters.CityID = 0x0066;
 
 	memset(parameter_.parse.terminal_parameters.CarPlateNum,0,sizeof(parameter_.parse.terminal_parameters.CarPlateNum));
-	memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "测1226", 7);
+	memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "测1227", 7);
 
 	parameter_.parse.terminal_parameters.CarPlateColor = 0x02;
 	

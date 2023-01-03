@@ -28,7 +28,11 @@ unsigned int RealBufferReceiveSize = 0;
 int jt808FrameHeadParse(const unsigned char *in, unsigned int in_len, struct MsgHead *msg_head)
 {
     if (msg_head == NULL || in_len < 15)
-        return -1;
+		{
+			printf("msg_head == NULL || in_len < 15");
+			return -1;
+		}
+        
     // 消息ID.
     msg_head->msg_id = (in[1] << 8) + in[2];
     printf("[jt808消息头解析] msg_head->msg_id = 0x%02x\r\n", msg_head->msg_id);
@@ -43,7 +47,8 @@ int jt808FrameHeadParse(const unsigned char *in, unsigned int in_len, struct Msg
 
     if (jt808BcdToStringCompress((&(in[5])), msg_head->phone_num, 6) == NULL)
     {
-        return -1;
+			printf("jt808BcdToStringCompress error");
+      return -1;
     }
     printf("[jt808消息头解析] msg_head->phone_num = %s !!!\r\n", msg_head->phone_num);
 
@@ -329,18 +334,28 @@ int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct Protoco
 
     // 逆转义.
     if (ReverseEscape_C(BufferReceive, RealBufferReceiveSize, outBuffer, &outBufferSize) < 0)
-        return -1;
+		{
+			printf("ReverseEscape_C ERROR\r\n");
+			return -1;
+		}
+        
     RealBufferReceiveSize = outBufferSize;
     printf("%s[%d]: ReverseEscape_C.  outBufferSize = %d  !!!\r\n", __FUNCTION__, __LINE__, outBufferSize);
 
     // 异或校验检查.
     if (BccCheckSum(&(outBuffer[1]), (outBufferSize - 3)) != *(outBuffer + outBufferSize - 2))
-        return -1;
+		{
+			printf("BccCheckSum ERROR\r\n");
+			return -1;
+		}
     printf("%s[%d]: BccCheckSum. -->3 !!!\r\n", __FUNCTION__, __LINE__);
 
     // 解析消息头.
     if (jt808FrameHeadParse(outBuffer, outBufferSize, &(para->parse.msg_head)) != 0)
-        return -1;
+    {
+			printf("jt808FrameHeadParse ERROR\r\n");
+			return -1;
+		}
     printf("%s[%d]:  jt808FrameHeadParse. -->4 !!!\r\n", __FUNCTION__, __LINE__);
     memcpy(para->msg_head.phone_num, para->parse.msg_head.phone_num, 11);
 //		para->msg_head.phone_num = para->parse.msg_head.phone_num;

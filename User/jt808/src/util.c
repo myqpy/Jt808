@@ -103,7 +103,7 @@ int ReverseEscape_C(unsigned char *in, unsigned int inlen, unsigned char *out, u
   return 0;
 }
 
-// 奇偶校验.
+// 异或校验.
 unsigned char BccCheckSum(const unsigned char *src, unsigned long len)
 {
   unsigned char checksum = 0;

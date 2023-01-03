@@ -442,7 +442,11 @@ int jt808FramePackage(struct ProtocolParameter *para)
 
     // 1、生成消息头
     if (jt808FrameHeadPackage(&(para->msg_head)) < 0)
-        return -1;
+		{
+			printf("jt808FrameHeadPackage FAILED");
+			return -1;
+		}
+        
 
     printf("[jt808FrameHeadPackage] OK !\r\n");
 
@@ -453,11 +457,14 @@ int jt808FramePackage(struct ProtocolParameter *para)
     {
         // 3、修正消息长度.
         if (jt808MsgBodyLengthFix(&(para->msg_head), ret) < 0)
-
-            return -1;
+				{
+					printf("jt808FrameHeadPackage FAILED");
+					return -1;
+				}
 
         // 4、获取校验码，并将其写入发送缓存.
-        valueCheck = BccCheckSum(BufferSend, RealBufferSendSize);
+        //valueCheck = BccCheckSum(BufferSend, RealBufferSendSize);
+				valueCheck = BccCheckSum((BufferSend+1), (RealBufferSendSize-1));//参考接收解析
         bufferSendPushByte(valueCheck);
 
         // 5、写入发送缓存结束标识位.
@@ -467,10 +474,9 @@ int jt808FramePackage(struct ProtocolParameter *para)
         // 6、处理转义.
         if (jt808MsgEscape() < 0)
 				{
-					printf("[%s] FAILED",__FUNCTION__);
+					printf("[jt808MsgEscape] FAILED");
 					return -1;
-				}
-            
+				} 
         return 0;
     }
 

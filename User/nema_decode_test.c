@@ -15,7 +15,7 @@
 #include "stm32f10x.h"
 #include "./usart/usart.h"
 #include "./gps/gps_config.h"
-//#include "ff.h"
+#include "ff.h"
 #include "nmea/nmea.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,8 +48,23 @@ int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude,
     nmea_parser_init(&parser);
 	  //char bufTime[64];
 	
+		if(GPS_HalfTransferEnd)     /* 接收到GPS_RBUFF_SIZE一半的数据 */
+		{
+			/* 进行nmea格式解码 */
+			nmea_parse(&parser, (const char*)&gps_rbuff[0], HALF_GPS_RBUFF_SIZE, &info);
+			
+			GPS_HalfTransferEnd = 0;   //清空标志位
+			new_parse = 1;             //设置解码消息标志 
+		}
+		else if(GPS_TransferEnd)    /* 接收到另一半数据 */
+		{
 
-    while(1)
+			nmea_parse(&parser, (const char*)&gps_rbuff[HALF_GPS_RBUFF_SIZE], HALF_GPS_RBUFF_SIZE, &info);
+		 
+			GPS_TransferEnd = 0;
+			new_parse =1;
+		}
+		while(1)
     {
       if(GPS_HalfTransferEnd)     /* 接收到GPS_RBUFF_SIZE一半的数据 */
       {
@@ -119,16 +134,16 @@ int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude,
 					memset(v_timestamp, 0, 13);
 					memcpy(v_timestamp, bufTime, 12);
 					//free(bufTime);
+					return 1;
 				}
 
         new_parse = 0;
 				memset(bufTime,0,12);
+				
 				break;
       }
-	
-	}
-    /* 释放GPS数据结构 */
-//     nmea_parser_destroy(&parser);
+		}
+//		nmea_parser_destroy(&parser);
 		return 0;
 }
 

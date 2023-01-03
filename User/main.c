@@ -14,7 +14,7 @@ extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_al
 														float *v_bearing, unsigned char *v_timestamp);
 void Tim3_Int_Init(u16 arr,u16 psc);
 void TIM3_IRQHandler(void);
-bool TIM3_IT_FLAG = 0;
+int time_1s = 0;
 
 int main(void)
 {
@@ -23,17 +23,24 @@ int main(void)
 	int 					isRegistered=0;
 	int 					isAuthenticated=0;
 	int 					LocationReportCounter=0;
-	
+	int 					HeartBeatCounter=0;
+	int						isNewLocationParse=0;
 	unsigned int 	v_alarm_value = 0;
 	unsigned int 	v_status_value = 0;
 	
 	
-	double 				v_latitude = 34.824788;
-	double 				v_longitude = 113.558408;
-	float 				v_altitude = 107;
-	float 				v_speed = 15;
-	float 				v_bearing = 120;
-	float 				m_bearing = 140;
+//	double 				v_latitude = 34.824788;
+//	double 				v_longitude = 113.558408;
+//	float 				v_altitude = 107;
+//	float 				v_speed = 15;
+//	float 				v_bearing = 120;
+//	float 				m_bearing = 140;
+	double 				v_latitude ;
+	double 				v_longitude ;
+	float 				v_altitude ;
+	float 				v_speed ;
+	float 				v_bearing ;
+	float 				m_bearing ;
 	unsigned char v_timestamp[] = "700101000000"; // 1970-01-01-00-00-00.
 
 
@@ -52,6 +59,9 @@ int main(void)
 	
 	while(1)
 	{
+		HeartBeatCounter = 0;
+		LocationReportCounter = 0;
+		time_1s = 0;
 		initSystemParameters();
 		//连接服务器
 		if(isTCPconnected == 0)
@@ -72,39 +82,34 @@ int main(void)
 		if(isRegistered == 0)	
 		{
 			isRegistered = jt808TerminalRegister(isRegistered);
-			
 			if(isRegistered==0)
 			{
 				isTCPconnected=0;
 				continue;
 			}
-			continue;
 		}
 
 		//终端鉴权
 		if(isAuthenticated == 0)
 		{
-			isAuthenticated =jt808TerminalAuthentication(isAuthenticated);		
-			
+			isAuthenticated =jt808TerminalAuthentication(isAuthenticated);			
 			if(isAuthenticated==0)
 			{
 				isRegistered=0;
 				isTCPconnected=0;
 				continue;
 			}
-			continue;
 		}
 		
 		//设置位置上报警报位、状态位
 		initLocationInfo(v_alarm_value, v_status_value);
 		setStatusBit();
 		
-		
-		Tim3_Int_Init(parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval*10000-1,7199);
+		Tim3_Int_Init(10000-1,7199);
 		while(1)
 		{
 			//位置上报 
-			nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp);
+			isNewLocationParse = nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp);
 			updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
 			
 			//拐弯时上报位置数据
@@ -112,71 +117,88 @@ int main(void)
 			{
 				m_bearing = v_bearing;
 				jt808LocationReport();
-				printf("fabs(v_bearing - m_bearing)) > %d LocationReport SUCCESS\r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
+				printf("fabs(v_bearing - m_bearing)) > %d trigger LocationReport SUCCESS\r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
 				LocationReportCounter++; 
 			}
 			printf("m_bearing ===== %f  \r\n", m_bearing);
 			
 			//当计时器达到缺省时间上报间隔时上报位置数据
-			if(TIM3_IT_FLAG == 1)
-			{
-				jt808LocationReport();
-				LocationReportCounter++; 
-			}
-
-//			jt808TerminalHeartBeat();
+			printf("parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval ===== %d  \r\n", parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval);
 			
+			printf("time_1s = %d \r\n",time_1s);
+			if(time_1s >= parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval )
+			{
+				if(isNewLocationParse == 1)
+				{
+					printf("locationReport!!!!!!!!!!!!!!!!! \r\n");
+					jt808LocationReport();
+					time_1s = 0;
+					LocationReportCounter++; 
+				}
+				else
+				{				
+					printf("HeartBeat!!!!!!!!!!!!!!!!! \r\n");
+					jt808TerminalHeartBeat();
+					time_1s = 0;
+					HeartBeatCounter++; 
+				}
+			}
 			
 			if(USART2_RX_STA&0X8000)    //接收到数据
 			{
 				USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
-				parsingMessage(USART2_RX_BUF, USART2_RX_STA);//开始校验
-				if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kLocationReport))
+				if((USART2_RX_BUF[0]==0x7e)&&(USART2_RX_BUF[USART2_RX_STA-1]==0x7e))
 				{
-					LocationReportCounter = 0;
-					printf("\r\n");
-					printf("Platform general response location report parse SUCCESS!!!!\r\n ");
-					printf("\r\n");
-					USART2_RX_STA=0;
-				}
-				
-				if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kTerminalHeartBeat))
-				{
-					printf("\r\n");
-					printf("jt808TerminalHeartBeat SEND SUCCESS!!!! \r\n ");
-					printf("\r\n");
-					USART2_RX_STA=0;
-				}
-				
-				
-				if(parameter_.parse.msg_head.msg_id==kSetTerminalParameters)
-				{
-					printf("\r\n");
-					printf("SetTerminalParameters parse SUCCESS!!!!\r\n ");
-					printf("\r\n");
-					isRegistered=0;
-					isTCPconnected=0;
-					isAuthenticated=0;
-					USART2_RX_STA=0;
-					LocationReportCounter = 0;
-					break;
+					parsingMessage(USART2_RX_BUF, USART2_RX_STA);//开始校验
+					if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kLocationReport))
+					{
+						LocationReportCounter = 0;
+						printf("\r\n");
+						printf("Platform general response location report parse SUCCESS!!!!\r\n ");
+						printf("\r\n");
+						USART2_RX_STA=0;
+					}
+					
+					if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kTerminalHeartBeat))
+					{
+						HeartBeatCounter = 0;
+						printf("\r\n");
+						printf("jt808TerminalHeartBeat report parse SUCCESS!!!! \r\n ");
+						printf("\r\n");
+						USART2_RX_STA=0;
+					}
+					
+					
+					if(parameter_.parse.msg_head.msg_id==kSetTerminalParameters)
+					{
+						printf("\r\n");
+						printf("SetTerminalParameters parse SUCCESS!!!!\r\n ");
+						printf("\r\n");
+						isRegistered=0;
+						isTCPconnected=0;
+						isAuthenticated=0;
+						USART2_RX_STA=0;
+						LocationReportCounter = 0;
+						break;
+					}
 				}
 				
 				USART2_RX_STA=0;
 			}
 			
 			//现行逻辑位如果上报5次未收到平台响应消息则重新连接服务器
-			printf("%d \r\n",LocationReportCounter);
-			if(LocationReportCounter>=5)
+			printf("LocationReportCounter == %d \r\n",LocationReportCounter);
+			printf("HeartBeatCounter == %d \r\n",HeartBeatCounter);
+			if(LocationReportCounter>=5||HeartBeatCounter>=5)
 			{
 				isRegistered=0;
 				isTCPconnected=0;
 				isAuthenticated=0;
+				HeartBeatCounter = 0;
 				LocationReportCounter = 0;
+				time_1s = 0;
 				break;
 			}
-
-
 		
 		}
 	}
@@ -214,7 +236,7 @@ void TIM3_IRQHandler(void)
 {
 	if(TIM_GetITStatus(TIM3,TIM_IT_Update) == 1)
 	{
-		TIM3_IT_FLAG = 1;
+		time_1s += 1;
 		TIM_ClearITPendingBit(TIM3,TIM_IT_Update);
 	}
 	
