@@ -1,0 +1,16 @@
+..\..\output\client_manager.o: ..\..\jt808\src\client_manager.c
+..\..\output\client_manager.o: ..\..\jt808\include\client_manager.h
+..\..\output\client_manager.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\client_manager.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\client_manager.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\..\output\client_manager.o: ..\..\jt808\include\protocol_parameter.h
+..\..\output\client_manager.o: ..\..\jt808\include\location_report.h
+..\..\output\client_manager.o: ..\..\jt808\include\terminal_parameter.h
+..\..\output\client_manager.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdbool.h
+..\..\output\client_manager.o: ..\..\jt808\include\util.h
+..\..\output\client_manager.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
+..\..\output\client_manager.o: ..\..\jt808\include\terminal_control.h
+..\..\output\client_manager.o: ..\..\jt808\include\jt808_packager.h
+..\..\output\client_manager.o: ..\..\jt808\include\bcd.h
+..\..\output\client_manager.o: ..\..\jt808\include\jt808_parser.h
+..\..\output\client_manager.o: D:\MDK5\ARM\ARMCC\Bin\..\include\string.h

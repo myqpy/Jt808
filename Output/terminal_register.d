@@ -1,0 +1,13 @@
+..\..\output\terminal_register.o: ..\..\jt808\src\terminal_register.c
+..\..\output\terminal_register.o: ..\..\jt808\include\terminal_register.h
+..\..\output\terminal_register.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\terminal_register.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\..\output\terminal_register.o: ..\..\jt808\include\protocol_parameter.h
+..\..\output\terminal_register.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\terminal_register.o: ..\..\jt808\include\location_report.h
+..\..\output\terminal_register.o: ..\..\jt808\include\terminal_parameter.h
+..\..\output\terminal_register.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdbool.h
+..\..\output\terminal_register.o: ..\..\jt808\include\util.h
+..\..\output\terminal_register.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
+..\..\output\terminal_register.o: ..\..\jt808\include\terminal_control.h
+..\..\output\terminal_register.o: D:\MDK5\ARM\ARMCC\Bin\..\include\string.h

@@ -1,0 +1,185 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¦ÌVision V5.21.1.0
+Copyright (C) 2016 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Pengyu Qu, Personal, LIC=8VRJ7-EBUW5-BS2YX-HPGPI-4EUBD-8IHK2
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.21a
+Toolchain Path:  D:\MDK5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 3 (build 300)
+Assembler:       Armasm.exe V5.06 update 3 (build 300)
+Linker/Locator:  ArmLink.exe V5.06 update 3 (build 300)
+Library Manager: ArmAr.exe V5.06 update 3 (build 300)
+Hex Converter:   FromElf.exe V5.06 update 3 (build 300)
+CPU DLL:         SARMCM3.DLL V5.21a
+Dialog DLL:      DCM.DLL V1.13.8.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.18.0
+Dialog DLL:      TCM.DLL V1.14.14.0
+ 
+<h2>Project:</h2>
+C:\Users\86156\Desktop\GJD-JT808\Project\RVMDK£¨uv5£©\BH-F103 .uvprojx
+Project File Date:  11/23/2022
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 3 (build 300)', folder: 'D:\MDK5\ARM\ARMCC\Bin'
+Rebuild target 'GPS'
+assembling startup_stm32f10x_hd.s...
+compiling stm32f10x_cec.c...
+compiling stm32f10x_can.c...
+compiling core_cm3.c...
+compiling stm32f10x_adc.c...
+compiling system_stm32f10x.c...
+compiling stm32f10x_dbgmcu.c...
+compiling misc.c...
+compiling stm32f10x_bkp.c...
+compiling stm32f10x_fsmc.c...
+compiling stm32f10x_flash.c...
+compiling stm32f10x_crc.c...
+compiling stm32f10x_dac.c...
+compiling stm32f10x_exti.c...
+compiling stm32f10x_dma.c...
+compiling stm32f10x_gpio.c...
+compiling stm32f10x_iwdg.c...
+compiling stm32f10x_i2c.c...
+compiling stm32f10x_pwr.c...
+compiling stm32f10x_rcc.c...
+compiling stm32f10x_rtc.c...
+compiling stm32f10x_spi.c...
+compiling stm32f10x_wwdg.c...
+compiling stm32f10x_sdio.c...
+compiling stm32f10x_usart.c...
+compiling main.c...
+..\..\User\main.c(81): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "const unsigned char *"
+  				parsingMessage(buf, recvbytes);
+..\..\User\main.c(130): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "const unsigned char *"
+  				parsingMessage(buf, recvbytes);
+..\..\User\main.c(23): warning:  #177-D: variable "sockfd" was declared but never referenced
+  	int sockfd, sendbytes, recvbytes;
+..\..\User\main.c(179): warning:  #223-D: function "memset" declared implicitly
+      memset(atstr,0,200);
+..\..\User\main.c: 4 warnings, 0 errors
+compiling stm32f10x_it.c...
+compiling stm32f10x_tim.c...
+compiling context.c...
+compiling bsp_key.c...
+compiling nema_decode_test.c...
+..\..\User\nema_decode_test.c(122): warning:  #111-D: statement is unreachable
+       nmea_parser_destroy(&parser);
+..\..\User\nema_decode_test.c: 1 warning, 0 errors
+compiling gps_config.c...
+compiling bsp_led.c...
+compiling bsp_usart.c...
+compiling usart2.c...
+compiling generate.c...
+compiling ec20.c...
+..\..\User\Bsp\EC20\ec20.c(75): warning:  #223-D: function "KEY_Scan" declared implicitly
+                  res=KEY_Scan(0);//·µ????Ò»¼¶
+..\..\User\Bsp\EC20\ec20.c(76): error:  #20: identifier "WKUP_PRES" is undefined
+                  if(res==WKUP_PRES)return 2;
+..\..\User\Bsp\EC20\ec20.c(114): warning:  #223-D: function "KEY_Scan" declared implicitly
+              key=KEY_Scan(0);
+..\..\User\Bsp\EC20\ec20.c(115): error:  #20: identifier "WKUP_PRES" is undefined
+              if(key==WKUP_PRES) return 2;//·µ????Ò»¼¶
+..\..\User\Bsp\EC20\ec20.c: 2 warnings, 2 errors
+compiling info.c...
+compiling generator.c...
+compiling gmath.c...
+..\..\User\nmea_decode\src\gmath.c(166): warning:  #550-D: variable "tan_sigma" was set but never used
+          double tmp1, tmp2, tan_sigma, sin_alpha, cos_alpha, C, lambda_prev; 
+..\..\User\nmea_decode\src\gmath.c(264): warning:  #550-D: variable "tan_sigma1" was set but never used
+      double tan_sigma1, sigma1, sin_alpha, cos_alpha, sqr_cos_alpha, sqr_u, A, B;
+..\..\User\nmea_decode\src\gmath.c(264): warning:  #550-D: variable "cos_alpha" was set but never used
+      double tan_sigma1, sigma1, sin_alpha, cos_alpha, sqr_cos_alpha, sqr_u, A, B;
+..\..\User\nmea_decode\src\gmath.c: 3 warnings, 0 errors
+compiling sentence.c...
+compiling parser.c...
+compiling time.c...
+compiling bcd.c...
+compiling parse.c...
+compiling gbk_utf8.c...
+compiling client_manager.c...
+..\..\jt808\src\client_manager.c(76): warning:  #870-D: invalid multibyte character sequence
+          printf("%s[%d]: æ‰?è¡?ã€? å¹?å?é€?ç”?åº?ç­? ã€?å?çš?æ“?ä½?\n", __FUNCTION__, __LINE__);
+..\..\jt808\src\client_manager.c(83): warning:  #870-D: invalid multibyte character sequence
+          printf("%s[%d]: æ‰?è¡?ã€? è¡?ä¼?åˆ?åŒ?è¯?æ±? ã€?å?çš?æ“?ä½?\n", __FUNCTION__, __LINE__);
+..\..\jt808\src\client_manager.c(90): warning:  #870-D: invalid multibyte character sequence
+          printf("%s[%d]: æ‰?è¡?ã€? ç»?ç«?æ³?å†?åº?ç­? ã€?å?çš?æ“?ä½?\n", __FUNCTION__, __LINE__);
+..\..\jt808\src\client_manager.c(97): warning:  #870-D: invalid multibyte character sequence
+          printf("%s[%d]: æ‰?è¡?ã€? è®?ç½?ç»?ç«?å?æ•? ã€?å?çš?æ“?ä½?\n", __FUNCTION__, __LINE__);
+..\..\jt808\src\client_manager.c(104): warning:  #870-D: invalid multibyte character sequence
+          printf("%s[%d]: æ‰?è¡?ã€? æŸ?è¯?ç»?ç«?å?æ•? ã€?å?çš?æ“?ä½?\n", __FUNCTION__, __LINE__);
+..\..\jt808\src\client_manager.c(111): warning:  #870-D: invalid multibyte character sequence
+          printf("%s[%d]: æ‰?è¡?ã€? æŸ?è¯?æŒ?å®?ç»?ç«?å?æ•? ã€?å?çš?æ“?ä½?\n", __FUNCTION__, __LINE__);
+..\..\jt808\src\client_manager.c(118): warning:  #870-D: invalid multibyte character sequence
+          printf("%s[%d]: æ‰?è¡?ã€? ç»?ç«?æ?åˆ? ã€?å?çš?æ“?ä½?\n", __FUNCTION__, __LINE__);
+..\..\jt808\src\client_manager.c(125): warning:  #870-D: invalid multibyte character sequence
+          printf("%s[%d]: æ‰?è¡?ã€? ä¸?å?ç»?ç«?å?çº?åŒ? ã€?å?çš?æ“?ä½?\n", __FUNCTION__, __LINE__);
+..\..\jt808\src\client_manager.c(125): warning:  #870-D: invalid multibyte character sequence
+          printf("%s[%d]: æ‰?è¡?ã€? ä¸?å?ç»?ç«?å?çº?åŒ? ã€?å?çš?æ“?ä½?\n", __FUNCTION__, __LINE__);
+..\..\jt808\src\client_manager.c(132): warning:  #870-D: invalid multibyte character sequence
+          printf("%s[%d]: æ‰?è¡?ã€? ä½?ç½?ä¿?æ?æŸ?è¯? ã€?å?çš?æ“?ä½?\n", __FUNCTION__, __LINE__);
+..\..\jt808\src\client_manager.c: 10 warnings, 0 errors
+compiling tok.c...
+compiling location_report.c...
+compiling jt808_packager.c...
+..\..\jt808\src\jt808_packager.c(107): warning:  #870-D: invalid multibyte character sequence
+      printf("[%s] ç»?ç«?å¿?è·? <æ¶?æ?ä½?ä¸?ç©?>  msg_id = 0x%04x\n", __FUNCTION__, kTerminalHeartBeat);
+..\..\jt808\src\jt808_packager.c(146): warning:  #167-D: argument of type "const char *" is incompatible with parameter of type "const unsigned char *"
+          bufferSendPushBytes(para->register_info.car_plate_num, len_car_num);
+..\..\jt808\src\jt808_packager.c(156): warning:  #870-D: invalid multibyte character sequence
+      printf("[%s] ç»?ç«?æ³?é”€ <æ¶?æ?ä½?ä¸?ç©?> msg_id = 0x%04x\n", __FUNCTION__, kTerminalLogOut);
+..\..\jt808\src\jt808_packager.c(165): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *"
+      int msg_len = strlen(para->parse.authentication_code);
+..\..\jt808\src\jt808_packager.c(237): warning:  #167-D: argument of type "const char *" is incompatible with parameter of type "const unsigned char *"
+      jt808StringToBcdCompress(para->location_info.time, time_bcd, strlen(para->location_info.time));
+..\..\jt808\src\jt808_packager.c(397): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *"
+      jt808StringToBcdCompress(msg_head->phone_num, phone_num_bcd, strlen(msg_head->phone_num));
+..\..\jt808\src\jt808_packager.c(497): warning:  #513-D: a value of type "unsigned char *" cannot be assigned to an entity of type "const char *"
+      para->location_info.time = v_timestamp;
+..\..\jt808\src\jt808_packager.c: 7 warnings, 0 errors
+compiling jt808_parser.c...
+..\..\jt808\src\jt808_parser.c(88): warning:  #870-D: invalid multibyte character sequence
+      printf("[%s] å¹?å?é€?ç”?åº?ç­? åº?ç­?æµ?æ°?å? = 0x%04x\n", __FUNCTION__, para->parse.respone_flow_num);
+..\..\jt808\src\jt808_parser.c(92): warning:  #870-D: invalid multibyte character sequence
+      printf("[%s] å¹?å?é€?ç”?åº?ç­? åº?ç­?æµ?æ°?å? = 0x%04x\n", __FUNCTION__, para->parse.respone_msg_id);
+..\..\jt808\src\jt808_parser.c(96): warning:  #870-D: invalid multibyte character sequence
+      printf("[%s] å¹?å?é€?ç”?åº?ç­? åº?ç­?æµ?æ°?å? = 0x%04x\n", __FUNCTION__, para->parse.respone_result);
+..\..\jt808\src\jt808_parser.c(122): warning:  #870-D: invalid multibyte character sequence
+      printf("[%s] ç»?ç«?æ³?å†?åº?ç­?æµ?æ°?å?  = 0x%04x\n", __FUNCTION__, para->parse.respone_flow_num);
+..\..\jt808\src\jt808_parser.c(133): warning:  #870-D: invalid multibyte character sequence
+          printf("[%s] ç»?ç«?æ³?å†?åº?ç­?é‰?æ?ç ? = %s\n", __FUNCTION__, para->parse.authentication_code);
+..\..\jt808\src\jt808_parser.c(144): warning:  #550-D: variable "cnt" was set but never used
+  		unsigned char cnt;
+..\..\jt808\src\jt808_parser.c(146): warning:  #550-D: variable "id" was set but never used
+  		unsigned int id;
+..\..\jt808\src\jt808_parser.c(212): warning:  #870-D: invalid multibyte character sequence
+      printf("[%s] ä¸?å?ç»?ç«?å?çº?åŒ? msg_id = 0x%04x\n", __FUNCTION__, kTerminalUpgrade);
+..\..\jt808\src\jt808_parser.c(324): warning:  #870-D: invalid multibyte character sequence
+      printf("%s[%d]: é€?è½?ä¹?.  outBufferSize = %d  !!!\n", __FUNCTION__, __LINE__, outBufferSize);
+..\..\jt808\src\jt808_parser.c(329): warning:  #870-D: invalid multibyte character sequence
+      printf("%s[%d]: å¼?æˆ?æ ?éª?æ£€æŸ?. -->3 !!!\n", __FUNCTION__, __LINE__);
+..\..\jt808\src\jt808_parser.c(334): warning:  #870-D: invalid multibyte character sequence
+      printf("%s[%d]: è§?æ?æ¶?æ?å¤?. -->4 !!!\n", __FUNCTION__, __LINE__);
+..\..\jt808\src\jt808_parser.c: 11 warnings, 0 errors
+compiling terminal_register.c...
+..\..\jt808\src\terminal_register.c(110): warning:  #870-D: invalid multibyte character sequence
+  char car_plate_num_ [20] = "è±?778899";
+..\..\jt808\src\terminal_register.c: 1 warning, 0 errors
+compiling util.c...
+compiling delay.c...
+"..\..\Output\Template.axf" - 2 Error(s), 39 Warning(s).
+
+<h2>Collection of Component include folders:</h2>
+  C:\Users\86156\Desktop\GJD-JT808\Project\RVMDK£¨uv5£©\RTE
+  D:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+Target not created.
+Build Time Elapsed:  00:00:04
+</pre>
+</body>
+</html>

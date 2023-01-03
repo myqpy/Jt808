@@ -1,0 +1,15 @@
+..\..\output\jt808_packager.o: ..\..\jt808\src\jt808_packager.c
+..\..\output\jt808_packager.o: ..\..\jt808\include\jt808_packager.h
+..\..\output\jt808_packager.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\jt808_packager.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\jt808_packager.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\..\output\jt808_packager.o: ..\..\jt808\include\protocol_parameter.h
+..\..\output\jt808_packager.o: ..\..\jt808\include\location_report.h
+..\..\output\jt808_packager.o: ..\..\jt808\include\terminal_parameter.h
+..\..\output\jt808_packager.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdbool.h
+..\..\output\jt808_packager.o: ..\..\jt808\include\util.h
+..\..\output\jt808_packager.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
+..\..\output\jt808_packager.o: ..\..\jt808\include\terminal_control.h
+..\..\output\jt808_packager.o: ..\..\jt808\include\bcd.h
+..\..\output\jt808_packager.o: D:\MDK5\ARM\ARMCC\Bin\..\include\string.h
+..\..\output\jt808_packager.o: ..\..\jt808\include\terminal_register.h

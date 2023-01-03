@@ -1,0 +1,12 @@
+..\..\output\util.o: ..\..\jt808\src\util.c
+..\..\output\util.o: ..\..\jt808\include\util.h
+..\..\output\util.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\util.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\..\output\util.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\util.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
+..\..\output\util.o: ..\..\jt808\include\protocol_parameter.h
+..\..\output\util.o: ..\..\jt808\include\location_report.h
+..\..\output\util.o: ..\..\jt808\include\terminal_parameter.h
+..\..\output\util.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdbool.h
+..\..\output\util.o: ..\..\jt808\include\terminal_control.h
+..\..\output\util.o: D:\MDK5\ARM\ARMCC\Bin\..\include\string.h
