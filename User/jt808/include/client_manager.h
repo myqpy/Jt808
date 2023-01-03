@@ -3,13 +3,20 @@
 #ifndef JT808_CLIENT_MANAGER_H_
 #define JT808_CLIENT_MANAGER_H_
 
-//#define JT808_DEBUG
+
 
 #include <stdio.h>
 #include <stdint.h>
 #include "./sys/sys.h"
 #include <stdlib.h>
 #include "ff.h"
+
+
+
+//#define __JT808_DEBUG
+
+
+
 extern struct ProtocolParameter parameter_;
 
 void setTerminalPhoneNumber(const char *phone_num, unsigned int phoneSize);
@@ -49,6 +56,7 @@ int jt808TerminalGeneralResponse(void);
 void setStatusBit(void);
 int FlashWrite(void);
 int IPFlashWrite(void);
+void system_reboot(void);
 ErrorStatus ec20_init(void);
 void initSystemParameters(void);
 void initLocationInfo(unsigned int v_alarm_value, unsigned int v_status_value);

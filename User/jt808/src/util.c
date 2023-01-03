@@ -74,8 +74,8 @@ int ReverseEscape_C(unsigned char *in, unsigned int inlen, unsigned char *out, u
   // memset(out, 0, *outlen);
 	unsigned int i;
 	int offset_num;
-	#ifdef JT808_DEBUG
-  printf("[ReverseEscape_C]:");
+	#ifdef __JT808_DEBUG
+		printf("[ReverseEscape_C]:");
 	#endif
 
   offset_num = 0;
@@ -96,8 +96,8 @@ int ReverseEscape_C(unsigned char *in, unsigned int inlen, unsigned char *out, u
     else
     {
       out[i - offset_num] = in[i];
-			#ifdef JT808_DEBUG
-      printf("%02x ", out[i - offset_num]);
+			#ifdef __JT808_DEBUG
+				printf("%02x ", out[i - offset_num]);
 			#endif
     }
   }
@@ -117,8 +117,8 @@ unsigned char BccCheckSum(const unsigned char *src, unsigned long len)
   {
     checksum = checksum ^ src[i];
   }
-	#ifdef JT808_DEBUG
-		printf("[%s] OK !\r\n", __FUNCTION__);
+	#ifdef __JT808_DEBUG
+		printf("[BccCheckSum] OK !\r\n");
 	#endif
   return checksum;
 	

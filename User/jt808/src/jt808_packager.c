@@ -355,7 +355,7 @@ int jt808MsgBodyLengthFix(struct MsgHead *msg_head, unsigned int msgBody_len)
     BufferSend[3] = u16converter.u8array[0];
     BufferSend[4] = u16converter.u8array[1];
 		
-		#ifdef JT808_DEBUG
+		#ifdef __JT808_DEBUG
 			printf("[%s] OK !\r\n",__FUNCTION__);
 		#endif
     return 0;
@@ -391,8 +391,8 @@ int jt808MsgEscape()
         outBuffer = NULL;
 				
     }
-		#ifdef JT808_DEBUG
-		printf("[%s] OK !\r\n",__FUNCTION__);
+		#ifdef __JT808_DEBUG
+			printf("[%s] OK !\r\n",__FUNCTION__);
 		#endif
     return 0;
 }
@@ -450,10 +450,8 @@ int jt808FramePackage(struct ProtocolParameter *para)
     // 0、设置头标志位
     jt808SetFrameFlagHeader();
 
-		#ifdef JT808_DEBUG
-		{
-			printf("[jt808SetFrameFlagHeader] OK !\r\n");
-		}
+		#ifdef __JT808_DEBUG
+			printf("[jt808SetFrameFlagHeader] OK !\r\n");	
 		#endif
 	
     // 1、生成消息头
@@ -463,8 +461,8 @@ int jt808FramePackage(struct ProtocolParameter *para)
 			return -1;
 		}
         
-		#ifdef JT808_DEBUG
-    printf("[jt808FrameHeadPackage] OK !\r\n");
+		#ifdef __JT808_DEBUG
+			printf("[jt808FrameHeadPackage] OK !\r\n");
 		#endif
 		
     // 2、封装消息内容.
@@ -486,8 +484,8 @@ int jt808FramePackage(struct ProtocolParameter *para)
 
         // 5、写入发送缓存结束标识位.
         bufferSendPushByte(PROTOCOL_SIGN);
-				#ifdef JT808_DEBUG
-				printf("[Write buffersend end PROTOCOL_SIGN] OK !\r\n");
+				#ifdef __JT808_DEBUG
+					printf("[Write buffersend end PROTOCOL_SIGN] OK !\r\n");
 				#endif
         // 6、处理转义.
         if (jt808MsgEscape() < 0)

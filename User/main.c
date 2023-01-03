@@ -8,8 +8,6 @@
 #include "client_manager.h"
 #include "jt808_packager.h"
 #include "ff.h"
-
-
 extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude, 
 										float  *v_speed, float *v_bearing, unsigned char *v_timestamp,
 											nmeaINFO info, uint8_t new_parse);
@@ -57,9 +55,9 @@ int main(void)
   GPS_Config();
 	LED_GPIO_Config(&GPIO_InitStructure);	//LED ¶Ë¿Ú³õÊ¼»¯
 
-	printf(" \r\n ");
+	printf("\r\n");
 	printf("SYSTEM INIT SUCCESS\r\n");
-	printf(" \r\n ");
+	printf("\r\n");
 
 
 	while(1)
@@ -96,8 +94,7 @@ int main(void)
 			if(isRegistered==0)
 			{
 				//isTCPconnected=0;
-				__set_FAULTMASK(1); 
-				NVIC_SystemReset();
+				system_reboot();
 				continue;
 			}
 		}
@@ -112,8 +109,7 @@ int main(void)
 //				isTCPconnected=0;
 //				parameter_.msg_head.msg_flow_num=0;
 //				parameter_.respone_flow_num=0;
-				__set_FAULTMASK(1); 
-				NVIC_SystemReset();
+				system_reboot();
 				continue;
 			}
 		}
@@ -238,8 +234,7 @@ int main(void)
 						printf("jt808TerminalLogOut parse SUCCESS!!!! \r\n ");
 						printf("\r\n");
 						USART2_RX_STA=0;
-						__set_FAULTMASK(1); 
-						NVIC_SystemReset();
+						system_reboot();
 					}
 					
 				}
@@ -259,8 +254,7 @@ int main(void)
 //				HeartBeatCounter = 0;
 //				LocationReportCounter = 0;
 //				time_1s = 0;
-				__set_FAULTMASK(1); 
-				NVIC_SystemReset();
+				system_reboot();
 				break;
 			}
 		

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\..\Output\Template.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\..\Output\Template.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Tue Jan 03 14:53:36 2023
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Tue Jan 03 15:48:35 2023
 <BR><P>
 <H3>Maximum Stack Usage =       6592 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1961,7 +1961,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handle_kTerminalRegister
 </UL>
 
-<P><STRONG><a name="[108]"></a>initSystemParameters</STRONG> (Thumb, 178 bytes, Stack size 72 bytes, client_manager.o(i.initSystemParameters))
+<P><STRONG><a name="[108]"></a>initSystemParameters</STRONG> (Thumb, 176 bytes, Stack size 72 bytes, client_manager.o(i.initSystemParameters))
 <BR><BR>[Stack]<UL><LI>Max Depth = 200<LI>Call Chain = initSystemParameters &rArr; FlashWrite &rArr; FLASH_WriteByte &rArr; FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Internal_ReadFlash
@@ -2187,13 +2187,14 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[46]"></a>main</STRONG> (Thumb, 900 bytes, Stack size 4424 bytes, main.o(i.main))
+<P><STRONG><a name="[46]"></a>main</STRONG> (Thumb, 882 bytes, Stack size 4424 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 6592<LI>Call Chain = main &rArr; ec20_init &rArr; ec20_send_cmd &rArr; u2_printf &rArr; __c89vsprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
 <LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
 <LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateLocation
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
+<LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_reboot
 <LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setTerminalPhoneNumber
 <LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setStatusBit
 <LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parsingMessage
@@ -2221,7 +2222,6 @@ Global Symbols
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IPFlashWrite
 <LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPS_Config
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Tim3_Int_Init
-<LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_SystemReset
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
@@ -2750,6 +2750,10 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[12f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nmea_atof
 </UL>
 
+<P><STRONG><a name="[123]"></a>system_reboot</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, client_manager.o(i.system_reboot))
+<BR><BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
 <P><STRONG><a name="[50]"></a>trace</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, gps_config.o(i.trace))
 <BR>[Address Reference Count : 1]<UL><LI> nema_decode_test.o(i.nmea_decode_test)
 </UL>
@@ -2805,10 +2809,6 @@ Local Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = SetSysClockTo72
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetSysClock
-</UL>
-
-<P><STRONG><a name="[123]"></a>NVIC_SystemReset</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, main.o(i.NVIC_SystemReset))
-<BR><BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[8d]"></a>GPS_DMA_Config</STRONG> (Thumb, 98 bytes, Stack size 56 bytes, gps_config.o(i.GPS_DMA_Config))

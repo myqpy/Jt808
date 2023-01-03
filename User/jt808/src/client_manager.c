@@ -15,15 +15,23 @@
 
 struct ProtocolParameter parameter_;
 
+void system_reboot(void)
+{
+	__set_FAULTMASK(1); 
+	NVIC_SystemReset();
+}
+
+
+
 void initSystemParameters(void)
 {
 	unsigned char read_buf[64] = {0};
 
-	Internal_ReadFlash(((uint32_t)0x08008000) , read_buf , sizeof(read_buf));
+	Internal_ReadFlash(((uint32_t)0x0800f000) , read_buf , sizeof(read_buf));
 	memset(&parameter_.parse.terminal_parameters,0,sizeof(parameter_.parse.terminal_parameters));
 	memcpy(&parameter_.parse.terminal_parameters, read_buf, sizeof(read_buf));
 //	parameter_.parse.terminal_parameters.initFactoryParameters = 0;
-	
+
 	printf("initFactoryParameters == %d \r\n",parameter_.parse.terminal_parameters.initFactoryParameters);
 	
 	if(parameter_.parse.terminal_parameters.initFactoryParameters == 0)
@@ -84,7 +92,7 @@ int FlashWrite()
 	
 	
 	
-	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));	
+	FLASH_WriteByte(((uint32_t)0x0800f000) , write_buf , sizeof(write_buf));	
 	printf("FLASH_Write SUCCESS!!!!!!\r\n");
 	printf("initFactoryParameters == %d \r\n",parameter_.parse.terminal_parameters.initFactoryParameters);
 
@@ -218,12 +226,14 @@ void updateLocation(double const v_latitude, double const v_longitude, float con
 		parameter_.location_info.bearing = v_bearing;
 		memcpy(parameter_.location_info.time, v_timestamp, 13);
 	
-//		printf("para->latitude = %d\r\n", parameter_.location_info.latitude);
-//		printf("para->longitude = %d\r\n", parameter_.location_info.longitude);
-//		printf("para->altitude = %d\r\n", parameter_.location_info.altitude);
-//		printf("para->speed = %d\r\n", parameter_.location_info.speed);
-//		printf("para->bearing = %d\r\n", parameter_.location_info.bearing);
-//		printf("para->time = %s\r\n", parameter_.location_info.time);
+		#ifdef __JT808_DEBUG
+			printf("para->latitude = %d\r\n", parameter_.location_info.latitude);
+			printf("para->longitude = %d\r\n", parameter_.location_info.longitude);
+			printf("para->altitude = %d\r\n", parameter_.location_info.altitude);
+			printf("para->speed = %d\r\n", parameter_.location_info.speed);
+			printf("para->bearing = %d\r\n", parameter_.location_info.bearing);
+			printf("para->time = %s\r\n", parameter_.location_info.time);
+		#endif
 }
 
 
@@ -236,8 +246,8 @@ int packagingMessage(unsigned int msg_id)
 			printf("[findMsgIDFromTerminalPackagerCMD] no msg_id \r\n");
 			return -1;
     }
-		#ifdef JT808_DEBUG
-    printf("[findMsgIDFromTerminalPackagerCMD] OK !\r\n");
+		#ifdef __JT808_DEBUG
+			printf("[findMsgIDFromTerminalPackagerCMD] OK !\r\n");
 		#endif
     parameter_.msg_head.msg_id = msg_id; // 设置消息ID.
     if (jt808FramePackage(&parameter_) < 0)
@@ -386,12 +396,11 @@ int parsingMessage(const unsigned char *in, unsigned int in_len)
 		unsigned short msg_id;
     if (jt808FrameParse(in, in_len, &parameter_) < 0)
     {
-				printf("jt808FrameParse ERROR\r\n");
-
+			printf("jt808FrameParse ERROR\r\n");
 			return -1;
     }
-		#ifdef JT808_DEBUG
-    printf("ok parsing\r\n");
+		#ifdef __JT808_DEBUG
+			printf("ok parsing\r\n");
 		#endif
 		
     msg_id = parameter_.parse.msg_head.msg_id;
