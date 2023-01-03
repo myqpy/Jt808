@@ -21,109 +21,77 @@ extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_al
 ErrorStatus ec20_init(void);
 
 
-int main(void)
-{
-	int i;
-	struct WriteInfo
-	{
-		unsigned short province_id;
+//int main(void)
+//{
+//	int i;
 
-		unsigned short city_id;
+//	
+//	unsigned short read_province_id = 0;
 
-		unsigned char manufacturer_id[5];
+//	unsigned short read_city_id = 0;
 
-		unsigned char terminal_model[20];
+//	unsigned char read_manufacturer_id[6]={0};
 
-		unsigned char terminal_id[7];
+//	unsigned char read_terminal_model[20]={0};
 
-		unsigned char car_plate_color;
+//	unsigned char read_terminal_id[7]={0};
 
-		unsigned char car_plate_num[12];
-	};
-	
-	struct ReadInfo
-	{
-		unsigned short province_id;
+//	unsigned char read_car_plate_color = 0;
 
-		unsigned short city_id;
+//	unsigned char read_car_plate_num[12]={0};
+//	
+//	unsigned char write_buf[50] = {0};
+//	unsigned char read_buf[50] = {0};
+//	
+//	//struct WriteInfo writeInfo;
+//	//struct ReadInfo readInfo;
+//	
+//	uart_init(115200);
+//	
+//	writeInfo.province_id = 0x0029;
+//	writeInfo.city_id = 0x0066;
+//	memcpy(writeInfo.manufacturer_id, "XINDA", 5);
+//	memcpy(writeInfo.terminal_model, "ZXIAT-CZ02", 10);
+//	memcpy(writeInfo.terminal_id, "0201101", 7);
+//	writeInfo.car_plate_color = 0x02;
+//	memcpy(writeInfo.car_plate_num, "AAa1", 7);
+//	
+//	memset(write_buf,0,sizeof(write_buf));
+//	memcpy(write_buf, &writeInfo, sizeof(writeInfo));
+//	
+//	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));
+//	
+//	
+//	Internal_ReadFlash(((uint32_t)0x08008000) , read_buf , sizeof(read_buf));
+//	
+//	memset(&readInfo,0,sizeof(readInfo));
+//	memcpy(&readInfo, read_buf, sizeof(read_buf));
+//	
+//	read_province_id = readInfo.province_id;
+//	printf("para->register_info.province_id = 0x%04x\r\n", read_province_id);
+//	
+//	read_city_id=readInfo.city_id;
+//	printf("para->register_info.city_id = 0x%04x\r\n", read_city_id);
+//	
+//	memcpy(read_manufacturer_id, readInfo.manufacturer_id, 5);
+//	printf("ptr_manufacturer_id = %s\r\n", read_manufacturer_id);
+//	
+//	memcpy(read_terminal_model, readInfo.terminal_model, 10);
+//	printf("ptr_terminal_model = %s\r\n", read_terminal_model);
+//	
+//	memcpy(read_terminal_id, readInfo.terminal_id, 7);
+//	printf("ptr_terminal_id = %s\r\n", read_terminal_id);
+//	
+//	read_car_plate_color = readInfo.car_plate_color;
+//	printf("para->register_info.car_plate_color = 0x%02x\r\n", read_car_plate_color);
+//	
+//	memcpy(read_car_plate_num, readInfo.car_plate_num,7);
+//	printf("para->register_info.car_plate_num = %s\r\n", read_car_plate_num);
+//	
+//	while(1);
+//}
 
-		unsigned char manufacturer_id[5];
 
-		unsigned char terminal_model[20];
-
-		unsigned char terminal_id[7];
-
-		unsigned char car_plate_color;
-
-		unsigned char car_plate_num[12];
-	};
-	
-	unsigned short read_province_id = 0;
-
-	unsigned short read_city_id = 0;
-
-	unsigned char read_manufacturer_id[6]={0};
-
-	unsigned char read_terminal_model[20]={0};
-
-	unsigned char read_terminal_id[7]={0};
-
-	unsigned char read_car_plate_color = 0;
-
-	unsigned char read_car_plate_num[12]={0};
-	
-	unsigned char write_buf[50] = {0};
-	unsigned char read_buf[50] = {0};
-	
-	struct WriteInfo writeInfo;
-	struct ReadInfo readInfo;
-	
-	uart_init(115200);
-	
-	writeInfo.province_id = 0x0029;
-	writeInfo.city_id = 0x0066;
-	memcpy(writeInfo.manufacturer_id, "XINDA", 5);
-	memcpy(writeInfo.terminal_model, "ZXIAT-CZ02", 10);
-	memcpy(writeInfo.terminal_id, "0201101", 7);
-	writeInfo.car_plate_color = 0x02;
-	memcpy(writeInfo.car_plate_num, "AAa1", 7);
-	
-	memset(write_buf,0,sizeof(write_buf));
-	memcpy(write_buf, &writeInfo, sizeof(writeInfo));
-	
-	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));
-	
-	
-	Internal_ReadFlash(((uint32_t)0x08008000) , read_buf , sizeof(read_buf));
-	
-	memset(&readInfo,0,sizeof(readInfo));
-	memcpy(&readInfo, read_buf, sizeof(read_buf));
-	
-	read_province_id = readInfo.province_id;
-	printf("para->register_info.province_id = 0x%04x\r\n", read_province_id);
-	
-	read_city_id=readInfo.city_id;
-	printf("para->register_info.city_id = 0x%04x\r\n", read_city_id);
-	
-	memcpy(read_manufacturer_id, readInfo.manufacturer_id, 5);
-	printf("ptr_manufacturer_id = %s\r\n", read_manufacturer_id);
-	
-	memcpy(read_terminal_model, readInfo.terminal_model, 10);
-	printf("ptr_terminal_model = %s\r\n", read_terminal_model);
-	
-	memcpy(read_terminal_id, readInfo.terminal_id, 7);
-	printf("ptr_terminal_id = %s\r\n", read_terminal_id);
-	
-	read_car_plate_color = readInfo.car_plate_color;
-	printf("para->register_info.car_plate_color = 0x%02x\r\n", read_car_plate_color);
-	
-	memcpy(read_car_plate_num, readInfo.car_plate_num,7);
-	printf("para->register_info.car_plate_num = %s\r\n", read_car_plate_num);
-	
-	while(1);
-}
-
-/*
 int main(void)
 {
 	int i;
@@ -137,7 +105,23 @@ int main(void)
 	float  v_speed = 15;
 	float  v_bearing = 132;
 	unsigned char v_timestamp[] = "221127212855";
+	unsigned char write_buf[50] = {0};
+	struct WriteInfo flashWriteInfo;
 	
+	
+	flashWriteInfo.write_province_id = 0x0029;
+	flashWriteInfo.write_city_id = 0x0066;
+	memcpy(flashWriteInfo.write_manufacturer_id, "XINDA", 5);
+	memcpy(flashWriteInfo.write_terminal_model, "ZXIAT-CZ05", 10);
+	memcpy(flashWriteInfo.write_terminal_id, "221203", 7);
+	flashWriteInfo.write_car_plate_color = 0x02;
+	memcpy(flashWriteInfo.write_car_plate_num, "A9527", 7);
+	
+	
+	memset(write_buf,0,sizeof(write_buf));
+	memcpy(write_buf, &flashWriteInfo, sizeof(flashWriteInfo));
+	
+	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));
 
 //	LED_GPIO_Config();	//LED 端口初始化
 //  
@@ -159,7 +143,9 @@ int main(void)
 		}
 		delay_ms(2000);
 	}
-  setTerminalPhoneNumber("20220200001", 11);
+  setTerminalPhoneNumber("20221203111", 11);
+
+	
 	packagingMessage(kTerminalRegister);
 	delay_ms(1000);
 	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
@@ -301,11 +287,4 @@ ErrorStatus ec20_init(void)
         return ERROR;
     }
 } 
-*/
-/*
-void Delay(__IO uint32_t nCount)	 //简单的延时函数
-{
-	for(; nCount != 0; nCount--);
-}
-*/
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

@@ -14,6 +14,44 @@
 #define WRITE_START_ADDR  ((uint32_t)0x08008000)
 #define WRITE_END_ADDR    ((uint32_t)0x0800C000)
 
+struct WriteInfo
+{
+	unsigned short write_province_id;
+
+	unsigned short write_city_id;
+
+	unsigned char write_manufacturer_id[5];
+
+	unsigned char write_terminal_model[20];
+
+	unsigned char write_terminal_id[7];
+
+	unsigned char write_car_plate_color;
+
+	unsigned char write_car_plate_num[12];
+};
+
+struct ReadInfo
+{
+	unsigned short read_province_id;
+
+	unsigned short read_city_id;
+
+	unsigned char read_manufacturer_id[5];
+
+	unsigned char read_terminal_model[20];
+
+	unsigned char read_terminal_id[7];
+
+	unsigned char read_car_plate_color;
+
+	unsigned char read_car_plate_num[12];
+};
+
+
+
+
+
 
 
 typedef enum 

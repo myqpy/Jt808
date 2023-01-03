@@ -8,6 +8,7 @@
 #include <string.h>
 #include "protocol_parameter.h"
 
+#include "./internal_flash/bsp_internal_flash.h" 
 /// @brief 设置注册省域ID
 /// @param provinceId
 void setRegisterProvinceId(unsigned short provinceId);
@@ -57,7 +58,8 @@ void setRegister_car_plate_num(const char *car_plate_num, unsigned int car_plate
 /// @return
 //const char *getRegister_car_plate_num(void);
 
-void initRegisterInfo(struct ProtocolParameter *para);
+//void initRegisterInfo(struct ProtocolParameter *para);
+void initRegisterInfo(struct ProtocolParameter *para, struct ReadInfo readFlashInfo);
 
 
 #endif  //JT808_TERMINAL_REGISTER_H_

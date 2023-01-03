@@ -1,4 +1,5 @@
 #include "jt808_packager.h"
+#include "./internal_flash/bsp_internal_flash.h"
 //#include <memory.h>
 #include "util.h"
 
@@ -112,9 +113,19 @@ int handle_kTerminalRegister(struct ProtocolParameter *para)
 {
 		int msg_len;
 		union U16ToU8Array u16converter;
+		unsigned char read_buf[50] = {0};
+		struct ReadInfo readFlashInfo;
+		
+		
     printf("[%s] 终端注册 msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalRegister);
+			
+		Internal_ReadFlash(((uint32_t)0x08008000) , read_buf , sizeof(read_buf));
+		memset(&readFlashInfo,0,sizeof(readFlashInfo));
+		memcpy(&readFlashInfo, read_buf, sizeof(read_buf));
 
-    initRegisterInfo(para); //初始化注册参数
+		
+    initRegisterInfo(para, readFlashInfo); //初始化注册参数
+		
 
     msg_len= 37;
 
