@@ -45,6 +45,7 @@ int jt808LocationReport(void);
 int jt808TerminalHeartBeat(void);
 void setStatusBit(void);
 int FlashWrite(void);
+int IPFlashWrite(void);
 ErrorStatus ec20_init(void);
 void initSystemParameters(void);
 void initLocationInfo(unsigned int v_alarm_value, unsigned int v_status_value);

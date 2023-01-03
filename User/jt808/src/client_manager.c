@@ -22,7 +22,7 @@ void initSystemParameters(void)
 	Internal_ReadFlash(((uint32_t)0x08008000) , read_buf , sizeof(read_buf));
 	memset(&parameter_.parse.terminal_parameters,0,sizeof(parameter_.parse.terminal_parameters));
 	memcpy(&parameter_.parse.terminal_parameters, read_buf, sizeof(read_buf));
-	parameter_.parse.terminal_parameters.initFactoryParameters = 0;
+//	parameter_.parse.terminal_parameters.initFactoryParameters = 0;
 	
 	printf("initFactoryParameters == %d \r\n",parameter_.parse.terminal_parameters.initFactoryParameters);
 	
@@ -53,24 +53,29 @@ int FlashWrite()
 	parameter_.parse.terminal_parameters.HeartBeatInterval = 2;
 
 	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
+	
+	// 研究院平台
 	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
+	
+	
+//	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
 
 	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
-//	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 8;
+	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 8;
 
 	parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle = 10;
 
 	parameter_.parse.terminal_parameters.MaxSpeed = 60;
 
-//	parameter_.parse.terminal_parameters.ProvinceID = 0x0029;
+	parameter_.parse.terminal_parameters.ProvinceID = 0x0029;
 
-//	parameter_.parse.terminal_parameters.CityID = 0x0066;
+	parameter_.parse.terminal_parameters.CityID = 0x0066;
 
-//	memset(parameter_.parse.terminal_parameters.CarPlateNum,0,sizeof(parameter_.parse.terminal_parameters.CarPlateNum));
-//	memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "测1229", 7);
+	memset(parameter_.parse.terminal_parameters.CarPlateNum,0,sizeof(parameter_.parse.terminal_parameters.CarPlateNum));
+	memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "factory", 7);
 
-//	parameter_.parse.terminal_parameters.CarPlateColor = 0x02;
+	parameter_.parse.terminal_parameters.CarPlateColor = 0x02;
 	
 	parameter_.parse.terminal_parameters.initFactoryParameters = 1;
 
@@ -85,6 +90,28 @@ int FlashWrite()
 
 	return 0;
 }
+
+int IPFlashWrite()
+{
+	unsigned char write_buf[64] = {0};
+
+	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
+	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
+
+	parameter_.parse.terminal_parameters.ServerPort = 7611;
+
+	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 8;
+
+	memset(write_buf,0,sizeof(write_buf));
+	memcpy(write_buf, &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
+	
+	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));	
+	printf("FLASH_Write SUCCESS!!!!!!\r\n");
+
+	return 0;
+}
+
+
 
 ErrorStatus ec20_init(void)
 {
@@ -173,7 +200,7 @@ void initLocationInfo(unsigned int v_alarm_value, unsigned int v_status_value)
 void updateLocation(double const v_latitude, double const v_longitude, float const v_altitude,
                     float const v_speed, float const v_bearing, unsigned char *v_timestamp)
 {
-    printf("\n\r[updateLocationInfo] OK !\r\n");
+		printf("\n\r[updateLocationInfo] OK !\r\n");
 		
     // if (speed >= 10) //默认车速大于等于10公里时为正常行驶状态
     // {
@@ -184,23 +211,18 @@ void updateLocation(double const v_latitude, double const v_longitude, float con
     //   isCarMoving.store(false);
     // }
     parameter_.location_info.latitude = v_latitude * 1e6;
-    printf("para->latitude = %d\r\n", parameter_.location_info.latitude);
-
     parameter_.location_info.longitude = v_longitude * 1e6;
-    printf("para->longitude = %d\r\n", parameter_.location_info.longitude);
-
     parameter_.location_info.altitude = v_altitude;
-    printf("para->altitude = %d\r\n", parameter_.location_info.altitude);
-
     parameter_.location_info.speed = v_speed * 10;
-    printf("para->speed = %d\r\n", parameter_.location_info.speed);
-
-    parameter_.location_info.bearing = v_bearing;
-    printf("para->bearing = %d\r\n", parameter_.location_info.bearing);
-
-    //parameter_.location_info.time = v_timestamp;
-    memcpy(parameter_.location_info.time, v_timestamp, 13);
-		printf("para->time = %s\r\n", parameter_.location_info.time);
+		parameter_.location_info.bearing = v_bearing;
+		memcpy(parameter_.location_info.time, v_timestamp, 13);
+	
+//		printf("para->latitude = %d\r\n", parameter_.location_info.latitude);
+//		printf("para->longitude = %d\r\n", parameter_.location_info.longitude);
+//		printf("para->altitude = %d\r\n", parameter_.location_info.altitude);
+//		printf("para->speed = %d\r\n", parameter_.location_info.speed);
+//		printf("para->bearing = %d\r\n", parameter_.location_info.bearing);
+//		printf("para->time = %s\r\n", parameter_.location_info.time);
 }
 
 

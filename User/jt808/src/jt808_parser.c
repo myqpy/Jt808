@@ -35,11 +35,11 @@ int jt808FrameHeadParse(const unsigned char *in, unsigned int in_len, struct Msg
         
     // 消息ID.
     msg_head->msg_id = (in[1] << 8) + in[2];
-    printf("[jt808消息头解析] msg_head->msg_id = 0x%02x\r\n", msg_head->msg_id);
+    printf("[jt808FrameHeadParse] msg_head->msg_id = 0x%02x\r\n", msg_head->msg_id);
 
     // 消息体属性.
     msg_head->msgbody_attr.u16val = (in[3] << 8) + in[4];
-    printf("[jt808消息头解析] msg_head->msgbody_attr.u16val = 0x%02x\r\n", msg_head->msgbody_attr.u16val);
+    printf("[jt808FrameHeadParse] msg_head->msgbody_attr.u16val = 0x%02x\r\n", msg_head->msgbody_attr.u16val);
 
     // 终端手机号.
 
@@ -50,11 +50,11 @@ int jt808FrameHeadParse(const unsigned char *in, unsigned int in_len, struct Msg
 			printf("jt808BcdToStringCompress error");
       return -1;
     }
-    printf("[jt808消息头解析] msg_head->phone_num = %s !!!\r\n", msg_head->phone_num);
+    printf("[jt808FrameHeadParse] msg_head->phone_num = %s !!!\r\n", msg_head->phone_num);
 
     // 消息流水号.
     msg_head->msg_flow_num = (in[11] << 8) + in[12];
-    printf("[jt808消息头解析] msg_head->msg_flow_num = 0x%02x !!!\r\n", msg_head->msg_flow_num);
+    printf("[jt808FrameHeadParse] msg_head->msg_flow_num = 0x%02x !!!\r\n", msg_head->msg_flow_num);
 
     // 出现封包.
     if ((msg_head->msgbody_attr.bit.packet == 1) &&

@@ -7,7 +7,7 @@
 
 /* 配置 */
 
-#define __GPS_DEBUG     //定义这个宏，在nmea解码时会输出调试信息
+//#define __GPS_DEBUG     //定义这个宏，在nmea解码时会输出调试信息
 
 //#define __GPS_LOG_FILE    //定义这个宏，对SD卡上的gpslog.txt文件进行解码；不定义的话使用串口接收GPS信息解码
 

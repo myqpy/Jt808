@@ -10,8 +10,9 @@
 #include "ff.h"
 
 
-extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude, float  *v_speed, 
-														float *v_bearing, unsigned char *v_timestamp);
+extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude, 
+										float  *v_speed, float *v_bearing, unsigned char *v_timestamp,
+											nmeaINFO info, uint8_t new_parse);
 void Tim3_Int_Init(u16 arr,u16 psc);
 void TIM3_IRQHandler(void);
 int time_1s = 0;
@@ -27,8 +28,7 @@ int main(void)
 	int						isNewLocationParse=0;
 	unsigned int 	v_alarm_value = 0;
 	unsigned int 	v_status_value = 0;
-	
-	
+		
 //	double 				v_latitude = 34.824788;
 //	double 				v_longitude = 113.558408;
 //	float 				v_altitude = 107;
@@ -42,20 +42,21 @@ int main(void)
 	float 				v_bearing ;
 	float 				m_bearing ;
 	unsigned char v_timestamp[] = "700101000000"; // 1970-01-01-00-00-00.
-
-
 	
-//	LED_GPIO_Config();	//LED 端口初始化
-//  
-//  GPIO_SetBits(GPIOD,GPIO_Pin_2);
+  nmeaPARSER parser;      //解码时使用的数据结构  
+	nmeaINFO info;          //GPS解码后得到的信息
+  uint8_t new_parse=0;    //是否有新的解码数据标志
+	/* 初始化GPS数据结构 */
+	nmea_parser_init(&parser);
+
 
 	NVIC_Configuration(); 	//设置NVIC中断分组2:2位抢占优先级，2位响应优先级
 	delay_init();	    	 		//延时函数初始化
 	uart_init(115200); //串口初始化
   USART2_Init(115200);
   GPS_Config();
-	
-	
+	LED_GPIO_Config();	//LED 端口初始化
+	GPIO_SetBits(GPIOA,GPIO_Pin_8);
 	
 	while(1)
 	{
@@ -71,6 +72,12 @@ int main(void)
 				printf("server connected\r\n");
 				isTCPconnected=1;
 				delay_ms(2000);
+			}
+			
+			else
+			{
+				IPFlashWrite();
+				isTCPconnected = 0;
 				continue;
 			}
 		}
@@ -108,9 +115,37 @@ int main(void)
 		Tim3_Int_Init(10000-1,7199);
 		while(1)
 		{
+			while(1)
+			{
+				if(GPS_HalfTransferEnd)     /* 接收到GPS_RBUFF_SIZE一半的数据 */
+				{
+					/* 进行nmea格式解码 */
+					nmea_parse(&parser, (const char*)&gps_rbuff[0], HALF_GPS_RBUFF_SIZE, &info);
+					
+					GPS_HalfTransferEnd = 0;   //清空标志位
+					new_parse = 1;             //设置解码消息标志 
+				}
+				else if(GPS_TransferEnd)    /* 接收到另一半数据 */
+				{
+
+					nmea_parse(&parser, (const char*)&gps_rbuff[HALF_GPS_RBUFF_SIZE], HALF_GPS_RBUFF_SIZE, &info);
+				 
+					GPS_TransferEnd = 0;
+					new_parse =1;
+					break;
+				}
+			}
+
+			
+
 			//位置上报 
-			isNewLocationParse = nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp);
-			updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
+			isNewLocationParse = nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp, info, new_parse);
+
+			if(new_parse == 1)
+			{
+				updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
+				new_parse = 0;
+			}
 			
 			//拐弯时上报位置数据
 			if((fabs(v_bearing - m_bearing)) >= parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle)
@@ -118,29 +153,36 @@ int main(void)
 				m_bearing = v_bearing;
 				jt808LocationReport();
 				printf("fabs(v_bearing - m_bearing)) > %d trigger LocationReport SUCCESS\r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
-				LocationReportCounter++; 
+				LocationReportCounter++;
+				printf("m_bearing ===== %f  \r\n", m_bearing);				
 			}
-			printf("m_bearing ===== %f  \r\n", m_bearing);
+
+
+			
 			
 			//当计时器达到缺省时间上报间隔时上报位置数据
-			printf("parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval ===== %d  \r\n", parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval);
+//			printf("parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval ===== %d  \r\n", parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval);
 			
-			printf("time_1s = %d \r\n",time_1s);
+//			printf("time_1s = %d \r\n",time_1s);
 			if(time_1s >= parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval )
 			{
+				printf("isNewLocationParse == %d \r\n", isNewLocationParse);
+				
 				if(isNewLocationParse == 1)
 				{
 					printf("locationReport!!!!!!!!!!!!!!!!! \r\n");
 					jt808LocationReport();
 					time_1s = 0;
 					LocationReportCounter++; 
+					GPIO_SetBits(GPIOA,GPIO_Pin_8);
 				}
 				else
-				{				
+				{			
 					printf("HeartBeat!!!!!!!!!!!!!!!!! \r\n");
 					jt808TerminalHeartBeat();
 					time_1s = 0;
 					HeartBeatCounter++; 
+					GPIO_ResetBits(GPIOA,GPIO_Pin_8);
 				}
 			}
 			
@@ -187,10 +229,11 @@ int main(void)
 			}
 			
 			//现行逻辑位如果上报5次未收到平台响应消息则重新连接服务器
-			printf("LocationReportCounter == %d \r\n",LocationReportCounter);
-			printf("HeartBeatCounter == %d \r\n",HeartBeatCounter);
+
 			if(LocationReportCounter>=5||HeartBeatCounter>=5)
 			{
+				printf("LocationReportCounter == %d \r\n",LocationReportCounter);
+				printf("HeartBeatCounter == %d \r\n",HeartBeatCounter);
 				isRegistered=0;
 				isTCPconnected=0;
 				isAuthenticated=0;
