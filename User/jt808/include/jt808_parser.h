@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "protocol_parameter.h"
+#include "ff.h"
 
 #define PARSER_NUM 9
 #define BUFFER_SIZE_RECEIVE 1024 // buffer size 发送缓存大小

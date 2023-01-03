@@ -40,3 +40,6 @@
 ..\..\output\terminal_register.o: ..\..\Libraries\FWlib\inc\stm32f10x_usart.h
 ..\..\output\terminal_register.o: ..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h
 ..\..\output\terminal_register.o: ..\..\Libraries\FWlib\inc\misc.h
+..\..\output\terminal_register.o: ..\..\User\FATFS\ff.h
+..\..\output\terminal_register.o: ..\..\User\FATFS\integer.h
+..\..\output\terminal_register.o: ..\..\User\FATFS\ffconf.h

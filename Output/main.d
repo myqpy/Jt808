@@ -63,3 +63,6 @@
 ..\..\output\main.o: ..\..\User\jt808\include\terminal_register.h
 ..\..\output\main.o: ..\..\User\Bsp\./internal_flash/bsp_internal_flash.h
 ..\..\output\main.o: ..\..\User\jt808\include\bcd.h
+..\..\output\main.o: ..\..\User\FATFS\ff.h
+..\..\output\main.o: ..\..\User\FATFS\integer.h
+..\..\output\main.o: ..\..\User\FATFS\ffconf.h

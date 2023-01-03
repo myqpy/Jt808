@@ -302,3 +302,55 @@ u8 ec20_call_test(void)
 }*/
 
 
+ErrorStatus ec20_init(void)
+{
+    u8 data=0,ret=0;
+    u8 err=0;
+    char atstr[BUFLEN];
+    USART2_RX_STA=0;
+    if(ec20_send_cmd("AT","OK","NULL","NULL",1000))err|=1<<0;//检测是否应答AT指令
+    USART2_RX_STA=0;
+    if(ec20_send_cmd("ATE0","OK","NULL","NULL",2000))err|=1<<1;//不回显
+    USART2_RX_STA=0;
+    if(ec20_send_cmd("AT+CPIN?","OK","NULL","NULL",2000))err|=1<<3;	//查询SIM卡是否在位
+    USART2_RX_STA=0;
+    data = 0;
+    //查询GSM网络注册状态，确认找网成功
+    while (ec20_send_cmd("AT+CREG?\r\n","\r\n+CREG: 0,1","NULL","NULL",2000)!= 1 && data < 10)
+    {
+        USART2_RX_STA=0;
+        delay_ms(100);
+        data++;
+    }
+    USART2_RX_STA=0;
+    if (data == 10)
+    {
+        return ERROR;                                                                             //找网不成功模块重启
+    }
+    ec20_send_cmd("AT+CGATT?\r\n","+CGATT: 1","OK","NULL",2000);
+    USART2_RX_STA=0;
+    delay_ms(200);
+    ec20_send_cmd("AT+QIACT?\r\n","OK","NULL","NULL",2000);
+
+    USART2_RX_STA=0;
+    delay_ms(200);
+    ec20_send_cmd("AT+QICLOSE=0\r\n","OK","NULL","NULL",2000);
+    USART2_RX_STA=0;
+    delay_ms(200);
+    memset(atstr,0,BUFLEN);
+    sprintf(atstr,"AT+QIOPEN=1,0,\"TCP\",\"%s\",%d,0,2\r\n",IPSERVER,PORTSERVER);
+    data=ec20_send_cmd((u8*)atstr,"CONNECT","OK","NULL",2000);
+    USART2_RX_STA=0;
+    delay_ms(200);
+    USART2_RX_STA=0;
+    if (data == 1 || data == 2 || data == 3 || ret==1)
+    {
+        printf("data=%d\r\n",data);
+        return SUCCESS;
+    }
+    else
+    {
+        return ERROR;
+    }
+} 
+

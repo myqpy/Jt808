@@ -1,6 +1,7 @@
 #include "jt808_packager.h"
 #include "./internal_flash/bsp_internal_flash.h"
 //#include <memory.h>
+#include "ff.h"
 #include "util.h"
 
 // 所有终端数据打包命令.
@@ -176,7 +177,7 @@ int handle_kTerminalAuthentication(struct ProtocolParameter *para)
     
 
     int msg_len = strlen(para->parse.authentication_code);
-		printf("[%s] msg_id = 0x%04x\n", __FUNCTION__, kTerminalAuthentication);
+		printf("[%s] 终端鉴权 msg_id = 0x%04x\n", __FUNCTION__, kTerminalAuthentication);
     // 鉴权码.
     bufferSendPushBytes(para->parse.authentication_code, msg_len);
 
@@ -205,7 +206,7 @@ int handle_kLocationReport(struct ProtocolParameter *para)
 		union U32ToU8Array u32converter;
 		union U16ToU8Array u16converter;
 		
-		printf("[%s] LocationReport msg_id = 0x%04x\r\n", __FUNCTION__, kLocationReport);
+		printf("[%s]位置上报 msg_id = 0x%04x\r\n", __FUNCTION__, kLocationReport);
 
     // 报警标志.
     u32converter.u32val = EndianSwap32(para->location_info.alarm.value);
@@ -267,7 +268,7 @@ int jt808FrameBodyPackage(struct ProtocolParameter *para)
 {
     unsigned short msg_id = para->msg_head.msg_id;
 		int result = -1;
-    printf("[jt808FrameBodyPackage] current msg_id: 0x%04x\r\n", para->msg_head.msg_id);
+    printf("[jt808消息体打包] current msg_id: 0x%04x\r\n", para->msg_head.msg_id);
     
 
     switch (msg_id)
@@ -439,13 +440,13 @@ int jt808FramePackage(struct ProtocolParameter *para)
     clearBufferSend();
     // 0、设置头标志位
     jt808SetFrameFlagHeader();
-    printf("[jt808SetFrameFlagHeader] OK !\n");
+    printf("[jt808头标志位] OK !\n");
 
     // 1、生成消息头
     if (jt808FrameHeadPackage(&(para->msg_head)) < 0)
         return -1;
 
-    printf("[jt808FrameHeadPackage] OK !\r\n");
+    printf("[jt808消息头] OK !\r\n");
 
     // 2、封装消息内容.
     ret = jt808FrameBodyPackage(para);

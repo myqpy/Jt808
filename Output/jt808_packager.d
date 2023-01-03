@@ -42,3 +42,6 @@
 ..\..\output\jt808_packager.o: ..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h
 ..\..\output\jt808_packager.o: ..\..\Libraries\FWlib\inc\misc.h
 ..\..\output\jt808_packager.o: ..\..\User\jt808\include\bcd.h
+..\..\output\jt808_packager.o: ..\..\User\FATFS\ff.h
+..\..\output\jt808_packager.o: ..\..\User\FATFS\integer.h
+..\..\output\jt808_packager.o: ..\..\User\FATFS\ffconf.h

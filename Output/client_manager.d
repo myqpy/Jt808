@@ -43,4 +43,7 @@
 ..\..\output\client_manager.o: ..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h
 ..\..\output\client_manager.o: ..\..\Libraries\FWlib\inc\misc.h
 ..\..\output\client_manager.o: ..\..\User\jt808\include\bcd.h
+..\..\output\client_manager.o: ..\..\User\FATFS\ff.h
+..\..\output\client_manager.o: ..\..\User\FATFS\integer.h
+..\..\output\client_manager.o: ..\..\User\FATFS\ffconf.h
 ..\..\output\client_manager.o: ..\..\User\jt808\include\jt808_parser.h

@@ -11,4 +11,7 @@
 ..\..\output\jt808_parser.o: ..\..\User\jt808\include\util.h
 ..\..\output\jt808_parser.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
 ..\..\output\jt808_parser.o: ..\..\User\jt808\include\terminal_control.h
+..\..\output\jt808_parser.o: ..\..\User\FATFS\ff.h
+..\..\output\jt808_parser.o: ..\..\User\FATFS\integer.h
+..\..\output\jt808_parser.o: ..\..\User\FATFS\ffconf.h
 ..\..\output\jt808_parser.o: ..\..\User\jt808\include\bcd.h

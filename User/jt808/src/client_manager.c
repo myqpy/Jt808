@@ -5,6 +5,7 @@
 #include "jt808_parser.h"
 #include "util.h"
 #include "bcd.h"
+#include "ff.h"
 #include "jt808_parser.h"
 
 struct ProtocolParameter parameter_;
@@ -79,16 +80,16 @@ int packagingMessage(unsigned int msg_id)
     //查找当前msgID是否存在于待打包消息ID数组中
     if (0 == findMsgIDFromTerminalPackagerCMD(msg_id))
     {
-        printf("[findMsgIDFromTerminalPackagerCMD] no current msg_id in kTerminalPackagerCMD\r\n");
+        printf("[查找当前msgID是否存在于待打包消息ID数组中] 暂无 msg_id \r\n");
         return -1;
     }
 
-    printf("[findMsgIDFromTerminalPackagerCMD] OK !\r\n");
+    printf("[查找当前msgID是否存在于待打包消息ID数组中] OK !\r\n");
 
     parameter_.msg_head.msg_id = msg_id; // 设置消息ID.
     if (jt808FramePackage(&parameter_) < 0)
     {
-        printf("[jt808FramePackage]: Package message failed !!!\r\n");
+        printf("[jt808消息头打包]: 失败 !!!\r\n");
         return -1;
     }
     ++parameter_.msg_head.msg_flow_num; // 每正确生成一条命令, 消息流水号增加1.

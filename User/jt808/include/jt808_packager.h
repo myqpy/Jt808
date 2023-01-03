@@ -9,6 +9,7 @@
 #include "protocol_parameter.h"
 #include "terminal_register.h"
 #include "bcd.h"
+#include "ff.h"
 
 extern unsigned short kTerminalPackagerCMD[PACKAGER_NUM];
 extern unsigned char BufferSend[BUFFER_SIZE_SEND]; //发送缓存s

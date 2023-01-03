@@ -49,12 +49,17 @@
 "..\..\output\delay.o"
 "..\..\output\bcd.o"
 "..\..\output\client_manager.o"
-"..\..\output\gbk_utf8.o"
 "..\..\output\jt808_packager.o"
 "..\..\output\jt808_parser.o"
 "..\..\output\location_report.o"
 "..\..\output\terminal_register.o"
 "..\..\output\util.o"
+"..\..\output\diskio.o"
+"..\..\output\ff.o"
+"..\..\output\fatfs_flash_spi.o"
+"..\..\output\fatfs_sd_sdio.o"
+"..\..\output\ccsbcs.o"
+"..\..\output\syscall.o"
 --library_type=microlib --strict --scatter "..\..\Output\Template.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

@@ -2,6 +2,7 @@
 
 #include "util.h"
 //#include <memory.h>
+#include "ff.h"
 #include "bcd.h"
 
 // 所有终端解析命令.
@@ -83,11 +84,11 @@ int handle_kPlatformGeneralResponse(struct ProtocolParameter *para)
     if (para->msg_head.msgbody_attr.bit.packet == 1)
         pos = MSGBODY_PACKET_POS;
     // 应答流水号.
-    para->parse.respone_flow_num = BufferReceive[pos] << 8 + BufferReceive[pos + 1];
+    para->parse.respone_flow_num = (BufferReceive[pos] << 8) + BufferReceive[pos + 1];
     printf("[%s] 平台通用应答 应答流水号 = 0x%04x\r\n", __FUNCTION__, para->parse.respone_flow_num);
 
     // 应答消息ID.
-    para->parse.respone_msg_id = BufferReceive[pos + 2] << 8 + BufferReceive[pos + 3];
+    para->parse.respone_msg_id = (BufferReceive[pos + 2] << 8) + BufferReceive[pos + 3];
     printf("[%s] 平台通用应答 应答流水号 = 0x%04x\r\n", __FUNCTION__, para->parse.respone_msg_id);
 
     // 应答结果.

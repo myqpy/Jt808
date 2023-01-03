@@ -10,6 +10,7 @@
       <TargetName>GPS</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pArmCC>5060300::V5.06 update 3 (build 300)::ARMCC</pArmCC>
       <pCCUsed>5060300::V5.06 update 3 (build 300)::ARMCC</pCCUsed>
       <TargetOption>
         <TargetCommonOption>
@@ -652,16 +653,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>DOC</GroupName>
-          <Files>
-            <File>
-              <FileName>必读说明.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\必读说明.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>system</GroupName>
           <Files>
             <File>
@@ -690,11 +681,6 @@
               <FilePath>..\..\User\jt808\src\client_manager.c</FilePath>
             </File>
             <File>
-              <FileName>gbk_utf8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\jt808\src\gbk_utf8.c</FilePath>
-            </File>
-            <File>
               <FileName>jt808_packager.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\jt808\src\jt808_packager.c</FilePath>
@@ -718,6 +704,41 @@
               <FileName>util.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\jt808\src\util.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>FatFs</GroupName>
+          <Files>
+            <File>
+              <FileName>diskio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\FATFS\diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\FATFS\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>fatfs_flash_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\FATFS\drivers\fatfs_flash_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>fatfs_sd_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\FATFS\drivers\fatfs_sd_sdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>ccsbcs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\FATFS\option\ccsbcs.c</FilePath>
+            </File>
+            <File>
+              <FileName>syscall.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\FATFS\option\syscall.c</FilePath>
             </File>
           </Files>
         </Group>
