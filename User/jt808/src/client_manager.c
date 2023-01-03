@@ -57,7 +57,7 @@ int FlashWrite()
 	// 研究院平台
 	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
 	
-	
+	//客户平台
 //	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
 
 	parameter_.parse.terminal_parameters.ServerPort = 7611;
@@ -275,7 +275,7 @@ int findParameterIDFromArray(unsigned int para_id)
     return result;
 }
 
-int jt808TerminalRegister(int isRegistered)
+int jt808TerminalRegister(int *isRegistered)
 {
 	int i=0;
 	while(i<3)
@@ -290,7 +290,7 @@ int jt808TerminalRegister(int isRegistered)
 			parsingMessage(USART2_RX_BUF, USART2_RX_STA);//校验
 			if((parameter_.parse.respone_result == kRegisterSuccess)&&(parameter_.parse.msg_head.msg_id==kTerminalRegisterResponse))
 			{
-				isRegistered = 1;
+				*isRegistered = 1;
 				printf("\r\n");
 				printf("TerminalRegister SUCCESS!!!!!!!!!!\r\n");
 				printf("\r\n");
@@ -306,11 +306,11 @@ int jt808TerminalRegister(int isRegistered)
 	}
 	
 	
-	return isRegistered;
+	return 0;
 }
 
 
-int jt808TerminalAuthentication(int isAuthenticated)
+int jt808TerminalAuthentication(int *isAuthenticated)
 {
 	int i=0;
 	while(i<3)
@@ -325,7 +325,7 @@ int jt808TerminalAuthentication(int isAuthenticated)
 			parsingMessage(USART2_RX_BUF, USART2_RX_STA);//校验
 			if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kTerminalAuthentication))
 			{
-				isAuthenticated = 1;
+				*isAuthenticated = 1;
 				printf("\r\n");
 				printf("TerminalAuthentication SUCCESS!!!!!!!!\r\n");
 				printf("\r\n");
@@ -339,7 +339,7 @@ int jt808TerminalAuthentication(int isAuthenticated)
 		printf("TerminalAuthentication FAILED RETRY!!!!!!!!\r\n");
 		printf("\r\n");		
 	}
-	return isAuthenticated;
+	return 0;
 }
 
 int jt808LocationReport()
@@ -358,6 +358,16 @@ int jt808TerminalHeartBeat()
 	delay_ms(1000);
 	return 0;
 }
+
+int jt808TerminalGeneralResponse()
+{
+	packagingMessage(kTerminalGeneralResponse);
+	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	printf("jt808TerminalGeneralResponse report SUCCESS!\r\n");
+	delay_ms(1000);
+	return 0;
+}
+
 
 int parsingMessage(const unsigned char *in, unsigned int in_len)
 {

@@ -146,7 +146,9 @@ int handle_kSetTerminalParameters(struct ProtocolParameter *para)
 	union U32ToU8Array u32converter;
 	int isFind=0, i;
 	unsigned len;
-		
+	
+	jt808TerminalGeneralResponse();
+	
 	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kSetTerminalParameters);
 	if (para == NULL){
 			return -1;
@@ -184,6 +186,7 @@ int handle_kSetTerminalParameters(struct ProtocolParameter *para)
 		}
 		pos+=len;
 	}
+	
 	
 	
 	return 0;

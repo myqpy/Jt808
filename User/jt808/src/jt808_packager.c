@@ -86,17 +86,20 @@ int handle_kTerminalGeneralResponse(struct ProtocolParameter *para)
 
     int msg_len = 5;
     union U16ToU8Array u16converter;
-		printf("[%s]  msg_id = 0x%04x\n", __FUNCTION__, kTerminalGeneralResponse);
+		printf("[%s]  msg_id = 0x%04x \r\n", __FUNCTION__, kTerminalGeneralResponse);
     // 应答消息流水号.
     u16converter.u16val = EndianSwap16(para->parse.msg_head.msg_flow_num);
     copyU16ToU8ArrayToBufferSend(u16converter.u8array);
+		printf(" flow_num == 0x%04x \r\n", para->parse.msg_head.msg_flow_num);
 
     // 应答消息ID.
     u16converter.u16val = EndianSwap16(para->parse.msg_head.msg_id);
     copyU16ToU8ArrayToBufferSend(u16converter.u8array);
+		printf(" msg_id == 0x%04x \r\n", para->parse.msg_head.msg_id);
 
     // 应答结果.
     bufferSendPushByte(para->respone_result);
+		printf(" respone_result == 0x%02x \r\n", para->parse.respone_result);
 
     return msg_len;
 }
@@ -121,7 +124,6 @@ int handle_kTerminalRegister(struct ProtocolParameter *para)
 
     msg_len= 37;
 
-    //union U16ToU8Array u16converter;
     // 省域ID.
     u16converter.u16val = EndianSwap16(para->register_info.province_id);
     copyU16ToU8ArrayToBufferSend(u16converter.u8array);
@@ -195,7 +197,7 @@ int handle_kLocationReport(struct ProtocolParameter *para)
 		union U32ToU8Array u32converter;
 		union U16ToU8Array u16converter;
 		
-		printf("[%s]位置上报 msg_id = 0x%04x\r\n", __FUNCTION__, kLocationReport);
+		printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kLocationReport);
 
     // 报警标志.
     u32converter.u32val = EndianSwap32(para->location_info.alarm.value);
@@ -265,7 +267,7 @@ int jt808FrameBodyPackage(struct ProtocolParameter *para)
         // 终端通用应答.
     case kTerminalGeneralResponse:
     {
-        result = handle_kGetTerminalParametersResponse(para);
+        result = handle_kTerminalGeneralResponse(para);
     }
     break;
 
@@ -356,8 +358,8 @@ int jt808MsgBodyLengthFix(struct MsgHead *msg_head, unsigned int msgBody_len)
 // JT808协议转义.
 int jt808MsgEscape()
 {
-	unsigned int outBufferSize;
-	unsigned char *outBuffer;
+		unsigned int outBufferSize;
+		unsigned char *outBuffer;
     BufferSend[0] = 0x00;
     BufferSend[RealBufferSendSize - 1] = 0x00;
 
@@ -381,6 +383,7 @@ int jt808MsgEscape()
     {
         free(outBuffer);
         outBuffer = NULL;
+				
     }
 		printf("[%s] OK !\r\n",__FUNCTION__);
     return 0;

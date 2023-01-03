@@ -34,17 +34,12 @@ int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude,
 		int m_speed=0;
 		int m_bearing=0;
 	
-    
-  
     nmeaTIME beiJingTime;    //北京时间 
 
     /* 设置用于输出调试信息的函数 */
     nmea_property()->trace_func = &trace;
     nmea_property()->error_func = &error;
     nmea_property()->info_func = &gps_info;
-
-
-	  //char bufTime[64];
 
 		if(new_parse )                //有新的解码消息   
 		{    
@@ -72,7 +67,6 @@ int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude,
 				return 1;
 			}
 
-//			new_parse = 0;
 			memset(bufTime,0,12);
 				
 		}
