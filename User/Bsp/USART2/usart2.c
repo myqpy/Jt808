@@ -1,9 +1,9 @@
-//#include "delay.h"
-#include "./USART2/usart2.h"
+#include "./delay/delay.h"
+#include "./usart2/usart2.h"
 #include "stdarg.h"	 	 
 #include "stdio.h"	 	 
 #include "string.h"
-#include "./EC20/ec20.h"
+#include "./ec20/ec20.h"
 
 
 //串口发送缓存区 	
@@ -96,14 +96,16 @@ void USART2_Init(u32 bound)
 }
 //串口2,printf 函数
 //确保一次发送数据不超过USART2_MAX_SEND_LEN字节
-void u2_printf(char* fmt,...)  
+	void u2_printf(char* fmt,...)  
 {  
     va_list ap;
     va_start(ap,fmt);
+		///printf("%s xxxxxxxxxxxxxxxxxxxx", fmt);
     vsprintf((char*)USART2_TX_BUF,fmt,ap);
     va_end(ap);
     while(DMA1_Channel7->CNDTR!=0);	//等待通道7传输完成
     UART_DMA_Enable(DMA1_Channel7,strlen((const char*)USART2_TX_BUF)); 	//通过dma发送出去
+		
 }
 
 //定时器4中断服务程序		    
@@ -216,6 +218,46 @@ void UART_DMA_Enable(DMA_Channel_TypeDef*DMA_CHx,u16 len)
 
 
 
+/*****************  发送一个字符 **********************/
+static void Usart_SendByte( USART_TypeDef * pUSARTx, uint8_t ch )
+{
+    /* 发送一个字节数据到USART1 */
+    USART_SendData(pUSARTx,ch);
+
+    /* 等待发送完毕 */
+    while (USART_GetFlagStatus(pUSARTx, USART_FLAG_TXE) == RESET);
+}
+/*****************  指定长度的发送字符串 **********************/
+void Usart_SendStr_length( USART_TypeDef * pUSARTx, uint8_t *str,uint32_t strlen )
+{
+    unsigned int k=0;
+    do 
+    {
+        Usart_SendByte( pUSARTx, *(str + k) );
+        k++;
+    } while(k < strlen);
+}
+
+/*****************  发送字符串 **********************/
+void Usart_SendString( USART_TypeDef * pUSARTx, char *str)
+{
+    unsigned int k=0;
+    do 
+    {
+        Usart_SendByte( pUSARTx, *(str + k) );
+        k++;
+    } while(*(str + k)!='\0');
+}
+
+
+void ClearRAM(u8* ram,u32 n)
+{
+    u32 i;
+    for (i = 0;i < n;i++)
+    {
+        ram[i] = 0x00;
+    }
+}
 
 
 

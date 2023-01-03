@@ -1,10 +1,10 @@
-#include "ec20.h"
-#include "./usart/bsp_usart.h"		
+#include "./ec20/ec20.h"
+#include "./usart/usart.h"		
 #include "./delay/delay.h"	
 #include "./led/bsp_led.h"   	 
-#include "./key/bsp_key.h"	 	 	 	 	 
+#include "./key/key.h"	 	 	 	 	 
 #include "string.h"    
-#include "./USART2/usart2.h" 
+#include "./usart2/usart2.h" 
 
 u8 Scan_Wtime = 0;//保存扫描需要的时间
 u8 BT_Scan_mode=0;//蓝牙扫描设备模式标志
@@ -49,6 +49,7 @@ u8 ec20_send_cmd(u8 *cmd,u8 *Re1,u8 *Re2,u8 *Re3,u16 waittime)
 {
     u8 res=0;
     USART2_RX_STA=0;
+		
     if((u32)cmd<=0XFF)
     {
         while(DMA1_Channel7->CNDTR!=0);	//等待通道7传输完成

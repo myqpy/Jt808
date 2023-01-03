@@ -1,5 +1,6 @@
-..\..\output\ec20.o: ..\..\User\Bsp\EC20\ec20.c
-..\..\output\ec20.o: ..\..\User\Bsp\EC20\ec20.h
+..\..\output\ec20.o: ..\..\User\Bsp\ec20\ec20.c
+..\..\output\ec20.o: ..\..\User\Bsp\./ec20/ec20.h
+..\..\output\ec20.o: ..\..\system\./sys/sys.h
 ..\..\output\ec20.o: ..\..\Libraries\CMSIS\stm32f10x.h
 ..\..\output\ec20.o: ..\..\Libraries\CMSIS\core_cm3.h
 ..\..\output\ec20.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -29,10 +30,10 @@
 ..\..\output\ec20.o: ..\..\Libraries\FWlib\inc\stm32f10x_usart.h
 ..\..\output\ec20.o: ..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h
 ..\..\output\ec20.o: ..\..\Libraries\FWlib\inc\misc.h
-..\..\output\ec20.o: ..\..\User\Bsp\./usart/bsp_usart.h
+..\..\output\ec20.o: ..\..\User\Bsp\./usart/usart.h
 ..\..\output\ec20.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
-..\..\output\ec20.o: ..\..\User\./delay/delay.h
+..\..\output\ec20.o: ..\..\system\./delay/delay.h
 ..\..\output\ec20.o: ..\..\User\Bsp\./led/bsp_led.h
-..\..\output\ec20.o: ..\..\User\Bsp\./key/bsp_key.h
+..\..\output\ec20.o: ..\..\User\Bsp\./key/key.h
 ..\..\output\ec20.o: D:\MDK5\ARM\ARMCC\Bin\..\include\string.h
-..\..\output\ec20.o: ..\..\User\Bsp\./USART2/usart2.h
+..\..\output\ec20.o: ..\..\User\Bsp\./usart2/usart2.h

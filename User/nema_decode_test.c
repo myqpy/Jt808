@@ -13,13 +13,12 @@
   */ 
   
 #include "stm32f10x.h"
-#include "./usart/bsp_usart.h"
+#include "./usart/usart.h"
 #include "./gps/gps_config.h"
 //#include "ff.h"
 #include "nmea/nmea.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 char bufTime[12]={0};
 int nmea_decode_test(void)
@@ -114,6 +113,7 @@ int nmea_decode_test(void)
 
         new_parse = 0;
 				memset(bufTime,0,12);
+				break;
       }
 	
 	}

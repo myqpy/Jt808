@@ -28,8 +28,9 @@
 ..\..\output\nema_decode_test.o: ..\..\Libraries\FWlib\inc\stm32f10x_usart.h
 ..\..\output\nema_decode_test.o: ..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h
 ..\..\output\nema_decode_test.o: ..\..\Libraries\FWlib\inc\misc.h
-..\..\output\nema_decode_test.o: ..\..\User\Bsp\./usart/bsp_usart.h
+..\..\output\nema_decode_test.o: ..\..\User\Bsp\./usart/usart.h
 ..\..\output\nema_decode_test.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\nema_decode_test.o: ..\..\system\./sys/sys.h
 ..\..\output\nema_decode_test.o: ..\..\User\Bsp\./gps/gps_config.h
 ..\..\output\nema_decode_test.o: ..\..\User\nmea_decode\include\nmea/nmea.h
 ..\..\output\nema_decode_test.o: ..\..\User\nmea_decode\include\nmea/./config.h
@@ -45,4 +46,3 @@
 ..\..\output\nema_decode_test.o: ..\..\User\nmea_decode\include\nmea/./parser.h
 ..\..\output\nema_decode_test.o: ..\..\User\nmea_decode\include\nmea/./context.h
 ..\..\output\nema_decode_test.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
-..\..\output\nema_decode_test.o: D:\MDK5\ARM\ARMCC\Bin\..\include\string.h

@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD, USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\User\FATFS;..\..\User\FATFS\option;..\..\User\Bsp;..\..\User\nmea_decode\include;..\..\jt808\include</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\User\FATFS;..\..\User\FATFS\option;..\..\User\Bsp;..\..\User\nmea_decode\include;..\..\system;..\..\User\jt808\include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -565,29 +565,59 @@
               <FilePath>..\..\User\Bsp\gps\gps_config.c</FilePath>
             </File>
             <File>
-              <FileName>bsp_key.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\Bsp\key\bsp_key.c</FilePath>
-            </File>
-            <File>
               <FileName>bsp_led.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\Bsp\led\bsp_led.c</FilePath>
             </File>
             <File>
-              <FileName>bsp_usart.c</FileName>
+              <FileName>usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\User\Bsp\usart\bsp_usart.c</FilePath>
+              <FilePath>..\..\User\Bsp\usart\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\Bsp\key\key.c</FilePath>
             </File>
             <File>
               <FileName>usart2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\User\Bsp\USART2\usart2.c</FilePath>
+              <FilePath>..\..\User\Bsp\usart2\usart2.c</FilePath>
             </File>
             <File>
               <FileName>ec20.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\User\Bsp\EC20\ec20.c</FilePath>
+              <FilePath>..\..\User\Bsp\ec20\ec20.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>FatFs</GroupName>
+          <Files>
+            <File>
+              <FileName>diskio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\FATFS\diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\FATFS\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>fatfs_flash_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\FATFS\drivers\fatfs_flash_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>fatfs_sd_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\FATFS\drivers\fatfs_sd_sdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>ccsbcs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\FATFS\option\ccsbcs.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -647,57 +677,72 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>DOC</GroupName>
+          <Files>
+            <File>
+              <FileName>必读说明.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\必读说明.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>system</GroupName>
+          <Files>
+            <File>
+              <FileName>sys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\system\sys\sys.c</FilePath>
+            </File>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\system\delay\delay.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>jt808</GroupName>
           <Files>
             <File>
               <FileName>bcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\jt808\src\bcd.c</FilePath>
+              <FilePath>..\..\User\jt808\src\bcd.c</FilePath>
             </File>
             <File>
               <FileName>client_manager.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\jt808\src\client_manager.c</FilePath>
+              <FilePath>..\..\User\jt808\src\client_manager.c</FilePath>
             </File>
             <File>
               <FileName>gbk_utf8.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\jt808\src\gbk_utf8.c</FilePath>
+              <FilePath>..\..\User\jt808\src\gbk_utf8.c</FilePath>
             </File>
             <File>
               <FileName>jt808_packager.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\jt808\src\jt808_packager.c</FilePath>
+              <FilePath>..\..\User\jt808\src\jt808_packager.c</FilePath>
             </File>
             <File>
               <FileName>jt808_parser.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\jt808\src\jt808_parser.c</FilePath>
+              <FilePath>..\..\User\jt808\src\jt808_parser.c</FilePath>
             </File>
             <File>
               <FileName>location_report.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\jt808\src\location_report.c</FilePath>
+              <FilePath>..\..\User\jt808\src\location_report.c</FilePath>
             </File>
             <File>
               <FileName>terminal_register.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\jt808\src\terminal_register.c</FilePath>
+              <FilePath>..\..\User\jt808\src\terminal_register.c</FilePath>
             </File>
             <File>
               <FileName>util.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\jt808\src\util.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sys</GroupName>
-          <Files>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\delay\delay.c</FilePath>
+              <FilePath>..\..\User\jt808\src\util.c</FilePath>
             </File>
           </Files>
         </Group>

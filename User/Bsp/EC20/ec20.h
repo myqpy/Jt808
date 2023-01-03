@@ -1,7 +1,7 @@
 #ifndef __ec20_H__
 #define __ec20_H__
-//#include "sys.h"
-#include "stm32f10x.h"
+#include "./sys/sys.h"
+
 
 #define swap16(x) (x&0XFF)<<8|(x&0XFF00)>>8	//高低字节交换宏定义
 

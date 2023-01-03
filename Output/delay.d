@@ -1,5 +1,6 @@
-..\..\output\delay.o: ..\..\User\delay\delay.c
-..\..\output\delay.o: ..\..\User\delay\delay.h
+..\..\output\delay.o: ..\..\system\delay\delay.c
+..\..\output\delay.o: ..\..\system\delay\delay.h
+..\..\output\delay.o: ..\..\system\./sys/sys.h
 ..\..\output\delay.o: ..\..\Libraries\CMSIS\stm32f10x.h
 ..\..\output\delay.o: ..\..\Libraries\CMSIS\core_cm3.h
 ..\..\output\delay.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h

@@ -1,151 +1,195 @@
+/**
+  ******************************************************************************
+  * @file    main.c
+  * @author  WJSHM
+  * @version V1.0
+  * @date    2013-xx-xx
+  * @brief   对GPS模块传输的数据进行解码，获取定位信息。
+  ******************************************************************************
+  * @attention
+  *
+  *
+  ******************************************************************************
+  */
 
-#include "stm32f10x.h"
-#include "./usart/bsp_usart.h"
-#include "./USART2/usart2.h"
+//#include "stm32f10x.h"
+#include "./usart/usart.h"
+#include "./usart2/usart2.h"
 #include "./led/bsp_led.h"
 #include "./gps/gps_config.h"
+#include "./delay/delay.h"
+#include "./ec20/ec20.h"
+#include "./sys/sys.h"
+#include "string.h"
 #include "client_manager.h"
 #include "jt808_packager.h"
-#include "./EC20/ec20.h"
-	
-#define PORTSERVER 7611
+
+//#define IPSERVER "121.5.140.126"
+//#define PORTSERVER 8089
+
 #define IPSERVER "121.5.140.126"
-
-#define MAXDATASIZE (1024 * 5)
-
-#define TIME_DIFF(t1, t2) (((t1).tv_sec - (t2).tv_sec) * 1000 + ((t1).tv_usec - (t2).tv_usec) / 1000)
-ErrorStatus ec20_init(void);
+#define PORTSERVER 7611
 extern int nmea_decode_test(void);
-void Usart_SendString( USART_TypeDef * pUSARTx, unsigned char *str);
-//static void Usart_SendByte( USART_TypeDef * pUSARTx, uint8_t ch )
+ErrorStatus ec20_init(void);
+
 int main(void)
 {
-	int sockfd, sendbytes, recvbytes;
 	int i;
-  char buf[MAXDATASIZE];
-	/* LED 端口初始化 */
-	LED_GPIO_Config();	 
+		
+	unsigned int v_alarm_value = 0;
+	unsigned int v_status_value = 0;
+	double const v_latitude = 34.824788;
+	double const v_longitude = 113.558408;
+	float const v_altitude = 107;
+	float const v_speed = 15;
+	float const v_bearing = 132;
+	unsigned char *v_timestamp = "221127212855";
+	
+	
+	LED_GPIO_Config();	//LED 端口初始化
   
   GPIO_SetBits(GPIOD,GPIO_Pin_2);
-  
-	/*串口初始化*/
-	USART_Config();
+
+	NVIC_Configuration(); 	//设置NVIC中断分组2:2位抢占优先级，2位响应优先级
+	delay_init();	    	 		//延时函数初始化
+	uart_init(115200); //串口初始化
   USART2_Init(115200);
   GPS_Config();
-
-  /* GPS解码测试 */
-  //nmea_decode_test();
-	while(1){
-			if(ec20_init() == ERROR)continue;
-		
-			sendbytes = 0;
-			recvbytes = 0;
-
-			//gettimeofday(&timestamp, NULL);
-
-			setTerminalPhoneNumber("17737702736", 11);
-			printf("will send !\n");
-
-			printf("RealBufferSendSize = %d \n", RealBufferSendSize);
-			// sleep(1);
-			packagingMessage(kTerminalRegister);
-			// sleep(1);
-			printf("RealBufferSendSize = %d \n", RealBufferSendSize);
-
-			for (i = 0; i < RealBufferSendSize; ++i)
-			{
-				printf("%02x ", BufferSend[i]);
-			}
-			
-			printf("\r\n");
-			//sleep(1);
-			
-			Usart_SendString(USART2, BufferSend);
-			printf("send ok!\n");
-			
-
-			printf("send done !\n");
-			//gettimeofday(&timestamp_end, NULL);
-			printf("sendbytes: %d\n", sendbytes);
-
-			printf("will recv !\n");
-			//if ((recvbytes = recv(sockfd, buf, MAXDATASIZE, 0)) == -1)
-			if(USART2_RX_STA&0X8000){
-				printf("recv ok!\n");
-				for (i = 0; i < recvbytes; ++i)
-				{
-					printf("%02x ", buf[i]);
-				}
-				printf("\r\n");
-				
-				parsingMessage(buf, recvbytes);
-			}
-
-			printf("recv done!\n");
-			printf("Client receive bytes: %d\n", recvbytes);
-
-			sendbytes = 0;
-			recvbytes = 0;
-
-			//gettimeofday(&timestamp, NULL);
-
-			setTerminalPhoneNumber("17737702736", 11);
-			printf("will send !\n");
-
-			printf("RealBufferSendSize = %d \n", RealBufferSendSize);
-			// sleep(1);
-			packagingMessage(kLocationReport);
-			// sleep(1);
-			printf("RealBufferSendSize = %d \n", RealBufferSendSize);
-
-			for (i = 0; i < RealBufferSendSize; ++i)
-			{
-				printf("%02x ", BufferSend[i]);
-			}
-			printf("\r\n");
-			//Delay(1000);
-
-			Usart_SendString(USART2, BufferSend);
-			printf("send ok!\n");
-			
-
-			printf("send done !\n");
-			//gettimeofday(&timestamp_end, NULL);
-			printf("sendbytes: %d\n", sendbytes);
-
-			printf("will recv !\n");
-			//if ((recvbytes = recv(sockfd, buf, MAXDATASIZE, 0)) == -1)
-			if(USART2_RX_STA&0X8000){
-				printf("recv ok!\n");
-				for (i = 0; i < recvbytes; ++i)
-				{
-					// if ((i > 0) && (buf[i] == 0x00) && (buf[i - 1] == 0x7e))
-					// {
-					//   break;
-					// }
-					printf("%02x ", buf[i]);
-				}
-				printf("\r\n");
-				
-				parsingMessage(buf, recvbytes);
-			}
-
-			printf("recv done!\n");
-			printf("Client receive bytes: %d\n", recvbytes);
-			
+	
+	//Connecting Server;
+	while(1)
+	{
+		if(ec20_init() == SUCCESS)
+		{	
+			printf("server connected\r\n");
+			break;
+		}
+		delay_ms(2000);
 	}
-}
+  setTerminalPhoneNumber("15637142115", 11);
+	printf("will send !\r\n");
+	
+	printf("RealBufferSendSize = %d \r\n", RealBufferSendSize);
+	delay_ms(1000);
+	packagingMessage(kTerminalRegister);
+	delay_ms(1000);
+	printf("RealBufferSendSize = %d \r\n", RealBufferSendSize);
+	
+	for (i = 0; i < RealBufferSendSize; i++)
+	{
+		printf("%02x ",BufferSend[i]);
+	}
+	printf("\r\n");
+	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	
+	printf("send ok!\r\n");			
+	printf("sendbytes: %d\r\n", RealBufferSendSize);
+	printf("send done !\r\n");
 
-void Delay(__IO uint32_t nCount)	 //简单的延时函数
-{
-	for(; nCount != 0; nCount--);
+	printf("will recv !\r\n");
+	
+	while(1)
+	{
+		//printf("1");
+		delay_ms(100);
+		if(USART2_RX_STA&0X8000)    //接收到数据
+		{
+			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
+			//开始校验
+			parsingMessage(USART2_RX_BUF, USART2_RX_STA);
+			printf("recv done!\r\n");
+			printf("Client receive bytes: %d\r\n", USART2_RX_STA);
+			USART2_RX_STA=0;
+			break;
+		}
+	}
+	
+	
+  packagingMessage(kTerminalAuthentication);
+
+  printf("RealBufferSendSize = %d \n", RealBufferSendSize);
+  delay_ms(1000);
+  for (i = 0; i < RealBufferSendSize; ++i)
+  {
+    printf("%02X ", BufferSend[i]);
+  }
+  printf("\r\n");
+  // sleep(1);
+	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	printf("send ok!\r\n");
+	printf("sendbytes: %d\r\n", RealBufferSendSize);
+  printf("send done !\r\n");
+
+  printf("will recv !\r\n");
+	
+	while(1)
+	{
+		delay_ms(100);
+		if(USART2_RX_STA&0X8000)    //接收到数据
+		{
+			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
+			//开始校验
+			parsingMessage(USART2_RX_BUF, USART2_RX_STA);
+			printf("recv done!\r\n");
+			printf("Client receive bytes: %d\r\n", USART2_RX_STA);
+			USART2_RX_STA=0;
+			break;
+		}
+	}
+	
+	initLocationInfo(v_alarm_value, v_status_value);
+	setStatusBit();
+	
+	
+	while(1)
+	{
+		delay_ms(100);
+		updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
+		printf("will send !\r\n");
+		printf("RealBufferSendSize = %d \r\n", RealBufferSendSize);
+		delay_ms(1000);
+		packagingMessage(kLocationReport);
+		delay_ms(1000);
+		printf("RealBufferSendSize = %d \r\n", RealBufferSendSize);
+
+		for (i = 0; i < RealBufferSendSize; i++)
+		{
+			printf("%02x ",BufferSend[i]);
+		}
+		printf("\r\n");
+		Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+		
+		printf("send ok!\r\n");			
+		printf("sendbytes: %d\r\n", RealBufferSendSize);
+		printf("send done !\r\n");
+		while(1)
+		{
+			delay_ms(100);
+			if(USART2_RX_STA&0X8000)    //接收到数据
+			{
+				USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
+				//开始校验
+				parsingMessage(USART2_RX_BUF, USART2_RX_STA);
+				printf("recv done!\r\n");
+				printf("Client receive bytes: %d\r\n", USART2_RX_STA);
+				USART2_RX_STA=0;
+				nmea_decode_test();
+				break;
+			}
+		}
+	}
+  //nmea_decode_test(); //GPS解码测试
+  
+  while(1);
+
+
 }
 
 ErrorStatus ec20_init(void)
 {
     u8 data=0,ret=0;
     u8 err=0;
-    char atstr[200];
+    char atstr[BUFLEN];
     USART2_RX_STA=0;
     if(ec20_send_cmd("AT","OK","NULL","NULL",1000))err|=1<<0;//检测是否应答AT指令
     USART2_RX_STA=0;
@@ -158,7 +202,7 @@ ErrorStatus ec20_init(void)
     while (ec20_send_cmd("AT+CREG?\r\n","\r\n+CREG: 0,1","NULL","NULL",2000)!= 1 && data < 10)
     {
         USART2_RX_STA=0;
-        Delay(100);
+        delay_ms(100);
         data++;
     }
     USART2_RX_STA=0;
@@ -168,19 +212,19 @@ ErrorStatus ec20_init(void)
     }
     ec20_send_cmd("AT+CGATT?\r\n","+CGATT: 1","OK","NULL",2000);
     USART2_RX_STA=0;
-    Delay(200);
+    delay_ms(200);
     ec20_send_cmd("AT+QIACT?\r\n","OK","NULL","NULL",2000);
 
     USART2_RX_STA=0;
-    Delay(200);
+    delay_ms(200);
     ec20_send_cmd("AT+QICLOSE=0\r\n","OK","NULL","NULL",2000);
     USART2_RX_STA=0;
-    Delay(200);
-    memset(atstr,0,200);
+    delay_ms(200);
+    memset(atstr,0,BUFLEN);
     sprintf(atstr,"AT+QIOPEN=1,0,\"TCP\",\"%s\",%d,0,2\r\n",IPSERVER,PORTSERVER);
     data=ec20_send_cmd((u8*)atstr,"CONNECT","OK","NULL",2000);
     USART2_RX_STA=0;
-    Delay(200);
+    delay_ms(200);
     USART2_RX_STA=0;
     if (data == 1 || data == 2 || data == 3 || ret==1)
     {
@@ -192,24 +236,10 @@ ErrorStatus ec20_init(void)
         return ERROR;
     }
 } 
-
-static void Usart_SendByte( USART_TypeDef * pUSARTx, uint8_t ch )
+/*
+void Delay(__IO uint32_t nCount)	 //简单的延时函数
 {
-    /* 发送一个字节数据到USART1 */
-    USART_SendData(pUSARTx,ch);
-
-    /* 等待发送完毕 */
-    while (USART_GetFlagStatus(pUSARTx, USART_FLAG_TXE) == RESET);
+	for(; nCount != 0; nCount--);
 }
-
-void Usart_SendString( USART_TypeDef * pUSARTx, unsigned char *str)
-{
-    unsigned int k=0;
-    do 
-    {
-        Usart_SendByte( pUSARTx, *(str + k) );
-        k++;
-    } while(*(str + k)!='\0');
-}
-
+*/
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -13,7 +13,7 @@
 
 #include "./gps/gps_config.h"
 #include "nmea/nmea.h"
-#include "./usart/bsp_usart.h"
+#include "./usart/usart.h"
 
 
 /* DMAΩ” ’ª∫≥Â  */
