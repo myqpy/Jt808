@@ -8,9 +8,10 @@
 #include "string.h"
 #include "client_manager.h"
 #include "jt808_packager.h"
-#include "./internal_flash/bsp_internal_flash.h"   
-//#include <stdio.h>
-//#include <stdlib.h>
+#include "./internal_flash/bsp_internal_flash.h"  
+
+#include <stdio.h>
+#include <stdint.h>
 //#define IPSERVER "121.5.140.126"
 //#define PORTSERVER 8089
 
@@ -22,8 +23,8 @@ ErrorStatus ec20_init(void);
 
 int main(void)
 {
-	
-	struct RegisterInfo
+	int i;
+	struct WriteInfo
 	{
 		unsigned short province_id;
 
@@ -39,35 +40,86 @@ int main(void)
 
 		unsigned char car_plate_num[12];
 	};
-	unsigned char buf_info[37] = {0};
 	
-	
-	struct RegisterInfo *info;
-	info->province_id = 0x0029;
-	info->city_id = 0x0066;
-	uart_init(115200);
-	//info->manufacturer_id = "XINDA";
-	memcpy(info->manufacturer_id, "XINDA", 5);
-	//info->terminal_model = "ZXIAT-CZ02";
-	memcpy(info->terminal_model, "ZXIAT-CZ02", 10);
-	//info->terminal_id = "0200001";
-	memcpy(info->terminal_id, "0200001", 7);
-	info->car_plate_color = 0x02;
-	//info->car_plate_num = "AAab111";
-	memcpy(info->car_plate_num, "AAab111", 7);
-	
-	memcpy(buf_info, info, 37);
-	
-	uart_init(115200);
-	if(InternalFlash_Test((uint32_t)(buf_info))== PASSED)
+	struct ReadInfo
 	{
-		printf("¶ÁÐ´ÄÚ²¿FLASH²âÊÔ³É¹¦\r\n");
+		unsigned short province_id;
 
-	}
-	else
-	{
-		printf("¶ÁÐ´ÄÚ²¿FLASH²âÊÔÊ§°Ü\r\n");
-	}
+		unsigned short city_id;
+
+		unsigned char manufacturer_id[5];
+
+		unsigned char terminal_model[20];
+
+		unsigned char terminal_id[7];
+
+		unsigned char car_plate_color;
+
+		unsigned char car_plate_num[12];
+	};
+	
+	unsigned short read_province_id = 0;
+
+	unsigned short read_city_id = 0;
+
+	unsigned char read_manufacturer_id[6]={0};
+
+	unsigned char read_terminal_model[20]={0};
+
+	unsigned char read_terminal_id[7]={0};
+
+	unsigned char read_car_plate_color = 0;
+
+	unsigned char read_car_plate_num[12]={0};
+	
+	unsigned char write_buf[50] = {0};
+	unsigned char read_buf[50] = {0};
+	
+	struct WriteInfo writeInfo;
+	struct ReadInfo readInfo;
+	
+	uart_init(115200);
+	
+	writeInfo.province_id = 0x0029;
+	writeInfo.city_id = 0x0066;
+	memcpy(writeInfo.manufacturer_id, "XINDA", 5);
+	memcpy(writeInfo.terminal_model, "ZXIAT-CZ02", 10);
+	memcpy(writeInfo.terminal_id, "0201101", 7);
+	writeInfo.car_plate_color = 0x02;
+	memcpy(writeInfo.car_plate_num, "AAa1", 7);
+	
+	memset(write_buf,0,sizeof(write_buf));
+	memcpy(write_buf, &writeInfo, sizeof(writeInfo));
+	
+	FLASH_WriteByte(((uint32_t)0x08008000) , write_buf , sizeof(write_buf));
+	
+	
+	Internal_ReadFlash(((uint32_t)0x08008000) , read_buf , sizeof(read_buf));
+	
+	memset(&readInfo,0,sizeof(readInfo));
+	memcpy(&readInfo, read_buf, sizeof(read_buf));
+	
+	read_province_id = readInfo.province_id;
+	printf("para->register_info.province_id = 0x%04x\r\n", read_province_id);
+	
+	read_city_id=readInfo.city_id;
+	printf("para->register_info.city_id = 0x%04x\r\n", read_city_id);
+	
+	memcpy(read_manufacturer_id, readInfo.manufacturer_id, 5);
+	printf("ptr_manufacturer_id = %s\r\n", read_manufacturer_id);
+	
+	memcpy(read_terminal_model, readInfo.terminal_model, 10);
+	printf("ptr_terminal_model = %s\r\n", read_terminal_model);
+	
+	memcpy(read_terminal_id, readInfo.terminal_id, 7);
+	printf("ptr_terminal_id = %s\r\n", read_terminal_id);
+	
+	read_car_plate_color = readInfo.car_plate_color;
+	printf("para->register_info.car_plate_color = 0x%02x\r\n", read_car_plate_color);
+	
+	memcpy(read_car_plate_num, readInfo.car_plate_num,7);
+	printf("para->register_info.car_plate_num = %s\r\n", read_car_plate_num);
+	
 	while(1);
 }
 

@@ -11,7 +11,7 @@
 ..\..\output\terminal_register.o: ..\..\User\jt808\include\util.h
 ..\..\output\terminal_register.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
 ..\..\output\terminal_register.o: ..\..\User\jt808\include\terminal_control.h
-..\..\output\terminal_register.o: ..\..\User\./internal_flash/bsp_internal_flash.h
+..\..\output\terminal_register.o: ..\..\User\Bsp\./internal_flash/bsp_internal_flash.h
 ..\..\output\terminal_register.o: ..\..\Libraries\CMSIS\stm32f10x.h
 ..\..\output\terminal_register.o: ..\..\Libraries\CMSIS\core_cm3.h
 ..\..\output\terminal_register.o: ..\..\Libraries\CMSIS\system_stm32f10x.h

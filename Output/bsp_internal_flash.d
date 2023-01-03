@@ -1,5 +1,5 @@
-..\..\output\bsp_internal_flash.o: ..\..\User\internal_flash\bsp_internal_flash.c
-..\..\output\bsp_internal_flash.o: ..\..\User\./internal_flash/bsp_internal_flash.h
+..\..\output\bsp_internal_flash.o: ..\..\User\Bsp\internal_flash\bsp_internal_flash.c
+..\..\output\bsp_internal_flash.o: ..\..\User\Bsp\./internal_flash/bsp_internal_flash.h
 ..\..\output\bsp_internal_flash.o: ..\..\Libraries\CMSIS\stm32f10x.h
 ..\..\output\bsp_internal_flash.o: ..\..\Libraries\CMSIS\core_cm3.h
 ..\..\output\bsp_internal_flash.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -32,3 +32,4 @@
 ..\..\output\bsp_internal_flash.o: ..\..\User\Bsp\./usart/usart.h
 ..\..\output\bsp_internal_flash.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\..\output\bsp_internal_flash.o: ..\..\system\./sys/sys.h
+..\..\output\bsp_internal_flash.o: D:\MDK5\ARM\ARMCC\Bin\..\include\string.h

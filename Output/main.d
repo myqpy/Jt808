@@ -62,4 +62,4 @@
 ..\..\output\main.o: ..\..\User\jt808\include\terminal_control.h
 ..\..\output\main.o: ..\..\User\jt808\include\terminal_register.h
 ..\..\output\main.o: ..\..\User\jt808\include\bcd.h
-..\..\output\main.o: ..\..\User\./internal_flash/bsp_internal_flash.h
+..\..\output\main.o: ..\..\User\Bsp\./internal_flash/bsp_internal_flash.h

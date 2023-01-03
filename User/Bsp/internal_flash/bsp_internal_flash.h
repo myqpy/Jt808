@@ -22,10 +22,8 @@ typedef enum
   PASSED = !FAILED
 } TestStatus;
 
-void FLASH_WriteData(uint8_t *Data);
-uint8_t FLASH_ReadByte(uint32_t address);
-//void FLASH_Read(u8 *pBuffer,int NumToRead);
-void FLASH_Read(u8 *pBuffer);
+void FLASH_WriteByte(uint32_t addr , uint8_t *p , uint16_t Byte_Num);
+void Internal_ReadFlash(uint32_t addr , uint8_t *p , uint16_t Byte_Num);
 
 #endif /* __INTERNAL_FLASH_H */
 

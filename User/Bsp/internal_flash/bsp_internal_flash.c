@@ -1,11 +1,12 @@
 #include "./internal_flash/bsp_internal_flash.h"   
 #include "./usart/usart.h"
+#include "string.h"
 
 //int InternalFlash_Test(uint8_t Data)
-void FLASH_WriteData(uint8_t *Data)
+/*void Internal_WriteFlash(uint32_t Address, uint8_t *Data, int dataLen)
 {
 	uint32_t EraseCounter = 0x00; 	//记录要擦除多少页
-	uint32_t Address = 0x00;				//记录写入的地址
+	//uint32_t Address = 0x00;				//记录写入的地址
 	//uint32_t Data = 0x3210ABCD;			//记录写入的数据
 	uint32_t NbrOfPage = 0x00;			//记录写入多少页
 	int writeCounter = 0;
@@ -30,20 +31,61 @@ void FLASH_WriteData(uint8_t *Data)
 	}
   
   // 向内部FLASH写入数据 
-  Address = WRITE_START_ADDR;
-
-  while((Address < WRITE_END_ADDR) && (FLASHStatus == FLASH_COMPLETE))
-  {
-    FLASH_ProgramOptionByteData(Address, Data[writeCounter]);
-		//FLASH_ProgramHalfWord(Address,Data[dataIndex]);
-    Address = Address + 1;
-		writeCounter++;
-  }
-
+  //Address = WRITE_START_ADDR;
+	
+	for(writeCounter = 0; (writeCounter < dataLen)&&(FLASHStatus == FLASH_COMPLETE); writeCounter++)
+	{
+		FLASHStatus = FLASH_ProgramWord(Address, Data[writeCounter]);            
+		Address = Address + 1;                                                                 
+	}
+	
   FLASH_Lock();
 }
 
+void Internal_ReadFlash(uint8_t *pData, uint32_t dataLen)
+{
+    uint32_t i = 0;
+    
+    uint32_t address = WRITE_START_ADDR;
+    
+    for(i = 0; i < dataLen; i++)
+    {
+        pData[i] = (*(__IO uint8_t*) address);                                                
+        address += 1;                                                                                
+    }
+}
+*/
 
+
+void FLASH_WriteByte(uint32_t addr , uint8_t *p , uint16_t Byte_Num)
+{
+		uint32_t HalfWord;
+		Byte_Num = Byte_Num/2;
+		FLASH_Unlock();
+		FLASH_ClearFlag(FLASH_FLAG_BSY | FLASH_FLAG_EOP | FLASH_FLAG_PGERR | FLASH_FLAG_WRPRTERR);
+		FLASH_ErasePage(addr);
+		while(Byte_Num --)
+		{
+						HalfWord=*(p++);
+						HalfWord|=*(p++)<<8;
+						FLASH_ProgramHalfWord(addr, HalfWord);
+						addr += 2;
+		}
+		FLASH_Lock();
+}
+
+
+void Internal_ReadFlash(uint32_t addr , uint8_t *p , uint16_t Byte_Num)
+{
+	while(Byte_Num--)
+	{
+	 *(p++)=*((uint8_t*)addr++);
+	}
+}
+
+
+
+/*
 uint8_t FLASH_ReadByte(uint32_t address)
 {
   return *(__IO uint16_t*)address; 
@@ -62,7 +104,12 @@ void FLASH_Read(u8 *pBuffer)
 		address=address+1;
 	}
 }
+*/
 
+//void FlashRead(uint32_t addr, uint8_t *buffer)
+//{
+//  memcpy(buffer, (void *)addr, 50);
+//}
 //uint16_t FLASH_ReadHalfWord(uint32_t address)
 //{
 //   return *(__IO uint16_t*)address; 
