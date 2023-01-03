@@ -37,3 +37,11 @@
 ..\..\output\ec20.o: ..\..\User\Bsp\./key/key.h
 ..\..\output\ec20.o: D:\MDK5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\ec20.o: ..\..\User\Bsp\./usart2/usart2.h
+..\..\output\ec20.o: ..\..\User\jt808\include\protocol_parameter.h
+..\..\output\ec20.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\..\output\ec20.o: ..\..\User\jt808\include\location_report.h
+..\..\output\ec20.o: ..\..\User\jt808\include\terminal_parameter.h
+..\..\output\ec20.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdbool.h
+..\..\output\ec20.o: ..\..\User\jt808\include\util.h
+..\..\output\ec20.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
+..\..\output\ec20.o: ..\..\User\jt808\include\terminal_control.h

@@ -46,3 +46,4 @@
 ..\..\output\jt808_parser.o: ..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h
 ..\..\output\jt808_parser.o: ..\..\Libraries\FWlib\inc\misc.h
 ..\..\output\jt808_parser.o: ..\..\User\jt808\include\client_manager.h
+..\..\output\jt808_parser.o: ..\..\system\./sys/sys.h

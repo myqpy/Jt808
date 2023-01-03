@@ -57,11 +57,11 @@ void initRegisterInfo(struct ProtocolParameter *para)
 //		lenTerminalId = sizeof(readFlashInfo.read_terminal_id);
 //		lenTerminalId=(lenTerminalId>20)?20:lenTerminalId;
 //		
-			lenTerminalId = sizeof("221203");
+			lenTerminalId = sizeof("221219");
 			lenTerminalId=(lenTerminalId>20)?20:lenTerminalId;
 
 			memset(para->register_info.terminal_id, 0, lenTerminalId);
-			memcpy(para->register_info.terminal_id, "221203", lenTerminalId);
+			memcpy(para->register_info.terminal_id, "221219", lenTerminalId);
 //		memcpy(para->register_info.terminal_id, readFlashInfo.read_terminal_id, lenTerminalId);
 
 //    printf("para->register_info.terminal_id : ");

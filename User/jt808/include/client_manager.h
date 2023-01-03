@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
-
+#include "./sys/sys.h"
 #include <stdlib.h>
 
 extern struct ProtocolParameter parameter_;
@@ -40,7 +40,9 @@ int findParameterIDFromArray(unsigned int para_id);
 int parsingMessage(const unsigned char *in, unsigned int in_len);
 int jt808TerminalRegister(int isRegistered);
 int jt808TerminalAuthentication(int isAuthenticated);
+int jt808LocationReport(void);
 void setStatusBit(void);
+ErrorStatus ec20_init(void);
 void initSystemParameters(void);
 void initLocationInfo(unsigned int v_alarm_value, unsigned int v_status_value);
 void updateLocation(double const v_latitude, double const v_longitude, float const v_altitude,

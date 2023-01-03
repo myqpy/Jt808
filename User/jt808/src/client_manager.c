@@ -1,4 +1,4 @@
-
+#include "./ec20/ec20.h"
 #include "client_manager.h"
 #include "protocol_parameter.h"
 #include "set_terminal_parameter.h"
@@ -9,6 +9,7 @@
 #include "bcd.h"
 #include "ff.h"
 #include "jt808_parser.h"
+#include "./usart/usart.h"
 #include "./usart2/usart2.h"
 #include "./internal_flash/bsp_internal_flash.h" 
 
@@ -22,12 +23,67 @@ void initSystemParameters(void)
 	memset(&parameter_.parse.terminal_parameters,0,sizeof(parameter_.parse.terminal_parameters));
 	memcpy(&parameter_.parse.terminal_parameters, read_buf, sizeof(read_buf));
 
+	
+	//printf("%s \r\n",parameter_.parse.terminal_parameters.MainServerAddress);
+	//printf("%d \r\n",parameter_.parse.terminal_parameters.ServerPort);
 	printf("\r\n");
 	printf("系统参数初始化成功！！！!\r\n");
 	printf("\r\n");
 }
 
 
+ErrorStatus ec20_init(void)
+{
+    u8 data=0,ret=0;
+    u8 err=0;
+    char atstr[BUFLEN];
+    USART2_RX_STA=0;
+    if(ec20_send_cmd("AT","OK","NULL","NULL",1000))err|=1<<0;//¼ì²âÊÇ·ñÓ¦´ðATÖ¸Áî
+    USART2_RX_STA=0;
+    if(ec20_send_cmd("ATE0","OK","NULL","NULL",2000))err|=1<<1;//²»»ØÏÔ
+    USART2_RX_STA=0;
+    if(ec20_send_cmd("AT+CPIN?","OK","NULL","NULL",2000))err|=1<<3;	//²éÑ¯SIM¿¨ÊÇ·ñÔÚÎ»
+    USART2_RX_STA=0;
+    data = 0;
+    //²éÑ¯GSMÍøÂç×¢²á×´Ì¬£¬È·ÈÏÕÒÍø³É¹¦
+    while (ec20_send_cmd("AT+CREG?\r\n","\r\n+CREG: 0,1","NULL","NULL",2000)!= 1 && data < 10)
+    {
+        USART2_RX_STA=0;
+        delay_ms(100);
+        data++;
+    }
+    USART2_RX_STA=0;
+    if (data == 10)
+    {
+        return ERROR;                                                                             //ÕÒÍø²»³É¹¦Ä£¿éÖØÆô
+    }
+    ec20_send_cmd("AT+CGATT?\r\n","+CGATT: 1","OK","NULL",2000);
+    USART2_RX_STA=0;
+    delay_ms(200);
+    ec20_send_cmd("AT+QIACT?\r\n","OK","NULL","NULL",2000);
+
+    USART2_RX_STA=0;
+    delay_ms(200);
+    ec20_send_cmd("AT+QICLOSE=0\r\n","OK","NULL","NULL",2000);
+    USART2_RX_STA=0;
+    delay_ms(200);
+    memset(atstr,0,BUFLEN);
+    //sprintf(atstr,"AT+QIOPEN=1,0,\"TCP\",\"%s\",%d,0,2\r\n",IPSERVER,PORTSERVER);
+		sprintf(atstr,"AT+QIOPEN=1,0,\"TCP\",\"%s\",%d,0,2\r\n",parameter_.parse.terminal_parameters.MainServerAddress,parameter_.parse.terminal_parameters.ServerPort);
+    data=ec20_send_cmd((u8*)atstr,"CONNECT","OK","NULL",2000);
+    USART2_RX_STA=0;
+    delay_ms(200);
+    USART2_RX_STA=0;
+    if (data == 1 || data == 2 || data == 3 || ret==1)
+    {
+        printf("data=%d\r\n",data);
+        return SUCCESS;
+    }
+    else
+    {
+        return ERROR;
+    }
+} 
 
 /// @brief 设置终端手机号
 /// @param phone
@@ -156,10 +212,7 @@ int jt808TerminalRegister(int isRegistered)
 		if(USART2_RX_STA&0X8000)    //接收到数据
 		{
 			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
-			
 			parsingMessage(USART2_RX_BUF, USART2_RX_STA);//校验
-//			printf("0x%02x \r\n",parameter_.parse.respone_result);
-//			printf("0x%02x \r\n",parameter_.parse.msg_head.msg_id);
 			if((parameter_.parse.respone_result == kRegisterSuccess)&&(parameter_.parse.msg_head.msg_id==kTerminalRegisterResponse))
 			{
 				isRegistered = 1;
@@ -170,8 +223,10 @@ int jt808TerminalRegister(int isRegistered)
 				break;
 			}
 		}
-//		printf("Client receive bytes: %d\r\n", USART2_RX_STA);
 		USART2_RX_STA=0;
+		printf("\r\n");
+		printf("注册失败 重注册中！！！!\r\n");
+		printf("\r\n");		
 		i++;	
 	}
 	
@@ -193,11 +248,8 @@ int jt808TerminalAuthentication(int isAuthenticated)
 		if(USART2_RX_STA&0X8000)    //接收到数据
 		{
 			USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
-			
 			parsingMessage(USART2_RX_BUF, USART2_RX_STA);//校验
-//			printf("0x%02x \r\n",parameter_.parse.respone_result);
-//			printf("0x%02x \r\n",parameter_.parse.msg_head.msg_id);
-			if((parameter_.parse.respone_result	 == kRegisterSuccess)&&(parameter_.parse.respone_msg_id==kTerminalAuthentication))
+			if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kTerminalAuthentication))
 			{
 				isAuthenticated = 1;
 				printf("\r\n");
@@ -209,20 +261,21 @@ int jt808TerminalAuthentication(int isAuthenticated)
 		}
 		USART2_RX_STA=0;
 		i++;	
+		printf("\r\n");
+		printf("鉴权失败 重鉴权中！！！!\r\n");
+		printf("\r\n");		
 	}
-	
-	
 	return isAuthenticated;
 }
 
+int jt808LocationReport(void)
+{
+		packagingMessage(kLocationReport);
+		Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+		printf("位置上报完成!\r\n");								
 
-
-
-
-
-
-
-
+		return 0;
+}
 
 
 
