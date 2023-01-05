@@ -23,6 +23,7 @@ int main(void)
 	int 					isAuthenticated=0;
 	int 					LocationReportCounter=0;
 	int 					HeartBeatCounter=0;
+	int 					CornerPointRetransmission=0;
 	int						isNewLocationParse=0;
 	unsigned int 	v_alarm_value = 0;
 	unsigned int 	v_status_value = 0;
@@ -64,6 +65,7 @@ int main(void)
 	{
 		HeartBeatCounter = 0;
 		LocationReportCounter = 0;
+		CornerPointRetransmission = 0;
 		time_1s = 0;
 		initSystemParameters();
 		//连接服务器
@@ -154,16 +156,29 @@ int main(void)
 			if((fabs(v_bearing - m_bearing)) >= parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle)
 			{
 				m_bearing = v_bearing;
+				
+
+				printf("fabs(v_bearing - m_bearing)) > %d trigger LocationReport SUCCESS\r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
 				jt808LocationReport();
-
-				printf("fabs(v_bearing - m_bearing)) > %d trigger LocationReport \r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
-
 //				LocationReportCounter++;
 //				printf("m_bearing ===== %f  \r\n", m_bearing);				
 			}
 
-
 			
+			
+//			if((fabs(v_bearing - m_bearing)) >= parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle)
+//			{
+//				m_bearing = v_bearing;
+//				CornerPointRetransmission++;
+////				printf("m_bearing ===== %f  \r\n", m_bearing);				
+//			}
+
+//			if(CornerPointRetransmission>=3)
+//			{
+//				printf("fabs(v_bearing - m_bearing)) > %d trigger LocationReport SUCCESS\r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
+//				jt808LocationReport();
+//				CornerPointRetransmission = 0;
+//			} 
 			
 			//当计时器达到缺省时间上报间隔时上报位置数据
 			if(time_1s >= parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval )
@@ -171,7 +186,7 @@ int main(void)
 				
 				if(isNewLocationParse == 1)
 				{
-					printf("locationReport!!!!!!!!!!!!!!!!! \r\n");
+					printf("locationReport!!!!!!!!!!!!!!!!! SUCCESS\r\n");
 					jt808LocationReport();
 					time_1s = 0;
 					LocationReportCounter++; 
@@ -179,7 +194,7 @@ int main(void)
 				}
 				else
 				{							
-					printf("HeartBeat!!!!!!!!!!!!!!!!! \r\n");
+					printf("HeartBeat!!!!!!!!!!!!!!!!! SUCCESS\r\n");
 					jt808TerminalHeartBeat();
 					time_1s = 0;
 					HeartBeatCounter++; 

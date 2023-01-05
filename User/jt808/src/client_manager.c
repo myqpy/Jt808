@@ -226,14 +226,13 @@ void updateLocation(double const v_latitude, double const v_longitude, float con
 			parameter_.location_info.speed = v_speed * 10;
 			parameter_.location_info.bearing = v_bearing;
 			memcpy(parameter_.location_info.time, v_timestamp, 13);
-		
-//		printf("para->latitude = %d\r\n", parameter_.location_info.latitude);
-//		printf("para->longitude = %d\r\n", parameter_.location_info.longitude);
-//		printf("para->altitude = %d\r\n", parameter_.location_info.altitude);
-//		printf("para->speed = %d\r\n", parameter_.location_info.speed);
 		#ifdef __JT808_DEBUG
-			printf("para->bearing = %d\r\n", parameter_.location_info.bearing);
-			printf("para->time = %s\r\n", parameter_.location_info.time);
+		printf("para->latitude = %d\r\n", parameter_.location_info.latitude);
+		printf("para->longitude = %d\r\n", parameter_.location_info.longitude);
+		printf("para->altitude = %d\r\n", parameter_.location_info.altitude);
+		printf("para->speed = %d\r\n", parameter_.location_info.speed);	
+		printf("para->bearing = %d\r\n", parameter_.location_info.bearing);
+		printf("para->time = %s\r\n", parameter_.location_info.time);
 		#endif
 }
 

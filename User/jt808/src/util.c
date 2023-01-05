@@ -101,7 +101,9 @@ int ReverseEscape_C(unsigned char *in, unsigned int inlen, unsigned char *out, u
 			#endif
     }
   }
-  printf("\r\n");
+	#ifdef __JT808_DEBUG
+		printf("\r\n");
+	#endif
 
   *outlen = inlen - offset_num;
 
