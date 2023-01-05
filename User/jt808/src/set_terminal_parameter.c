@@ -178,9 +178,13 @@ void handle_DefaultTimeReportTimeInterval(unsigned char *buf, unsigned char buf_
 	
 	memcpy(u32converter.u8array,p,buf_len);
 	DefaultTimeReportTimeInterval=EndianSwap32(u32converter.u32val);
-	if(DefaultTimeReportTimeInterval >= 8)
+	if(DefaultTimeReportTimeInterval >= 30)
 	{
-		DefaultTimeReportTimeInterval = 8;
+		DefaultTimeReportTimeInterval = 30;
+	}
+	if(DefaultTimeReportTimeInterval <= 2)
+	{
+		DefaultTimeReportTimeInterval = 2;
 	}
 	para->parse.terminal_parameters.DefaultTimeReportTimeInterval = DefaultTimeReportTimeInterval;
 	memset(write_buf,0,sizeof(write_buf));

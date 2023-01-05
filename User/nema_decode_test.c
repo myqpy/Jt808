@@ -28,11 +28,11 @@ int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude,
 {
 		double deg_lat;//转换成[degree].[degree]格式的纬度
 		double deg_lon;//转换成[degree].[degree]格式的经度
-	  long m_lat=0;
-		long m_lon=0;
-		int m_alt=0;
-		int m_speed=0;
-		int m_bearing=0;
+//	  long m_lat=0;
+//		long m_lon=0;
+//		int m_alt=0;
+//		int m_speed=0;
+//		int m_bearing=0;
 	
     nmeaTIME beiJingTime;    //北京时间 
 
@@ -50,13 +50,13 @@ int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude,
 			deg_lat = nmea_ndeg2degree(info.lat);
 			deg_lon = nmea_ndeg2degree(info.lon);
 
-			m_lat=(long)(deg_lat*(1e6));
-			m_lon=(long)(deg_lon*1000000);
-			m_alt=(int)(info.elv);
-			m_speed=(int)(info.speed*10);
-			m_bearing=(int)(info.direction);
+//			m_lat=(long)(deg_lat*(1e6));
+//			m_lon=(long)(deg_lon*1000000);
+//			m_alt=(int)(info.elv);
+//			m_speed=(int)(info.speed*10);
+//			m_bearing=(int)(info.direction);
 			
-			if(m_lat!=0)
+			if(deg_lat!=0)
 			{
 				*v_latitude = deg_lat;
 				*v_longitude = deg_lon;

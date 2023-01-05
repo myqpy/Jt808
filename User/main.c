@@ -155,8 +155,10 @@ int main(void)
 			{
 				m_bearing = v_bearing;
 				jt808LocationReport();
-				printf("fabs(v_bearing - m_bearing)) > %d trigger LocationReport SUCCESS\r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
-				LocationReportCounter++;
+
+				printf("fabs(v_bearing - m_bearing)) > %d trigger LocationReport \r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
+
+//				LocationReportCounter++;
 //				printf("m_bearing ===== %f  \r\n", m_bearing);				
 			}
 
@@ -169,9 +171,7 @@ int main(void)
 				
 				if(isNewLocationParse == 1)
 				{
-					printf("\r\n");
 					printf("locationReport!!!!!!!!!!!!!!!!! \r\n");
-					printf("\r\n");
 					jt808LocationReport();
 					time_1s = 0;
 					LocationReportCounter++; 
@@ -179,9 +179,7 @@ int main(void)
 				}
 				else
 				{							
-					printf("\r\n");
 					printf("HeartBeat!!!!!!!!!!!!!!!!! \r\n");
-					printf("\r\n");
 					jt808TerminalHeartBeat();
 					time_1s = 0;
 					HeartBeatCounter++; 

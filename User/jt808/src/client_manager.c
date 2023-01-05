@@ -62,7 +62,7 @@ int FlashWrite()
 
 	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
 	
-	// 研究院平台
+//	// 研究院平台
 	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
 	
 	//客户平台
@@ -70,7 +70,7 @@ int FlashWrite()
 
 	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
-	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 8;
+	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 2;
 
 	parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle = 10;
 
@@ -108,7 +108,7 @@ int IPFlashWrite()
 
 	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
-	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 8;
+	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 5;
 
 	memset(write_buf,0,sizeof(write_buf));
 	memcpy(write_buf, &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
@@ -209,28 +209,29 @@ void initLocationInfo(unsigned int v_alarm_value, unsigned int v_status_value)
 void updateLocation(double const v_latitude, double const v_longitude, float const v_altitude,
                     float const v_speed, float const v_bearing, unsigned char *v_timestamp)
 {
-		printf("\n\r[updateLocationInfo] OK !\r\n");
+			#ifdef __JT808_DEBUG
+				printf("\n\r[updateLocationInfo] OK !\r\n");
+			#endif
+//			if (speed >= 10) //默认车速大于等于10公里时为正常行驶状态
+//			{
+//			 isCarMoving.store(true);
+//			}
+//			else
+//			{
+//			 isCarMoving.store(false);
+//			}
+			parameter_.location_info.latitude = v_latitude * 1e6;
+			parameter_.location_info.longitude = v_longitude * 1e6;
+			parameter_.location_info.altitude = v_altitude;
+			parameter_.location_info.speed = v_speed * 10;
+			parameter_.location_info.bearing = v_bearing;
+			memcpy(parameter_.location_info.time, v_timestamp, 13);
 		
-    // if (speed >= 10) //默认车速大于等于10公里时为正常行驶状态
-    // {
-    //   isCarMoving.store(true);
-    // }
-    // else
-    // {
-    //   isCarMoving.store(false);
-    // }
-    parameter_.location_info.latitude = v_latitude * 1e6;
-    parameter_.location_info.longitude = v_longitude * 1e6;
-    parameter_.location_info.altitude = v_altitude;
-    parameter_.location_info.speed = v_speed * 10;
-		parameter_.location_info.bearing = v_bearing;
-		memcpy(parameter_.location_info.time, v_timestamp, 13);
-	
+//		printf("para->latitude = %d\r\n", parameter_.location_info.latitude);
+//		printf("para->longitude = %d\r\n", parameter_.location_info.longitude);
+//		printf("para->altitude = %d\r\n", parameter_.location_info.altitude);
+//		printf("para->speed = %d\r\n", parameter_.location_info.speed);
 		#ifdef __JT808_DEBUG
-			printf("para->latitude = %d\r\n", parameter_.location_info.latitude);
-			printf("para->longitude = %d\r\n", parameter_.location_info.longitude);
-			printf("para->altitude = %d\r\n", parameter_.location_info.altitude);
-			printf("para->speed = %d\r\n", parameter_.location_info.speed);
 			printf("para->bearing = %d\r\n", parameter_.location_info.bearing);
 			printf("para->time = %s\r\n", parameter_.location_info.time);
 		#endif
@@ -358,7 +359,11 @@ int jt808LocationReport()
 {
 	packagingMessage(kLocationReport);
 	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
-	printf("jt808LocationReport SUCCESS!\r\n");
+	printf("latitude * 1e6 	= %d\r\n", parameter_.location_info.latitude);
+	printf("longitude * 1e6 = %d\r\n", parameter_.location_info.longitude);
+	printf("altitude = %d\r\n", parameter_.location_info.altitude);
+	printf("speed * 10 = %d\r\n", parameter_.location_info.speed);
+	
 	return 0;
 }
 
@@ -366,7 +371,7 @@ int jt808TerminalHeartBeat()
 {
 	packagingMessage(kTerminalHeartBeat);
 	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
-	printf("jt808TerminalHeartBeat report SUCCESS!\r\n");
+	
 	return 0;
 }
 
@@ -404,74 +409,79 @@ int parsingMessage(const unsigned char *in, unsigned int in_len)
 		#endif
 		
     msg_id = parameter_.parse.msg_head.msg_id;
-    printf("%s[%d]: [parameter_.parse.msg_head.msg_id] msg_id = 0x%02x \r\n", __FUNCTION__, __LINE__, msg_id);
-    switch (msg_id)
-    {
-    // +平台通用应答.
-    case kPlatformGeneralResponse:
-    {
-        printf("%s[%d]: [ kPlatformGeneralResponse ] parse done \r\n", __FUNCTION__, __LINE__);
-    }
-    break;
+		
+		#ifdef __JT808_DEBUG
+			printf("%s[%d]: [parameter_.parse.msg_head.msg_id] msg_id = 0x%02x \r\n", __FUNCTION__, __LINE__, msg_id);
+			switch (msg_id)
+			{
+			// +平台通用应答.
+			case kPlatformGeneralResponse:
+			{
+					printf("%s[%d]: [ kPlatformGeneralResponse ] parse done \r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-    //  补传分包请求.
-    case kFillPacketRequest:
-    {
-        printf("%s[%d]: [ kFillPacketRequest ] parse done \r\n", __FUNCTION__, __LINE__);
-    }
-    break;
+			//  补传分包请求.
+			case kFillPacketRequest:
+			{
+					printf("%s[%d]: [ kFillPacketRequest ] parse done \r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-    // 终端注册应答..
-    case kTerminalRegisterResponse:
-    {
-        printf("%s[%d]: [ kTerminalRegisterResponse ] parse done \r\n", __FUNCTION__, __LINE__);
-    }
-    break;
+			// 终端注册应答..
+			case kTerminalRegisterResponse:
+			{
+					printf("%s[%d]: [ kTerminalRegisterResponse ] parse done \r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-    // 设置终端参数..
-    case kSetTerminalParameters:
-    {
-        printf("%s[%d]: [ kSetTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
-    }
-    break;
+			// 设置终端参数..
+			case kSetTerminalParameters:
+			{
+					printf("%s[%d]: [ kSetTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-    // 查询终端参数..
-    case kGetTerminalParameters:
-    {
-        printf("%s[%d]: [ kGetTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
-    }
-    break;
+			// 查询终端参数..
+			case kGetTerminalParameters:
+			{
+					printf("%s[%d]: [ kGetTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-    //查询指定终端参数..
-    case kGetSpecificTerminalParameters:
-    {
-        printf("%s[%d]: [ kGetSpecificTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
-    }
-    break;
+			//查询指定终端参数..
+			case kGetSpecificTerminalParameters:
+			{
+					printf("%s[%d]: [ kGetSpecificTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-    // 终端控制
-    case kTerminalControl: 
-    {
-        printf("%s[%d]: [ kTerminalControl ] parse done \r\n", __FUNCTION__, __LINE__);
-    }
-    break;
+			// 终端控制
+			case kTerminalControl: 
+			{
+					printf("%s[%d]: [ kTerminalControl ] parse done \r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-    // 下发终端升级包.
-    case kTerminalUpgrade:
-    {
-        printf("%s[%d]: [ kTerminalUpgrade ] parse done\r\n", __FUNCTION__, __LINE__);
-    }
-    break;
+			// 下发终端升级包.
+			case kTerminalUpgrade:
+			{
+					printf("%s[%d]: [ kTerminalUpgrade ] parse done\r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-    //  位置信息查询..
-    case kGetLocationInformation:
-    {
-        printf("%s[%d]: [ kGetLocationInformation ] parse done\r\n", __FUNCTION__, __LINE__);
-    }
-    break;
+			//  位置信息查询..
+			case kGetLocationInformation:
+			{
+					printf("%s[%d]: [ kGetLocationInformation ] parse done\r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-    default:
-        break;
-    }
+			default:
+					break;
+			}
+			
+			
+		#endif
     return 0;
 }

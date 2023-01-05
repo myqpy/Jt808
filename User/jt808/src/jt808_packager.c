@@ -262,8 +262,9 @@ int jt808FrameBodyPackage(struct ProtocolParameter *para)
 {
     unsigned short msg_id = para->msg_head.msg_id;
 		int result = -1;
-    printf("[jt808FrameBodyPackage] msg_id: 0x%04x\r\n", para->msg_head.msg_id);
-    
+		#ifdef __JT808_DEBUG
+			printf("[jt808FrameBodyPackage] msg_id: 0x%04x\r\n", para->msg_head.msg_id);
+    #endif
 
     switch (msg_id)
     {
