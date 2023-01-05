@@ -108,8 +108,9 @@ int handle_kTerminalGeneralResponse(struct ProtocolParameter *para)
 // 终端心跳.
 int handle_kTerminalHeartBeat(struct ProtocolParameter *para)
 {
-    printf("[%s] <no message body>  msg_id = 0x%04x \r\n ", __FUNCTION__, kTerminalHeartBeat);
-
+		#ifdef __JT808_DEBUG
+			printf("[%s] <no message body>  msg_id = 0x%04x \r\n ", __FUNCTION__, kTerminalHeartBeat);
+		#endif
     return 0;
 }
 

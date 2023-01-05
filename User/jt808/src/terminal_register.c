@@ -32,13 +32,13 @@ void initRegisterInfo(struct ProtocolParameter *para)
 	memcpy(para->register_info.terminal_model, "ZXIAT-CZ01", lenTModel);	
 	printf("para->register_info.terminal_model = %s\r\n", para->register_info.terminal_model);
 
-	//终端ID
-	lenTerminalId = sizeof("1000000");
-	lenTerminalId=(lenTerminalId>20)?20:lenTerminalId;
+//	//终端ID
+//	lenTerminalId = sizeof("1000000");
+//	lenTerminalId=(lenTerminalId>20)?20:lenTerminalId;
 
-	memset(para->register_info.terminal_id, 0, lenTerminalId);
-	memcpy(para->register_info.terminal_id, "1000000", lenTerminalId);
-	printf("para->register_info.terminal_id = %s\r\n", para->register_info.terminal_id);
+//	memset(para->register_info.terminal_id, 0, lenTerminalId);
+//	memcpy(para->register_info.terminal_id, "1000000", lenTerminalId);
+//	printf("para->register_info.terminal_id = %s\r\n", para->register_info.terminal_id);
 
 	//车牌颜色
 	para->register_info.car_plate_color = para->parse.terminal_parameters.CarPlateColor;

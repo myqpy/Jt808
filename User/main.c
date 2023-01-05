@@ -67,7 +67,10 @@ int main(void)
 		LocationReportCounter = 0;
 		CornerPointRetransmission = 0;
 		time_1s = 0;
-		initSystemParameters();
+		initSystemParameters(1); //0 烧写出厂参数 1 不烧写出厂参数
+		//设置手机号（唯一识别id）
+		setTerminalPhoneNumber("100221000001", 12);
+		setTerminalId("1000001", 8);
 		//连接服务器
 		if(isTCPconnected == 0)
 		{
@@ -86,8 +89,7 @@ int main(void)
 			}
 		}
 
-		//设置手机号（唯一识别id）
-		setTerminalPhoneNumber("19149421105", 11);
+
 
 		//终端注册
 		if(isRegistered == 0)	

@@ -23,14 +23,14 @@ void system_reboot(void)
 
 
 
-void initSystemParameters(void)
+void initSystemParameters(int i)
 {
 	unsigned char read_buf[64] = {0};
 
 	Internal_ReadFlash(FLASH_ADDR , read_buf , sizeof(read_buf));
 	memset(&parameter_.parse.terminal_parameters,0,sizeof(parameter_.parse.terminal_parameters));
 	memcpy(&parameter_.parse.terminal_parameters, read_buf, sizeof(read_buf));
-//	parameter_.parse.terminal_parameters.initFactoryParameters = 0;
+	parameter_.parse.terminal_parameters.initFactoryParameters = i;
 
 	printf("initFactoryParameters == %d \r\n",parameter_.parse.terminal_parameters.initFactoryParameters);
 	
@@ -81,7 +81,7 @@ int FlashWrite()
 	parameter_.parse.terminal_parameters.CityID = 0x0066;
 
 	memset(parameter_.parse.terminal_parameters.CarPlateNum,0,sizeof(parameter_.parse.terminal_parameters.CarPlateNum));
-	memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "factory", 7);
+	memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "init", 7);
 
 	parameter_.parse.terminal_parameters.CarPlateColor = 0x02;
 	
@@ -181,7 +181,23 @@ void setTerminalPhoneNumber(const char *phone_num, unsigned int phoneSize)
   memset(parameter_.msg_head.phone_num, 0, 13);
 	memcpy(parameter_.msg_head.phone_num, phone_num, phoneSize);  
 //	parameter_.msg_head.phone_num = (unsigned char *)phone_num;
+	printf("parameter_.msg_head.phone_num = %s\r\n", parameter_.msg_head.phone_num);
 }
+
+
+void setTerminalId(const char *TerminalId,unsigned int lenTerminalId)
+{
+	//终端ID
+//	unsigned int lenTerminalId;
+//	lenTerminalId = sizeof(TerminalId);
+//	lenTerminalId	=(lenTerminalId>20)?20:lenTerminalId;
+
+	memset(parameter_.register_info.terminal_id, 0, lenTerminalId);
+	memcpy(parameter_.register_info.terminal_id, TerminalId, lenTerminalId);
+	printf("para->register_info.terminal_id = %s\r\n", parameter_.register_info.terminal_id);
+}
+
+
 
 int packagingAndSendMessage(unsigned int msg_id)
 {
@@ -286,6 +302,7 @@ int findParameterIDFromArray(unsigned int para_id)
     }
     return result;
 }
+
 
 int jt808TerminalRegister(int *isRegistered)
 {

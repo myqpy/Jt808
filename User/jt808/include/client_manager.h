@@ -54,12 +54,13 @@ int jt808LocationReport(void);
 int jt808TerminalLogOut(void);
 int jt808TerminalHeartBeat(void);
 int jt808TerminalGeneralResponse(void);
+void setTerminalId(const char *TerminalId, unsigned int lenTerminalId);
 void setStatusBit(void);
 int FlashWrite(void);
 int IPFlashWrite(void);
 void system_reboot(void);
 ErrorStatus ec20_init(void);
-void initSystemParameters(void);
+void initSystemParameters(int i);
 void initLocationInfo(unsigned int v_alarm_value, unsigned int v_status_value);
 void updateLocation(double const v_latitude, double const v_longitude, float const v_altitude,
                     float const v_speed, float const v_bearing, unsigned char *v_timestamp);
