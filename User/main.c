@@ -69,8 +69,8 @@ int main(void)
 		time_1s = 0;
 		initSystemParameters(1); //0 烧写出厂参数 1 不烧写出厂参数
 		//设置手机号（唯一识别id）
-		setTerminalPhoneNumber("100221000001", 12);
-		setTerminalId("1000001", 8);
+		setTerminalPhoneNumber("100221000212", 12);
+		setTerminalId("1000212", 8);
 		//连接服务器
 		if(isTCPconnected == 0)
 		{
