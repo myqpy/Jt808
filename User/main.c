@@ -35,7 +35,7 @@ int main(void)
 	float 				v_speed ;
 	float 				v_bearing ;
 	float 				m_bearing ;
-	unsigned char v_timestamp[] = "700101000000"; // 1970-01-01-00-00-00.
+	unsigned char v_timestamp[13] = "700101000000"; // 1970-01-01-00-00-00.
 	
 	GPIO_InitTypeDef  GPIO_InitStructure;
   nmeaPARSER parser;      //解码时使用的数据结构  
@@ -69,8 +69,8 @@ int main(void)
 		time_1s = 0;
 		initSystemParameters(1); //0 烧写出厂参数 1 不烧写出厂参数
 		//设置手机号（唯一识别id）
-		setTerminalPhoneNumber("100221000212", 12);
-		setTerminalId("1000212", 8);
+		setTerminalPhoneNumber("100221000011", 12);
+		setTerminalId("1000011", 8);
 		//连接服务器
 		if(isTCPconnected == 0)
 		{

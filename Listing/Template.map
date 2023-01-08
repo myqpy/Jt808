@@ -139,6 +139,9 @@ Section Cross References
     nema_decode_test.o(i.nmea_decode_test) refers to gmath.o(i.nmea_ndeg2degree) for nmea_ndeg2degree
     nema_decode_test.o(i.nmea_decode_test) refers to cdcmple.o(.text) for __aeabi_cdcmpeq
     nema_decode_test.o(i.nmea_decode_test) refers to d2f.o(.text) for __aeabi_d2f
+    nema_decode_test.o(i.nmea_decode_test) refers to printf8.o(i.__0sprintf$8) for __2sprintf
+    nema_decode_test.o(i.nmea_decode_test) refers to memseta.o(.text) for __aeabi_memclr
+    nema_decode_test.o(i.nmea_decode_test) refers to printf8.o(i.__0printf$8) for __2printf
     nema_decode_test.o(i.nmea_decode_test) refers to gps_config.o(i.trace) for trace
     nema_decode_test.o(i.nmea_decode_test) refers to gps_config.o(i.error) for error
     nema_decode_test.o(i.nmea_decode_test) refers to gps_config.o(i.gps_info) for gps_info
@@ -2990,69 +2993,69 @@ Image Symbol Table
     i.nmea_atof                              0x08005d02   Section        0  tok.o(i.nmea_atof)
     i.nmea_atoi                              0x08005d2e   Section        0  tok.o(i.nmea_atoi)
     i.nmea_decode_test                       0x08005d5c   Section        0  nema_decode_test.o(i.nmea_decode_test)
-    i.nmea_error                             0x08005e10   Section        0  context.o(i.nmea_error)
-    i.nmea_find_tail                         0x08005e4e   Section        0  parse.o(i.nmea_find_tail)
-    i.nmea_info                              0x08005eca   Section        0  context.o(i.nmea_info)
-    i.nmea_ndeg2degree                       0x08005f08   Section        0  gmath.o(i.nmea_ndeg2degree)
-    i.nmea_pack_type                         0x08005f64   Section        0  parse.o(i.nmea_pack_type)
-    i.nmea_parse                             0x08006068   Section        0  parser.o(i.nmea_parse)
-    i.nmea_parse_BDGSA                       0x08006160   Section        0  parse.o(i.nmea_parse_BDGSA)
-    i.nmea_parse_BDGSV                       0x08006234   Section        0  parse.o(i.nmea_parse_BDGSV)
-    i.nmea_parse_GNGGA                       0x080062f0   Section        0  parse.o(i.nmea_parse_GNGGA)
-    i.nmea_parse_GNGLL                       0x080063e4   Section        0  parse.o(i.nmea_parse_GNGLL)
-    i.nmea_parse_GNRMC                       0x080064a4   Section        0  parse.o(i.nmea_parse_GNRMC)
-    i.nmea_parse_GNVTG                       0x0800659c   Section        0  parse.o(i.nmea_parse_GNVTG)
-    i.nmea_parse_GNZDA                       0x08006680   Section        0  parse.o(i.nmea_parse_GNZDA)
-    i.nmea_parse_GPGGA                       0x08006740   Section        0  parse.o(i.nmea_parse_GPGGA)
-    i.nmea_parse_GPGSA                       0x08006834   Section        0  parse.o(i.nmea_parse_GPGSA)
-    i.nmea_parse_GPGSV                       0x08006908   Section        0  parse.o(i.nmea_parse_GPGSV)
-    i.nmea_parse_GPRMC                       0x080069c4   Section        0  parse.o(i.nmea_parse_GPRMC)
-    i.nmea_parse_GPTXT                       0x08006abc   Section        0  parse.o(i.nmea_parse_GPTXT)
-    i.nmea_parse_GPVTG                       0x08006b30   Section        0  parse.o(i.nmea_parse_GPVTG)
-    i.nmea_parser_buff_clear                 0x08006c0c   Section        0  parser.o(i.nmea_parser_buff_clear)
-    i.nmea_parser_init                       0x08006c16   Section        0  parser.o(i.nmea_parser_init)
-    i.nmea_parser_pop                        0x08006c34   Section        0  parser.o(i.nmea_parser_pop)
-    i.nmea_parser_push                       0x08006c58   Section        0  parser.o(i.nmea_parser_push)
-    i.nmea_parser_real_push                  0x08006c88   Section        0  parser.o(i.nmea_parser_real_push)
-    i.nmea_property                          0x0800707c   Section        0  context.o(i.nmea_property)
-    i.nmea_scanf                             0x08007084   Section        0  tok.o(i.nmea_scanf)
-    i.nmea_trace_buff                        0x08007238   Section        0  context.o(i.nmea_trace_buff)
-    i.packagingMessage                       0x08007254   Section        0  client_manager.o(i.packagingMessage)
-    i.parsingMessage                         0x080072e8   Section        0  client_manager.o(i.parsingMessage)
-    i.setStatusBit                           0x08007320   Section        0  client_manager.o(i.setStatusBit)
-    i.setTerminalId                          0x08007330   Section        0  client_manager.o(i.setTerminalId)
-    i.setTerminalPhoneNumber                 0x08007384   Section        0  client_manager.o(i.setTerminalPhoneNumber)
-    i.strtod                                 0x080073d8   Section        0  strtod.o(i.strtod)
-    i.system_reboot                          0x080073f4   Section        0  client_manager.o(i.system_reboot)
-    i.trace                                  0x08007418   Section        0  gps_config.o(i.trace)
-    i.u2_printf                              0x0800741c   Section        0  usart2.o(i.u2_printf)
-    i.uart_init                              0x08007458   Section        0  usart.o(i.uart_init)
-    i.updateLocation                         0x080074fc   Section        0  client_manager.o(i.updateLocation)
-    .constdata                               0x08007574   Section      239  jt808_packager.o(.constdata)
-    __FUNCTION__                             0x08007574   Data          32  jt808_packager.o(.constdata)
-    __FUNCTION__                             0x08007594   Data          25  jt808_packager.o(.constdata)
-    __FUNCTION__                             0x080075ad   Data          23  jt808_packager.o(.constdata)
-    __FUNCTION__                             0x080075c4   Data          31  jt808_packager.o(.constdata)
-    __FUNCTION__                             0x080075e3   Data          38  jt808_packager.o(.constdata)
-    __FUNCTION__                             0x08007609   Data          36  jt808_packager.o(.constdata)
-    __FUNCTION__                             0x0800762d   Data          39  jt808_packager.o(.constdata)
-    __FUNCTION__                             0x08007654   Data          15  jt808_packager.o(.constdata)
-    .constdata                               0x08007663   Section      236  jt808_parser.o(.constdata)
-    __FUNCTION__                             0x08007663   Data          26  jt808_parser.o(.constdata)
-    __FUNCTION__                             0x0800767d   Data          33  jt808_parser.o(.constdata)
-    __FUNCTION__                             0x0800769e   Data          30  jt808_parser.o(.constdata)
-    __FUNCTION__                             0x080076bc   Data          30  jt808_parser.o(.constdata)
-    __FUNCTION__                             0x080076da   Data          38  jt808_parser.o(.constdata)
-    __FUNCTION__                             0x08007700   Data          24  jt808_parser.o(.constdata)
-    __FUNCTION__                             0x08007718   Data          24  jt808_parser.o(.constdata)
-    __FUNCTION__                             0x08007730   Data          31  jt808_parser.o(.constdata)
-    .constdata                               0x0800774f   Section        9  util.o(.constdata)
-    __FUNCTION__                             0x0800774f   Data           9  util.o(.constdata)
-    .constdata                               0x08007758   Section      129  ctype_o.o(.constdata)
-    .constdata                               0x080077dc   Section        4  ctype_o.o(.constdata)
-    table                                    0x080077dc   Data           4  ctype_o.o(.constdata)
-    .conststring                             0x080077e0   Section       67  main.o(.conststring)
-    .conststring                             0x08007824   Section      238  parse.o(.conststring)
+    i.nmea_error                             0x08005ea8   Section        0  context.o(i.nmea_error)
+    i.nmea_find_tail                         0x08005ee6   Section        0  parse.o(i.nmea_find_tail)
+    i.nmea_info                              0x08005f62   Section        0  context.o(i.nmea_info)
+    i.nmea_ndeg2degree                       0x08005fa0   Section        0  gmath.o(i.nmea_ndeg2degree)
+    i.nmea_pack_type                         0x08005ffc   Section        0  parse.o(i.nmea_pack_type)
+    i.nmea_parse                             0x08006100   Section        0  parser.o(i.nmea_parse)
+    i.nmea_parse_BDGSA                       0x080061f8   Section        0  parse.o(i.nmea_parse_BDGSA)
+    i.nmea_parse_BDGSV                       0x080062cc   Section        0  parse.o(i.nmea_parse_BDGSV)
+    i.nmea_parse_GNGGA                       0x08006388   Section        0  parse.o(i.nmea_parse_GNGGA)
+    i.nmea_parse_GNGLL                       0x0800647c   Section        0  parse.o(i.nmea_parse_GNGLL)
+    i.nmea_parse_GNRMC                       0x0800653c   Section        0  parse.o(i.nmea_parse_GNRMC)
+    i.nmea_parse_GNVTG                       0x08006634   Section        0  parse.o(i.nmea_parse_GNVTG)
+    i.nmea_parse_GNZDA                       0x08006718   Section        0  parse.o(i.nmea_parse_GNZDA)
+    i.nmea_parse_GPGGA                       0x080067d8   Section        0  parse.o(i.nmea_parse_GPGGA)
+    i.nmea_parse_GPGSA                       0x080068cc   Section        0  parse.o(i.nmea_parse_GPGSA)
+    i.nmea_parse_GPGSV                       0x080069a0   Section        0  parse.o(i.nmea_parse_GPGSV)
+    i.nmea_parse_GPRMC                       0x08006a5c   Section        0  parse.o(i.nmea_parse_GPRMC)
+    i.nmea_parse_GPTXT                       0x08006b54   Section        0  parse.o(i.nmea_parse_GPTXT)
+    i.nmea_parse_GPVTG                       0x08006bc8   Section        0  parse.o(i.nmea_parse_GPVTG)
+    i.nmea_parser_buff_clear                 0x08006ca4   Section        0  parser.o(i.nmea_parser_buff_clear)
+    i.nmea_parser_init                       0x08006cae   Section        0  parser.o(i.nmea_parser_init)
+    i.nmea_parser_pop                        0x08006ccc   Section        0  parser.o(i.nmea_parser_pop)
+    i.nmea_parser_push                       0x08006cf0   Section        0  parser.o(i.nmea_parser_push)
+    i.nmea_parser_real_push                  0x08006d20   Section        0  parser.o(i.nmea_parser_real_push)
+    i.nmea_property                          0x08007114   Section        0  context.o(i.nmea_property)
+    i.nmea_scanf                             0x0800711c   Section        0  tok.o(i.nmea_scanf)
+    i.nmea_trace_buff                        0x080072d0   Section        0  context.o(i.nmea_trace_buff)
+    i.packagingMessage                       0x080072ec   Section        0  client_manager.o(i.packagingMessage)
+    i.parsingMessage                         0x08007380   Section        0  client_manager.o(i.parsingMessage)
+    i.setStatusBit                           0x080073b8   Section        0  client_manager.o(i.setStatusBit)
+    i.setTerminalId                          0x080073c8   Section        0  client_manager.o(i.setTerminalId)
+    i.setTerminalPhoneNumber                 0x0800741c   Section        0  client_manager.o(i.setTerminalPhoneNumber)
+    i.strtod                                 0x08007470   Section        0  strtod.o(i.strtod)
+    i.system_reboot                          0x0800748c   Section        0  client_manager.o(i.system_reboot)
+    i.trace                                  0x080074b0   Section        0  gps_config.o(i.trace)
+    i.u2_printf                              0x080074b4   Section        0  usart2.o(i.u2_printf)
+    i.uart_init                              0x080074f0   Section        0  usart.o(i.uart_init)
+    i.updateLocation                         0x08007594   Section        0  client_manager.o(i.updateLocation)
+    .constdata                               0x0800760c   Section      239  jt808_packager.o(.constdata)
+    __FUNCTION__                             0x0800760c   Data          32  jt808_packager.o(.constdata)
+    __FUNCTION__                             0x0800762c   Data          25  jt808_packager.o(.constdata)
+    __FUNCTION__                             0x08007645   Data          23  jt808_packager.o(.constdata)
+    __FUNCTION__                             0x0800765c   Data          31  jt808_packager.o(.constdata)
+    __FUNCTION__                             0x0800767b   Data          38  jt808_packager.o(.constdata)
+    __FUNCTION__                             0x080076a1   Data          36  jt808_packager.o(.constdata)
+    __FUNCTION__                             0x080076c5   Data          39  jt808_packager.o(.constdata)
+    __FUNCTION__                             0x080076ec   Data          15  jt808_packager.o(.constdata)
+    .constdata                               0x080076fb   Section      236  jt808_parser.o(.constdata)
+    __FUNCTION__                             0x080076fb   Data          26  jt808_parser.o(.constdata)
+    __FUNCTION__                             0x08007715   Data          33  jt808_parser.o(.constdata)
+    __FUNCTION__                             0x08007736   Data          30  jt808_parser.o(.constdata)
+    __FUNCTION__                             0x08007754   Data          30  jt808_parser.o(.constdata)
+    __FUNCTION__                             0x08007772   Data          38  jt808_parser.o(.constdata)
+    __FUNCTION__                             0x08007798   Data          24  jt808_parser.o(.constdata)
+    __FUNCTION__                             0x080077b0   Data          24  jt808_parser.o(.constdata)
+    __FUNCTION__                             0x080077c8   Data          31  jt808_parser.o(.constdata)
+    .constdata                               0x080077e7   Section        9  util.o(.constdata)
+    __FUNCTION__                             0x080077e7   Data           9  util.o(.constdata)
+    .constdata                               0x080077f0   Section      129  ctype_o.o(.constdata)
+    .constdata                               0x08007874   Section        4  ctype_o.o(.constdata)
+    table                                    0x08007874   Data           4  ctype_o.o(.constdata)
+    .conststring                             0x08007878   Section       67  main.o(.conststring)
+    .conststring                             0x080078bc   Section      238  parse.o(.conststring)
     .data                                    0x20000000   Section       20  system_stm32f10x.o(.data)
     .data                                    0x20000014   Section       20  stm32f10x_rcc.o(.data)
     ADCPrescTable                            0x20000014   Data           4  stm32f10x_rcc.o(.data)
@@ -3081,9 +3084,9 @@ Image Symbol Table
     .data                                    0x200000b8   Section        4  mvars.o(.data)
     .data                                    0x200000bc   Section        4  errno.o(.data)
     _errno                                   0x200000bc   Data           4  errno.o(.data)
-    .bss                                     0x200000c0   Section       12  nema_decode_test.o(.bss)
-    .bss                                     0x200000cc   Section     2048  gps_config.o(.bss)
-    .bss                                     0x200008cc   Section      200  usart.o(.bss)
+    .bss                                     0x200000c0   Section       13  nema_decode_test.o(.bss)
+    .bss                                     0x200000cd   Section     2048  gps_config.o(.bss)
+    .bss                                     0x200008cd   Section      200  usart.o(.bss)
     .bss                                     0x20000998   Section    10240  usart2.o(.bss)
     .bss                                     0x20003198   Section      256  parse.o(.bss)
     .bss                                     0x20003298   Section      448  client_manager.o(.bss)
@@ -3475,48 +3478,48 @@ Image Symbol Table
     nmea_GPVTG2info                          0x08005ce1   Thumb Code    34  parse.o(i.nmea_GPVTG2info)
     nmea_atof                                0x08005d03   Thumb Code    44  tok.o(i.nmea_atof)
     nmea_atoi                                0x08005d2f   Thumb Code    46  tok.o(i.nmea_atoi)
-    nmea_decode_test                         0x08005d5d   Thumb Code   162  nema_decode_test.o(i.nmea_decode_test)
-    nmea_error                               0x08005e11   Thumb Code    62  context.o(i.nmea_error)
-    nmea_find_tail                           0x08005e4f   Thumb Code   124  parse.o(i.nmea_find_tail)
-    nmea_info                                0x08005ecb   Thumb Code    62  context.o(i.nmea_info)
-    nmea_ndeg2degree                         0x08005f09   Thumb Code    84  gmath.o(i.nmea_ndeg2degree)
-    nmea_pack_type                           0x08005f65   Thumb Code   254  parse.o(i.nmea_pack_type)
-    nmea_parse                               0x08006069   Thumb Code   248  parser.o(i.nmea_parse)
-    nmea_parse_BDGSA                         0x08006161   Thumb Code   130  parse.o(i.nmea_parse_BDGSA)
-    nmea_parse_BDGSV                         0x08006235   Thumb Code   164  parse.o(i.nmea_parse_BDGSV)
-    nmea_parse_GNGGA                         0x080062f1   Thumb Code   146  parse.o(i.nmea_parse_GNGGA)
-    nmea_parse_GNGLL                         0x080063e5   Thumb Code   116  parse.o(i.nmea_parse_GNGLL)
-    nmea_parse_GNRMC                         0x080064a5   Thumb Code   152  parse.o(i.nmea_parse_GNRMC)
-    nmea_parse_GNVTG                         0x0800659d   Thumb Code   134  parse.o(i.nmea_parse_GNVTG)
-    nmea_parse_GNZDA                         0x08006681   Thumb Code   114  parse.o(i.nmea_parse_GNZDA)
-    nmea_parse_GPGGA                         0x08006741   Thumb Code   146  parse.o(i.nmea_parse_GPGGA)
-    nmea_parse_GPGSA                         0x08006835   Thumb Code   130  parse.o(i.nmea_parse_GPGSA)
-    nmea_parse_GPGSV                         0x08006909   Thumb Code   164  parse.o(i.nmea_parse_GPGSV)
-    nmea_parse_GPRMC                         0x080069c5   Thumb Code   152  parse.o(i.nmea_parse_GPRMC)
-    nmea_parse_GPTXT                         0x08006abd   Thumb Code    68  parse.o(i.nmea_parse_GPTXT)
-    nmea_parse_GPVTG                         0x08006b31   Thumb Code   132  parse.o(i.nmea_parse_GPVTG)
-    nmea_parser_buff_clear                   0x08006c0d   Thumb Code    10  parser.o(i.nmea_parser_buff_clear)
-    nmea_parser_init                         0x08006c17   Thumb Code    30  parser.o(i.nmea_parser_init)
-    nmea_parser_pop                          0x08006c35   Thumb Code    36  parser.o(i.nmea_parser_pop)
-    nmea_parser_push                         0x08006c59   Thumb Code    46  parser.o(i.nmea_parser_push)
-    nmea_parser_real_push                    0x08006c89   Thumb Code   988  parser.o(i.nmea_parser_real_push)
-    nmea_property                            0x0800707d   Thumb Code     4  context.o(i.nmea_property)
-    nmea_scanf                               0x08007085   Thumb Code   436  tok.o(i.nmea_scanf)
-    nmea_trace_buff                          0x08007239   Thumb Code    28  context.o(i.nmea_trace_buff)
-    packagingMessage                         0x08007255   Thumb Code    60  client_manager.o(i.packagingMessage)
-    parsingMessage                           0x080072e9   Thumb Code    28  client_manager.o(i.parsingMessage)
-    setStatusBit                             0x08007321   Thumb Code    12  client_manager.o(i.setStatusBit)
-    setTerminalId                            0x08007331   Thumb Code    38  client_manager.o(i.setTerminalId)
-    setTerminalPhoneNumber                   0x08007385   Thumb Code    38  client_manager.o(i.setTerminalPhoneNumber)
-    strtod                                   0x080073d9   Thumb Code    28  strtod.o(i.strtod)
-    system_reboot                            0x080073f5   Thumb Code    26  client_manager.o(i.system_reboot)
-    trace                                    0x08007419   Thumb Code     2  gps_config.o(i.trace)
-    u2_printf                                0x0800741d   Thumb Code    50  usart2.o(i.u2_printf)
-    uart_init                                0x08007459   Thumb Code   156  usart.o(i.uart_init)
-    updateLocation                           0x080074fd   Thumb Code   108  client_manager.o(i.updateLocation)
-    __ctype_table                            0x08007758   Data         129  ctype_o.o(.constdata)
-    Region$$Table$$Base                      0x08007914   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x08007934   Number         0  anon$$obj.o(Region$$Table)
+    nmea_decode_test                         0x08005d5d   Thumb Code   268  nema_decode_test.o(i.nmea_decode_test)
+    nmea_error                               0x08005ea9   Thumb Code    62  context.o(i.nmea_error)
+    nmea_find_tail                           0x08005ee7   Thumb Code   124  parse.o(i.nmea_find_tail)
+    nmea_info                                0x08005f63   Thumb Code    62  context.o(i.nmea_info)
+    nmea_ndeg2degree                         0x08005fa1   Thumb Code    84  gmath.o(i.nmea_ndeg2degree)
+    nmea_pack_type                           0x08005ffd   Thumb Code   254  parse.o(i.nmea_pack_type)
+    nmea_parse                               0x08006101   Thumb Code   248  parser.o(i.nmea_parse)
+    nmea_parse_BDGSA                         0x080061f9   Thumb Code   130  parse.o(i.nmea_parse_BDGSA)
+    nmea_parse_BDGSV                         0x080062cd   Thumb Code   164  parse.o(i.nmea_parse_BDGSV)
+    nmea_parse_GNGGA                         0x08006389   Thumb Code   146  parse.o(i.nmea_parse_GNGGA)
+    nmea_parse_GNGLL                         0x0800647d   Thumb Code   116  parse.o(i.nmea_parse_GNGLL)
+    nmea_parse_GNRMC                         0x0800653d   Thumb Code   152  parse.o(i.nmea_parse_GNRMC)
+    nmea_parse_GNVTG                         0x08006635   Thumb Code   134  parse.o(i.nmea_parse_GNVTG)
+    nmea_parse_GNZDA                         0x08006719   Thumb Code   114  parse.o(i.nmea_parse_GNZDA)
+    nmea_parse_GPGGA                         0x080067d9   Thumb Code   146  parse.o(i.nmea_parse_GPGGA)
+    nmea_parse_GPGSA                         0x080068cd   Thumb Code   130  parse.o(i.nmea_parse_GPGSA)
+    nmea_parse_GPGSV                         0x080069a1   Thumb Code   164  parse.o(i.nmea_parse_GPGSV)
+    nmea_parse_GPRMC                         0x08006a5d   Thumb Code   152  parse.o(i.nmea_parse_GPRMC)
+    nmea_parse_GPTXT                         0x08006b55   Thumb Code    68  parse.o(i.nmea_parse_GPTXT)
+    nmea_parse_GPVTG                         0x08006bc9   Thumb Code   132  parse.o(i.nmea_parse_GPVTG)
+    nmea_parser_buff_clear                   0x08006ca5   Thumb Code    10  parser.o(i.nmea_parser_buff_clear)
+    nmea_parser_init                         0x08006caf   Thumb Code    30  parser.o(i.nmea_parser_init)
+    nmea_parser_pop                          0x08006ccd   Thumb Code    36  parser.o(i.nmea_parser_pop)
+    nmea_parser_push                         0x08006cf1   Thumb Code    46  parser.o(i.nmea_parser_push)
+    nmea_parser_real_push                    0x08006d21   Thumb Code   988  parser.o(i.nmea_parser_real_push)
+    nmea_property                            0x08007115   Thumb Code     4  context.o(i.nmea_property)
+    nmea_scanf                               0x0800711d   Thumb Code   436  tok.o(i.nmea_scanf)
+    nmea_trace_buff                          0x080072d1   Thumb Code    28  context.o(i.nmea_trace_buff)
+    packagingMessage                         0x080072ed   Thumb Code    60  client_manager.o(i.packagingMessage)
+    parsingMessage                           0x08007381   Thumb Code    28  client_manager.o(i.parsingMessage)
+    setStatusBit                             0x080073b9   Thumb Code    12  client_manager.o(i.setStatusBit)
+    setTerminalId                            0x080073c9   Thumb Code    38  client_manager.o(i.setTerminalId)
+    setTerminalPhoneNumber                   0x0800741d   Thumb Code    38  client_manager.o(i.setTerminalPhoneNumber)
+    strtod                                   0x08007471   Thumb Code    28  strtod.o(i.strtod)
+    system_reboot                            0x0800748d   Thumb Code    26  client_manager.o(i.system_reboot)
+    trace                                    0x080074b1   Thumb Code     2  gps_config.o(i.trace)
+    u2_printf                                0x080074b5   Thumb Code    50  usart2.o(i.u2_printf)
+    uart_init                                0x080074f1   Thumb Code   156  usart.o(i.uart_init)
+    updateLocation                           0x08007595   Thumb Code   108  client_manager.o(i.updateLocation)
+    __ctype_table                            0x080077f0   Data         129  ctype_o.o(.constdata)
+    Region$$Table$$Base                      0x080079ac   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x080079cc   Number         0  anon$$obj.o(Region$$Table)
     SystemCoreClock                          0x20000000   Data           4  system_stm32f10x.o(.data)
     AHBPrescTable                            0x20000004   Data          16  system_stm32f10x.o(.data)
     time_1s                                  0x20000028   Data           4  main.o(.data)
@@ -3533,9 +3536,9 @@ Image Symbol Table
     kParameterSettingCMD                     0x200000a0   Data          20  set_terminal_parameter.o(.data)
     __microlib_freelist                      0x200000b4   Data           4  mvars.o(.data)
     __microlib_freelist_initialised          0x200000b8   Data           4  mvars.o(.data)
-    bufTime                                  0x200000c0   Data          12  nema_decode_test.o(.bss)
-    gps_rbuff                                0x200000cc   Data        2048  gps_config.o(.bss)
-    USART_RX_BUF                             0x200008cc   Data         200  usart.o(.bss)
+    bufTime                                  0x200000c0   Data          13  nema_decode_test.o(.bss)
+    gps_rbuff                                0x200000cd   Data        2048  gps_config.o(.bss)
+    USART_RX_BUF                             0x200008cd   Data         200  usart.o(.bss)
     USART2_TX_BUF                            0x20000998   Data        5120  usart2.o(.bss)
     USART2_RX_BUF                            0x20001d98   Data        5120  usart2.o(.bss)
     txt_buff                                 0x20003198   Data         256  parse.o(.bss)
@@ -3554,9 +3557,9 @@ Memory Map of the image
 
   Image Entry point : 0x08000131
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000079f4, Max: 0x00040000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00007a8c, Max: 0x00040000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00007934, Max: 0x00040000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x000079cc, Max: 0x00040000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -3818,58 +3821,58 @@ Memory Map of the image
     0x08005ce0   0x00000022   Code   RO         4104    i.nmea_GPVTG2info   parse.o
     0x08005d02   0x0000002c   Code   RO         4460    i.nmea_atof         tok.o
     0x08005d2e   0x0000002e   Code   RO         4461    i.nmea_atoi         tok.o
-    0x08005d5c   0x000000b4   Code   RO         3324    i.nmea_decode_test  nema_decode_test.o
-    0x08005e10   0x0000003e   Code   RO         3667    i.nmea_error        context.o
-    0x08005e4e   0x0000007c   Code   RO         4105    i.nmea_find_tail    parse.o
-    0x08005eca   0x0000003e   Code   RO         3668    i.nmea_info         context.o
-    0x08005f08   0x0000005c   Code   RO         3975    i.nmea_ndeg2degree  gmath.o
-    0x08005f64   0x00000104   Code   RO         4106    i.nmea_pack_type    parse.o
-    0x08006068   0x000000f8   Code   RO         4286    i.nmea_parse        parser.o
-    0x08006160   0x000000d4   Code   RO         4107    i.nmea_parse_BDGSA  parse.o
-    0x08006234   0x000000bc   Code   RO         4108    i.nmea_parse_BDGSV  parse.o
-    0x080062f0   0x000000f4   Code   RO         4109    i.nmea_parse_GNGGA  parse.o
-    0x080063e4   0x000000c0   Code   RO         4110    i.nmea_parse_GNGLL  parse.o
-    0x080064a4   0x000000f8   Code   RO         4111    i.nmea_parse_GNRMC  parse.o
-    0x0800659c   0x000000e4   Code   RO         4112    i.nmea_parse_GNVTG  parse.o
-    0x08006680   0x000000c0   Code   RO         4113    i.nmea_parse_GNZDA  parse.o
-    0x08006740   0x000000f4   Code   RO         4114    i.nmea_parse_GPGGA  parse.o
-    0x08006834   0x000000d4   Code   RO         4115    i.nmea_parse_GPGSA  parse.o
-    0x08006908   0x000000bc   Code   RO         4116    i.nmea_parse_GPGSV  parse.o
-    0x080069c4   0x000000f8   Code   RO         4117    i.nmea_parse_GPRMC  parse.o
-    0x08006abc   0x00000074   Code   RO         4118    i.nmea_parse_GPTXT  parse.o
-    0x08006b30   0x000000dc   Code   RO         4119    i.nmea_parse_GPVTG  parse.o
-    0x08006c0c   0x0000000a   Code   RO         4287    i.nmea_parser_buff_clear  parser.o
-    0x08006c16   0x0000001e   Code   RO         4290    i.nmea_parser_init  parser.o
-    0x08006c34   0x00000024   Code   RO         4292    i.nmea_parser_pop   parser.o
-    0x08006c58   0x0000002e   Code   RO         4293    i.nmea_parser_push  parser.o
-    0x08006c86   0x00000002   PAD
-    0x08006c88   0x000003f4   Code   RO         4295    i.nmea_parser_real_push  parser.o
-    0x0800707c   0x00000008   Code   RO         3669    i.nmea_property     context.o
-    0x08007084   0x000001b4   Code   RO         4464    i.nmea_scanf        tok.o
-    0x08007238   0x0000001c   Code   RO         3671    i.nmea_trace_buff   context.o
-    0x08007254   0x00000094   Code   RO         4607    i.packagingMessage  client_manager.o
-    0x080072e8   0x00000038   Code   RO         4608    i.parsingMessage    client_manager.o
-    0x08007320   0x00000010   Code   RO         4609    i.setStatusBit      client_manager.o
-    0x08007330   0x00000054   Code   RO         4610    i.setTerminalId     client_manager.o
-    0x08007384   0x00000054   Code   RO         4611    i.setTerminalPhoneNumber  client_manager.o
-    0x080073d8   0x0000001c   Code   RO         5932    i.strtod            m_ws.l(strtod.o)
-    0x080073f4   0x00000024   Code   RO         4612    i.system_reboot     client_manager.o
-    0x08007418   0x00000002   Code   RO         3348    i.trace             gps_config.o
-    0x0800741a   0x00000002   PAD
-    0x0800741c   0x0000003c   Code   RO         3509    i.u2_printf         usart2.o
-    0x08007458   0x000000a4   Code   RO         3436    i.uart_init         usart.o
-    0x080074fc   0x00000078   Code   RO         4613    i.updateLocation    client_manager.o
-    0x08007574   0x000000ef   Data   RO         4765    .constdata          jt808_packager.o
-    0x08007663   0x000000ec   Data   RO         4904    .constdata          jt808_parser.o
-    0x0800774f   0x00000009   Data   RO         5013    .constdata          util.o
-    0x08007758   0x00000081   Data   RO         5949    .constdata          mc_w.l(ctype_o.o)
-    0x080077d9   0x00000003   PAD
-    0x080077dc   0x00000004   Data   RO         5950    .constdata          mc_w.l(ctype_o.o)
-    0x080077e0   0x00000043   Data   RO         3111    .conststring        main.o
-    0x08007823   0x00000001   PAD
-    0x08007824   0x000000ee   Data   RO         4121    .conststring        parse.o
-    0x08007912   0x00000002   PAD
-    0x08007914   0x00000020   Data   RO         6414    Region$$Table       anon$$obj.o
+    0x08005d5c   0x0000014c   Code   RO         3324    i.nmea_decode_test  nema_decode_test.o
+    0x08005ea8   0x0000003e   Code   RO         3667    i.nmea_error        context.o
+    0x08005ee6   0x0000007c   Code   RO         4105    i.nmea_find_tail    parse.o
+    0x08005f62   0x0000003e   Code   RO         3668    i.nmea_info         context.o
+    0x08005fa0   0x0000005c   Code   RO         3975    i.nmea_ndeg2degree  gmath.o
+    0x08005ffc   0x00000104   Code   RO         4106    i.nmea_pack_type    parse.o
+    0x08006100   0x000000f8   Code   RO         4286    i.nmea_parse        parser.o
+    0x080061f8   0x000000d4   Code   RO         4107    i.nmea_parse_BDGSA  parse.o
+    0x080062cc   0x000000bc   Code   RO         4108    i.nmea_parse_BDGSV  parse.o
+    0x08006388   0x000000f4   Code   RO         4109    i.nmea_parse_GNGGA  parse.o
+    0x0800647c   0x000000c0   Code   RO         4110    i.nmea_parse_GNGLL  parse.o
+    0x0800653c   0x000000f8   Code   RO         4111    i.nmea_parse_GNRMC  parse.o
+    0x08006634   0x000000e4   Code   RO         4112    i.nmea_parse_GNVTG  parse.o
+    0x08006718   0x000000c0   Code   RO         4113    i.nmea_parse_GNZDA  parse.o
+    0x080067d8   0x000000f4   Code   RO         4114    i.nmea_parse_GPGGA  parse.o
+    0x080068cc   0x000000d4   Code   RO         4115    i.nmea_parse_GPGSA  parse.o
+    0x080069a0   0x000000bc   Code   RO         4116    i.nmea_parse_GPGSV  parse.o
+    0x08006a5c   0x000000f8   Code   RO         4117    i.nmea_parse_GPRMC  parse.o
+    0x08006b54   0x00000074   Code   RO         4118    i.nmea_parse_GPTXT  parse.o
+    0x08006bc8   0x000000dc   Code   RO         4119    i.nmea_parse_GPVTG  parse.o
+    0x08006ca4   0x0000000a   Code   RO         4287    i.nmea_parser_buff_clear  parser.o
+    0x08006cae   0x0000001e   Code   RO         4290    i.nmea_parser_init  parser.o
+    0x08006ccc   0x00000024   Code   RO         4292    i.nmea_parser_pop   parser.o
+    0x08006cf0   0x0000002e   Code   RO         4293    i.nmea_parser_push  parser.o
+    0x08006d1e   0x00000002   PAD
+    0x08006d20   0x000003f4   Code   RO         4295    i.nmea_parser_real_push  parser.o
+    0x08007114   0x00000008   Code   RO         3669    i.nmea_property     context.o
+    0x0800711c   0x000001b4   Code   RO         4464    i.nmea_scanf        tok.o
+    0x080072d0   0x0000001c   Code   RO         3671    i.nmea_trace_buff   context.o
+    0x080072ec   0x00000094   Code   RO         4607    i.packagingMessage  client_manager.o
+    0x08007380   0x00000038   Code   RO         4608    i.parsingMessage    client_manager.o
+    0x080073b8   0x00000010   Code   RO         4609    i.setStatusBit      client_manager.o
+    0x080073c8   0x00000054   Code   RO         4610    i.setTerminalId     client_manager.o
+    0x0800741c   0x00000054   Code   RO         4611    i.setTerminalPhoneNumber  client_manager.o
+    0x08007470   0x0000001c   Code   RO         5932    i.strtod            m_ws.l(strtod.o)
+    0x0800748c   0x00000024   Code   RO         4612    i.system_reboot     client_manager.o
+    0x080074b0   0x00000002   Code   RO         3348    i.trace             gps_config.o
+    0x080074b2   0x00000002   PAD
+    0x080074b4   0x0000003c   Code   RO         3509    i.u2_printf         usart2.o
+    0x080074f0   0x000000a4   Code   RO         3436    i.uart_init         usart.o
+    0x08007594   0x00000078   Code   RO         4613    i.updateLocation    client_manager.o
+    0x0800760c   0x000000ef   Data   RO         4765    .constdata          jt808_packager.o
+    0x080076fb   0x000000ec   Data   RO         4904    .constdata          jt808_parser.o
+    0x080077e7   0x00000009   Data   RO         5013    .constdata          util.o
+    0x080077f0   0x00000081   Data   RO         5949    .constdata          mc_w.l(ctype_o.o)
+    0x08007871   0x00000003   PAD
+    0x08007874   0x00000004   Data   RO         5950    .constdata          mc_w.l(ctype_o.o)
+    0x08007878   0x00000043   Data   RO         3111    .conststring        main.o
+    0x080078bb   0x00000001   PAD
+    0x080078bc   0x000000ee   Data   RO         4121    .conststring        parse.o
+    0x080079aa   0x00000002   PAD
+    0x080079ac   0x00000020   Data   RO         6414    Region$$Table       anon$$obj.o
 
 
     Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00008c58, Max: 0x0000c000, ABSOLUTE)
@@ -3897,10 +3900,10 @@ Memory Map of the image
     0x200000b4   0x00000004   Data   RW         6375    .data               mc_w.l(mvars.o)
     0x200000b8   0x00000004   Data   RW         6376    .data               mc_w.l(mvars.o)
     0x200000bc   0x00000004   Data   RW         6380    .data               mc_w.l(errno.o)
-    0x200000c0   0x0000000c   Zero   RW         3325    .bss                nema_decode_test.o
-    0x200000cc   0x00000800   Zero   RW         3349    .bss                gps_config.o
-    0x200008cc   0x000000c8   Zero   RW         3437    .bss                usart.o
-    0x20000994   0x00000004   PAD
+    0x200000c0   0x0000000d   Zero   RW         3325    .bss                nema_decode_test.o
+    0x200000cd   0x00000800   Zero   RW         3349    .bss                gps_config.o
+    0x200008cd   0x000000c8   Zero   RW         3437    .bss                usart.o
+    0x20000995   0x00000003   PAD
     0x20000998   0x00002800   Zero   RW         3510    .bss                usart2.o
     0x20003198   0x00000100   Zero   RW         4120    .bss                parse.o
     0x20003298   0x000001c0   Zero   RW         4614    .bss                client_manager.o
@@ -3933,7 +3936,7 @@ Image component sizes
        172         12          0          1          0        715   key.o
       1484        492         67          4          0      13623   main.o
        148         14          0          0          0       2177   misc.o
-       180         18          0          0         12       1989   nema_decode_test.o
+       332         64          0          0         13       2029   nema_decode_test.o
       4614       1154        238         52        256      23189   parse.o
       1382         24          0          0          0       6202   parser.o
       1700        406          0         20          0      10843   set_terminal_parameter.o
@@ -3954,9 +3957,9 @@ Image component sizes
        270         20          9          0          0       3481   util.o
 
     ----------------------------------------------------------------------
-     22252       5376       1128        180      35736     466735   Object Totals
+     22404       5422       1128        180      35736     466775   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        26          0          3          3          4          0   (incl. Padding)
+        26          0          3          3          3          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -4039,15 +4042,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     29764       5604       1264        192      35736     458423   Grand Totals
-     29764       5604       1264        192      35736     458423   ELF Image Totals
-     29764       5604       1264        192          0          0   ROM Totals
+     29916       5650       1264        192      35736     458463   Grand Totals
+     29916       5650       1264        192      35736     458463   ELF Image Totals
+     29916       5650       1264        192          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                31028 (  30.30kB)
+    Total RO  Size (Code + RO Data)                31180 (  30.45kB)
     Total RW  Size (RW Data + ZI Data)             35928 (  35.09kB)
-    Total ROM Size (Code + RO Data + RW Data)      31220 (  30.49kB)
+    Total ROM Size (Code + RO Data + RW Data)      31372 (  30.64kB)
 
 ==============================================================================
 

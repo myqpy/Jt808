@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-char bufTime[12]={0};
+char bufTime[13]={0};
 int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude, 
 										float  *v_speed, float *v_bearing, unsigned char *v_timestamp,
 											nmeaINFO info, uint8_t new_parse)
@@ -63,6 +63,13 @@ int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude,
 				*v_altitude = info.elv;
 				*v_speed = info.speed;
 				*v_bearing = info.direction;
+				
+				sprintf(bufTime,"%02d%02d%02d%02d%02d%02d \r\n",((beiJingTime.year+1900)%2000), beiJingTime.mon,beiJingTime.day,beiJingTime.hour,beiJingTime.min,beiJingTime.sec);
+				memset(v_timestamp, 0, 13);
+				memcpy(v_timestamp, bufTime, 12);
+				memset(bufTime,0,12);
+				printf("v_timestamp = %s \r\n",v_timestamp);
+//				sprintf(v_timestamp,"%02d%02d%02d%02d%02d%02d \r\n",((beiJingTime.year+1900)%2000), beiJingTime.mon,beiJingTime.day,beiJingTime.hour,beiJingTime.min,beiJingTime.sec);
 
 				return 1;
 			}
