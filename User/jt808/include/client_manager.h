@@ -14,7 +14,8 @@
 
 
 //#define __JT808_DEBUG
-#define FLASH_ADDR (uint32_t)0x0800f000
+#define FLASH_ADDR (uint32_t)0x0803c000
+#define FLASH_BUFFER_SIZE 128
 
 
 
@@ -64,5 +65,6 @@ void initSystemParameters(int i);
 void initLocationInfo(unsigned int v_alarm_value, unsigned int v_status_value);
 void updateLocation(double const v_latitude, double const v_longitude, float const v_altitude,
                     float const v_speed, float const v_bearing, unsigned char *v_timestamp);
+void boot_loader_flag(void);
 
 #endif // JT808_CLIENT_MANAGER_H_

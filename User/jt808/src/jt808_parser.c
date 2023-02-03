@@ -204,6 +204,7 @@ int handle_kSetTerminalParameters(struct ProtocolParameter *para)
 		pos+=len;
 	}
 	
+//	boot_loader_flag();
 	
 	
 	return 0;

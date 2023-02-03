@@ -25,9 +25,9 @@ void system_reboot(void)
 
 void initSystemParameters(int i)
 {
-	unsigned char read_buf[64] = {0};
+	unsigned char read_buf[FLASH_BUFFER_SIZE] = {0};
 
-	Internal_ReadFlash(FLASH_ADDR , read_buf , sizeof(read_buf));
+	Internal_ReadFlash(FLASH_ADDR, read_buf , sizeof(read_buf));
 	memset(&parameter_.parse.terminal_parameters,0,sizeof(parameter_.parse.terminal_parameters));
 	memcpy(&parameter_.parse.terminal_parameters, read_buf, sizeof(read_buf));
 	parameter_.parse.terminal_parameters.initFactoryParameters = i;
@@ -37,8 +37,18 @@ void initSystemParameters(int i)
 	if(parameter_.parse.terminal_parameters.initFactoryParameters == 0)
 	{
 		FlashWrite();
+		Internal_ReadFlash(FLASH_ADDR, read_buf , sizeof(read_buf));
+		memset(&parameter_.parse.terminal_parameters,0,sizeof(parameter_.parse.terminal_parameters));
+		memcpy(&parameter_.parse.terminal_parameters, read_buf, sizeof(read_buf));
 	}
   
+	
+	
+	printf("-->---------------------------\r\n");
+	printf("-->                           \r\n");
+	printf("-->       Version = %s     		\r\n", parameter_.parse.terminal_parameters.version);
+	printf("-->                           \r\n");
+	printf("-->---------------------------\r\n");
 	printf("HeartBeatInterval == %d \r\n",parameter_.parse.terminal_parameters.HeartBeatInterval);
 	printf("MainServerAddress == \"%s\" \r\n",parameter_.parse.terminal_parameters.MainServerAddress);
 	printf("ServerPort == %d \r\n",parameter_.parse.terminal_parameters.ServerPort);
@@ -49,6 +59,7 @@ void initSystemParameters(int i)
 	printf("CityID == %d \r\n",parameter_.parse.terminal_parameters.CityID);
 	printf("CarPlateNum == %s \r\n",parameter_.parse.terminal_parameters.CarPlateNum);
 	printf("CarPlateColor == %02x \r\n",parameter_.parse.terminal_parameters.CarPlateColor);
+	printf("boot_loader_flag  =  0x%lx \r\n", parameter_.parse.terminal_parameters.bootLoaderFlag);
 	printf("\r\n");
 	printf("initSystemParameters SUCCESS!!!!!!\r\n");
 	printf("\r\n");
@@ -57,7 +68,7 @@ void initSystemParameters(int i)
 
 int FlashWrite()
 {
-	unsigned char write_buf[64] = {0};
+	unsigned char write_buf[FLASH_BUFFER_SIZE] = {0};
 	parameter_.parse.terminal_parameters.HeartBeatInterval = 2;
 
 	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
@@ -86,6 +97,12 @@ int FlashWrite()
 	parameter_.parse.terminal_parameters.CarPlateColor = 0x02;
 	
 	parameter_.parse.terminal_parameters.initFactoryParameters = 1;
+	
+	
+	memset(parameter_.parse.terminal_parameters.version,0,sizeof(parameter_.parse.terminal_parameters.version));
+	memcpy(parameter_.parse.terminal_parameters.version, "v1.2", 5);
+	
+	parameter_.parse.terminal_parameters.bootLoaderFlag = 0XFFFFFFFF;
 
 	memset(write_buf,0,sizeof(write_buf));
 	memcpy(write_buf, &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
@@ -101,11 +118,12 @@ int FlashWrite()
 
 int IPFlashWrite()
 {
-	unsigned char write_buf[64] = {0};
+	unsigned char write_buf[FLASH_BUFFER_SIZE] = {0};
 
 	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
 	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
-
+	//memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
+	
 	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
 	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 5;
@@ -114,11 +132,23 @@ int IPFlashWrite()
 	memcpy(write_buf, &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
 	
 	FLASH_WriteByte(FLASH_ADDR , write_buf , sizeof(write_buf));	
-	printf("FLASH_Write SUCCESS!!!!!!\r\n");
+	printf("IPFLASH_Write SUCCESS!!!!!!\r\n");
 
 	return 0;
 }
 
+void boot_loader_flag()
+{	
+	unsigned char write_buf[FLASH_BUFFER_SIZE] = {0};
+	
+	parameter_.parse.terminal_parameters.bootLoaderFlag = 0XAAAAAAAA;
+	
+	memset(write_buf,0,sizeof(write_buf));
+	memcpy(write_buf, &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
+	
+	FLASH_WriteByte(FLASH_ADDR , write_buf , sizeof(write_buf));	
+	printf("boot_loader_flag write SUCCESS!!!!!!\r\n");
+}	
 
 
 ErrorStatus ec20_init(void)
@@ -210,6 +240,9 @@ void setStatusBit()
 		 parameter_.location_info.status.bit.positioning=1;
 }
 
+
+
+
 void initLocationInfo(unsigned int v_alarm_value, unsigned int v_status_value)
 {
 		
@@ -217,7 +250,7 @@ void initLocationInfo(unsigned int v_alarm_value, unsigned int v_status_value)
     //报警标志
     parameter_.location_info.alarm.value = v_alarm_value;
     printf("para->alarm.value = %d\r\n", parameter_.location_info.alarm.value);
-    //状态
+    //状态	
     parameter_.location_info.status.value = v_status_value;
     printf("para->status.value = %d\r\n", parameter_.location_info.status.value);
 }

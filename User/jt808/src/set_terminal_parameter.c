@@ -92,7 +92,7 @@ void handle_HeartBeatInterval(unsigned char *buf,unsigned char buf_len,struct Pr
 	union U32ToU8Array u32converter;//注意大小端转换
 	unsigned char *p=NULL;
 	unsigned int heartBeatInterval;
-	unsigned char write_buf[64] = {0};
+	unsigned char write_buf[FLASH_BUFFER_SIZE] = {0};
 	if((buf==NULL)||(buf_len==0))
 		return ;
 
@@ -116,7 +116,7 @@ void handle_HeartBeatInterval(unsigned char *buf,unsigned char buf_len,struct Pr
 void handle_MainServerAddress(unsigned char *buf,unsigned char buf_len,struct ProtocolParameter *para)
 {
 	unsigned char *p=NULL;
-	unsigned char write_buf[64] = {0};
+	unsigned char write_buf[FLASH_BUFFER_SIZE] = {0};
 	if((buf==NULL)||(buf_len==0))
 		return ;
 
@@ -141,7 +141,7 @@ void handle_ServerPort(unsigned char *buf,unsigned char buf_len,struct ProtocolP
 	union U32ToU8Array u32converter;//注意大小端转换
 	unsigned char *p=NULL;
 	unsigned int serverPort;
-	unsigned char write_buf[64] = {0};
+	unsigned char write_buf[FLASH_BUFFER_SIZE] = {0};
 	
 	if((buf==NULL)||(buf_len==0))
 		return ;
@@ -168,7 +168,7 @@ void handle_DefaultTimeReportTimeInterval(unsigned char *buf, unsigned char buf_
 	union U32ToU8Array u32converter;//注意大小端转换
 	unsigned char *p=NULL;
 	unsigned int DefaultTimeReportTimeInterval;
-	unsigned char write_buf[64] = {0};
+	unsigned char write_buf[FLASH_BUFFER_SIZE] = {0};
 	if((buf==NULL)||(buf_len==0))
 		return ;
 
@@ -201,7 +201,7 @@ void handle_CornerPointRetransmissionAngle(unsigned char *buf, unsigned char buf
 	union U32ToU8Array u32converter;//注意大小端转换
 	unsigned char *p=NULL;
 	unsigned int CornerPointRetransmissionAngle;
-	unsigned char write_buf[64] = {0};
+	unsigned char write_buf[FLASH_BUFFER_SIZE] = {0};
 	if((buf==NULL)||(buf_len==0))
 		return ;
 
@@ -227,7 +227,7 @@ void handle_MaxSpeed(unsigned char *buf,unsigned char buf_len,struct ProtocolPar
 	union U32ToU8Array u32converter;//注意大小端转换
 	unsigned char *p=NULL;
 	unsigned int MaxSpeed;
-	unsigned char write_buf[64] = {0};
+	unsigned char write_buf[FLASH_BUFFER_SIZE] = {0};
 	if((buf==NULL)||(buf_len==0))
 		return ;
 
@@ -253,7 +253,7 @@ void handle_ProvinceID(unsigned char *buf,unsigned char buf_len,struct ProtocolP
 	union U16ToU8Array u16converter;//注意大小端转换
 	unsigned char *p=NULL;
 	unsigned short ProvinceID;
-	unsigned char write_buf[64] = {0};
+	unsigned char write_buf[128] = {0};
 	if((buf==NULL)||(buf_len==0))
 		return ;
 
@@ -279,7 +279,7 @@ void handle_CityID(unsigned char *buf,unsigned char buf_len,struct ProtocolParam
 	union U16ToU8Array u16converter;//注意大小端转换
 	unsigned char *p=NULL;
 	unsigned short CityID;
-	unsigned char write_buf[64] = {0};
+	unsigned char write_buf[128] = {0};
 	if((buf==NULL)||(buf_len==0))
 		return ;
 
@@ -304,7 +304,7 @@ void handle_CarPlateNum(unsigned char *buf,unsigned char buf_len,struct Protocol
 {
 	//字符串注意GBK转码
 	unsigned char *p=NULL;
-	unsigned char write_buf[64] = {0};
+	unsigned char write_buf[FLASH_BUFFER_SIZE] = {0};
 	if((buf==NULL)||(buf_len==0))
 		return ;
 
@@ -325,7 +325,7 @@ void handle_CarPlateNum(unsigned char *buf,unsigned char buf_len,struct Protocol
 void handle_CarPlateColor(unsigned char *buf,unsigned char buf_len,struct ProtocolParameter *para)
 {
 	unsigned char *p=NULL;
-	unsigned char write_buf[64] = {0};
+	unsigned char write_buf[FLASH_BUFFER_SIZE] = {0};
 	if((buf==NULL)||(buf_len==0))
 		return ;
 	p = (unsigned char *)malloc(sizeof(unsigned char)*buf_len+1);

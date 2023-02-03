@@ -75,6 +75,12 @@ struct TerminalParameters
 	
 	//	DWORD, 判断是否已经进行出厂化参数设置
 	unsigned int initFactoryParameters;
+	
+	//	DWORD, 判断是否进行版本更新
+	unsigned long bootLoaderFlag;
+	
+	//STRING, 版本号
+	unsigned char version[12];
 };
 
 

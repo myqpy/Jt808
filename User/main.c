@@ -13,8 +13,8 @@ extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_al
 											nmeaINFO info, uint8_t new_parse);
 void Tim3_Int_Init(u16 arr,u16 psc);
 void TIM3_IRQHandler(void);
-int time_1s = 0;
-
+int time_1s = 0;		
+										
 int main(void)
 {
 	
@@ -69,8 +69,8 @@ int main(void)
 		time_1s = 0;
 		initSystemParameters(1); //0 烧写出厂参数 1 不烧写出厂参数
 		//设置手机号（唯一识别id）
-		setTerminalPhoneNumber("100221000210", 12);
-		setTerminalId("1000210", 8);
+		setTerminalPhoneNumber("100221000206", 12);
+		setTerminalId("1000206", 8);
 		//连接服务器
 		if(isTCPconnected == 0)
 		{
@@ -237,8 +237,10 @@ int main(void)
 //						isTCPconnected=0;
 //						isAuthenticated=0;
 //						USART2_RX_STA=0;
-//						LocationReportCounter = 0;
+//						LocationReportCounter = 0;	
+						boot_loader_flag();						
 						jt808TerminalLogOut();
+						
 						break;
 					}
 					
