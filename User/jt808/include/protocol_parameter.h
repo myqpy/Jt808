@@ -224,7 +224,7 @@ struct FillPacket
   // 分包数据首包的消息流水号.
   unsigned short first_packet_msg_flow_num;
   // 需要重传包的ID.
-  const char *packet_id;
+  const char packet_id[50];
 };
 
 // 协议格式、各消息ID等相关参数.

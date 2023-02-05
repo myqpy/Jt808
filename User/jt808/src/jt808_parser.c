@@ -116,9 +116,44 @@ int handle_kPlatformGeneralResponse(struct ProtocolParameter *para)
 //  补传分包请求.
 int handle_kFillPacketRequest(struct ProtocolParameter *para)
 {
-    printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kPlatformGeneralResponse);
+	uint16_t pos;
+	unsigned short cnt;
+	unsigned char i;
+	unsigned short id;
+	
+	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kFillPacketRequest);
+	
+	if (para == NULL)
+	{
+		return -1;
+	}
+	pos = MSGBODY_NOPACKET_POS;
+	if (para->parse.msg_head.msgbody_attr.bit.packet == 1){
+			pos = MSGBODY_PACKET_POS;
+	}
+	
+  para->fill_packet.first_packet_msg_flow_num = (BufferReceive[pos] << 8) + BufferReceive[pos + 1];
+	pos += 2;
+	
+	cnt = BufferReceive[pos+2];
+	++pos;
+	
+//	if(para->msg_head.msgbody_attr.bit.msglen -3 != (cnt * 2))
+//	{
+//		return -1;
+//	}
+//	
+////	memset(para->fill_packet.packet_id, 0, sizeof(para->fill_packet.packet_id));
+//	for(i=0;i<cnt;++i)
+//	{
+//		id = BufferReceive[pos + i * 2] + BufferReceive[pos + 1 + i * 2];
+//		memncpy(para->fill_packet.packet_id[pos], id, 2);
+//		pos += 2;
+//	}
 
-    return 0;
+	File_upload();
+	
+	return 0;
 }
 
 // 终端注册应答..
@@ -204,132 +239,164 @@ int handle_kSetTerminalParameters(struct ProtocolParameter *para)
 		pos+=len;
 	}
 	
-//	boot_loader_flag();
-	
-	
 	return 0;
 }
 
 // 查询终端参数..
 int handle_kGetTerminalParameters(struct ProtocolParameter *para)
 {
-    printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kGetTerminalParameters);
+	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kGetTerminalParameters);
 
-    return 0;
+	return 0;
 }
 
 //查询指定终端参数..
 int handle_kGetSpecificTerminalParameters(struct ProtocolParameter *para)
 {
-    printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kGetSpecificTerminalParameters);
+	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kGetSpecificTerminalParameters);
 
-    return 0;
+	return 0;
 }
 
 // 终端控制
 int handle_kTerminalControl(struct ProtocolParameter *para)
 {
-    printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalControl);
+	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalControl);
 
-    return 0;
+	return 0;
 }
 
 // 下发终端升级包.
 int handle_kTerminalUpgrade(struct ProtocolParameter *para)
 {
-    printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalUpgrade);
+	uint16_t pos;
+	uint16_t beg = pos;
+	int i;
+	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalUpgrade);
+	jt808TerminalGeneralResponse();
+	if (para == NULL)
+	{
+		return -1;
+	}
+	
+	pos = MSGBODY_NOPACKET_POS;
+	if (para->parse.msg_head.msgbody_attr.bit.packet == 1)
+	{
+		pos = MSGBODY_PACKET_POS;
+	}
+	
+	para->upgrade_info.upgrade_type = BufferReceive[pos++];
 
-    return 0;
+	memset(para->upgrade_info.manufacturer_id, 0, sizeof(para->upgrade_info.manufacturer_id));
+	for(i=0;i<5;i++)
+	{
+		
+	}
+	
+
+
+
+
+
+
+
+
+
+
+	jt808TerminalUpgradeResultReport();
+	boot_loader_flag();					
+	return 0;
 }
 
 //  位置信息查询..
 int handle_kGetLocationInformation(struct ProtocolParameter *para)
 {
-    printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kGetLocationInformation);
+	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kGetLocationInformation);
 
-    return 0;
+	return 0;
 }
 
 int jt808FrameBodyParse(struct ProtocolParameter *para)
 {
-    unsigned short msg_id = para->parse.msg_head.msg_id;
-    
-    int result = -1;
-	
-		#ifdef __JT808_DEBUG
-			printf("[%s] current msg_id: 0x%04x\r\n",__FUNCTION__, msg_id);
-		#endif
-	
-    switch (msg_id)
-    {
-    // +平台通用应答.
-    case kPlatformGeneralResponse:
-    {
-        result = handle_kPlatformGeneralResponse(para);
-    }
-    break;
+	unsigned short msg_id = para->parse.msg_head.msg_id;
+	struct FillPacket *fill_packet;
+	struct UpgradeInfo *upgrade_info;
+	int result = -1;
 
-    //  补传分包请求.
-    case kFillPacketRequest:
-    {
-        result = handle_kFillPacketRequest(para);
-    }
-    break;
+	#ifdef __JT808_DEBUG
+		printf("[%s] current msg_id: 0x%04x\r\n",__FUNCTION__, msg_id);
+	#endif
 
-    // 终端注册应答..
-    case kTerminalRegisterResponse:
-    {
-        result = handle_kTerminalRegisterResponse(para);
-    }
-    break;
+	switch (msg_id)
+	{
+	// +平台通用应答.
+	case kPlatformGeneralResponse:
+	{
+			result = handle_kPlatformGeneralResponse(para);
+	}
+	break;
 
-    // 设置终端参数..
-    case kSetTerminalParameters:
-    {
-        result = handle_kSetTerminalParameters(para);
-    }
-    break;
+	//  补传分包请求.
+	case kFillPacketRequest:
+	{
+			result = handle_kFillPacketRequest(para);
+	}
+	break;
 
-    // 查询终端参数..
-    case kGetTerminalParameters:
-    {
-        result = handle_kGetTerminalParameters(para);
-    }
-    break;
+	// 终端注册应答..
+	case kTerminalRegisterResponse:
+	{
+			result = handle_kTerminalRegisterResponse(para);
+	}
+	break;
 
-    //查询指定终端参数..
-    case kGetSpecificTerminalParameters:
-    {
-        result = handle_kGetSpecificTerminalParameters(para);
-    }
-    break;
+	// 设置终端参数..
+	case kSetTerminalParameters:
+	{
+			result = handle_kSetTerminalParameters(para);
+	}
+	break;
 
-    // 终端控制
-    case kTerminalControl:
-    {
-        result = handle_kTerminalControl(para);
-    }
-    break;
+	// 查询终端参数..
+	case kGetTerminalParameters:
+	{
+			result = handle_kGetTerminalParameters(para);
+	}
+	break;
 
-    // 下发终端升级包.
-    case kTerminalUpgrade:
-    {
-        result = handle_kTerminalUpgrade(para);
-    }
-    break;
+	//查询指定终端参数..
+	case kGetSpecificTerminalParameters:
+	{
+			result = handle_kGetSpecificTerminalParameters(para);
+	}
+	break;
 
-    //  位置信息查询..
-    case kGetLocationInformation:
-    {
-        result = handle_kGetLocationInformation(para);
-    }
-    break;
+	// 终端控制
+	case kTerminalControl:
+	{
+			result = handle_kTerminalControl(para);
+	}
+	break;
 
-    default:
-        break;
-    }
+	// 下发终端升级包.
+	case kTerminalUpgrade:
+	{
+			result = handle_kTerminalUpgrade(para);
+	}
+	break;
 
-    return result;
+	//  位置信息查询..
+	case kGetLocationInformation:
+	{
+			result = handle_kGetLocationInformation(para);
+	}
+	break;
+
+	default:
+			break;
+	}
+
+	return result;
 }
 
 int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct ProtocolParameter *para)
