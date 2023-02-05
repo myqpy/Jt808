@@ -319,8 +319,6 @@ int handle_kGetLocationInformation(struct ProtocolParameter *para)
 int jt808FrameBodyParse(struct ProtocolParameter *para)
 {
 	unsigned short msg_id = para->parse.msg_head.msg_id;
-	struct FillPacket *fill_packet;
-	struct UpgradeInfo *upgrade_info;
 	int result = -1;
 
 	#ifdef __JT808_DEBUG

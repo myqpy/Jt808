@@ -69,8 +69,10 @@ int main(void)
 		time_1s = 0;
 		initSystemParameters(1); //0 烧写出厂参数 1 不烧写出厂参数
 		//设置手机号（唯一识别id）
-		setTerminalPhoneNumber("100221000206", 12);
-		setTerminalId("1000206", 8);
+		setUUID();
+		
+//		setTerminalPhoneNumber("100221000206", 12);
+//		setTerminalId("1000206", 8);
 		//连接服务器
 		if(isTCPconnected == 0)
 		{
@@ -238,7 +240,7 @@ int main(void)
 //						isAuthenticated=0;
 //						USART2_RX_STA=0;
 //						LocationReportCounter = 0;	
-						
+//						boot_loader_flag();		
 						jt808TerminalLogOut();
 						
 						break;

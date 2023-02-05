@@ -47,7 +47,7 @@ struct TerminalParameters
 	unsigned int HeartBeatInterval;
 	
 	//STRING, 主服务器地址,IP 或域名
-	unsigned char MainServerAddress[16];
+	unsigned char MainServerAddress[50];
 
 	//DWORD, 服务器 TCP 端口		
 	unsigned int ServerPort;
