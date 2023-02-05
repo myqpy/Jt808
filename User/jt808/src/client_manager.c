@@ -424,6 +424,14 @@ int jt808TerminalHeartBeat()
 	return 0;
 }
 
+int jt808TerminalUpgradeResultReport()
+{
+	packagingMessage(kTerminalUpgradeResultReport);
+	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	printf("jt808TerminalLogOut report SUCCESS!!! \r\n");
+	return 0;
+}
+
 
 int jt808TerminalLogOut()
 {
@@ -444,6 +452,11 @@ int jt808TerminalGeneralResponse()
 	return 0;
 }
 
+
+void File_upload()
+{
+	
+}
 
 int parsingMessage(const unsigned char *in, unsigned int in_len)
 {

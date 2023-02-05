@@ -238,11 +238,22 @@ int main(void)
 //						isAuthenticated=0;
 //						USART2_RX_STA=0;
 //						LocationReportCounter = 0;	
-						boot_loader_flag();						
+						
 						jt808TerminalLogOut();
 						
 						break;
 					}
+					
+					if(parameter_.parse.msg_head.msg_id==kTerminalUpgrade)
+					{
+						printf("\r\n");
+						printf("kTerminalUpgrade parse SUCCESS!!!!\r\n ");
+						printf("\r\n");
+						
+						jt808TerminalLogOut();
+						break;
+					}
+					
 					
 										
 					if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kTerminalLogOut))
