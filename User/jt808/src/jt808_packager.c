@@ -187,69 +187,91 @@ int handle_kGetTerminalParametersResponse(struct ProtocolParameter *para)
 // 终端升级结果通知.
 int handle_kTerminalUpgradeResultReport(struct ProtocolParameter *para)
 {
-    printf("[%s] msg_id = 0x%04x\n", __FUNCTION__, kTerminalUpgradeResultReport);
-		return 0;
+	
+	int msg_len = 2;
+	int result = 0;
+	printf("[%s] msg_id = 0x%04x\n", __FUNCTION__, kTerminalUpgradeResultReport);
+	bufferSendPushByte(kTerminal);              //升级类型 终端
+	msg_len += 1;
+	
+	
+	//升级结果 0成功 1失败 2取消
+	if(result == 0)
+	{
+		bufferSendPushByte(kTerminalUpgradeSuccess);
+	}
+	else if(result == 1)
+	{
+		bufferSendPushByte(kTerminalUpgradeFailed);
+	}
+	else
+	{
+		bufferSendPushByte(kTerminalUpgradeCancel);
+	}
+	msg_len += 1;
+
+	return msg_len;
 }
 
 // 位置信息汇报.
 int handle_kLocationReport(struct ProtocolParameter *para)
 {
-		unsigned char time_bcd[6] = {0};
-		int msg_len = 28;
-		union U32ToU8Array u32converter;
-		union U16ToU8Array u16converter;
-		
-		#ifdef JT808_DEBUG
-		printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kLocationReport);
-		#endif
+	unsigned char time_bcd[6] = {0};
+	int msg_len = 28;
+	union U32ToU8Array u32converter;
+	union U16ToU8Array u16converter;
+	
+	#ifdef JT808_DEBUG
+	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kLocationReport);
+	#endif
 
-    // 报警标志.
-    u32converter.u32val = EndianSwap32(para->location_info.alarm.value);
-    copyU32ToU8ArrayToBufferSend(u32converter.u8array);
-    // 状态.
-    u32converter.u32val = EndianSwap32(para->location_info.status.value);
-    copyU32ToU8ArrayToBufferSend(u32converter.u8array);
-    // 纬度.
-    u32converter.u32val = EndianSwap32(para->location_info.latitude);
-    copyU32ToU8ArrayToBufferSend(u32converter.u8array);
-    // 经度.
-    u32converter.u32val = EndianSwap32(para->location_info.longitude);
-    copyU32ToU8ArrayToBufferSend(u32converter.u8array);
-    //union U16ToU8Array u16converter;
-    // 海拔高程.
-    u16converter.u16val = EndianSwap16(para->location_info.altitude);
-    copyU16ToU8ArrayToBufferSend(u16converter.u8array);
-    // 速度.
-    u16converter.u16val = EndianSwap16(para->location_info.speed);
-    copyU16ToU8ArrayToBufferSend(u16converter.u8array);
-    // 方向.
-    u16converter.u16val = EndianSwap16(para->location_info.bearing);
-    copyU16ToU8ArrayToBufferSend(u16converter.u8array);
-		
-    jt808StringToBcdCompress(para->location_info.time, time_bcd, strlen(para->location_info.time));
-    bufferSendPushBytes(time_bcd, 6);
-		
-		bufferSendPushByte(kNetworkQuantity); //附加信息ID 0x30
-    bufferSendPushByte(1);               //附加信息长度
-    bufferSendPushByte(0x53);              //附加信息，无线信号强度
-    msg_len += 3;
+	// 报警标志.
+	u32converter.u32val = EndianSwap32(para->location_info.alarm.value);
+	copyU32ToU8ArrayToBufferSend(u32converter.u8array);
+	// 状态.
+	u32converter.u32val = EndianSwap32(para->location_info.status.value);
+	copyU32ToU8ArrayToBufferSend(u32converter.u8array);
+	// 纬度.
+	u32converter.u32val = EndianSwap32(para->location_info.latitude);
+	copyU32ToU8ArrayToBufferSend(u32converter.u8array);
+	// 经度.
+	u32converter.u32val = EndianSwap32(para->location_info.longitude);
+	copyU32ToU8ArrayToBufferSend(u32converter.u8array);
+	//union U16ToU8Array u16converter;
+	// 海拔高程.
+	u16converter.u16val = EndianSwap16(para->location_info.altitude);
+	copyU16ToU8ArrayToBufferSend(u16converter.u8array);
+	// 速度.
+	u16converter.u16val = EndianSwap16(para->location_info.speed);
+	copyU16ToU8ArrayToBufferSend(u16converter.u8array);
+	// 方向.
+	u16converter.u16val = EndianSwap16(para->location_info.bearing);
+	copyU16ToU8ArrayToBufferSend(u16converter.u8array);
+	
+	jt808StringToBcdCompress(para->location_info.time, time_bcd, strlen(para->location_info.time));
+	bufferSendPushBytes(time_bcd, 6);
+	
+	bufferSendPushByte(kNetworkQuantity); //附加信息ID 0x30
+	bufferSendPushByte(1);               //附加信息长度
+	bufferSendPushByte(0x53);              //附加信息，无线信号强度
+	msg_len += 3;
 
-    bufferSendPushByte(kGnssSatellites); //附加信息ID  0x31
-    bufferSendPushByte(1);               //附加信息长度
-    bufferSendPushByte(11);              //附加信息，卫星数量
-    msg_len += 3;
+	bufferSendPushByte(kGnssSatellites); //附加信息ID  0x31
+	bufferSendPushByte(1);               //附加信息长度
+	bufferSendPushByte(11);              //附加信息，卫星数量
+	msg_len += 3;
 
-    bufferSendPushByte(kCustomInformationLength); //附加信息ID  0xe0
-    bufferSendPushByte(1);                        //附加信息长度
-    bufferSendPushByte(3);                        //附加信息，后续数据长度
-    msg_len += 3;
+	bufferSendPushByte(kCustomInformationLength); //附加信息ID  0xe0
+	bufferSendPushByte(1);                        //附加信息长度
+	bufferSendPushByte(3);                        //附加信息，后续数据长度
+	msg_len += 3;
 
-    bufferSendPushByte(kPositioningStatus); //附加信息ID  0xee
-    bufferSendPushByte(1);                  //附加信息长度
-    bufferSendPushByte(2);                  //附加信息，定位解状态
-    msg_len += 3;
-		
-		return msg_len;
+	bufferSendPushByte(kPositioningStatus); //附加信息ID  0xee
+	bufferSendPushByte(1);                  //附加信息长度
+	bufferSendPushByte(2);                  //附加信息，定位解状态
+	msg_len += 3;
+	
+	return msg_len;
 }
 
 // 位置信息查询应答.

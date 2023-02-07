@@ -14,7 +14,9 @@
 
 
 //#define __JT808_DEBUG
-#define FLASH_ADDR (uint32_t)0x0800f000
+#define FLASH_ADDR (uint32_t)0x0803c000
+//#define ID_FLASH_ADDR (uint32_t)0x0803b800
+#define FLASH_BUFFER_SIZE 128
 
 
 
@@ -53,16 +55,20 @@ int jt808TerminalAuthentication(int *isAuthenticated);
 int jt808LocationReport(void);
 int jt808TerminalLogOut(void);
 int jt808TerminalHeartBeat(void);
+int jt808TerminalUpgradeResultReport(void);
 int jt808TerminalGeneralResponse(void);
 void setTerminalId(const char *TerminalId, unsigned int lenTerminalId);
 void setStatusBit(void);
 int FlashWrite(void);
+void setUUID(void);
 int IPFlashWrite(void);
+void File_upload(void);
 void system_reboot(void);
 ErrorStatus ec20_init(void);
 void initSystemParameters(int i);
 void initLocationInfo(unsigned int v_alarm_value, unsigned int v_status_value);
 void updateLocation(double const v_latitude, double const v_longitude, float const v_altitude,
                     float const v_speed, float const v_bearing, unsigned char *v_timestamp);
+void boot_loader_flag(void);
 
 #endif // JT808_CLIENT_MANAGER_H_

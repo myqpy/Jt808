@@ -13,8 +13,8 @@ extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_al
 											nmeaINFO info, uint8_t new_parse);
 void Tim3_Int_Init(u16 arr,u16 psc);
 void TIM3_IRQHandler(void);
-int time_1s = 0;
-
+int time_1s = 0;		
+										
 int main(void)
 {
 	
@@ -59,7 +59,10 @@ int main(void)
 	printf("\r\n");
 	printf("SYSTEM INIT SUCCESS\r\n");
 	printf("\r\n");
-
+	
+	GPIO_SetBits(GPIOC, GPIO_Pin_5);	
+	delay_ms(500);
+	GPIO_ResetBits(GPIOC, GPIO_Pin_5);	
 
 	while(1)
 	{
@@ -69,8 +72,10 @@ int main(void)
 		time_1s = 0;
 		initSystemParameters(1); //0 烧写出厂参数 1 不烧写出厂参数
 		//设置手机号（唯一识别id）
-		setTerminalPhoneNumber("100221000210", 12);
-		setTerminalId("1000210", 8);
+		setUUID();
+		
+//		setTerminalPhoneNumber("100221000206", 12);
+//		setTerminalId("1000206", 8);
 		//连接服务器
 		if(isTCPconnected == 0)
 		{
@@ -85,6 +90,7 @@ int main(void)
 			{
 				IPFlashWrite();
 				isTCPconnected = 0;
+				system_reboot();
 				continue;
 			}
 		}
@@ -237,10 +243,23 @@ int main(void)
 //						isTCPconnected=0;
 //						isAuthenticated=0;
 //						USART2_RX_STA=0;
-//						LocationReportCounter = 0;
+//						LocationReportCounter = 0;	
+//						boot_loader_flag();		
 						jt808TerminalLogOut();
+						
 						break;
 					}
+					
+//					if(parameter_.parse.msg_head.msg_id==kTerminalUpgrade)
+//					{
+//						printf("\r\n");
+//						printf("kTerminalUpgrade parse SUCCESS!!!!\r\n ");
+//						printf("\r\n");
+//						
+//						jt808TerminalLogOut();
+//						break;
+//					}
+					
 					
 										
 					if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kTerminalLogOut))

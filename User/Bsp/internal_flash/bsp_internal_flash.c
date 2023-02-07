@@ -55,6 +55,22 @@ void Internal_ReadFlash(uint8_t *pData, uint32_t dataLen)
     }
 }
 */
+void FLASH_WriteWord(uint32_t Address , uint32_t Data)
+{	
+  /* 解锁 */
+  FLASH_Unlock();
+
+  /* 清空所有标志位 */
+  FLASH_ClearFlag(FLASH_FLAG_EOP | FLASH_FLAG_PGERR | FLASH_FLAG_WRPRTERR);	
+
+  /* 按页擦除*/
+	FLASH_ErasePage(Address);
+
+  FLASH_ProgramWord(Address, Data);
+
+  FLASH_Lock();
+}
+
 
 
 void FLASH_WriteByte(uint32_t addr , uint8_t *p , uint16_t Byte_Num)
@@ -62,7 +78,7 @@ void FLASH_WriteByte(uint32_t addr , uint8_t *p , uint16_t Byte_Num)
 		uint32_t HalfWord;
 		Byte_Num = Byte_Num/2;
 		FLASH_Unlock();
-		FLASH_ClearFlag(FLASH_FLAG_BSY | FLASH_FLAG_EOP | FLASH_FLAG_PGERR | FLASH_FLAG_WRPRTERR);
+		FLASH_ClearFlag(FLASH_FLAG_EOP | FLASH_FLAG_WRPRTERR | FLASH_FLAG_PGERR | FLASH_FLAG_BSY | FLASH_FLAG_OPTERR);
 		FLASH_ErasePage(addr);
 		while(Byte_Num --)
 		{
