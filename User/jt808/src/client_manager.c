@@ -25,11 +25,7 @@ void system_reboot(void)
 
 void initSystemParameters(int i)
 {
-	unsigned char read_buf[FLASH_BUFFER_SIZE] = {0};
-
-	Internal_ReadFlash(FLASH_ADDR, read_buf , sizeof(read_buf));
-	memset(&parameter_.parse.terminal_parameters,0,sizeof(parameter_.parse.terminal_parameters));
-	memcpy(&parameter_.parse.terminal_parameters, read_buf, sizeof(read_buf));
+	Internal_ReadFlash(FLASH_ADDR, (uint8_t*)&parameter_.parse.terminal_parameters , sizeof(parameter_.parse.terminal_parameters));
 	parameter_.parse.terminal_parameters.initFactoryParameters = i;
 
 	printf("initFactoryParameters == %d \r\n",parameter_.parse.terminal_parameters.initFactoryParameters);
@@ -37,13 +33,8 @@ void initSystemParameters(int i)
 	if(parameter_.parse.terminal_parameters.initFactoryParameters == 0)
 	{
 		FlashWrite();
-		Internal_ReadFlash(FLASH_ADDR, read_buf , sizeof(read_buf));
-		memset(&parameter_.parse.terminal_parameters,0,sizeof(parameter_.parse.terminal_parameters));
-		memcpy(&parameter_.parse.terminal_parameters, read_buf, sizeof(read_buf));
+		Internal_ReadFlash(FLASH_ADDR, (uint8_t*)&parameter_.parse.terminal_parameters , sizeof(parameter_.parse.terminal_parameters));
 	}
-  
-	
-	
 	printf("-->---------------------------\r\n");
 	printf("-->                           \r\n");
 	printf("-->       Version = %s     		\r\n", parameter_.parse.terminal_parameters.version);
@@ -68,13 +59,13 @@ void initSystemParameters(int i)
 
 int FlashWrite()
 {
-	unsigned char write_buf[FLASH_BUFFER_SIZE] = {0};
 	parameter_.parse.terminal_parameters.HeartBeatInterval = 2;
 
 	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
 	
 	// 研究院平台
 	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
+//	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"http://jt808.gps.ciicp.com", sizeof("http://jt808.gps.ciicp.com"));
 	
 //	//客户平台
 //	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
@@ -103,13 +94,10 @@ int FlashWrite()
 	memcpy(parameter_.parse.terminal_parameters.version, "v1.2", 5);
 	
 	parameter_.parse.terminal_parameters.bootLoaderFlag = 0XFFFFFFFF;
-
-	memset(write_buf,0,sizeof(write_buf));
-	memcpy(write_buf, &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
 	
 	
 	
-	FLASH_WriteByte(FLASH_ADDR , write_buf , sizeof(write_buf));	
+	FLASH_WriteByte(FLASH_ADDR , (uint8_t*)&parameter_.parse.terminal_parameters , sizeof(parameter_.parse.terminal_parameters));	
 	printf("FLASH_Write SUCCESS!!!!!!\r\n");
 	printf("initFactoryParameters == %d \r\n",parameter_.parse.terminal_parameters.initFactoryParameters);
 
@@ -118,35 +106,37 @@ int FlashWrite()
 
 int IPFlashWrite()
 {
-	unsigned char write_buf[FLASH_BUFFER_SIZE] = {0};
-
 	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
-	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
-	//memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
+	//memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
+	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
 	
 	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
 	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 5;
-
-	memset(write_buf,0,sizeof(write_buf));
-	memcpy(write_buf, &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
 	
-	FLASH_WriteByte(FLASH_ADDR , write_buf , sizeof(write_buf));	
+	FLASH_WriteByte(FLASH_ADDR , (uint8_t*)&parameter_.parse.terminal_parameters , sizeof(parameter_.parse.terminal_parameters));	
 	printf("IPFLASH_Write SUCCESS!!!!!!\r\n");
 
 	return 0;
 }
 
+void setUUID(void)
+{
+		Internal_ReadFlash(FLASH_ADDR, (uint8_t *) &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
+	
+//	printf("PhoneNumber == \"%s\" \r\n",parameter_.register_id.PhoneNumber);
+//	printf("TerminalId == \"%s\" \r\n",parameter_.register_id.TerminalId);
+	
+	setTerminalPhoneNumber(parameter_.parse.terminal_parameters.PhoneNumber, 12);
+	setTerminalId(parameter_.parse.terminal_parameters.TerminalId, 8);
+	
+}
+
 void boot_loader_flag()
 {	
-	unsigned char write_buf[FLASH_BUFFER_SIZE] = {0};
-	
 	parameter_.parse.terminal_parameters.bootLoaderFlag = 0XAAAAAAAA;
 	
-	memset(write_buf,0,sizeof(write_buf));
-	memcpy(write_buf, &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
-	
-	FLASH_WriteByte(FLASH_ADDR , write_buf , sizeof(write_buf));	
+	FLASH_WriteByte(FLASH_ADDR , (uint8_t *) &parameter_.parse.terminal_parameters , sizeof(parameter_.parse.terminal_parameters));	
 	printf("boot_loader_flag write SUCCESS!!!!!!\r\n");
 }	
 
@@ -424,6 +414,14 @@ int jt808TerminalHeartBeat()
 	return 0;
 }
 
+int jt808TerminalUpgradeResultReport()
+{
+	packagingMessage(kTerminalUpgradeResultReport);
+	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	printf("jt808TerminalLogOut report SUCCESS!!! \r\n");
+	return 0;
+}
+
 
 int jt808TerminalLogOut()
 {
@@ -444,6 +442,11 @@ int jt808TerminalGeneralResponse()
 	return 0;
 }
 
+
+void File_upload()
+{
+	
+}
 
 int parsingMessage(const unsigned char *in, unsigned int in_len)
 {

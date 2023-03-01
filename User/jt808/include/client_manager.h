@@ -15,6 +15,7 @@
 
 //#define __JT808_DEBUG
 #define FLASH_ADDR (uint32_t)0x0803c000
+//#define ID_FLASH_ADDR (uint32_t)0x0803b800
 #define FLASH_BUFFER_SIZE 128
 
 
@@ -54,11 +55,14 @@ int jt808TerminalAuthentication(int *isAuthenticated);
 int jt808LocationReport(void);
 int jt808TerminalLogOut(void);
 int jt808TerminalHeartBeat(void);
+int jt808TerminalUpgradeResultReport(void);
 int jt808TerminalGeneralResponse(void);
 void setTerminalId(const char *TerminalId, unsigned int lenTerminalId);
 void setStatusBit(void);
 int FlashWrite(void);
+void setUUID(void);
 int IPFlashWrite(void);
+void File_upload(void);
 void system_reboot(void);
 ErrorStatus ec20_init(void);
 void initSystemParameters(int i);

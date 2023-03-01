@@ -179,6 +179,12 @@ struct RegisterInfo
   unsigned char car_plate_num[12];
 };
 
+//struct RegisterID
+//{
+//	unsigned char PhoneNumber[20];
+//	unsigned char TerminalId[20];
+//};
+
 // 升级类型.
 enum kTerminalUpgradeType
 {
@@ -224,7 +230,7 @@ struct FillPacket
   // 分包数据首包的消息流水号.
   unsigned short first_packet_msg_flow_num;
   // 需要重传包的ID.
-  const char *packet_id;
+  const char packet_id[50];
 };
 
 // 协议格式、各消息ID等相关参数.
@@ -237,6 +243,7 @@ struct ProtocolParameter
   struct MsgHead msg_head;
   // 终端注册时需填充注册信息.
   struct RegisterInfo register_info;
+//	struct RegisterID register_id;
   // 平台随机生成鉴权码.
   unsigned char *authentication_code;
   // 设置终端参数项.
