@@ -4,7 +4,7 @@ F (..\..\Libraries\CMSIS\core_cm3.c)(0x589533AD)(-c --cpu Cortex-M3 -D__MICROLIB
 I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
 F (..\..\Libraries\CMSIS\core_cm3.h)(0x589533AD)()
 F (..\..\Libraries\CMSIS\stm32f10x.h)(0x589533AE)()
-F (..\..\Libraries\CMSIS\system_stm32f10x.c)(0x63DCAA13)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\system_stm32f10x.o --omf_browse ..\..\output\system_stm32f10x.crf --depend ..\..\output\system_stm32f10x.d)
+F (..\..\Libraries\CMSIS\system_stm32f10x.c)(0x63E0CC6D)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\system_stm32f10x.o --omf_browse ..\..\output\system_stm32f10x.crf --depend ..\..\output\system_stm32f10x.d)
 I (..\..\Libraries\CMSIS\stm32f10x.h)(0x589533AE)
 I (..\..\Libraries\CMSIS\core_cm3.h)(0x589533AD)
 I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
@@ -701,7 +701,7 @@ I (..\..\Libraries\FWlib\inc\stm32f10x_spi.h)(0x589533AF)
 I (..\..\Libraries\FWlib\inc\stm32f10x_tim.h)(0x589533AF)
 I (..\..\Libraries\FWlib\inc\stm32f10x_usart.h)(0x589533AF)
 I (..\..\Libraries\FWlib\inc\misc.h)(0x589533AE)
-F (..\..\User\main.c)(0x63DCB8A6)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\main.o --omf_browse ..\..\output\main.crf --depend ..\..\output\main.d)
+F (..\..\User\main.c)(0x63E19CCB)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\main.o --omf_browse ..\..\output\main.crf --depend ..\..\output\main.d)
 I (..\..\User\Bsp\./usart/usart.h)(0x6385B239)
 I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
 I (..\..\system\./sys/sys.h)(0x59A65523)
@@ -751,22 +751,22 @@ I (..\..\User\nmea_decode\include\nmea/./parser.h)(0x6385F002)
 I (..\..\User\nmea_decode\include\nmea/./context.h)(0x58EDD81E)
 I (..\..\User\./delay/delay.h)(0x6380BC5E)
 I (D:\MDK5\ARM\ARMCC\include\math.h)(0x574E3E26)
-I (..\..\User\jt808\include\client_manager.h)(0x63DCA667)
+I (..\..\User\jt808\include\client_manager.h)(0x63E0CA4D)
 I (D:\MDK5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
 I (..\..\User\FATFS\ff.h)(0x589536A5)
 I (..\..\User\FATFS\integer.h)(0x589536A5)
 I (..\..\User\FATFS\ffconf.h)(0x63A957FF)
 I (..\..\User\jt808\include\jt808_packager.h)(0x63AEAA38)
 I (D:\MDK5\ARM\ARMCC\include\string.h)(0x574E3E26)
-I (..\..\User\jt808\include\protocol_parameter.h)(0x63B2F907)
+I (..\..\User\jt808\include\protocol_parameter.h)(0x63E0CA91)
 I (..\..\User\jt808\include\location_report.h)(0x6385F544)
-I (..\..\User\jt808\include\terminal_parameter.h)(0x63DC7DBC)
+I (..\..\User\jt808\include\terminal_parameter.h)(0x63E0CA8E)
 I (D:\MDK5\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
 I (..\..\User\jt808\include\util.h)(0x63AEAA18)
 I (D:\MDK5\ARM\ARMCC\include\stddef.h)(0x574E3E26)
 I (..\..\User\jt808\include\terminal_control.h)(0x63819102)
 I (..\..\User\jt808\include\terminal_register.h)(0x63919AC0)
-I (..\..\User\./internal_flash/bsp_internal_flash.h)(0x63DC5E2A)
+I (..\..\User\./internal_flash/bsp_internal_flash.h)(0x63E0C989)
 I (..\..\User\jt808\include\bcd.h)(0x63572043)
 F (..\..\User\stm32f10x_it.c)(0x58EF3C99)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\stm32f10x_it.o --omf_browse ..\..\output\stm32f10x_it.crf --depend ..\..\output\stm32f10x_it.d)
 I (..\..\User\stm32f10x_it.h)(0x589533AF)
@@ -910,7 +910,7 @@ I (..\..\User\Bsp\./usart/usart.h)(0x6385B239)
 I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
 I (..\..\system\./sys/sys.h)(0x59A65523)
 I (..\..\User\Bsp\./usart2/usart2.h)(0x6385C6F6)
-F (..\..\User\Bsp\led\bsp_led.c)(0x63AE7BE1)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\bsp_led.o --omf_browse ..\..\output\bsp_led.crf --depend ..\..\output\bsp_led.d)
+F (..\..\User\Bsp\led\bsp_led.c)(0x63E0CBF1)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\bsp_led.o --omf_browse ..\..\output\bsp_led.crf --depend ..\..\output\bsp_led.d)
 I (..\..\User\Bsp\led\bsp_led.h)(0x63AE7BEC)
 I (..\..\Libraries\CMSIS\stm32f10x.h)(0x589533AE)
 I (..\..\Libraries\CMSIS\core_cm3.h)(0x589533AD)
@@ -940,7 +940,7 @@ I (..\..\Libraries\FWlib\inc\stm32f10x_tim.h)(0x589533AF)
 I (..\..\Libraries\FWlib\inc\stm32f10x_usart.h)(0x589533AF)
 I (..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h)(0x589533AF)
 I (..\..\Libraries\FWlib\inc\misc.h)(0x589533AE)
-F (..\..\User\Bsp\usart\usart.c)(0x63D88049)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\usart.o --omf_browse ..\..\output\usart.crf --depend ..\..\output\usart.d)
+F (..\..\User\Bsp\usart\usart.c)(0x63E0C989)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\usart.o --omf_browse ..\..\output\usart.crf --depend ..\..\output\usart.d)
 I (..\..\system\./sys/sys.h)(0x59A65523)
 I (..\..\Libraries\CMSIS\stm32f10x.h)(0x589533AE)
 I (..\..\Libraries\CMSIS\core_cm3.h)(0x589533AD)
@@ -1078,16 +1078,16 @@ I (..\..\User\Bsp\./led/bsp_led.h)(0x63AE7BEC)
 I (..\..\User\Bsp\./key/key.h)(0x6385B2FC)
 I (D:\MDK5\ARM\ARMCC\include\string.h)(0x574E3E26)
 I (..\..\User\Bsp\./usart2/usart2.h)(0x6385C6F6)
-I (..\..\User\jt808\include\protocol_parameter.h)(0x63B2F907)
+I (..\..\User\jt808\include\protocol_parameter.h)(0x63E0CA91)
 I (D:\MDK5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
 I (..\..\User\jt808\include\location_report.h)(0x6385F544)
-I (..\..\User\jt808\include\terminal_parameter.h)(0x63DC7DBC)
+I (..\..\User\jt808\include\terminal_parameter.h)(0x63E0CA8E)
 I (D:\MDK5\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
 I (..\..\User\jt808\include\util.h)(0x63AEAA18)
 I (D:\MDK5\ARM\ARMCC\include\stddef.h)(0x574E3E26)
 I (..\..\User\jt808\include\terminal_control.h)(0x63819102)
-F (..\..\User\Bsp\internal_flash\bsp_internal_flash.c)(0x63DC8C75)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\bsp_internal_flash.o --omf_browse ..\..\output\bsp_internal_flash.crf --depend ..\..\output\bsp_internal_flash.d)
-I (..\..\User\./internal_flash/bsp_internal_flash.h)(0x63DC5E2A)
+F (..\..\User\Bsp\internal_flash\bsp_internal_flash.c)(0x63E0C989)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\bsp_internal_flash.o --omf_browse ..\..\output\bsp_internal_flash.crf --depend ..\..\output\bsp_internal_flash.d)
+I (..\..\User\./internal_flash/bsp_internal_flash.h)(0x63E0C989)
 I (..\..\Libraries\CMSIS\stm32f10x.h)(0x589533AE)
 I (..\..\Libraries\CMSIS\core_cm3.h)(0x589533AD)
 I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
@@ -1212,7 +1212,7 @@ I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\ctype.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\string.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\limits.h)(0x574E3E26)
-F (..\..\system\sys\sys.c)(0x63DCA1CB)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\sys.o --omf_browse ..\..\output\sys.crf --depend ..\..\output\sys.d)
+F (..\..\system\sys\sys.c)(0x63E0C989)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\sys.o --omf_browse ..\..\output\sys.crf --depend ..\..\output\sys.d)
 I (..\..\system\sys\sys.h)(0x59A65523)
 I (..\..\Libraries\CMSIS\stm32f10x.h)(0x589533AE)
 I (..\..\Libraries\CMSIS\core_cm3.h)(0x589533AD)
@@ -1278,7 +1278,7 @@ I (..\..\User\jt808\include\bcd.h)(0x63572043)
 I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
-F (..\..\User\jt808\src\client_manager.c)(0x63DCAF1E)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\client_manager.o --omf_browse ..\..\output\client_manager.crf --depend ..\..\output\client_manager.d)
+F (..\..\User\jt808\src\client_manager.c)(0x63E0CC0A)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\client_manager.o --omf_browse ..\..\output\client_manager.crf --depend ..\..\output\client_manager.d)
 I (..\..\User\Bsp\./ec20/ec20.h)(0x63A028EA)
 I (..\..\system\./sys/sys.h)(0x59A65523)
 I (..\..\Libraries\CMSIS\stm32f10x.h)(0x589533AE)
@@ -1309,15 +1309,15 @@ I (..\..\Libraries\FWlib\inc\stm32f10x_tim.h)(0x589533AF)
 I (..\..\Libraries\FWlib\inc\stm32f10x_usart.h)(0x589533AF)
 I (..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h)(0x589533AF)
 I (..\..\Libraries\FWlib\inc\misc.h)(0x589533AE)
-I (..\..\User\jt808\include\client_manager.h)(0x63DCA667)
+I (..\..\User\jt808\include\client_manager.h)(0x63E0CA4D)
 I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
 I (..\..\User\FATFS\ff.h)(0x589536A5)
 I (..\..\User\FATFS\integer.h)(0x589536A5)
 I (..\..\User\FATFS\ffconf.h)(0x63A957FF)
-I (..\..\User\jt808\include\protocol_parameter.h)(0x63B2F907)
+I (..\..\User\jt808\include\protocol_parameter.h)(0x63E0CA91)
 I (..\..\User\jt808\include\location_report.h)(0x6385F544)
-I (..\..\User\jt808\include\terminal_parameter.h)(0x63DC7DBC)
+I (..\..\User\jt808\include\terminal_parameter.h)(0x63E0CA8E)
 I (D:\MDK5\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
 I (..\..\User\jt808\include\util.h)(0x63AEAA18)
 I (D:\MDK5\ARM\ARMCC\include\stddef.h)(0x574E3E26)
@@ -1325,28 +1325,28 @@ I (D:\MDK5\ARM\ARMCC\include\string.h)(0x574E3E26)
 I (..\..\User\jt808\include\terminal_control.h)(0x63819102)
 I (..\..\User\jt808\include\set_terminal_parameter.h)(0x639060FE)
 I (..\..\User\jt808\include\bcd.h)(0x63572043)
-I (..\..\User\./internal_flash/bsp_internal_flash.h)(0x63DC5E2A)
+I (..\..\User\./internal_flash/bsp_internal_flash.h)(0x63E0C989)
 I (..\..\User\jt808\include\jt808_parser.h)(0x638B076E)
 I (..\..\User\./delay/delay.h)(0x6380BC5E)
 I (..\..\User\jt808\include\jt808_packager.h)(0x63AEAA38)
 I (..\..\User\jt808\include\terminal_register.h)(0x63919AC0)
 I (..\..\User\Bsp\./usart/usart.h)(0x6385B239)
 I (..\..\User\Bsp\./usart2/usart2.h)(0x6385C6F6)
-F (..\..\User\jt808\src\jt808_packager.c)(0x63B67773)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\jt808_packager.o --omf_browse ..\..\output\jt808_packager.crf --depend ..\..\output\jt808_packager.d)
+F (..\..\User\jt808\src\jt808_packager.c)(0x63E0C989)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\jt808_packager.o --omf_browse ..\..\output\jt808_packager.crf --depend ..\..\output\jt808_packager.d)
 I (..\..\User\jt808\include\jt808_packager.h)(0x63AEAA38)
 I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\string.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
-I (..\..\User\jt808\include\protocol_parameter.h)(0x63B2F907)
+I (..\..\User\jt808\include\protocol_parameter.h)(0x63E0CA91)
 I (..\..\User\jt808\include\location_report.h)(0x6385F544)
-I (..\..\User\jt808\include\terminal_parameter.h)(0x63DC7DBC)
+I (..\..\User\jt808\include\terminal_parameter.h)(0x63E0CA8E)
 I (D:\MDK5\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
 I (..\..\User\jt808\include\util.h)(0x63AEAA18)
 I (D:\MDK5\ARM\ARMCC\include\stddef.h)(0x574E3E26)
 I (..\..\User\jt808\include\terminal_control.h)(0x63819102)
 I (..\..\User\jt808\include\terminal_register.h)(0x63919AC0)
-I (..\..\User\./internal_flash/bsp_internal_flash.h)(0x63DC5E2A)
+I (..\..\User\./internal_flash/bsp_internal_flash.h)(0x63E0C989)
 I (..\..\Libraries\CMSIS\stm32f10x.h)(0x589533AE)
 I (..\..\Libraries\CMSIS\core_cm3.h)(0x589533AD)
 I (..\..\Libraries\CMSIS\system_stm32f10x.h)(0x589533AE)
@@ -1378,17 +1378,17 @@ I (..\..\User\jt808\include\bcd.h)(0x63572043)
 I (..\..\User\FATFS\ff.h)(0x589536A5)
 I (..\..\User\FATFS\integer.h)(0x589536A5)
 I (..\..\User\FATFS\ffconf.h)(0x63A957FF)
-I (..\..\User\jt808\include\client_manager.h)(0x63DCA667)
+I (..\..\User\jt808\include\client_manager.h)(0x63E0CA4D)
 I (..\..\system\./sys/sys.h)(0x59A65523)
-F (..\..\User\jt808\src\jt808_parser.c)(0x63DB7C50)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\jt808_parser.o --omf_browse ..\..\output\jt808_parser.crf --depend ..\..\output\jt808_parser.d)
+F (..\..\User\jt808\src\jt808_parser.c)(0x63E0C989)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\jt808_parser.o --omf_browse ..\..\output\jt808_parser.crf --depend ..\..\output\jt808_parser.d)
 I (..\..\User\jt808\include\jt808_parser.h)(0x638B076E)
 I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\string.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
-I (..\..\User\jt808\include\protocol_parameter.h)(0x63B2F907)
+I (..\..\User\jt808\include\protocol_parameter.h)(0x63E0CA91)
 I (..\..\User\jt808\include\location_report.h)(0x6385F544)
-I (..\..\User\jt808\include\terminal_parameter.h)(0x63DC7DBC)
+I (..\..\User\jt808\include\terminal_parameter.h)(0x63E0CA8E)
 I (D:\MDK5\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
 I (..\..\User\jt808\include\util.h)(0x63AEAA18)
 I (D:\MDK5\ARM\ARMCC\include\stddef.h)(0x574E3E26)
@@ -1398,7 +1398,7 @@ I (..\..\User\FATFS\integer.h)(0x589536A5)
 I (..\..\User\FATFS\ffconf.h)(0x63A957FF)
 I (..\..\User\jt808\include\set_terminal_parameter.h)(0x639060FE)
 I (..\..\User\jt808\include\bcd.h)(0x63572043)
-I (..\..\User\./internal_flash/bsp_internal_flash.h)(0x63DC5E2A)
+I (..\..\User\./internal_flash/bsp_internal_flash.h)(0x63E0C989)
 I (..\..\Libraries\CMSIS\stm32f10x.h)(0x589533AE)
 I (..\..\Libraries\CMSIS\core_cm3.h)(0x589533AD)
 I (..\..\Libraries\CMSIS\system_stm32f10x.h)(0x589533AE)
@@ -1426,7 +1426,7 @@ I (..\..\Libraries\FWlib\inc\stm32f10x_tim.h)(0x589533AF)
 I (..\..\Libraries\FWlib\inc\stm32f10x_usart.h)(0x589533AF)
 I (..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h)(0x589533AF)
 I (..\..\Libraries\FWlib\inc\misc.h)(0x589533AE)
-I (..\..\User\jt808\include\client_manager.h)(0x63DCA667)
+I (..\..\User\jt808\include\client_manager.h)(0x63E0CA4D)
 I (..\..\system\./sys/sys.h)(0x59A65523)
 F (..\..\User\jt808\src\location_report.c)(0x63919FFD)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\location_report.o --omf_browse ..\..\output\location_report.crf --depend ..\..\output\location_report.d)
 I (..\..\User\jt808\include\location_report.h)(0x6385F544)
@@ -1441,15 +1441,15 @@ I (..\..\User\jt808\include\terminal_register.h)(0x63919AC0)
 I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\string.h)(0x574E3E26)
-I (..\..\User\jt808\include\protocol_parameter.h)(0x63B2F907)
+I (..\..\User\jt808\include\protocol_parameter.h)(0x63E0CA91)
 I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
 I (..\..\User\jt808\include\location_report.h)(0x6385F544)
-I (..\..\User\jt808\include\terminal_parameter.h)(0x63DC7DBC)
+I (..\..\User\jt808\include\terminal_parameter.h)(0x63E0CA8E)
 I (D:\MDK5\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
 I (..\..\User\jt808\include\util.h)(0x63AEAA18)
 I (D:\MDK5\ARM\ARMCC\include\stddef.h)(0x574E3E26)
 I (..\..\User\jt808\include\terminal_control.h)(0x63819102)
-I (..\..\User\./internal_flash/bsp_internal_flash.h)(0x63DC5E2A)
+I (..\..\User\./internal_flash/bsp_internal_flash.h)(0x63E0C989)
 I (..\..\Libraries\CMSIS\stm32f10x.h)(0x589533AE)
 I (..\..\Libraries\CMSIS\core_cm3.h)(0x589533AD)
 I (..\..\Libraries\CMSIS\system_stm32f10x.h)(0x589533AE)
@@ -1487,12 +1487,12 @@ I (D:\MDK5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\stddef.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\string.h)(0x574E3E26)
-I (..\..\User\jt808\include\protocol_parameter.h)(0x63B2F907)
+I (..\..\User\jt808\include\protocol_parameter.h)(0x63E0CA91)
 I (..\..\User\jt808\include\location_report.h)(0x6385F544)
-I (..\..\User\jt808\include\terminal_parameter.h)(0x63DC7DBC)
+I (..\..\User\jt808\include\terminal_parameter.h)(0x63E0CA8E)
 I (D:\MDK5\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
 I (..\..\User\jt808\include\terminal_control.h)(0x63819102)
-I (..\..\User\jt808\include\client_manager.h)(0x63DCA667)
+I (..\..\User\jt808\include\client_manager.h)(0x63E0CA4D)
 I (..\..\system\./sys/sys.h)(0x59A65523)
 I (..\..\Libraries\CMSIS\stm32f10x.h)(0x589533AE)
 I (..\..\Libraries\CMSIS\core_cm3.h)(0x589533AD)
@@ -1524,14 +1524,14 @@ I (..\..\Libraries\FWlib\inc\misc.h)(0x589533AE)
 I (..\..\User\FATFS\ff.h)(0x589536A5)
 I (..\..\User\FATFS\integer.h)(0x589536A5)
 I (..\..\User\FATFS\ffconf.h)(0x63A957FF)
-F (..\..\User\jt808\src\set_terminal_parameter.c)(0x63DCAA71)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\set_terminal_parameter.o --omf_browse ..\..\output\set_terminal_parameter.crf --depend ..\..\output\set_terminal_parameter.d)
+F (..\..\User\jt808\src\set_terminal_parameter.c)(0x63E0C9D8)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\set_terminal_parameter.o --omf_browse ..\..\output\set_terminal_parameter.crf --depend ..\..\output\set_terminal_parameter.d)
 I (..\..\User\jt808\include\set_terminal_parameter.h)(0x639060FE)
-I (..\..\User\jt808\include\protocol_parameter.h)(0x63B2F907)
+I (..\..\User\jt808\include\protocol_parameter.h)(0x63E0CA91)
 I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
 I (D:\MDK5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
 I (..\..\User\jt808\include\location_report.h)(0x6385F544)
-I (..\..\User\jt808\include\terminal_parameter.h)(0x63DC7DBC)
+I (..\..\User\jt808\include\terminal_parameter.h)(0x63E0CA8E)
 I (D:\MDK5\ARM\ARMCC\include\stdbool.h)(0x574E3E26)
 I (..\..\User\jt808\include\util.h)(0x63AEAA18)
 I (D:\MDK5\ARM\ARMCC\include\stddef.h)(0x574E3E26)
@@ -1541,7 +1541,7 @@ I (..\..\User\jt808\include\bcd.h)(0x63572043)
 I (..\..\User\FATFS\ff.h)(0x589536A5)
 I (..\..\User\FATFS\integer.h)(0x589536A5)
 I (..\..\User\FATFS\ffconf.h)(0x63A957FF)
-I (..\..\User\./internal_flash/bsp_internal_flash.h)(0x63DC5E2A)
+I (..\..\User\./internal_flash/bsp_internal_flash.h)(0x63E0C989)
 I (..\..\Libraries\CMSIS\stm32f10x.h)(0x589533AE)
 I (..\..\Libraries\CMSIS\core_cm3.h)(0x589533AD)
 I (..\..\Libraries\CMSIS\system_stm32f10x.h)(0x589533AE)
@@ -1569,7 +1569,7 @@ I (..\..\Libraries\FWlib\inc\stm32f10x_tim.h)(0x589533AF)
 I (..\..\Libraries\FWlib\inc\stm32f10x_usart.h)(0x589533AF)
 I (..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h)(0x589533AF)
 I (..\..\Libraries\FWlib\inc\misc.h)(0x589533AE)
-I (..\..\User\jt808\include\client_manager.h)(0x63DCA667)
+I (..\..\User\jt808\include\client_manager.h)(0x63E0CA4D)
 I (..\..\system\./sys/sys.h)(0x59A65523)
 F (..\..\User\FATFS\diskio.c)(0x589536A5)(-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option -I ..\..\User\Bsp -I ..\..\User\nmea_decode\include -I ..\..\system -I ..\..\User\jt808\include-IC:\Users\86156\Desktop\Jt808_on_stm32\Project\RVMDK£¨uv5£©\RTE-ID:\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="521" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\diskio.o --omf_browse ..\..\output\diskio.crf --depend ..\..\output\diskio.d)
 I (..\..\User\FATFS\diskio.h)(0x589533AF)
