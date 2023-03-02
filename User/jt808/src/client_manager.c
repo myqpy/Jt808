@@ -6,6 +6,7 @@
 #include "util.h"
 #include "./delay/delay.h"
 #include "bcd.h"
+#include "./IWDG/iwdg.h"
 #include "jt808_packager.h"
 #include "jt808_parser.h"
 #include "./usart/usart.h"
@@ -148,10 +149,13 @@ ErrorStatus ec20_init(void)
     char atstr[BUFLEN];
     USART2_RX_STA=0;
     if(ec20_send_cmd("AT","OK","NULL","NULL",1000))err|=1<<0;//¼ì²âÊÇ·ñÓ¦´ðATÖ¸Áî
+		IWDG_Feed();
     USART2_RX_STA=0;
     if(ec20_send_cmd("ATE0","OK","NULL","NULL",2000))err|=1<<1;//²»»ØÏÔ
+		IWDG_Feed();
     USART2_RX_STA=0;
     if(ec20_send_cmd("AT+CPIN?","OK","NULL","NULL",2000))err|=1<<3;	//²éÑ¯SIM¿¨ÊÇ·ñÔÚÎ»
+		IWDG_Feed();
     USART2_RX_STA=0;
     data = 0;
     //²éÑ¯GSMÍøÂç×¢²á×´Ì¬£¬È·ÈÏÕÒÍø³É¹¦
@@ -159,6 +163,7 @@ ErrorStatus ec20_init(void)
     {
         USART2_RX_STA=0;
         delay_ms(100);
+				IWDG_Feed();
         data++;
     }
     USART2_RX_STA=0;
@@ -294,6 +299,7 @@ int packagingMessage(unsigned int msg_id)
 			printf("[jt808FramePackage]: FAILED !!!\r\n");
 			return -1;
     }
+		IWDG_Feed();
     ++parameter_.msg_head.msg_flow_num; // 每正确生成一条命令, 消息流水号增加1.
     return 0;
 }
