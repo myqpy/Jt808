@@ -35,6 +35,7 @@
 "..\..\output\usart2.o"
 "..\..\output\ec20.o"
 "..\..\output\bsp_internal_flash.o"
+"..\..\output\iwdg.o"
 "..\..\output\context.o"
 "..\..\output\generate.o"
 "..\..\output\generator.o"

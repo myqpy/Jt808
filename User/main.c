@@ -8,6 +8,8 @@
 #include "client_manager.h"
 #include "jt808_packager.h"
 #include "ff.h"
+#include "./IWDG/iwdg.h"
+
 extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude, 
 										float  *v_speed, float *v_bearing, unsigned char *v_timestamp,
 											nmeaINFO info, uint8_t new_parse);
@@ -64,6 +66,7 @@ int main(void)
 	delay_ms(500);
 	GPIO_ResetBits(GPIOC, GPIO_Pin_5);	
 
+	IWDG_Init(4,625); //与分频数为64,重载值为625,溢出时间为1s
 	while(1)
 	{
 		HeartBeatCounter = 0;
