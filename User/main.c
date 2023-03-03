@@ -73,7 +73,7 @@ int main(void)
 		LocationReportCounter = 0;
 		CornerPointRetransmission = 0;
 		time_1s = 0;
-		initSystemParameters(1); //0 烧写出厂参数 1 不烧写出厂参数
+		initSystemParameters(0); //0 烧写出厂参数 1 不烧写出厂参数
 		//设置手机号（唯一识别id）
 		setUUID();
 		
@@ -91,7 +91,7 @@ int main(void)
 			
 			else
 			{
-				IPFlashWrite();
+//				IPFlashWrite();
 				isTCPconnected = 0;
 				system_reboot();
 				continue;

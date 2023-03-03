@@ -64,16 +64,16 @@ int FlashWrite()
 
 	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
 	
-	// ç ”ç©¶é™¢å¹³å°
+	// ÑĞ¾¿ÔºÆ½Ì¨
 	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
 //	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"http://jt808.gps.ciicp.com", sizeof("http://jt808.gps.ciicp.com"));
 	
-//	//å®¢æˆ·å¹³å°
+//	//¿Í»§Æ½Ì¨
 //	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
 
 	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
-	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 2;
+	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 5;
 
 	parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle = 10;
 
@@ -89,14 +89,18 @@ int FlashWrite()
 	parameter_.parse.terminal_parameters.CarPlateColor = 0x02;
 	
 	parameter_.parse.terminal_parameters.initFactoryParameters = 1;
-	
-	
-	memset(parameter_.parse.terminal_parameters.version,0,sizeof(parameter_.parse.terminal_parameters.version));
-	memcpy(parameter_.parse.terminal_parameters.version, "v1.2", 5);
+
 	
 	parameter_.parse.terminal_parameters.bootLoaderFlag = 0XFFFFFFFF;
 	
 	
+	memset(parameter_.parse.terminal_parameters.PhoneNumber,0, 12);
+	memset(parameter_.parse.terminal_parameters.CarPlateNum,0,sizeof(parameter_.parse.terminal_parameters.CarPlateNum));
+	memset(parameter_.parse.terminal_parameters.TerminalId,0, 8);
+	
+	memcpy(parameter_.parse.terminal_parameters.PhoneNumber, "100221000211" , 12);
+	memcpy(parameter_.parse.terminal_parameters.TerminalId, "1000211" , 8);
+	memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "²âÊÔ211", 9);
 	
 	FLASH_WriteByte(FLASH_ADDR , (uint8_t*)&parameter_.parse.terminal_parameters , sizeof(parameter_.parse.terminal_parameters));	
 	printf("FLASH_Write SUCCESS!!!!!!\r\n");
@@ -120,6 +124,15 @@ int IPFlashWrite()
 
 	return 0;
 }
+
+void IWDG_ReBoot_Flag_FlashWrite(void)
+{
+	parameter_.parse.terminal_parameters.bootLoaderFlag = 0XCCCCCCCC;
+	
+	FLASH_WriteByte(FLASH_ADDR , (uint8_t *) &parameter_.parse.terminal_parameters , sizeof(parameter_.parse.terminal_parameters));	
+	printf("boot_loader_flag write SUCCESS!!!!!!\r\n");
+}
+
 
 void setUUID(void)
 {
@@ -148,17 +161,17 @@ ErrorStatus ec20_init(void)
     u8 err=0;
     char atstr[BUFLEN];
     USART2_RX_STA=0;
-    if(ec20_send_cmd("AT","OK","NULL","NULL",1000))err|=1<<0;//Â¼Ã¬Â²Ã¢ÃŠÃ‡Â·Ã±Ã“Â¦Â´Ã°ATÃ–Â¸ÃÃ®
+    if(ec20_send_cmd("AT","OK","NULL","NULL",1000))err|=1<<0;//?¨¬????¡¤?????AT????
 		IWDG_Feed();
     USART2_RX_STA=0;
-    if(ec20_send_cmd("ATE0","OK","NULL","NULL",2000))err|=1<<1;//Â²Â»Â»Ã˜ÃÃ”
+    if(ec20_send_cmd("ATE0","OK","NULL","NULL",2000))err|=1<<1;//??????
 		IWDG_Feed();
     USART2_RX_STA=0;
-    if(ec20_send_cmd("AT+CPIN?","OK","NULL","NULL",2000))err|=1<<3;	//Â²Ã©Ã‘Â¯SIMÂ¿Â¨ÃŠÃ‡Â·Ã±Ã”ÃšÃÂ»
+    if(ec20_send_cmd("AT+CPIN?","OK","NULL","NULL",2000))err|=1<<3;	//?¨¦??SIM?¡§??¡¤?????
 		IWDG_Feed();
     USART2_RX_STA=0;
     data = 0;
-    //Â²Ã©Ã‘Â¯GSMÃÃ¸Ã‚Ã§Ã—Â¢Â²Ã¡Ã—Â´ÃŒÂ¬Â£Â¬ÃˆÂ·ÃˆÃÃ•Ã’ÃÃ¸Â³Ã‰Â¹Â¦
+    //?¨¦??GSM????¡Á??¨¢¡Á??????¡¤??????????
     while (ec20_send_cmd("AT+CREG?\r\n","\r\n+CREG: 0,1","NULL","NULL",2000)!= 1 && data < 10)
     {
         USART2_RX_STA=0;
@@ -169,7 +182,7 @@ ErrorStatus ec20_init(void)
     USART2_RX_STA=0;
     if (data == 10)
     {
-        return ERROR;                                                                             //Ã•Ã’ÃÃ¸Â²Â»Â³Ã‰Â¹Â¦Ã„Â£Â¿Ã©Ã–Ã˜Ã†Ã´
+        return ERROR;                                                                             //?????????????¨¦????
     }
     ec20_send_cmd("AT+CGATT?\r\n","+CGATT: 1","OK","NULL",2000);
     USART2_RX_STA=0;
@@ -199,7 +212,7 @@ ErrorStatus ec20_init(void)
     }
 } 
 
-/// @brief è®¾ç½®ç»ˆç«¯æ‰‹æœºå·
+/// @brief ÉèÖÃÖÕ¶ËÊÖ»úºÅ
 /// @param phone
 void setTerminalPhoneNumber(const char *phone_num, unsigned int phoneSize)
 {
@@ -212,7 +225,7 @@ void setTerminalPhoneNumber(const char *phone_num, unsigned int phoneSize)
 
 void setTerminalId(const char *TerminalId,unsigned int lenTerminalId)
 {
-	//ç»ˆç«¯ID
+	//ÖÕ¶ËID
 //	unsigned int lenTerminalId;
 //	lenTerminalId = sizeof(TerminalId);
 //	lenTerminalId	=(lenTerminalId>20)?20:lenTerminalId;
@@ -242,10 +255,10 @@ void initLocationInfo(unsigned int v_alarm_value, unsigned int v_status_value)
 {
 		
 		printf("\n\r[InitLocationInfo] OK !\r\n");	
-    //æŠ¥è­¦æ ‡å¿—
+    //±¨¾¯±êÖ¾
     parameter_.location_info.alarm.value = v_alarm_value;
     printf("para->alarm.value = %d\r\n", parameter_.location_info.alarm.value);
-    //çŠ¶æ€	
+    //×´Ì¬	
     parameter_.location_info.status.value = v_status_value;
     printf("para->status.value = %d\r\n", parameter_.location_info.status.value);
 }
@@ -256,7 +269,7 @@ void updateLocation(double const v_latitude, double const v_longitude, float con
 			#ifdef __JT808_DEBUG
 				printf("\n\r[updateLocationInfo] OK !\r\n");
 			#endif
-//			if (speed >= 10) //é»˜è®¤è½¦é€Ÿå¤§äºç­‰äº10å…¬é‡Œæ—¶ä¸ºæ­£å¸¸è¡Œé©¶çŠ¶æ€
+//			if (speed >= 10) //Ä¬ÈÏ³µËÙ´óÓÚµÈÓÚ10¹«ÀïÊ±ÎªÕı³£ĞĞÊ»×´Ì¬
 //			{
 //			 isCarMoving.store(true);
 //			}
@@ -284,7 +297,7 @@ void updateLocation(double const v_latitude, double const v_longitude, float con
 int packagingMessage(unsigned int msg_id)
 {
 		
-    //æŸ¥æ‰¾å½“å‰msgIDæ˜¯å¦å­˜åœ¨äºå¾…æ‰“åŒ…æ¶ˆæ¯IDæ•°ç»„ä¸­
+    //²éÕÒµ±Ç°msgIDÊÇ·ñ´æÔÚÓÚ´ı´ò°üÏûÏ¢IDÊı×éÖĞ
     if (0 == findMsgIDFromTerminalPackagerCMD(msg_id))
     {
 			printf("[findMsgIDFromTerminalPackagerCMD] no msg_id \r\n");
@@ -293,14 +306,14 @@ int packagingMessage(unsigned int msg_id)
 		#ifdef __JT808_DEBUG
 			printf("[findMsgIDFromTerminalPackagerCMD] OK !\r\n");
 		#endif
-    parameter_.msg_head.msg_id = msg_id; // è®¾ç½®æ¶ˆæ¯ID.
+    parameter_.msg_head.msg_id = msg_id; // ÉèÖÃÏûÏ¢ID.
     if (jt808FramePackage(&parameter_) < 0)
     {
 			printf("[jt808FramePackage]: FAILED !!!\r\n");
 			return -1;
     }
 		IWDG_Feed();
-    ++parameter_.msg_head.msg_flow_num; // æ¯æ­£ç¡®ç”Ÿæˆä¸€æ¡å‘½ä»¤, æ¶ˆæ¯æµæ°´å·å¢åŠ 1.
+    ++parameter_.msg_head.msg_flow_num; // Ã¿ÕıÈ·Éú³ÉÒ»ÌõÃüÁî, ÏûÏ¢Á÷Ë®ºÅÔö¼Ó1.
     return 0;
 }
 
@@ -342,10 +355,10 @@ int jt808TerminalRegister(int *isRegistered)
 		Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
 		delay_ms(1000);
 		
-		if(USART2_RX_STA&0X8000)    //æ¥æ”¶åˆ°æ•°æ®
+		if(USART2_RX_STA&0X8000)    //½ÓÊÕµ½Êı¾İ
 		{
-			USART2_RX_STA = USART2_RX_STA&0x7FFF;//è·å–åˆ°å®é™…å­—ç¬¦æ•°é‡
-			parsingMessage(USART2_RX_BUF, USART2_RX_STA);//æ ¡éªŒ
+			USART2_RX_STA = USART2_RX_STA&0x7FFF;//»ñÈ¡µ½Êµ¼Ê×Ö·ûÊıÁ¿
+			parsingMessage(USART2_RX_BUF, USART2_RX_STA);//Ğ£Ñé
 			if((parameter_.parse.respone_result == kRegisterSuccess)&&(parameter_.parse.msg_head.msg_id==kTerminalRegisterResponse))
 			{
 				*isRegistered = 1;
@@ -377,10 +390,10 @@ int jt808TerminalAuthentication(int *isAuthenticated)
 		Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
 		delay_ms(1000);
 		
-		if(USART2_RX_STA&0X8000)    //æ¥æ”¶åˆ°æ•°æ®
+		if(USART2_RX_STA&0X8000)    //½ÓÊÕµ½Êı¾İ
 		{
-			USART2_RX_STA = USART2_RX_STA&0x7FFF;//è·å–åˆ°å®é™…å­—ç¬¦æ•°é‡
-			parsingMessage(USART2_RX_BUF, USART2_RX_STA);//æ ¡éªŒ
+			USART2_RX_STA = USART2_RX_STA&0x7FFF;//»ñÈ¡µ½Êµ¼Ê×Ö·ûÊıÁ¿
+			parsingMessage(USART2_RX_BUF, USART2_RX_STA);//Ğ£Ñé
 			if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kTerminalAuthentication))
 			{
 				*isAuthenticated = 1;
@@ -472,63 +485,63 @@ int parsingMessage(const unsigned char *in, unsigned int in_len)
 			printf("%s[%d]: [parameter_.parse.msg_head.msg_id] msg_id = 0x%02x \r\n", __FUNCTION__, __LINE__, msg_id);
 			switch (msg_id)
 			{
-			// +å¹³å°é€šç”¨åº”ç­”.
+			// +Æ½Ì¨Í¨ÓÃÓ¦´ğ.
 			case kPlatformGeneralResponse:
 			{
 					printf("%s[%d]: [ kPlatformGeneralResponse ] parse done \r\n", __FUNCTION__, __LINE__);
 			}
 			break;
 
-			//  è¡¥ä¼ åˆ†åŒ…è¯·æ±‚.
+			//  ²¹´«·Ö°üÇëÇó.
 			case kFillPacketRequest:
 			{
 					printf("%s[%d]: [ kFillPacketRequest ] parse done \r\n", __FUNCTION__, __LINE__);
 			}
 			break;
 
-			// ç»ˆç«¯æ³¨å†Œåº”ç­”..
+			// ÖÕ¶Ë×¢²áÓ¦´ğ..
 			case kTerminalRegisterResponse:
 			{
 					printf("%s[%d]: [ kTerminalRegisterResponse ] parse done \r\n", __FUNCTION__, __LINE__);
 			}
 			break;
 
-			// è®¾ç½®ç»ˆç«¯å‚æ•°..
+			// ÉèÖÃÖÕ¶Ë²ÎÊı..
 			case kSetTerminalParameters:
 			{
 					printf("%s[%d]: [ kSetTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
 			}
 			break;
 
-			// æŸ¥è¯¢ç»ˆç«¯å‚æ•°..
+			// ²éÑ¯ÖÕ¶Ë²ÎÊı..
 			case kGetTerminalParameters:
 			{
 					printf("%s[%d]: [ kGetTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
 			}
 			break;
 
-			//æŸ¥è¯¢æŒ‡å®šç»ˆç«¯å‚æ•°..
+			//²éÑ¯Ö¸¶¨ÖÕ¶Ë²ÎÊı..
 			case kGetSpecificTerminalParameters:
 			{
 					printf("%s[%d]: [ kGetSpecificTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
 			}
 			break;
 
-			// ç»ˆç«¯æ§åˆ¶
+			// ÖÕ¶Ë¿ØÖÆ
 			case kTerminalControl: 
 			{
 					printf("%s[%d]: [ kTerminalControl ] parse done \r\n", __FUNCTION__, __LINE__);
 			}
 			break;
 
-			// ä¸‹å‘ç»ˆç«¯å‡çº§åŒ….
+			// ÏÂ·¢ÖÕ¶ËÉı¼¶°ü.
 			case kTerminalUpgrade:
 			{
 					printf("%s[%d]: [ kTerminalUpgrade ] parse done\r\n", __FUNCTION__, __LINE__);
 			}
 			break;
 
-			//  ä½ç½®ä¿¡æ¯æŸ¥è¯¢..
+			//  Î»ÖÃĞÅÏ¢²éÑ¯..
 			case kGetLocationInformation:
 			{
 					printf("%s[%d]: [ kGetLocationInformation ] parse done\r\n", __FUNCTION__, __LINE__);
