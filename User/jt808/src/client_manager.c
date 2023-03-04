@@ -64,12 +64,12 @@ int FlashWrite()
 
 	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
 	
-	// 研究院平台
-	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
+// 研究院平台
+//	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
 //	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"http://jt808.gps.ciicp.com", sizeof("http://jt808.gps.ciicp.com"));
 	
-//	//客户平台
-//	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
+//	天瑞平台
+	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
 
 	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
@@ -82,14 +82,13 @@ int FlashWrite()
 	parameter_.parse.terminal_parameters.ProvinceID = 0x0029;
 
 	parameter_.parse.terminal_parameters.CityID = 0x0066;
-
-	memset(parameter_.parse.terminal_parameters.CarPlateNum,0,sizeof(parameter_.parse.terminal_parameters.CarPlateNum));
-	memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "init", 7);
-
+	
 	parameter_.parse.terminal_parameters.CarPlateColor = 0x02;
 	
 	parameter_.parse.terminal_parameters.initFactoryParameters = 1;
-
+	
+	memset(parameter_.parse.terminal_parameters.version,0,sizeof(parameter_.parse.terminal_parameters.version));
+	memcpy(parameter_.parse.terminal_parameters.version, "v1.2", 5);
 	
 	parameter_.parse.terminal_parameters.bootLoaderFlag = 0XFFFFFFFF;
 	
@@ -97,6 +96,7 @@ int FlashWrite()
 	memset(parameter_.parse.terminal_parameters.PhoneNumber,0, 12);
 	memset(parameter_.parse.terminal_parameters.CarPlateNum,0,sizeof(parameter_.parse.terminal_parameters.CarPlateNum));
 	memset(parameter_.parse.terminal_parameters.TerminalId,0, 8);
+
 	
 	memcpy(parameter_.parse.terminal_parameters.PhoneNumber, "100221000211" , 12);
 	memcpy(parameter_.parse.terminal_parameters.TerminalId, "1000211" , 8);
@@ -162,13 +162,13 @@ ErrorStatus ec20_init(void)
     char atstr[BUFLEN];
     USART2_RX_STA=0;
     if(ec20_send_cmd("AT","OK","NULL","NULL",1000))err|=1<<0;//?ì????·?????AT????
-		IWDG_Feed();
+//		IWDG_Feed();
     USART2_RX_STA=0;
     if(ec20_send_cmd("ATE0","OK","NULL","NULL",2000))err|=1<<1;//??????
-		IWDG_Feed();
+//		IWDG_Feed();
     USART2_RX_STA=0;
     if(ec20_send_cmd("AT+CPIN?","OK","NULL","NULL",2000))err|=1<<3;	//?é??SIM?¨??·?????
-		IWDG_Feed();
+//		IWDG_Feed();
     USART2_RX_STA=0;
     data = 0;
     //?é??GSM????×??á×??????·??????????
@@ -176,7 +176,7 @@ ErrorStatus ec20_init(void)
     {
         USART2_RX_STA=0;
         delay_ms(100);
-				IWDG_Feed();
+//				IWDG_Feed();
         data++;
     }
     USART2_RX_STA=0;
@@ -312,7 +312,7 @@ int packagingMessage(unsigned int msg_id)
 			printf("[jt808FramePackage]: FAILED !!!\r\n");
 			return -1;
     }
-		IWDG_Feed();
+//		IWDG_Feed();
     ++parameter_.msg_head.msg_flow_num; // 每正确生成一条命令, 消息流水号增加1.
     return 0;
 }

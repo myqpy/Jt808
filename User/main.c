@@ -66,7 +66,7 @@ int main(void)
 	delay_ms(500);
 	GPIO_ResetBits(GPIOC, GPIO_Pin_5);	
 
-	IWDG_Init(6,4095); //与分频数为64,重载值为625,溢出时间为1s
+//	IWDG_Init(6,4095); //与分频数为64,重载值为625,溢出时间为1s
 	while(1)
 	{
 		HeartBeatCounter = 0;
@@ -130,11 +130,11 @@ int main(void)
 		//设置位置上报警报位、状态位
 		initLocationInfo(v_alarm_value, v_status_value);
 		setStatusBit();
-		
+		IWDG_Feed();
 		Tim3_Int_Init(10000-1,7199);
 		while(1)
 		{
-			IWDG_Feed();
+			
 
 			if(GPS_HalfTransferEnd)     /* 接收到GPS_RBUFF_SIZE一半的数据 */
 			{

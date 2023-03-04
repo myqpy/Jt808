@@ -14,8 +14,7 @@
 
 
 //#define __JT808_DEBUG
-#define FLASH_ADDR (uint32_t)0x08038000
-//#define ID_FLASH_ADDR (uint32_t)0x0803b800
+#define FLASH_ADDR (uint32_t)0x08034000
 #define FLASH_BUFFER_SIZE 128
 
 

@@ -169,7 +169,7 @@ FlagStatus IWDG_GetFlagStatus(uint16_t IWDG_FLAG)
   }
   else
   {
-		IWDG_ReBoot_Flag_FlashWrite();
+//		IWDG_ReBoot_Flag_FlashWrite();
     bitstatus = RESET;
   }
   /* Return the flag status */
