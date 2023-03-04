@@ -65,11 +65,11 @@ int FlashWrite()
 	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
 	
 // 研究院平台
-//	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
+	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
 //	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"http://jt808.gps.ciicp.com", sizeof("http://jt808.gps.ciicp.com"));
 	
 //	天瑞平台
-	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
+//	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
 
 	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
@@ -112,8 +112,8 @@ int FlashWrite()
 int IPFlashWrite()
 {
 	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
-	//memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
-	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
+	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
+//	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
 	
 	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
@@ -125,21 +125,10 @@ int IPFlashWrite()
 	return 0;
 }
 
-void IWDG_ReBoot_Flag_FlashWrite(void)
-{
-	parameter_.parse.terminal_parameters.bootLoaderFlag = 0XCCCCCCCC;
-	
-	FLASH_WriteByte(FLASH_ADDR , (uint8_t *) &parameter_.parse.terminal_parameters , sizeof(parameter_.parse.terminal_parameters));	
-	printf("boot_loader_flag write SUCCESS!!!!!!\r\n");
-}
-
 
 void setUUID(void)
 {
-		Internal_ReadFlash(FLASH_ADDR, (uint8_t *) &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
-	
-//	printf("PhoneNumber == \"%s\" \r\n",parameter_.register_id.PhoneNumber);
-//	printf("TerminalId == \"%s\" \r\n",parameter_.register_id.TerminalId);
+	Internal_ReadFlash(FLASH_ADDR, (uint8_t *) &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
 	
 	setTerminalPhoneNumber(parameter_.parse.terminal_parameters.PhoneNumber, 12);
 	setTerminalId(parameter_.parse.terminal_parameters.TerminalId, 8);
@@ -162,13 +151,10 @@ ErrorStatus ec20_init(void)
     char atstr[BUFLEN];
     USART2_RX_STA=0;
     if(ec20_send_cmd("AT","OK","NULL","NULL",1000))err|=1<<0;//?ì????·?????AT????
-//		IWDG_Feed();
     USART2_RX_STA=0;
     if(ec20_send_cmd("ATE0","OK","NULL","NULL",2000))err|=1<<1;//??????
-//		IWDG_Feed();
     USART2_RX_STA=0;
     if(ec20_send_cmd("AT+CPIN?","OK","NULL","NULL",2000))err|=1<<3;	//?é??SIM?¨??·?????
-//		IWDG_Feed();
     USART2_RX_STA=0;
     data = 0;
     //?é??GSM????×??á×??????·??????????
@@ -176,7 +162,6 @@ ErrorStatus ec20_init(void)
     {
         USART2_RX_STA=0;
         delay_ms(100);
-//				IWDG_Feed();
         data++;
     }
     USART2_RX_STA=0;
@@ -227,8 +212,8 @@ void setTerminalId(const char *TerminalId,unsigned int lenTerminalId)
 {
 	//终端ID
 //	unsigned int lenTerminalId;
-//	lenTerminalId = sizeof(TerminalId);
-//	lenTerminalId	=(lenTerminalId>20)?20:lenTerminalId;
+	lenTerminalId = sizeof(TerminalId);
+	lenTerminalId	=(lenTerminalId>20)?20:lenTerminalId;
 
 	memset(parameter_.register_info.terminal_id, 0, lenTerminalId);
 	memcpy(parameter_.register_info.terminal_id, TerminalId, lenTerminalId);

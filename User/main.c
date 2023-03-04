@@ -4,6 +4,7 @@
 #include "./gps/gps_config.h"
 #include "./delay/delay.h"
 #include "./sys/sys.h"
+#include "./timer/timer.h"
 #include "math.h"
 #include "client_manager.h"
 #include "jt808_packager.h"
@@ -13,13 +14,12 @@
 extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude, 
 										float  *v_speed, float *v_bearing, unsigned char *v_timestamp,
 											nmeaINFO info, uint8_t new_parse);
-void Tim3_Int_Init(u16 arr,u16 psc);
-void TIM3_IRQHandler(void);
-int time_1s = 0;		
+
+	
 										
 int main(void)
 {
-	
+	int 					time_1s = 0;	
 	int 					isTCPconnected=0;
 	int 					isRegistered=0;
 	int 					isAuthenticated=0;
@@ -66,14 +66,14 @@ int main(void)
 	delay_ms(500);
 	GPIO_ResetBits(GPIOC, GPIO_Pin_5);	
 
-//	IWDG_Init(6,4095); //与分频数为64,重载值为625,溢出时间为1s
+//	IWDG_Init(6,4095); 
 	while(1)
 	{
 		HeartBeatCounter = 0;
 		LocationReportCounter = 0;
 		CornerPointRetransmission = 0;
 		time_1s = 0;
-		initSystemParameters(0); //0 烧写出厂参数 1 不烧写出厂参数
+		initSystemParameters(1); //0 烧写出厂参数 1 不烧写出厂参数
 		//设置手机号（唯一识别id）
 		setUUID();
 		
@@ -91,7 +91,7 @@ int main(void)
 			
 			else
 			{
-//				IPFlashWrite();
+				IPFlashWrite();
 				isTCPconnected = 0;
 				system_reboot();
 				continue;
@@ -303,38 +303,5 @@ int main(void)
 
 
 
-void Tim3_Int_Init(u16 arr,u16 psc)
-{
-	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStruct;
-	NVIC_InitTypeDef NVIC_InitStruct;
-	
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3,ENABLE);
-	
-	TIM_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;
-	TIM_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;
-	TIM_TimeBaseInitStruct.TIM_Period = arr;
-	TIM_TimeBaseInitStruct.TIM_Prescaler = psc;
-	
-	TIM_TimeBaseInit(TIM3,&TIM_TimeBaseInitStruct);
-	
-	TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE);
-	
-	NVIC_InitStruct.NVIC_IRQChannel = TIM3_IRQn;
-	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 3;
-	NVIC_Init(&NVIC_InitStruct);
-	
-	TIM_Cmd(TIM3,ENABLE);
-}
 
-void TIM3_IRQHandler(void)
-{
-	if(TIM_GetITStatus(TIM3,TIM_IT_Update) == 1)
-	{
-		time_1s += 1;
-		TIM_ClearITPendingBit(TIM3,TIM_IT_Update);
-	}
-	
-}
 
