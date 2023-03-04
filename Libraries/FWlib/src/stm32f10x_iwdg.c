@@ -21,7 +21,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_iwdg.h"
-#include "client_manager.h"
+
 /** @addtogroup STM32F10x_StdPeriph_Driver
   * @{
   */
@@ -169,7 +169,6 @@ FlagStatus IWDG_GetFlagStatus(uint16_t IWDG_FLAG)
   }
   else
   {
-//		IWDG_ReBoot_Flag_FlashWrite();
     bitstatus = RESET;
   }
   /* Return the flag status */
