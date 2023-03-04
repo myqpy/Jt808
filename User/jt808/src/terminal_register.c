@@ -6,7 +6,7 @@ struct RegisterInfo registerInfo_;
 
 void initRegisterInfo(struct ProtocolParameter *para)
 {
-	int lenManufacturer, lenTModel, lenTerminalId;
+	int lenManufacturer, lenTModel;
 	printf("\r\n[ initRegisterInfo ] OK !\r\n");
 	//省域ID
 	para->register_info.province_id = para->parse.terminal_parameters.ProvinceID;

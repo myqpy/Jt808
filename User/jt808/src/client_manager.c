@@ -144,58 +144,58 @@ void boot_loader_flag()
 }	
 
 
-ErrorStatus ec20_init(void)
-{
-    u8 data=0,ret=0;
-    u8 err=0;
-    char atstr[BUFLEN];
-    USART2_RX_STA=0;
-    if(ec20_send_cmd("AT","OK","NULL","NULL",1000))err|=1<<0;//?¨¬????¡¤?????AT????
-    USART2_RX_STA=0;
-    if(ec20_send_cmd("ATE0","OK","NULL","NULL",2000))err|=1<<1;//??????
-    USART2_RX_STA=0;
-    if(ec20_send_cmd("AT+CPIN?","OK","NULL","NULL",2000))err|=1<<3;	//?¨¦??SIM?¡§??¡¤?????
-    USART2_RX_STA=0;
-    data = 0;
-    //?¨¦??GSM????¡Á??¨¢¡Á??????¡¤??????????
-    while (ec20_send_cmd("AT+CREG?\r\n","\r\n+CREG: 0,1","NULL","NULL",2000)!= 1 && data < 10)
-    {
-        USART2_RX_STA=0;
-        delay_ms(100);
-        data++;
-    }
-    USART2_RX_STA=0;
-    if (data == 10)
-    {
-        return ERROR;                                                                             //?????????????¨¦????
-    }
-    ec20_send_cmd("AT+CGATT?\r\n","+CGATT: 1","OK","NULL",2000);
-    USART2_RX_STA=0;
-    delay_ms(200);
-    ec20_send_cmd("AT+QIACT?\r\n","OK","NULL","NULL",2000);
+//ErrorStatus ec20_init(void)
+//{
+//    u8 data=0,ret=0;
+//    u8 err=0;
+//    char atstr[BUFLEN];
+//    USART2_RX_STA=0;
+//    if(ec20_send_cmd("AT","OK","NULL","NULL",1000))err|=1<<0;//?¨¬????¡¤?????AT????
+//    USART2_RX_STA=0;
+//    if(ec20_send_cmd("ATE0","OK","NULL","NULL",2000))err|=1<<1;//??????
+//    USART2_RX_STA=0;
+//    if(ec20_send_cmd("AT+CPIN?","OK","NULL","NULL",2000))err|=1<<3;	//?¨¦??SIM?¡§??¡¤?????
+//    USART2_RX_STA=0;
+//    data = 0;
+//    //?¨¦??GSM????¡Á??¨¢¡Á??????¡¤??????????
+//    while (ec20_send_cmd("AT+CREG?\r\n","\r\n+CREG: 0,1","NULL","NULL",2000)!= 1 && data < 10)
+//    {
+//        USART2_RX_STA=0;
+//        delay_ms(100);
+//        data++;
+//    }
+//    USART2_RX_STA=0;
+//    if (data == 10)
+//    {
+//        return ERROR;                                                                             //?????????????¨¦????
+//    }
+//    ec20_send_cmd("AT+CGATT?\r\n","+CGATT: 1","OK","NULL",2000);
+//    USART2_RX_STA=0;
+//    delay_ms(200);
+//    ec20_send_cmd("AT+QIACT?\r\n","OK","NULL","NULL",2000);
 
-    USART2_RX_STA=0;
-    delay_ms(200);
-    ec20_send_cmd("AT+QICLOSE=0\r\n","OK","NULL","NULL",2000);
-    USART2_RX_STA=0;
-    delay_ms(200);
-    memset(atstr,0,BUFLEN);
-    //sprintf(atstr,"AT+QIOPEN=1,0,\"TCP\",\"%s\",%d,0,2\r\n",IPSERVER,PORTSERVER);
-		sprintf(atstr,"AT+QIOPEN=1,0,\"TCP\",\"%s\",%d,0,2\r\n",parameter_.parse.terminal_parameters.MainServerAddress,parameter_.parse.terminal_parameters.ServerPort);
-    data=ec20_send_cmd((u8*)atstr,"CONNECT","OK","NULL",2000);
-    USART2_RX_STA=0;
-    delay_ms(200);
-    USART2_RX_STA=0;
-    if (data == 1 || data == 2 || data == 3 || ret==1)
-    {
-        printf("data=%d\r\n",data);
-        return SUCCESS;
-    }
-    else
-    {
-        return ERROR;
-    }
-} 
+//    USART2_RX_STA=0;
+//    delay_ms(200);
+//    ec20_send_cmd("AT+QICLOSE=0\r\n","OK","NULL","NULL",2000);
+//    USART2_RX_STA=0;
+//    delay_ms(200);
+//    memset(atstr,0,BUFLEN);
+//    //sprintf(atstr,"AT+QIOPEN=1,0,\"TCP\",\"%s\",%d,0,2\r\n",IPSERVER,PORTSERVER);
+//		sprintf(atstr,"AT+QIOPEN=1,0,\"TCP\",\"%s\",%d,0,2\r\n",parameter_.parse.terminal_parameters.MainServerAddress,parameter_.parse.terminal_parameters.ServerPort);
+//    data=ec20_send_cmd((u8*)atstr,"CONNECT","OK","NULL",2000);
+//    USART2_RX_STA=0;
+//    delay_ms(200);
+//    USART2_RX_STA=0;
+//    if (data == 1 || data == 2 || data == 3 || ret==1)
+//    {
+//        printf("data=%d\r\n",data);
+//        return SUCCESS;
+//    }
+//    else
+//    {
+//        return ERROR;
+//    }
+//} 
 
 /// @brief ÉèÖÃÖÕ¶ËÊÖ»úºÅ
 /// @param phone

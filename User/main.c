@@ -9,12 +9,14 @@
 #include "client_manager.h"
 #include "jt808_packager.h"
 #include "ff.h"
+#include "./ec20/ec20.h"
 #include "./IWDG/iwdg.h"
 
 extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude, 
 										float  *v_speed, float *v_bearing, unsigned char *v_timestamp,
-											nmeaINFO info, uint8_t new_parse);
-
+										//	nmeaINFO info, 
+										uint8_t new_parse);
+extern uint8_t gpsData_Receive(uint8_t *new_parse);
 	
 										
 int main(void)
@@ -25,7 +27,7 @@ int main(void)
 	int 					isAuthenticated=0;
 	int 					LocationReportCounter=0;
 	int 					HeartBeatCounter=0;
-	int 					CornerPointRetransmission=0;
+//	int 					CornerPointRetransmission=0;
 	int						isNewLocationParse=0;
 	unsigned int 	v_alarm_value = 0;
 	unsigned int 	v_status_value = 0;
@@ -40,11 +42,10 @@ int main(void)
 	unsigned char v_timestamp[13] = "700101000000"; // 1970-01-01-00-00-00.
 	
 	GPIO_InitTypeDef  GPIO_InitStructure;
-  nmeaPARSER parser;      //解码时使用的数据结构  
-	nmeaINFO info;          //GPS解码后得到的信息
+
   uint8_t new_parse=0;    //是否有新的解码数据标志
 	/* 初始化GPS数据结构 */
-	nmea_parser_init(&parser);
+//	nmea_parser_init(&parser);
 	
 	NVIC_Configuration(); 	//设置NVIC中断分组2:2位抢占优先级，2位响应优先级
 	
@@ -71,18 +72,16 @@ int main(void)
 	{
 		HeartBeatCounter = 0;
 		LocationReportCounter = 0;
-		CornerPointRetransmission = 0;
+//		CornerPointRetransmission = 0;
 		time_1s = 0;
 		initSystemParameters(1); //0 烧写出厂参数 1 不烧写出厂参数
 		//设置手机号（唯一识别id）
 		setUUID();
 		
-//		setTerminalPhoneNumber("100221000206", 12);
-//		setTerminalId("1000206", 8);
 		//连接服务器
 		if(isTCPconnected == 0)
 		{
-			if(ec20_init() == SUCCESS)
+			if(ec20_init(parameter_.parse.terminal_parameters.MainServerAddress,parameter_.parse.terminal_parameters.ServerPort) == SUCCESS)
 			{	
 				printf("server connected\r\n");
 				isTCPconnected=1;
@@ -120,8 +119,6 @@ int main(void)
 			{
 //				isRegistered=0;
 //				isTCPconnected=0;
-//				parameter_.msg_head.msg_flow_num=0;
-//				parameter_.respone_flow_num=0;
 				system_reboot();
 				continue;
 			}
@@ -136,29 +133,29 @@ int main(void)
 		{
 			
 
-			if(GPS_HalfTransferEnd)     /* 接收到GPS_RBUFF_SIZE一半的数据 */
-			{
-				/* 进行nmea格式解码 */
-				nmea_parse(&parser, (const char*)&gps_rbuff[0], HALF_GPS_RBUFF_SIZE, &info);
-				
-				GPS_HalfTransferEnd = 0;   //清空标志位
-				new_parse = 1;             //设置解码消息标志
-			}
-			else if(GPS_TransferEnd)    /* 接收到另一半数据 */
-			{
-				/* 进行nmea格式解码 */
-				nmea_parse(&parser, (const char*)&gps_rbuff[HALF_GPS_RBUFF_SIZE], HALF_GPS_RBUFF_SIZE, &info);
-			 
-				GPS_TransferEnd = 0;
-				new_parse = 1;
-			}
-		
+//			if(GPS_HalfTransferEnd)     /* 接收到GPS_RBUFF_SIZE一半的数据 */
+//			{
+//				/* 进行nmea格式解码 */
+//				nmea_parse(&parser, (const char*)&gps_rbuff[0], HALF_GPS_RBUFF_SIZE, &info);
+//				
+//				GPS_HalfTransferEnd = 0;   //清空标志位
+//				new_parse = 1;             //设置解码消息标志
+//			}
+//			else if(GPS_TransferEnd)    /* 接收到另一半数据 */
+//			{
+//				/* 进行nmea格式解码 */
+//				nmea_parse(&parser, (const char*)&gps_rbuff[HALF_GPS_RBUFF_SIZE], HALF_GPS_RBUFF_SIZE, &info);
+//			 
+//				GPS_TransferEnd = 0;
+//				new_parse = 1;
+//			}
+			new_parse = gpsData_Receive(&new_parse);
 
 
 			if(new_parse == 1)
 			{
 				//位置数据更新
-				isNewLocationParse = nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp, info, new_parse);
+				isNewLocationParse = nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp, new_parse);
 				updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
 				new_parse = 0;
 			}

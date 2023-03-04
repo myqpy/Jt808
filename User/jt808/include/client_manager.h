@@ -63,12 +63,10 @@ void setUUID(void);
 int IPFlashWrite(void);
 void File_upload(void);
 void system_reboot(void);
-ErrorStatus ec20_init(void);
 void initSystemParameters(int i);
 void initLocationInfo(unsigned int v_alarm_value, unsigned int v_status_value);
 void updateLocation(double const v_latitude, double const v_longitude, float const v_altitude,
                     float const v_speed, float const v_bearing, unsigned char *v_timestamp);
 void boot_loader_flag(void);
-void IWDG_ReBoot_Flag_FlashWrite(void);
 
 #endif // JT808_CLIENT_MANAGER_H_
