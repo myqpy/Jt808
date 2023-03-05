@@ -9,7 +9,7 @@
 
 nmeaPARSER parser;      //解码时使用的数据结构  
 nmeaINFO info;          //GPS解码后得到的信息
-nmea_parser_init(&parser);
+
 char bufTime[13]={0};
 
 uint8_t gpsData_Receive(uint8_t *new_parse)
@@ -35,7 +35,6 @@ uint8_t gpsData_Receive(uint8_t *new_parse)
 
 int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude, 
 										float  *v_speed, float *v_bearing, unsigned char *v_timestamp,
-										//nmeaINFO info, 
 										uint8_t new_parse)
 {
 		double deg_lat;//转换成[degree].[degree]格式的纬度

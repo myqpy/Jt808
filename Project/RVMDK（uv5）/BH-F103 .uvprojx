@@ -570,11 +570,6 @@
               <FilePath>..\..\User\Bsp\gps\gps_config.c</FilePath>
             </File>
             <File>
-              <FileName>bsp_led.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\Bsp\led\bsp_led.c</FilePath>
-            </File>
-            <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\Bsp\usart\usart.c</FilePath>
@@ -608,6 +603,11 @@
               <FileName>timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\Bsp\timer\timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\Bsp\gpio\gpio.c</FilePath>
             </File>
           </Files>
         </Group>

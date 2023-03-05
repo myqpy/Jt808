@@ -1,6 +1,6 @@
 #include "./usart/usart.h"
 #include "./usart2/usart2.h"
-#include "./led/bsp_led.h"
+#include "./gpio/gpio.h"
 #include "./gps/gps_config.h"
 #include "./delay/delay.h"
 #include "./sys/sys.h"
@@ -14,10 +14,10 @@
 
 extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude, 
 										float  *v_speed, float *v_bearing, unsigned char *v_timestamp,
-										//	nmeaINFO info, 
-										uint8_t new_parse);
+										uint8_t new_parse);					
 extern uint8_t gpsData_Receive(uint8_t *new_parse);
-	
+extern nmeaINFO info;
+extern nmeaPARSER parser;										
 										
 int main(void)
 {
@@ -45,14 +45,15 @@ int main(void)
 
   uint8_t new_parse=0;    //是否有新的解码数据标志
 	/* 初始化GPS数据结构 */
-//	nmea_parser_init(&parser);
+	nmea_zero_INFO(&info);
+	nmea_parser_init(&parser);
 	
 	NVIC_Configuration(); 	//设置NVIC中断分组2:2位抢占优先级，2位响应优先级
 	
 	delay_init();	 					//延时函数初始化
 	
-	PC1_Config(&GPIO_InitStructure);
-	delay_ms(1000);
+	PC_Config(&GPIO_InitStructure);
+	
    	 		
 	uart_init(115200); //串口初始化
   USART2_Init(115200);
@@ -63,9 +64,7 @@ int main(void)
 	printf("SYSTEM INIT SUCCESS\r\n");
 	printf("\r\n");
 	
-	GPIO_SetBits(GPIOC, GPIO_Pin_5);	
-	delay_ms(500);
-	GPIO_ResetBits(GPIOC, GPIO_Pin_5);	
+
 
 //	IWDG_Init(6,4095); 
 	while(1)
@@ -131,24 +130,6 @@ int main(void)
 		Tim3_Int_Init(10000-1,7199);
 		while(1)
 		{
-			
-
-//			if(GPS_HalfTransferEnd)     /* 接收到GPS_RBUFF_SIZE一半的数据 */
-//			{
-//				/* 进行nmea格式解码 */
-//				nmea_parse(&parser, (const char*)&gps_rbuff[0], HALF_GPS_RBUFF_SIZE, &info);
-//				
-//				GPS_HalfTransferEnd = 0;   //清空标志位
-//				new_parse = 1;             //设置解码消息标志
-//			}
-//			else if(GPS_TransferEnd)    /* 接收到另一半数据 */
-//			{
-//				/* 进行nmea格式解码 */
-//				nmea_parse(&parser, (const char*)&gps_rbuff[HALF_GPS_RBUFF_SIZE], HALF_GPS_RBUFF_SIZE, &info);
-//			 
-//				GPS_TransferEnd = 0;
-//				new_parse = 1;
-//			}
 			new_parse = gpsData_Receive(&new_parse);
 
 
@@ -165,30 +146,11 @@ int main(void)
 			if((fabs(v_bearing - m_bearing)) >= parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle)
 			{
 				m_bearing = v_bearing;
-				
-
 				printf("fabs(v_bearing - m_bearing)) > %d trigger LocationReport SUCCESS\r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
 				jt808LocationReport();
-//				LocationReportCounter++;
-//				printf("m_bearing ===== %f  \r\n", m_bearing);				
+//				LocationReportCounter++;			
 			}
 
-			
-			
-//			if((fabs(v_bearing - m_bearing)) >= parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle)
-//			{
-//				m_bearing = v_bearing;
-//				CornerPointRetransmission++;
-////				printf("m_bearing ===== %f  \r\n", m_bearing);				
-//			}
-
-//			if(CornerPointRetransmission>=3)
-//			{
-//				printf("fabs(v_bearing - m_bearing)) > %d trigger LocationReport SUCCESS\r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
-//				jt808LocationReport();
-//				CornerPointRetransmission = 0;
-//			} 
-			
 			//当计时器达到缺省时间上报间隔时上报位置数据
 			if(time_1s >= parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval )
 			{
@@ -239,13 +201,7 @@ int main(void)
 					{
 						printf("\r\n");
 						printf("SetTerminalParameters parse SUCCESS!!!!\r\n ");
-						printf("\r\n");
-//						isRegistered=0;
-//						isTCPconnected=0;
-//						isAuthenticated=0;
-//						USART2_RX_STA=0;
-//						LocationReportCounter = 0;	
-//						boot_loader_flag();		
+						printf("\r\n");	
 						jt808TerminalLogOut();
 						
 						break;
@@ -283,12 +239,6 @@ int main(void)
 			{
 				printf("LocationReportCounter == %d \r\n",LocationReportCounter);
 				printf("HeartBeatCounter == %d \r\n",HeartBeatCounter);
-//				isRegistered=0;
-//				isTCPconnected=0;
-//				isAuthenticated=0;
-//				HeartBeatCounter = 0;
-//				LocationReportCounter = 0;
-//				time_1s = 0;
 				system_reboot();
 				break;
 			}
@@ -296,9 +246,3 @@ int main(void)
 		}
 	}
 }
-
-
-
-
-
-

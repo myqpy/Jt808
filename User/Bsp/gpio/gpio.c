@@ -1,23 +1,6 @@
-/**
-  ******************************************************************************
-  * @file    bsp_led.c
-  * @author  WJSHM
-  * @version V1.0
-  * @date    2013-xx-xx
-  * @brief   led应用函数接口
-  ******************************************************************************
-  * @attention
-  *
-  ******************************************************************************
-  */
-  
-#include "bsp_led.h"   
+#include "./gpio/gpio.h"   
+#include "./delay/delay.h"
 
- /**
-  * @brief  初始化控制LED的IO
-  * @param  无
-  * @retval 无
-  */
 void LED_GPIO_Config(GPIO_InitTypeDef *GPIO_InitStructure)
 {		
 
@@ -51,7 +34,12 @@ void PC1_Config(GPIO_InitTypeDef *GPIO_InitStructure)
 	GPIO_InitStructure->GPIO_Mode = GPIO_Mode_Out_PP; 		 
 	GPIO_InitStructure->GPIO_Speed = GPIO_Speed_50MHz;		 
 	GPIO_Init(GPIOC, GPIO_InitStructure);	
-	GPIO_SetBits(GPIOC, GPIO_Pin_1);						 
+	GPIO_SetBits(GPIOC, GPIO_Pin_1);
+	delay_ms(1000);
+	
+	GPIO_SetBits(GPIOC, GPIO_Pin_5);	
+	delay_ms(500);
+	GPIO_ResetBits(GPIOC, GPIO_Pin_5);		
 }	
 
 /*********************************************END OF FILE**********************/
