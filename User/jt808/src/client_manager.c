@@ -65,11 +65,11 @@ int FlashWrite()
 	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
 	
 // 研究院平台
-//	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
+	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
 //	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"http://jt808.gps.ciicp.com", sizeof("http://jt808.gps.ciicp.com"));
 	
 //	天瑞平台
-	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
+//	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
 
 	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
@@ -112,8 +112,8 @@ int FlashWrite()
 int IPFlashWrite()
 {
 	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
-	//memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
-	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
+	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
+//	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
 	
 	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
@@ -136,11 +136,8 @@ void IWDG_ReBoot_Flag_FlashWrite(void)
 
 void setUUID(void)
 {
-		Internal_ReadFlash(FLASH_ADDR, (uint8_t *) &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
-	
-//	printf("PhoneNumber == \"%s\" \r\n",parameter_.register_id.PhoneNumber);
-//	printf("TerminalId == \"%s\" \r\n",parameter_.register_id.TerminalId);
-	
+	Internal_ReadFlash(FLASH_ADDR, (uint8_t *) &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
+		
 	setTerminalPhoneNumber(parameter_.parse.terminal_parameters.PhoneNumber, 12);
 	setTerminalId(parameter_.parse.terminal_parameters.TerminalId, 8);
 	
@@ -255,7 +252,6 @@ int packagingMessage(unsigned int msg_id)
 			printf("[jt808FramePackage]: FAILED !!!\r\n");
 			return -1;
     }
-//		IWDG_Feed();
     ++parameter_.msg_head.msg_flow_num; // 每正确生成一条命令, 消息流水号增加1.
     return 0;
 }

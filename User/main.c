@@ -4,6 +4,7 @@
 #include "./gps/gps_config.h"
 #include "./delay/delay.h"
 #include "./sys/sys.h"
+#include "nema_decode_test.h"
 #include "math.h"
 #include "client_manager.h"
 #include "jt808_packager.h"
@@ -13,12 +14,8 @@
 #include "./timer/timer.h"
 
 
-extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude, 
-										float  *v_speed, float *v_bearing, unsigned char *v_timestamp,
-										uint8_t new_parse);
-extern uint8_t gpsData_Receive(uint8_t *new_parse);										
+extern nmeaPARSER parser;      
 extern nmeaINFO info;
-extern nmeaPARSER parser;		
 										
 int time_1s = 0;		
 										
@@ -77,7 +74,7 @@ int main(void)
 		LocationReportCounter = 0;
 //		CornerPointRetransmission = 0;
 		time_1s = 0;
-		initSystemParameters(1); //0 烧写出厂参数 1 不烧写出厂参数
+		initSystemParameters(0); //0 烧写出厂参数 1 不烧写出厂参数
 		//设置手机号（唯一识别id）
 		setUUID();
 		
@@ -130,14 +127,13 @@ int main(void)
 		//设置位置上报警报位、状态位
 		initLocationInfo(v_alarm_value, v_status_value);
 		setStatusBit();
-		IWDG_Feed();
+		
 		Tim3_Int_Init(10000-1,7199);
 		while(1)
 		{
+			IWDG_Feed();
 			new_parse = gpsData_Receive(&new_parse);
 		
-
-
 			if(new_parse == 1)
 			{
 				//位置数据更新
@@ -225,13 +221,7 @@ int main(void)
 					{
 						printf("\r\n");
 						printf("SetTerminalParameters parse SUCCESS!!!!\r\n ");
-						printf("\r\n");
-//						isRegistered=0;
-//						isTCPconnected=0;
-//						isAuthenticated=0;
-//						USART2_RX_STA=0;
-//						LocationReportCounter = 0;	
-//						boot_loader_flag();		
+						printf("\r\n");		
 						jt808TerminalLogOut();
 						
 						break;
@@ -269,12 +259,6 @@ int main(void)
 			{
 				printf("LocationReportCounter == %d \r\n",LocationReportCounter);
 				printf("HeartBeatCounter == %d \r\n",HeartBeatCounter);
-//				isRegistered=0;
-//				isTCPconnected=0;
-//				isAuthenticated=0;
-//				HeartBeatCounter = 0;
-//				LocationReportCounter = 0;
-//				time_1s = 0;
 				system_reboot();
 				break;
 			}
@@ -283,7 +267,6 @@ int main(void)
 	}
 }
 
-//void TIM3_IRQHandler(int time_1s)
 void TIM3_IRQHandler(void)
 {
 	if(TIM_GetITStatus(TIM3,TIM_IT_Update) == 1)

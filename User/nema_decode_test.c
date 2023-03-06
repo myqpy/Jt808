@@ -1,24 +1,11 @@
-/**
-  ******************************************************************************
-  * @file    nmea_decode_test.c
-  * @author  WJSHM
-  * @version V1.0
-  * @date    2016-07-xx
-  * @brief   ≤‚ ‘NEMAΩ‚¬Îø‚
-  ******************************************************************************
-  * @attention
-  *
-  *
-  ******************************************************************************
-  */ 
-  
-#include "stm32f10x.h"
+//#include "stm32f10x.h"
 #include "./usart/usart.h"
+#include "nema_decode_test.h"
 #include "./gps/gps_config.h"
 #include "ff.h"
-#include "nmea/nmea.h"
-#include <stdio.h>
-#include <stdlib.h>
+//#include "nmea/nmea.h"
+//#include <stdio.h>
+//#include <stdlib.h>
 #include <string.h>
 
 
