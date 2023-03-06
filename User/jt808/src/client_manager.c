@@ -167,8 +167,8 @@ void setTerminalId(const char *TerminalId,unsigned int lenTerminalId)
 {
 	//ÖÕ¶ËID
 //	unsigned int lenTerminalId;
-	lenTerminalId = sizeof(TerminalId);
-	lenTerminalId	=(lenTerminalId>20)?20:lenTerminalId;
+//	lenTerminalId = sizeof(TerminalId);
+//	lenTerminalId	=(lenTerminalId>20)?20:lenTerminalId;
 
 	memset(parameter_.register_info.terminal_id, 0, lenTerminalId);
 	memcpy(parameter_.register_info.terminal_id, TerminalId, lenTerminalId);
