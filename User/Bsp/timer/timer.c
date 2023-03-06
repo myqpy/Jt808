@@ -25,14 +25,5 @@ void Tim3_Int_Init(u16 arr,u16 psc)
 	TIM_Cmd(TIM3,ENABLE);
 }
 
-void TIM3_IRQHandler(int time_1s)
-{
-	if(TIM_GetITStatus(TIM3,TIM_IT_Update) == 1)
-	{
-		time_1s += 1;
-		TIM_ClearITPendingBit(TIM3,TIM_IT_Update);
-	}
-	
-}
- 
+
 

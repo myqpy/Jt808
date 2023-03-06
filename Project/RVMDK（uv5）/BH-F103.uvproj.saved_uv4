@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_projx.xsd">
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_proj.xsd">
 
-  <SchemaVersion>2.1</SchemaVersion>
+  <SchemaVersion>1.1</SchemaVersion>
 
   <Header>### uVision Project, (C) Keil Software</Header>
 
@@ -10,14 +10,12 @@
       <TargetName>GPS</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pArmCC>5060300::V5.06 update 3 (build 300)::ARMCC</pArmCC>
       <pCCUsed>5060300::V5.06 update 3 (build 300)::ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32F103RC</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F1xx_DFP.2.2.0</PackID>
-          <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x08000000,0x40000) IRAM(0x20000000,0xC000) CPUTYPE("Cortex-M3") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -126,6 +124,47 @@
             <HexOffset>0</HexOffset>
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
+          <Simulator>
+            <UseSimulator>0</UseSimulator>
+            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
+            <RunToMain>1</RunToMain>
+            <RestoreBreakpoints>1</RestoreBreakpoints>
+            <RestoreWatchpoints>1</RestoreWatchpoints>
+            <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
+            <RestoreFunctions>1</RestoreFunctions>
+            <RestoreToolbox>1</RestoreToolbox>
+            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
+            <RestoreSysVw>1</RestoreSysVw>
+          </Simulator>
+          <Target>
+            <UseTarget>1</UseTarget>
+            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
+            <RunToMain>1</RunToMain>
+            <RestoreBreakpoints>1</RestoreBreakpoints>
+            <RestoreWatchpoints>1</RestoreWatchpoints>
+            <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
+            <RestoreFunctions>0</RestoreFunctions>
+            <RestoreToolbox>1</RestoreToolbox>
+            <RestoreTracepoints>0</RestoreTracepoints>
+            <RestoreSysVw>1</RestoreSysVw>
+          </Target>
+          <RunDebugAfterBuild>0</RunDebugAfterBuild>
+          <TargetSelection>3</TargetSelection>
+          <SimDlls>
+            <CpuDll></CpuDll>
+            <CpuDllArguments></CpuDllArguments>
+            <PeripheralDll></PeripheralDll>
+            <PeripheralDllArguments></PeripheralDllArguments>
+            <InitializationFile></InitializationFile>
+          </SimDlls>
+          <TargetDlls>
+            <CpuDll></CpuDll>
+            <CpuDllArguments></CpuDllArguments>
+            <PeripheralDll></PeripheralDll>
+            <PeripheralDllArguments></PeripheralDllArguments>
+            <InitializationFile></InitializationFile>
+            <Driver>BIN\CMSIS_AGDI.dll</Driver>
+          </TargetDlls>
         </DebugOption>
         <Utilities>
           <Flash1>
@@ -136,7 +175,7 @@
             <Capability>1</Capability>
             <DriverSelection>4099</DriverSelection>
           </Flash1>
-          <bUseTDR>1</bUseTDR>
+          <bUseTDR>0</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3></Flash3>
           <Flash4></Flash4>
@@ -184,6 +223,8 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -273,8 +314,8 @@
               </OCR_RVCT3>
               <OCR_RVCT4>
                 <Type>1</Type>
-                <StartAddress>0x8004000</StartAddress>
-                <Size>0x10000</Size>
+                <StartAddress>0x8000000</StartAddress>
+                <Size>0x40000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -324,6 +365,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>1</v6Lang>
             <v6LangP>1</v6LangP>
@@ -336,7 +378,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD, USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\User\FATFS;..\..\User\FATFS\option;..\..\User\Bsp;..\..\User\nmea_decode\include;..\..\system;..\..\User\jt808\include</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\User\FATFS;..\..\User\FATFS\option;..\..\User\Bsp;..\..\User\nmea_decode\include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -349,7 +391,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>4</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -566,39 +608,49 @@
               <FilePath>..\..\User\Bsp\gps\gps_config.c</FilePath>
             </File>
             <File>
+              <FileName>bsp_key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\Bsp\key\bsp_key.c</FilePath>
+            </File>
+            <File>
               <FileName>bsp_led.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\Bsp\led\bsp_led.c</FilePath>
             </File>
             <File>
-              <FileName>usart.c</FileName>
+              <FileName>bsp_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\User\Bsp\usart\usart.c</FilePath>
+              <FilePath>..\..\User\Bsp\usart\bsp_usart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>FatFs</GroupName>
+          <Files>
+            <File>
+              <FileName>diskio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\FATFS\diskio.c</FilePath>
             </File>
             <File>
-              <FileName>key.c</FileName>
+              <FileName>ff.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\User\Bsp\key\key.c</FilePath>
+              <FilePath>..\..\User\FATFS\ff.c</FilePath>
             </File>
             <File>
-              <FileName>usart2.c</FileName>
+              <FileName>fatfs_flash_spi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\User\Bsp\usart2\usart2.c</FilePath>
+              <FilePath>..\..\User\FATFS\drivers\fatfs_flash_spi.c</FilePath>
             </File>
             <File>
-              <FileName>ec20.c</FileName>
+              <FileName>fatfs_sd_sdio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\User\Bsp\ec20\ec20.c</FilePath>
+              <FilePath>..\..\User\FATFS\drivers\fatfs_sd_sdio.c</FilePath>
             </File>
             <File>
-              <FileName>bsp_internal_flash.c</FileName>
+              <FileName>ccsbcs.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\User\Bsp\internal_flash\bsp_internal_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>iwdg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\Bsp\IWDG\iwdg.c</FilePath>
+              <FilePath>..\..\User\FATFS\option\ccsbcs.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -658,92 +710,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>system</GroupName>
+          <GroupName>DOC</GroupName>
           <Files>
             <File>
-              <FileName>sys.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\system\sys\sys.c</FilePath>
-            </File>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\system\delay\delay.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>jt808</GroupName>
-          <Files>
-            <File>
-              <FileName>bcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\jt808\src\bcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>client_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\jt808\src\client_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>jt808_packager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\jt808\src\jt808_packager.c</FilePath>
-            </File>
-            <File>
-              <FileName>jt808_parser.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\jt808\src\jt808_parser.c</FilePath>
-            </File>
-            <File>
-              <FileName>location_report.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\jt808\src\location_report.c</FilePath>
-            </File>
-            <File>
-              <FileName>terminal_register.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\jt808\src\terminal_register.c</FilePath>
-            </File>
-            <File>
-              <FileName>util.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\jt808\src\util.c</FilePath>
-            </File>
-            <File>
-              <FileName>set_terminal_parameter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\jt808\src\set_terminal_parameter.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>FatFs</GroupName>
-          <Files>
-            <File>
-              <FileName>diskio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\FATFS\diskio.c</FilePath>
-            </File>
-            <File>
-              <FileName>ff.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\FATFS\ff.c</FilePath>
-            </File>
-            <File>
-              <FileName>fatfs_flash_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\FATFS\drivers\fatfs_flash_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>fatfs_sd_sdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\FATFS\drivers\fatfs_sd_sdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>cc936.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\FATFS\option\cc936.c</FilePath>
+              <FileName>必读说明.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\必读说明.txt</FilePath>
             </File>
           </Files>
         </Group>

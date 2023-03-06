@@ -1,14 +1,15 @@
 #include "./ec20/ec20.h"
 #include "./usart/usart.h"		
 #include "./delay/delay.h"	
-#include "./gpio/gpio.h"   	 
-#include "./key/key.h"	
-#include "./IWDG/iwdg.h"
+#include "./gpio/gpio.h"  	 
+#include "./key/key.h"	 	 	 	 	 
+#include "string.h"    
 #include "./usart2/usart2.h" 
 #include "protocol_parameter.h"
-
+#include "./IWDG/iwdg.h"
 u8 Scan_Wtime = 0;//保存扫描需要的时间
 u8 BT_Scan_mode=0;//蓝牙扫描设备模式标志
+//struct ProtocolParameter protocolParas;
 
 //usmart支持部分 
 //将收到的AT指令应答数据返回给电脑串口
@@ -309,14 +310,14 @@ ErrorStatus ec20_init(unsigned char *IPSERVER, int PORTSERVER)
     u8 err=0;
     char atstr[BUFLEN];
     USART2_RX_STA=0;
-    if(ec20_send_cmd("AT","OK","NULL","NULL",1000))err|=1<<0;//检测是否应答AT指令
+    if(ec20_send_cmd("AT","OK","NULL","NULL",1000))err|=1<<0;//?????????AT???
     USART2_RX_STA=0;
-    if(ec20_send_cmd("ATE0","OK","NULL","NULL",2000))err|=1<<1;//不回显
+    if(ec20_send_cmd("ATE0","OK","NULL","NULL",2000))err|=1<<1;//??????
     USART2_RX_STA=0;
-    if(ec20_send_cmd("AT+CPIN?","OK","NULL","NULL",2000))err|=1<<3;	//查询SIM卡是否在位
+    if(ec20_send_cmd("AT+CPIN?","OK","NULL","NULL",2000))err|=1<<3;	//???SIM????????
     USART2_RX_STA=0;
     data = 0;
-    //查询GSM网络注册状态，确认找网成功
+    //???GSM?????????????????????
     while (ec20_send_cmd("AT+CREG?\r\n","\r\n+CREG: 0,1","NULL","NULL",2000)!= 1 && data < 10)
     {
         USART2_RX_STA=0;
@@ -326,7 +327,7 @@ ErrorStatus ec20_init(unsigned char *IPSERVER, int PORTSERVER)
     USART2_RX_STA=0;
     if (data == 10)
     {
-        return ERROR;                                                                             //找网不成功模块重启
+        return ERROR;                                                                             //?????????g??????
     }
     ec20_send_cmd("AT+CGATT?\r\n","+CGATT: 1","OK","NULL",2000);
     USART2_RX_STA=0;

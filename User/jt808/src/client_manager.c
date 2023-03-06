@@ -65,11 +65,11 @@ int FlashWrite()
 	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
 	
 // 研究院平台
-	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
+//	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
 //	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"http://jt808.gps.ciicp.com", sizeof("http://jt808.gps.ciicp.com"));
 	
 //	天瑞平台
-//	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
+	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
 
 	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
@@ -112,8 +112,8 @@ int FlashWrite()
 int IPFlashWrite()
 {
 	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
-	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
-//	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
+	//memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
+	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
 	
 	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
@@ -125,10 +125,21 @@ int IPFlashWrite()
 	return 0;
 }
 
+void IWDG_ReBoot_Flag_FlashWrite(void)
+{
+	parameter_.parse.terminal_parameters.bootLoaderFlag = 0XCCCCCCCC;
+	
+	FLASH_WriteByte(FLASH_ADDR , (uint8_t *) &parameter_.parse.terminal_parameters , sizeof(parameter_.parse.terminal_parameters));	
+	printf("boot_loader_flag write SUCCESS!!!!!!\r\n");
+}
+
 
 void setUUID(void)
 {
-	Internal_ReadFlash(FLASH_ADDR, (uint8_t *) &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
+		Internal_ReadFlash(FLASH_ADDR, (uint8_t *) &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
+	
+//	printf("PhoneNumber == \"%s\" \r\n",parameter_.register_id.PhoneNumber);
+//	printf("TerminalId == \"%s\" \r\n",parameter_.register_id.TerminalId);
 	
 	setTerminalPhoneNumber(parameter_.parse.terminal_parameters.PhoneNumber, 12);
 	setTerminalId(parameter_.parse.terminal_parameters.TerminalId, 8);
@@ -143,59 +154,6 @@ void boot_loader_flag()
 	printf("boot_loader_flag write SUCCESS!!!!!!\r\n");
 }	
 
-
-//ErrorStatus ec20_init(void)
-//{
-//    u8 data=0,ret=0;
-//    u8 err=0;
-//    char atstr[BUFLEN];
-//    USART2_RX_STA=0;
-//    if(ec20_send_cmd("AT","OK","NULL","NULL",1000))err|=1<<0;//?ì????·?????AT????
-//    USART2_RX_STA=0;
-//    if(ec20_send_cmd("ATE0","OK","NULL","NULL",2000))err|=1<<1;//??????
-//    USART2_RX_STA=0;
-//    if(ec20_send_cmd("AT+CPIN?","OK","NULL","NULL",2000))err|=1<<3;	//?é??SIM?¨??·?????
-//    USART2_RX_STA=0;
-//    data = 0;
-//    //?é??GSM????×??á×??????·??????????
-//    while (ec20_send_cmd("AT+CREG?\r\n","\r\n+CREG: 0,1","NULL","NULL",2000)!= 1 && data < 10)
-//    {
-//        USART2_RX_STA=0;
-//        delay_ms(100);
-//        data++;
-//    }
-//    USART2_RX_STA=0;
-//    if (data == 10)
-//    {
-//        return ERROR;                                                                             //?????????????é????
-//    }
-//    ec20_send_cmd("AT+CGATT?\r\n","+CGATT: 1","OK","NULL",2000);
-//    USART2_RX_STA=0;
-//    delay_ms(200);
-//    ec20_send_cmd("AT+QIACT?\r\n","OK","NULL","NULL",2000);
-
-//    USART2_RX_STA=0;
-//    delay_ms(200);
-//    ec20_send_cmd("AT+QICLOSE=0\r\n","OK","NULL","NULL",2000);
-//    USART2_RX_STA=0;
-//    delay_ms(200);
-//    memset(atstr,0,BUFLEN);
-//    //sprintf(atstr,"AT+QIOPEN=1,0,\"TCP\",\"%s\",%d,0,2\r\n",IPSERVER,PORTSERVER);
-//		sprintf(atstr,"AT+QIOPEN=1,0,\"TCP\",\"%s\",%d,0,2\r\n",parameter_.parse.terminal_parameters.MainServerAddress,parameter_.parse.terminal_parameters.ServerPort);
-//    data=ec20_send_cmd((u8*)atstr,"CONNECT","OK","NULL",2000);
-//    USART2_RX_STA=0;
-//    delay_ms(200);
-//    USART2_RX_STA=0;
-//    if (data == 1 || data == 2 || data == 3 || ret==1)
-//    {
-//        printf("data=%d\r\n",data);
-//        return SUCCESS;
-//    }
-//    else
-//    {
-//        return ERROR;
-//    }
-//} 
 
 /// @brief 设置终端手机号
 /// @param phone
