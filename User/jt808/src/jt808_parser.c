@@ -269,8 +269,10 @@ int handle_kTerminalControl(struct ProtocolParameter *para)
 // 下发终端升级包.
 int handle_kTerminalUpgrade(struct ProtocolParameter *para)
 {
+	union U32ToU8Array u32converter;
+	unsigned char *p=NULL;
 	uint16_t pos;
-	uint16_t beg = pos;
+//	uint16_t beg = pos;
 	int i;
 	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalUpgrade);
 	jt808TerminalGeneralResponse();
@@ -285,26 +287,44 @@ int handle_kTerminalUpgrade(struct ProtocolParameter *para)
 		pos = MSGBODY_PACKET_POS;
 	}
 	
-	para->upgrade_info.upgrade_type = BufferReceive[pos++];
+	para->upgrade_info.upgrade_type = BufferReceive[pos];
+	pos++;
 
 	memset(para->upgrade_info.manufacturer_id, 0, sizeof(para->upgrade_info.manufacturer_id));
 	for(i=0;i<5;i++)
 	{
-		
+		para->upgrade_info.manufacturer_id[i] = BufferReceive[pos];
+		pos++;
 	}
 	
+	para->upgrade_info.version_id_len = BufferReceive[pos];
+	pos++;
+	
+	p = (unsigned char *)malloc(sizeof(unsigned char)*(para->upgrade_info.version_id_len)+1);
+	memcpy(para->upgrade_info.version_id, p, para->upgrade_info.version_id_len);
+	pos+=para->upgrade_info.version_id_len;
+	free(p);
+	
+	for(i=0;i<3;i++)
+	{
+		u32converter.u8array[i] = BufferReceive[pos];
+		pos++;
+	}
+	para->upgrade_info.upgrade_data_total_len = EndianSwap32(u32converter.u32val);
 
 
+	p = (unsigned char *)malloc(sizeof(unsigned char)*(para->upgrade_info.version_id_len)+1);
+	memcpy(para->upgrade_info.upgrade_data, p, para->upgrade_info.version_id_len);
+	free(p);
 
-
-
-
-
-
+	for(i=0;i<para->upgrade_info.version_id_len;i++)
+	{
+		printf(("%02x "),para->upgrade_info.upgrade_data[i]);
+	}
 
 
 	jt808TerminalUpgradeResultReport();
-	boot_loader_flag();					
+	//boot_loader_flag();					
 	return 0;
 }
 
@@ -403,9 +423,9 @@ int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct Protoco
 		unsigned int outBufferSize;
 		unsigned char *outBuffer;
 	
-		#ifdef __JT808_DEBUG
-			printf("%s[%d]: jt808FrameParse -->1 !!! \r\n", __FUNCTION__, __LINE__);
-		#endif
+	#ifdef __JT808_DEBUG
+		printf("%s[%d]: jt808FrameParse -->1 !!! \r\n", __FUNCTION__, __LINE__);
+	#endif
     if (para == NULL)
 		{
 			printf("para == NULL \r\n");
@@ -417,9 +437,9 @@ int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct Protoco
     outBuffer = (unsigned char *)malloc(outBufferSize * sizeof(unsigned char));
     memset(outBuffer, 0, outBufferSize);
 
-		#ifdef __JT808_DEBUG
-			printf("%s[%d]: outBufferSize = %d \r\n", __FUNCTION__, __LINE__, outBufferSize);
-		#endif
+	#ifdef __JT808_DEBUG
+		printf("%s[%d]: outBufferSize = %d \r\n", __FUNCTION__, __LINE__, outBufferSize);
+	#endif
 		
     // 逆转义.
     if (ReverseEscape_C(BufferReceive, RealBufferReceiveSize, outBuffer, &outBufferSize) < 0)
@@ -430,10 +450,10 @@ int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct Protoco
         
     RealBufferReceiveSize = outBufferSize;
 		
-		#ifdef __JT808_DEBUG
-			printf("%s[%d]: ReverseEscape_C.  outBufferSize = %d  !!!\r\n", __FUNCTION__, __LINE__, outBufferSize);
-		#endif 
-		
+	#ifdef __JT808_DEBUG
+		printf("%s[%d]: ReverseEscape_C.  outBufferSize = %d  !!!\r\n", __FUNCTION__, __LINE__, outBufferSize);
+	#endif 
+	
     // 异或校验检查.
     if (BccCheckSum(&(outBuffer[1]), (outBufferSize - 3)) != *(outBuffer + outBufferSize - 2))
 		{
@@ -441,18 +461,18 @@ int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct Protoco
 			return -1;
 		}
 		
-		#ifdef __JT808_DEBUG
-			printf("%s[%d]: BccCheckSum. -->3 !!!\r\n", __FUNCTION__, __LINE__);
-		#endif
+	#ifdef __JT808_DEBUG
+		printf("%s[%d]: BccCheckSum. -->3 !!!\r\n", __FUNCTION__, __LINE__);
+	#endif
     // 解析消息头.
     if (jt808FrameHeadParse(outBuffer, outBufferSize, &(para->parse.msg_head)) != 0)
     {
 			printf("jt808FrameHeadParse ERROR\r\n");
 			return -1;
 		}
-		#ifdef __JT808_DEBUG
-			printf("%s[%d]:  jt808FrameHeadParse. -->4 !!!\r\n", __FUNCTION__, __LINE__);
-		#endif 
+	#ifdef __JT808_DEBUG
+		printf("%s[%d]:  jt808FrameHeadParse. -->4 !!!\r\n", __FUNCTION__, __LINE__);
+	#endif 
     memcpy(para->msg_head.phone_num, para->parse.msg_head.phone_num, 11);
 
     // 解析消息内容.

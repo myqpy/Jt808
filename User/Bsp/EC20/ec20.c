@@ -1,15 +1,14 @@
 #include "./ec20/ec20.h"
 #include "./usart/usart.h"		
-#include "./delay/delay.h"	
-#include "./gpio/gpio.h"  	 
+#include "./delay/delay.h"	 
 #include "./key/key.h"	 	 	 	 	 
 #include "string.h"    
 #include "./usart2/usart2.h" 
-#include "protocol_parameter.h"
 #include "./IWDG/iwdg.h"
+#include "./timer/timer.h"
+
 u8 Scan_Wtime = 0;//保存扫描需要的时间
 u8 BT_Scan_mode=0;//蓝牙扫描设备模式标志
-//struct ProtocolParameter protocolParas;
 
 //usmart支持部分 
 //将收到的AT指令应答数据返回给电脑串口

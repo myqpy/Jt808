@@ -1,7 +1,6 @@
 #include "set_terminal_parameter.h"
 #include "terminal_parameter.h"
 #include "client_manager.h"
-#include "ff.h"
 
 unsigned short kParameterSettingCMD[PARA_SETTING_LIMIT] = {
 	kTerminalHeartBeatInterval, // DWORD, 终端心跳发送间隔(s).

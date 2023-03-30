@@ -9,7 +9,6 @@
 #include <stdint.h>
 #include "./sys/sys.h"
 #include <stdlib.h>
-#include "ff.h"
 
 
 

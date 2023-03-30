@@ -210,18 +210,20 @@ enum kTerminalUpgradeResultType
 // 升级信息.
 struct UpgradeInfo
 {
-  // 升级类型.
-  unsigned char upgrade_type;
-  // 升级结果.
-  unsigned char upgrade_result;
-  // 制造商ID, 固定5个字节.
-  unsigned char manufacturer_id[5];
-  // 升级版本号.
-  const char *version_id;
-  // 升级包总长度.
-  unsigned int upgrade_data_total_len;
-  // 升级数据包.
-  char *upgrade_data;
+	// 升级类型.
+	unsigned char upgrade_type;
+	// 升级结果.
+	unsigned char upgrade_result;
+	// 制造商ID, 固定5个字节.
+	unsigned char manufacturer_id[5];
+	//版本号长度
+	unsigned int version_id_len;
+	// 升级版本号.
+	unsigned char *version_id;
+	// 升级包总长度.
+	unsigned int upgrade_data_total_len;
+	// 升级数据包.
+	unsigned char *upgrade_data;
 };
 
 // 补传分包信息.
@@ -306,5 +308,6 @@ struct ProtocolParameter
   } parse;
 };
 
+//struct ProtocolParameter parameter_;
 
 #endif // JT808_PROTOCOL_PARAMETER_H_

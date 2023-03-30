@@ -1,11 +1,5 @@
-//#include "stm32f10x.h"
 #include "./usart/usart.h"
-#include "nema_decode_test.h"
 #include "./gps/gps_config.h"
-#include "ff.h"
-//#include "nmea/nmea.h"
-//#include <stdio.h>
-//#include <stdlib.h>
 #include <string.h>
 
 

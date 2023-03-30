@@ -2,8 +2,11 @@
 #include "./internal_flash/bsp_internal_flash.h"
 #include "ff.h"
 #include "util.h"
+#include "bcd.h"
 #include "terminal_parameter.h"
 #include "client_manager.h"
+#include "protocol_parameter.h"
+#include "terminal_register.h"
 
 // 所有终端数据打包命令.
 unsigned short kTerminalPackagerCMD[PACKAGER_NUM] = {

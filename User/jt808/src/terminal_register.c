@@ -1,6 +1,7 @@
 #include "terminal_register.h"  
 #include "ff.h"
 #include "string.h"
+//#include "protocol_parameter.h"
 
 struct RegisterInfo registerInfo_;
 

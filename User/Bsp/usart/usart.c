@@ -141,3 +141,35 @@ void USART1_IRQHandler(void)                	//串口1中断服务程序
 } 
 #endif	
 
+
+
+/*****************  发送一个字符 **********************/
+static void Usart_SendByte( USART_TypeDef * pUSARTx, uint8_t ch )
+{
+    /* 发送一个字节数据到USART1 */
+    USART_SendData(pUSARTx,ch);
+
+    /* 等待发送完毕 */
+    while (USART_GetFlagStatus(pUSARTx, USART_FLAG_TXE) == RESET);
+}
+/*****************  指定长度的发送字符串 **********************/
+void Usart_SendStr_length( USART_TypeDef * pUSARTx, uint8_t *str,uint32_t strlen )
+{
+    unsigned int k=0;
+    do 
+    {
+        Usart_SendByte( pUSARTx, *(str + k) );
+        k++;
+    } while(k < strlen);
+}
+
+/*****************  发送字符串 **********************/
+void Usart_SendString( USART_TypeDef * pUSARTx, char *str)
+{
+    unsigned int k=0;
+    do 
+    {
+        Usart_SendByte( pUSARTx, *(str + k) );
+        k++;
+    } while(*(str + k)!='\0');
+}

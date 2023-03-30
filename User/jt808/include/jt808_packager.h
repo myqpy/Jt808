@@ -11,6 +11,8 @@
 #include "bcd.h"
 #include "ff.h"
 
+
+
 extern unsigned short kTerminalPackagerCMD[PACKAGER_NUM];
 extern unsigned char BufferSend[BUFFER_SIZE_SEND]; //发送缓存
 extern unsigned int RealBufferSendSize;

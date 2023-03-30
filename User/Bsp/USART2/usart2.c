@@ -3,7 +3,8 @@
 #include "stdarg.h"	 	 
 #include "stdio.h"	 	 
 #include "string.h"
-#include "./ec20/ec20.h"
+//#include "./ec20/ec20.h"
+#include "./timer/timer.h"
 
 
 //串口发送缓存区 	
@@ -96,7 +97,7 @@ void USART2_Init(u32 bound)
 }
 //串口2,printf 函数
 //确保一次发送数据不超过USART2_MAX_SEND_LEN字节
-	void u2_printf(char* fmt,...)  
+void u2_printf(char* fmt,...)  
 {  
     va_list ap;
     va_start(ap,fmt);
@@ -136,52 +137,6 @@ void TIM4_IRQHandler(void)
         }
     }
 }
-//设置TIM4的开关
-//sta:0，关闭;1,开启;
-void TIM4_Set(u8 sta)
-{
-    if(sta)
-    {
-
-        TIM_SetCounter(TIM4,0);  //计数器清空
-        TIM_Cmd(TIM4, ENABLE);   //使能TIMx
-    }else TIM_Cmd(TIM4, DISABLE);//关闭定时器4
-}
-//配置TIM4预装载周期值
-void TIM4_SetARR(u16 period)
-{
-    TIM_SetCounter(TIM4,0); //计数器清空
-    TIM4->ARR&=0x00;        //先清预装载周期值为0
-    TIM4->ARR|= period;     //更新预装载周期值
-}
-//通用定时器中断初始化
-//这里始终选择为APB1的2倍，而APB1为36M
-//arr：自动重装值。
-//psc：时钟预分频数		 
-void TIM4_Init(u16 arr,u16 psc)
-{	
-		NVIC_InitTypeDef NVIC_InitStructure;
-    TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
-
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE); //时钟使能//TIM4时钟使能
-
-    //定时器TIM4初始化
-    TIM_TimeBaseStructure.TIM_Period = arr; //设置在下一个更新事件装入活动的自动重装载寄存器周期的值
-    TIM_TimeBaseStructure.TIM_Prescaler =psc; //设置用来作为TIMx时钟频率除数的预分频值
-    TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; //设置时钟分割:TDTS = Tck_tim
-    TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  //TIM向上计数模式
-    TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure); //根据指定的参数初始化TIMx的时间基数单位
-
-    TIM_ITConfig(TIM4,TIM_IT_Update,ENABLE ); //使能指定的TIM4中断,允许更新中断
-
-
-    NVIC_InitStructure.NVIC_IRQChannel = TIM4_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=1 ;//抢占优先级3
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;		//子优先级3
-    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			//IRQ通道使能
-    NVIC_Init(&NVIC_InitStructure);	//根据指定的参数初始化VIC寄存器
-
-}
 #endif		 
 ///////////////////////////////////////USART2 DMA发送配置部分//////////////////////////////////	   		    
 //DMA1的各通道配置
@@ -219,36 +174,7 @@ void UART_DMA_Enable(DMA_Channel_TypeDef*DMA_CHx,u16 len)
 
 
 
-/*****************  发送一个字符 **********************/
-static void Usart_SendByte( USART_TypeDef * pUSARTx, uint8_t ch )
-{
-    /* 发送一个字节数据到USART1 */
-    USART_SendData(pUSARTx,ch);
 
-    /* 等待发送完毕 */
-    while (USART_GetFlagStatus(pUSARTx, USART_FLAG_TXE) == RESET);
-}
-/*****************  指定长度的发送字符串 **********************/
-void Usart_SendStr_length( USART_TypeDef * pUSARTx, uint8_t *str,uint32_t strlen )
-{
-    unsigned int k=0;
-    do 
-    {
-        Usart_SendByte( pUSARTx, *(str + k) );
-        k++;
-    } while(k < strlen);
-}
-
-/*****************  发送字符串 **********************/
-void Usart_SendString( USART_TypeDef * pUSARTx, char *str)
-{
-    unsigned int k=0;
-    do 
-    {
-        Usart_SendByte( pUSARTx, *(str + k) );
-        k++;
-    } while(*(str + k)!='\0');
-}
 
 
 void ClearRAM(u8* ram,u32 n)

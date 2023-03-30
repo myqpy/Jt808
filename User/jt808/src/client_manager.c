@@ -1,20 +1,24 @@
-#include "./ec20/ec20.h"
+/*********BSP headers***********/
+#include "./usart/usart.h"
+#include "./usart2/usart2.h"
+#include "./internal_flash/bsp_internal_flash.h" 
+#include "./IWDG/iwdg.h"
+
+/*********common headers***********/
+#include "util.h"
+#include "bcd.h"
+#include "./delay/delay.h"
+
+/*********JT808 headers***********/
+
 #include "client_manager.h"
 #include "protocol_parameter.h"
 #include "set_terminal_parameter.h"
 #include "jt808_parser.h"
-#include "util.h"
-#include "./delay/delay.h"
-#include "bcd.h"
-#include "./IWDG/iwdg.h"
 #include "jt808_packager.h"
-#include "jt808_parser.h"
-#include "./usart/usart.h"
-#include "./usart2/usart2.h"
-#include "./internal_flash/bsp_internal_flash.h" 
-#include "ff.h"
 
 struct ProtocolParameter parameter_;
+
 
 void system_reboot(void)
 {
@@ -100,6 +104,7 @@ int FlashWrite()
 	
 	memcpy(parameter_.parse.terminal_parameters.PhoneNumber, "100221000211" , 12);
 	memcpy(parameter_.parse.terminal_parameters.TerminalId, "1000211" , 8);
+//	ff_convert(parameter_.parse.terminal_parameters.CarPlateNum,0);
 	memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "测试211", 9);
 	
 	FLASH_WriteByte(FLASH_ADDR , (uint8_t*)&parameter_.parse.terminal_parameters , sizeof(parameter_.parse.terminal_parameters));	
@@ -408,90 +413,90 @@ void File_upload()
 
 int parsingMessage(const unsigned char *in, unsigned int in_len)
 {
-		unsigned short msg_id;
+	unsigned short msg_id;
     if (jt808FrameParse(in, in_len, &parameter_) < 0)
     {
 			printf("jt808FrameParse ERROR\r\n");
 			return -1;
     }
-		#ifdef __JT808_DEBUG
-			printf("ok parsing\r\n");
-		#endif
+	#ifdef __JT808_DEBUG
+		printf("ok parsing\r\n");
+	#endif
 		
     msg_id = parameter_.parse.msg_head.msg_id;
 		
-		#ifdef __JT808_DEBUG
-			printf("%s[%d]: [parameter_.parse.msg_head.msg_id] msg_id = 0x%02x \r\n", __FUNCTION__, __LINE__, msg_id);
-			switch (msg_id)
-			{
-			// +平台通用应答.
-			case kPlatformGeneralResponse:
-			{
-					printf("%s[%d]: [ kPlatformGeneralResponse ] parse done \r\n", __FUNCTION__, __LINE__);
-			}
-			break;
+	#ifdef __JT808_DEBUG
+		printf("%s[%d]: [parameter_.parse.msg_head.msg_id] msg_id = 0x%02x \r\n", __FUNCTION__, __LINE__, msg_id);
+		switch (msg_id)
+		{
+		// +平台通用应答.
+		case kPlatformGeneralResponse:
+		{
+				printf("%s[%d]: [ kPlatformGeneralResponse ] parse done \r\n", __FUNCTION__, __LINE__);
+		}
+		break;
 
-			//  补传分包请求.
-			case kFillPacketRequest:
-			{
-					printf("%s[%d]: [ kFillPacketRequest ] parse done \r\n", __FUNCTION__, __LINE__);
-			}
-			break;
+		//  补传分包请求.
+		case kFillPacketRequest:
+		{
+				printf("%s[%d]: [ kFillPacketRequest ] parse done \r\n", __FUNCTION__, __LINE__);
+		}
+		break;
 
-			// 终端注册应答..
-			case kTerminalRegisterResponse:
-			{
-					printf("%s[%d]: [ kTerminalRegisterResponse ] parse done \r\n", __FUNCTION__, __LINE__);
-			}
-			break;
+		// 终端注册应答..
+		case kTerminalRegisterResponse:
+		{
+				printf("%s[%d]: [ kTerminalRegisterResponse ] parse done \r\n", __FUNCTION__, __LINE__);
+		}
+		break;
 
-			// 设置终端参数..
-			case kSetTerminalParameters:
-			{
-					printf("%s[%d]: [ kSetTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
-			}
-			break;
+		// 设置终端参数..
+		case kSetTerminalParameters:
+		{
+				printf("%s[%d]: [ kSetTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
+		}
+		break;
 
-			// 查询终端参数..
-			case kGetTerminalParameters:
-			{
-					printf("%s[%d]: [ kGetTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
-			}
-			break;
+		// 查询终端参数..
+		case kGetTerminalParameters:
+		{
+				printf("%s[%d]: [ kGetTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
+		}
+		break;
 
-			//查询指定终端参数..
-			case kGetSpecificTerminalParameters:
-			{
-					printf("%s[%d]: [ kGetSpecificTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
-			}
-			break;
+		//查询指定终端参数..
+		case kGetSpecificTerminalParameters:
+		{
+				printf("%s[%d]: [ kGetSpecificTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
+		}
+		break;
 
-			// 终端控制
-			case kTerminalControl: 
-			{
-					printf("%s[%d]: [ kTerminalControl ] parse done \r\n", __FUNCTION__, __LINE__);
-			}
-			break;
+		// 终端控制
+		case kTerminalControl: 
+		{
+				printf("%s[%d]: [ kTerminalControl ] parse done \r\n", __FUNCTION__, __LINE__);
+		}
+		break;
 
-			// 下发终端升级包.
-			case kTerminalUpgrade:
-			{
-					printf("%s[%d]: [ kTerminalUpgrade ] parse done\r\n", __FUNCTION__, __LINE__);
-			}
-			break;
+		// 下发终端升级包.
+		case kTerminalUpgrade:
+		{
+				printf("%s[%d]: [ kTerminalUpgrade ] parse done\r\n", __FUNCTION__, __LINE__);
+		}
+		break;
 
-			//  位置信息查询..
-			case kGetLocationInformation:
-			{
-					printf("%s[%d]: [ kGetLocationInformation ] parse done\r\n", __FUNCTION__, __LINE__);
-			}
-			break;
+		//  位置信息查询..
+		case kGetLocationInformation:
+		{
+				printf("%s[%d]: [ kGetLocationInformation ] parse done\r\n", __FUNCTION__, __LINE__);
+		}
+		break;
 
-			default:
-					break;
-			}
-			
-			
-		#endif
+		default:
+				break;
+		}
+		
+		
+	#endif
     return 0;
 }
