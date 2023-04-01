@@ -69,7 +69,7 @@ int main(void)
 	printf("SYSTEM INIT SUCCESS\r\n");
 	printf("\r\n");
 
-	//	IWDG_Init(6,4095); 
+//	IWDG_Init(6,4095); 
 	while (1)
 	{
 		HeartBeatCounter = 0;
@@ -182,7 +182,7 @@ int main(void)
 				}
 				else
 				{
-					printf("HeartBeat!!!!!!!!!!!!!!!!! SUCCESS\r\n");
+					printf("HeartBeatReport!!!!!!!!!!!!!!!!! SUCCESS\r\n");
 					jt808TerminalHeartBeat();
 					time_1s = 0;
 					HeartBeatCounter++;

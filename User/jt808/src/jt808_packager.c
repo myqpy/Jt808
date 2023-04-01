@@ -120,8 +120,8 @@ int handle_kTerminalHeartBeat(struct ProtocolParameter *para)
 // 终端注册.
 int handle_kTerminalRegister(struct ProtocolParameter *para)
 {
-		int msg_len;
-		union U16ToU8Array u16converter;
+	int msg_len;
+	union U16ToU8Array u16converter;
 	
     printf("[%s] msg_id = 0x%04x \r\n", __FUNCTION__, kTerminalRegister);
 
@@ -152,7 +152,7 @@ int handle_kTerminalRegister(struct ProtocolParameter *para)
     // 车牌标识，即车牌号
     if (para->register_info.car_plate_color != 0x00)
     {
-        unsigned int len_car_num = sizeof(para->register_info.car_plate_num);
+        unsigned int len_car_num = strlen(para->register_info.car_plate_num);
         bufferSendPushBytes(para->register_info.car_plate_num, len_car_num);
         msg_len += len_car_num;
     }
@@ -172,7 +172,7 @@ int handle_kTerminalLogOut(struct ProtocolParameter *para)
 // 终端鉴权.
 int handle_kTerminalAuthentication(struct ProtocolParameter *para)
 {
-    int msg_len = sizeof(para->parse.authentication_code);
+    int msg_len = strlen(para->parse.authentication_code);
 	printf("[%s] msg_id = 0x%04x \r\n", __FUNCTION__, kTerminalAuthentication);
     // 鉴权码.
     bufferSendPushBytes(para->parse.authentication_code, msg_len);
@@ -251,7 +251,7 @@ int handle_kLocationReport(struct ProtocolParameter *para)
 	u16converter.u16val = EndianSwap16(para->location_info.bearing);
 	copyU16ToU8ArrayToBufferSend(u16converter.u8array);
 	
-	jt808StringToBcdCompress(para->location_info.time, time_bcd, sizeof(para->location_info.time));
+	jt808StringToBcdCompress(para->location_info.time, time_bcd, strlen(para->location_info.time));
 	bufferSendPushBytes(time_bcd, 6);
 	
 	bufferSendPushByte(kNetworkQuantity); //附加信息ID 0x30
@@ -367,13 +367,13 @@ int jt808FrameBodyPackage(struct ProtocolParameter *para)
 // 消息内容长度修正.
 int jt808MsgBodyLengthFix(struct MsgHead *msg_head, unsigned int msgBody_len)
 {
-		union U16ToU8Array u16converter;
-		union MsgBodyAttribute msgbody_attr;
-    if (RealBufferSendSize < 12)
-		{
-			printf("%d \r\n", RealBufferSendSize);
-			return -1;
-		}
+	union U16ToU8Array u16converter;
+	union MsgBodyAttribute msgbody_attr;
+	if (RealBufferSendSize < 12)
+	{
+		printf("%d \r\n", RealBufferSendSize);
+		return -1;
+	}
         
     msgbody_attr = msg_head->msgbody_attr;
     msgbody_attr.bit.msglen = msgBody_len;
@@ -382,28 +382,28 @@ int jt808MsgBodyLengthFix(struct MsgHead *msg_head, unsigned int msgBody_len)
     BufferSend[3] = u16converter.u8array[0];
     BufferSend[4] = u16converter.u8array[1];
 		
-		#ifdef __JT808_DEBUG
-			printf("[%s] OK !\r\n",__FUNCTION__);
-		#endif
+	#ifdef __JT808_DEBUG
+		printf("[%s] OK !\r\n",__FUNCTION__);
+	#endif
     return 0;
 }
 
 // JT808协议转义.
 int jt808MsgEscape()
 {
-		unsigned int outBufferSize;
-		unsigned char *outBuffer;
+	unsigned int outBufferSize;
+	unsigned char *outBuffer;
     BufferSend[0] = 0x00;
     BufferSend[RealBufferSendSize - 1] = 0x00;
 
     outBufferSize = RealBufferSendSize * 2;
     outBuffer = (unsigned char *)malloc(outBufferSize);
 
-    if (Escape_C(BufferSend, RealBufferSendSize, outBuffer, &outBufferSize) < 0)
-		{
-			printf("[%s] FAILED \r\n",__FUNCTION__);
-			return -1;
-		}
+	if (Escape_C(BufferSend, RealBufferSendSize, outBuffer, &outBufferSize) < 0)
+	{
+		printf("[%s] FAILED \r\n",__FUNCTION__);
+		return -1;
+	}
        
 
     *(outBuffer + 0) = PROTOCOL_SIGN;
@@ -418,9 +418,9 @@ int jt808MsgEscape()
         outBuffer = NULL;
 				
     }
-		#ifdef __JT808_DEBUG
-			printf("[%s] OK !\r\n",__FUNCTION__);
-		#endif
+	#ifdef __JT808_DEBUG
+		printf("[%s] OK !\r\n",__FUNCTION__);
+	#endif
     return 0;
 }
 
@@ -435,7 +435,7 @@ void jt808SetFrameFlagHeader()
 int jt808FrameHeadPackage(struct MsgHead *msg_head)
 {
     union U16ToU8Array u16converter;
-		unsigned char phone_num_bcd[6]= {0};
+	unsigned char phone_num_bcd[6]= {0};
     // 1消息ID.
     u16converter.u16val = EndianSwap16(msg_head->msg_id);
     copyU16ToU8ArrayToBufferSend(u16converter.u8array);
@@ -447,7 +447,7 @@ int jt808FrameHeadPackage(struct MsgHead *msg_head)
     // 3终端手机号(BCD码).
     // msg_head->phone_num = "17737702736"; //测试用2022.10.25
     //unsigned char phone_num_bcd[6] = {0};
-    jt808StringToBcdCompress(msg_head->phone_num, phone_num_bcd, sizeof(msg_head->phone_num));
+    jt808StringToBcdCompress(msg_head->phone_num, phone_num_bcd, strlen(msg_head->phone_num));
     bufferSendPushBytes(phone_num_bcd, 6);
 
     // 4消息流水号.
@@ -506,7 +506,7 @@ int jt808FramePackage(struct ProtocolParameter *para)
 
         // 4、获取校验码，并将其写入发送缓存.
         //valueCheck = BccCheckSum(BufferSend, RealBufferSendSize);
-				valueCheck = BccCheckSum((BufferSend+1), (RealBufferSendSize-1));//参考接收解析
+		valueCheck = BccCheckSum((BufferSend+1), (RealBufferSendSize-1));//参考接收解析
         bufferSendPushByte(valueCheck);
 
         // 5、写入发送缓存结束标识位.
