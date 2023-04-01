@@ -1,15 +1,14 @@
 
 
-#ifndef JT808_CLIENT_MANAGER_H_
-#define JT808_CLIENT_MANAGER_H_
+//#ifndef JT808_CLIENT_MANAGER_H_
+//#define JT808_CLIENT_MANAGER_H_
 
 
 
-#include <stdio.h>
-#include <stdint.h>
-#include "./sys/sys.h"
-#include <stdlib.h>
-
+//#include <stdio.h>
+//#include <stdint.h>
+//#include <stdlib.h>
+//#include "./sys/sys.h"
 
 
 //#define __JT808_DEBUG
@@ -20,7 +19,7 @@
 
 extern struct ProtocolParameter parameter_;
 
-void setTerminalPhoneNumber(const char *phone_num, unsigned int phoneSize);
+void setTerminalPhoneNumber(unsigned char *phone_num, unsigned int phoneSize);
 
 /******************************************************************************
  * @description: 数据打包并发送接口
@@ -55,7 +54,7 @@ int jt808TerminalLogOut(void);
 int jt808TerminalHeartBeat(void);
 int jt808TerminalUpgradeResultReport(void);
 int jt808TerminalGeneralResponse(void);
-void setTerminalId(const char *TerminalId, unsigned int lenTerminalId);
+void setTerminalId(unsigned char *TerminalId, unsigned int lenTerminalId);
 void setStatusBit(void);
 int FlashWrite(void);
 void setUUID(void);
@@ -68,4 +67,4 @@ void updateLocation(double const v_latitude, double const v_longitude, float con
                     float const v_speed, float const v_bearing, unsigned char *v_timestamp);
 void boot_loader_flag(void);
 
-#endif // JT808_CLIENT_MANAGER_H_
+//#endif // JT808_CLIENT_MANAGER_H_

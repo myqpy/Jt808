@@ -75,7 +75,7 @@ int FlashWrite()
 //	天瑞平台
 //	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
 
-	parameter_.parse.terminal_parameters.ServerPort = 7611;
+	parameter_.parse.terminal_parameters.ServerPort = 17611;
 
 	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 5;
 
@@ -120,7 +120,7 @@ int IPFlashWrite()
 	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
 //	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
 	
-	parameter_.parse.terminal_parameters.ServerPort = 7611;
+	parameter_.parse.terminal_parameters.ServerPort = 17611;
 
 	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 5;
 	
@@ -159,7 +159,7 @@ void boot_loader_flag()
 
 /// @brief 设置终端手机号
 /// @param phone
-void setTerminalPhoneNumber(const char *phone_num, unsigned int phoneSize)
+void setTerminalPhoneNumber(unsigned char *phone_num, unsigned int phoneSize)
 {
   memset(parameter_.msg_head.phone_num, 0, 13);
 	memcpy(parameter_.msg_head.phone_num, phone_num, phoneSize);  
@@ -168,7 +168,7 @@ void setTerminalPhoneNumber(const char *phone_num, unsigned int phoneSize)
 }
 
 
-void setTerminalId(const char *TerminalId,unsigned int lenTerminalId)
+void setTerminalId(unsigned char *TerminalId,unsigned int lenTerminalId)
 {
 	//终端ID
 //	unsigned int lenTerminalId;
@@ -381,7 +381,7 @@ int jt808TerminalUpgradeResultReport()
 {
 	packagingMessage(kTerminalUpgradeResultReport);
 	Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
-	printf("jt808TerminalLogOut report SUCCESS!!! \r\n");
+	printf("jt808TerminalUpgradeResultReport report SUCCESS!!! \r\n");
 	return 0;
 }
 
@@ -425,78 +425,78 @@ int parsingMessage(const unsigned char *in, unsigned int in_len)
 		
     msg_id = parameter_.parse.msg_head.msg_id;
 		
-	#ifdef __JT808_DEBUG
-		printf("%s[%d]: [parameter_.parse.msg_head.msg_id] msg_id = 0x%02x \r\n", __FUNCTION__, __LINE__, msg_id);
-		switch (msg_id)
-		{
-		// +平台通用应答.
-		case kPlatformGeneralResponse:
-		{
-				printf("%s[%d]: [ kPlatformGeneralResponse ] parse done \r\n", __FUNCTION__, __LINE__);
-		}
-		break;
+	
+//	printf("%s[%d]: [parameter_.parse.msg_head.msg_id] msg_id = 0x%02x \r\n", __FUNCTION__, __LINE__, msg_id);
+	switch (msg_id)
+	{
+	// +平台通用应答.
+	case kPlatformGeneralResponse:
+	{
+			printf("%s[%d]: [ kPlatformGeneralResponse ] msg_id = 0x%02x parse done \r\n", __FUNCTION__, __LINE__ , msg_id);
+	}
+	break;
 
-		//  补传分包请求.
-		case kFillPacketRequest:
-		{
-				printf("%s[%d]: [ kFillPacketRequest ] parse done \r\n", __FUNCTION__, __LINE__);
-		}
-		break;
+	//  补传分包请求.
+	case kFillPacketRequest:
+	{
+			printf("%s[%d]: [ kFillPacketRequest ] msg_id = 0x%02x parse done \r\n", __FUNCTION__, __LINE__, msg_id);
+	}
+	break;
 
-		// 终端注册应答..
-		case kTerminalRegisterResponse:
-		{
-				printf("%s[%d]: [ kTerminalRegisterResponse ] parse done \r\n", __FUNCTION__, __LINE__);
-		}
-		break;
+	// 终端注册应答..
+	case kTerminalRegisterResponse:
+	{
+			printf("%s[%d]: [ kTerminalRegisterResponse ] msg_id = 0x%02x parse done \r\n", __FUNCTION__, __LINE__, msg_id);
+	}
+	break;
 
-		// 设置终端参数..
-		case kSetTerminalParameters:
-		{
-				printf("%s[%d]: [ kSetTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
-		}
-		break;
+	// 设置终端参数..
+	case kSetTerminalParameters:
+	{
+			printf("%s[%d]: [ kSetTerminalParameters ] msg_id = 0x%02x parse done \r\n", __FUNCTION__, __LINE__, msg_id);
+	}
+	break;
 
-		// 查询终端参数..
-		case kGetTerminalParameters:
-		{
-				printf("%s[%d]: [ kGetTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
-		}
-		break;
+	// 查询终端参数..
+	case kGetTerminalParameters:
+	{
+			printf("%s[%d]: [ kGetTerminalParameters ] msg_id = 0x%02x parse done \r\n", __FUNCTION__, __LINE__, msg_id);
+	}
+	break;
 
-		//查询指定终端参数..
-		case kGetSpecificTerminalParameters:
-		{
-				printf("%s[%d]: [ kGetSpecificTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
-		}
-		break;
+	//查询指定终端参数..
+	case kGetSpecificTerminalParameters:
+	{
+			printf("%s[%d]: [ kGetSpecificTerminalParameters ] msg_id = 0x%02x parse done \r\n", __FUNCTION__, __LINE__, msg_id);
+	}
+	break;
 
-		// 终端控制
-		case kTerminalControl: 
-		{
-				printf("%s[%d]: [ kTerminalControl ] parse done \r\n", __FUNCTION__, __LINE__);
-		}
-		break;
+	// 终端控制
+	case kTerminalControl: 
+	{
+			printf("%s[%d]: [ kTerminalControl ] msg_id = 0x%02x parse done \r\n", __FUNCTION__, __LINE__, msg_id);
+	}
+	break;
 
-		// 下发终端升级包.
-		case kTerminalUpgrade:
-		{
-				printf("%s[%d]: [ kTerminalUpgrade ] parse done\r\n", __FUNCTION__, __LINE__);
-		}
-		break;
+	// 下发终端升级包.
+	case kTerminalUpgrade:
+	{
+			printf("%s[%d]: [ kTerminalUpgrade ] msg_id = 0x%02x parse done\r\n", __FUNCTION__, __LINE__, msg_id);
+	}
+	break;
 
-		//  位置信息查询..
-		case kGetLocationInformation:
-		{
-				printf("%s[%d]: [ kGetLocationInformation ] parse done\r\n", __FUNCTION__, __LINE__);
-		}
-		break;
+	//  位置信息查询..
+	case kGetLocationInformation:
+	{
+			printf("%s[%d]: [ kGetLocationInformation ] msg_id = 0x%02x parse done\r\n", __FUNCTION__, __LINE__, msg_id);
+	}
+	break;
 
-		default:
-				break;
-		}
-		
-		
-	#endif
+	default:
+			break;
+	}
+	
+	
+
     return 0;
 }

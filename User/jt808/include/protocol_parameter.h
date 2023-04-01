@@ -1,9 +1,9 @@
 #ifndef JT808_PROTOCOL_PARAMETER_H_
 #define JT808_PROTOCOL_PARAMETER_H_
 
-#include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
+//#include <stdio.h>
+//#include <stdint.h>
+//#include <stdlib.h>
 
 #include "location_report.h"
 #include "terminal_parameter.h"
@@ -215,9 +215,9 @@ struct UpgradeInfo
 	// 升级结果.
 	unsigned char upgrade_result;
 	// 制造商ID, 固定5个字节.
-	unsigned char manufacturer_id[5];
+	unsigned char manufacturer_id[6];
 	//版本号长度
-	unsigned int version_id_len;
+	unsigned char version_id_len;
 	// 升级版本号.
 	unsigned char *version_id;
 	// 升级包总长度.

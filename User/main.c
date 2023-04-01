@@ -200,8 +200,8 @@ int main(void)
 					{
 						LocationReportCounter = 0;
 						printf("\r\n");
-						printf("Platform general response location report parse SUCCESS!!!!\r\n ");
-						printf("\r\n");
+//						printf("Platform general response location report parse SUCCESS!!!!\r\n ");
+//						printf("\r\n");
 						USART2_RX_STA = 0;
 					}
 
@@ -209,16 +209,16 @@ int main(void)
 					{
 						HeartBeatCounter = 0;
 						printf("\r\n");
-						printf("jt808TerminalHeartBeat report parse SUCCESS!!!! \r\n ");
-						printf("\r\n");
+//						printf("jt808TerminalHeartBeat report parse SUCCESS!!!! \r\n ");
+//						printf("\r\n");
 						USART2_RX_STA = 0;
 					}
 
 					if (parameter_.parse.msg_head.msg_id == kSetTerminalParameters)
 					{
 						printf("\r\n");
-						printf("SetTerminalParameters parse SUCCESS!!!!\r\n ");
-						printf("\r\n");
+//						printf("SetTerminalParameters parse SUCCESS!!!!\r\n ");
+//						printf("\r\n");
 						jt808TerminalLogOut();
 
 						break;
@@ -227,18 +227,18 @@ int main(void)
 					if(parameter_.parse.msg_head.msg_id==kTerminalUpgrade)
 					{
 						printf("\r\n");
-						printf("kTerminalUpgrade parse SUCCESS!!!!\r\n ");
-						printf("\r\n");
+//						printf("kTerminalUpgrade parse SUCCESS!!!!\r\n ");
+//						printf("\r\n");
 
-						//jt808TerminalLogOut();
-						break;
+//						jt808TerminalLogOut();
+//						break;
 					}
 
 					if ((parameter_.parse.respone_result == kSuccess) && (parameter_.parse.respone_msg_id == kTerminalLogOut))
 					{
 						printf("\r\n");
-						printf("jt808TerminalLogOut parse SUCCESS!!!! \r\n ");
-						printf("\r\n");
+//						printf("jt808TerminalLogOut parse SUCCESS!!!! \r\n ");
+//						printf("\r\n");
 						USART2_RX_STA = 0;
 						system_reboot();
 					}
