@@ -419,14 +419,12 @@ int parsingMessage(const unsigned char *in, unsigned int in_len)
 			printf("jt808FrameParse ERROR\r\n");
 			return -1;
     }
-	#ifdef __JT808_DEBUG
-		printf("ok parsing\r\n");
-	#endif
-		
-    msg_id = parameter_.parse.msg_head.msg_id;
-		
+	msg_id = parameter_.parse.msg_head.msg_id;
 	
-//	printf("%s[%d]: [parameter_.parse.msg_head.msg_id] msg_id = 0x%02x \r\n", __FUNCTION__, __LINE__, msg_id);
+	#ifdef __JT808_DEBUG
+	printf("ok parsing\r\n");
+
+	printf("%s[%d]: [parameter_.parse.msg_head.msg_id] msg_id = 0x%02x \r\n", __FUNCTION__, __LINE__, msg_id);
 	switch (msg_id)
 	{
 	// +平台通用应答.
@@ -495,7 +493,7 @@ int parsingMessage(const unsigned char *in, unsigned int in_len)
 	default:
 			break;
 	}
-	
+	#endif
 	
 
     return 0;

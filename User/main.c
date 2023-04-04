@@ -34,7 +34,7 @@ int main(void)
 	int isAuthenticated = 0;
 	int LocationReportCounter = 0;
 	int HeartBeatCounter = 0;
-	//	int CornerPointRetransmission=0;
+//	int CornerPointRetransmission=0;
 	int isNewLocationParse = 0;
 	unsigned int v_alarm_value = 0;
 	unsigned int v_status_value = 0;
@@ -74,7 +74,7 @@ int main(void)
 	{
 		HeartBeatCounter = 0;
 		LocationReportCounter = 0;
-		//		CornerPointRetransmission = 0;
+//		CornerPointRetransmission = 0;
 		time_1s = 0;
 		initSystemParameters(1); // //0 烧写出厂参数 1 不烧写出厂参数
 		//设置手机号（唯一识别id）
@@ -105,7 +105,7 @@ int main(void)
 			jt808TerminalRegister(&isRegistered);
 			if (isRegistered == 0)
 			{
-				// isTCPconnected=0;
+//				isTCPconnected=0;
 				system_reboot();
 				continue;
 			}
@@ -158,7 +158,7 @@ int main(void)
 //			{
 //				m_bearing = v_bearing;
 //				CornerPointRetransmission++;
-//				//				printf("m_bearing ===== %f  \r\n", m_bearing);
+//				//printf("m_bearing ===== %f  \r\n", m_bearing);
 //			}
 
 //			if(CornerPointRetransmission>=3)
@@ -199,36 +199,32 @@ int main(void)
 					if ((parameter_.parse.respone_result == kSuccess) && (parameter_.parse.respone_msg_id == kLocationReport))
 					{
 						LocationReportCounter = 0;
+						printf("Platform general response location report parse SUCCESS!!!!\r\n ");
 						printf("\r\n");
-//						printf("Platform general response location report parse SUCCESS!!!!\r\n ");
-//						printf("\r\n");
 						USART2_RX_STA = 0;
 					}
 
 					if ((parameter_.parse.respone_result == kSuccess) && (parameter_.parse.respone_msg_id == kTerminalHeartBeat))
 					{
 						HeartBeatCounter = 0;
+						printf("jt808TerminalHeartBeat report parse SUCCESS!!!! \r\n ");
 						printf("\r\n");
-//						printf("jt808TerminalHeartBeat report parse SUCCESS!!!! \r\n ");
-//						printf("\r\n");
 						USART2_RX_STA = 0;
 					}
 
 					if (parameter_.parse.msg_head.msg_id == kSetTerminalParameters)
 					{
+						printf("SetTerminalParameters parse SUCCESS!!!!\r\n ");
 						printf("\r\n");
-//						printf("SetTerminalParameters parse SUCCESS!!!!\r\n ");
-//						printf("\r\n");
 						jt808TerminalLogOut();
 
 						break;
 					}
 
-					if(parameter_.parse.msg_head.msg_id==kTerminalUpgrade)
+					if ((parameter_.parse.respone_result == kSuccess) &&(parameter_.parse.msg_head.msg_id==kTerminalUpgrade))
 					{
+						printf("kTerminalUpgrade parse SUCCESS!!!!\r\n ");
 						printf("\r\n");
-//						printf("kTerminalUpgrade parse SUCCESS!!!!\r\n ");
-//						printf("\r\n");
 
 //						jt808TerminalLogOut();
 //						break;
@@ -236,9 +232,8 @@ int main(void)
 
 					if ((parameter_.parse.respone_result == kSuccess) && (parameter_.parse.respone_msg_id == kTerminalLogOut))
 					{
+						printf("jt808TerminalLogOut parse SUCCESS!!!! \r\n ");
 						printf("\r\n");
-//						printf("jt808TerminalLogOut parse SUCCESS!!!! \r\n ");
-//						printf("\r\n");
 						USART2_RX_STA = 0;
 						system_reboot();
 					}
@@ -253,6 +248,7 @@ int main(void)
 			{
 				printf("LocationReportCounter == %d \r\n", LocationReportCounter);
 				printf("HeartBeatCounter == %d \r\n", HeartBeatCounter);
+				printf("\r\n");
 				system_reboot();
 				break;
 			}

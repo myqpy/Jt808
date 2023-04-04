@@ -31,12 +31,12 @@ unsigned int RealBufferReceiveSize = 0;
 int jt808FrameHeadParse(const unsigned char *in, unsigned int in_len, struct MsgHead *msg_head)
 {
     if (msg_head == NULL || in_len < 15)
-		{
-			printf("msg_head == NULL || in_len < 15");
-			return -1;
-		}
-        
-    // 消息ID.
+	{
+		printf("msg_head == NULL || in_len < 15");
+		return -1;
+	}
+	
+    // 消息ID.	
     msg_head->msg_id = (in[1] << 8) + in[2];
 		
     
@@ -51,8 +51,8 @@ int jt808FrameHeadParse(const unsigned char *in, unsigned int in_len, struct Msg
 
     if (jt808BcdToStringCompress((&(in[5])), msg_head->phone_num, 6) == NULL)
     {
-			printf("jt808BcdToStringCompress error \r\n");
-      return -1;
+		printf("jt808BcdToStringCompress error \r\n");
+		return -1;
     }
     
 
@@ -74,10 +74,10 @@ int jt808FrameHeadParse(const unsigned char *in, unsigned int in_len, struct Msg
     }
 		
 		#ifdef __JT808_DEBUG
-			printf("[jt808FrameHeadParse] msg_head->msg_id = 0x%02x\r\n", msg_head->msg_id);
-			printf("[jt808FrameHeadParse] msg_head->msgbody_attr.u16val = 0x%02x\r\n", msg_head->msgbody_attr.u16val);
+			printf("[jt808FrameHeadParse] msg_head->msg_id = 0x%04x\r\n", msg_head->msg_id);
+			printf("[jt808FrameHeadParse] msg_head->msgbody_attr.u16val = 0x%04x\r\n", msg_head->msgbody_attr.u16val);
 			printf("[jt808FrameHeadParse] msg_head->phone_num = %s !!!\r\n", msg_head->phone_num);
-			printf("[jt808FrameHeadParse] msg_head->msg_flow_num = 0x%02x !!!\r\n", msg_head->msg_flow_num);
+			printf("[jt808FrameHeadParse] msg_head->msg_flow_num = 0x%04x !!!\r\n", msg_head->msg_flow_num);
 		#endif
 		
 		
@@ -312,8 +312,8 @@ int handle_kTerminalUpgrade(struct ProtocolParameter *para)
 	
 	// 升级版本号.
 	para->upgrade_info.version_id = (unsigned char *)malloc(sizeof(unsigned char)*(para->upgrade_info.version_id_len)+1);
-	memset(para->upgrade_info.version_id,0,para->upgrade_info.version_id_len+1);
-	memcpy(para->upgrade_info.version_id, &BufferReceive[pos], para->upgrade_info.version_id_len+1);
+	memset(para->upgrade_info.version_id,0,para->upgrade_info.version_id_len);
+	memcpy(para->upgrade_info.version_id, &BufferReceive[pos], para->upgrade_info.version_id_len);
 	pos+=(para->upgrade_info.version_id_len);
 	printf("para->upgrade_info.version_id: %s \r\n", para->upgrade_info.version_id);	
 	//free(para->upgrade_info.version_id);
@@ -338,7 +338,7 @@ int handle_kTerminalUpgrade(struct ProtocolParameter *para)
 		printf(("%02x "),para->upgrade_info.upgrade_data[i]);
 	}
 	printf("\r\n");
-	//free(para->upgrade_info.upgrade_data);
+//	free(para->upgrade_info.upgrade_data);
 	
 //	jt808TerminalUpgradeResultReport();
 //	boot_loader_flag();					
@@ -367,68 +367,68 @@ int jt808FrameBodyParse(struct ProtocolParameter *para)
 	// +平台通用应答.
 	case kPlatformGeneralResponse:
 	{
-			result = handle_kPlatformGeneralResponse(para);
+		result = handle_kPlatformGeneralResponse(para);
 	}
 	break;
 
 	//  补传分包请求.
 	case kFillPacketRequest:
 	{
-			result = handle_kFillPacketRequest(para);
+		result = handle_kFillPacketRequest(para);
 	}
 	break;
 
 	// 终端注册应答..
 	case kTerminalRegisterResponse:
 	{
-			result = handle_kTerminalRegisterResponse(para);
+		result = handle_kTerminalRegisterResponse(para);
 	}
 	break;
 
 	// 设置终端参数..
 	case kSetTerminalParameters:
 	{
-			result = handle_kSetTerminalParameters(para);
+		result = handle_kSetTerminalParameters(para);
 	}
 	break;
 
 	// 查询终端参数..
 	case kGetTerminalParameters:
 	{
-			result = handle_kGetTerminalParameters(para);
+		result = handle_kGetTerminalParameters(para);
 	}
 	break;
 
-	//查询指定终端参数..
+	//	查询指定终端参数..
 	case kGetSpecificTerminalParameters:
 	{
-			result = handle_kGetSpecificTerminalParameters(para);
+		result = handle_kGetSpecificTerminalParameters(para);
 	}
 	break;
 
 	// 终端控制
 	case kTerminalControl:
 	{
-			result = handle_kTerminalControl(para);
+		result = handle_kTerminalControl(para);
 	}
 	break;
 
 	// 下发终端升级包.
 	case kTerminalUpgrade:
 	{
-			result = handle_kTerminalUpgrade(para);
+		result = handle_kTerminalUpgrade(para);
 	}
 	break;
 
 	//  位置信息查询..
 	case kGetLocationInformation:
 	{
-			result = handle_kGetLocationInformation(para);
+		result = handle_kGetLocationInformation(para);
 	}
 	break;
 
 	default:
-			break;
+		break;
 	}
 
 	return result;
@@ -436,18 +436,18 @@ int jt808FrameBodyParse(struct ProtocolParameter *para)
 
 int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct ProtocolParameter *para)
 {
-		int ret;
-		unsigned int outBufferSize;
-		unsigned char *outBuffer;
+	int ret;
+	unsigned int outBufferSize;
+	unsigned char *outBuffer;
 	
 	#ifdef __JT808_DEBUG
 		printf("%s[%d]: jt808FrameParse -->1 !!! \r\n", __FUNCTION__, __LINE__);
 	#endif
     if (para == NULL)
-		{
-			printf("para == NULL \r\n");
-			return -1;
-		}
+	{
+		printf("para == NULL \r\n");
+		return -1;
+	}
     memcpy(BufferReceive, in, in_len);
     RealBufferReceiveSize = in_len;
     outBufferSize = RealBufferReceiveSize;
@@ -460,10 +460,10 @@ int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct Protoco
 		
     // 逆转义.
     if (ReverseEscape_C(BufferReceive, RealBufferReceiveSize, outBuffer, &outBufferSize) < 0)
-		{
-			printf("ReverseEscape_C ERROR\r\n");
-			return -1;
-		}
+	{
+		printf("ReverseEscape_C ERROR\r\n");
+		return -1;
+	}
         
     RealBufferReceiveSize = outBufferSize;
 		
@@ -473,10 +473,10 @@ int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct Protoco
 	
     // 异或校验检查.
     if (BccCheckSum(&(outBuffer[1]), (outBufferSize - 3)) != *(outBuffer + outBufferSize - 2))
-		{
-			printf("BccCheckSum ERROR\r\n");
-			return -1;
-		}
+	{
+		printf("BccCheckSum ERROR\r\n");
+		return -1;
+	}
 		
 	#ifdef __JT808_DEBUG
 		printf("%s[%d]: BccCheckSum. -->3 !!!\r\n", __FUNCTION__, __LINE__);
@@ -484,9 +484,9 @@ int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct Protoco
     // 解析消息头.
     if (jt808FrameHeadParse(outBuffer, outBufferSize, &(para->parse.msg_head)) != 0)
     {
-			printf("jt808FrameHeadParse ERROR\r\n");
-			return -1;
-		}
+		printf("jt808FrameHeadParse ERROR\r\n");
+		return -1;
+	}
 	#ifdef __JT808_DEBUG
 		printf("%s[%d]:  jt808FrameHeadParse. -->4 !!!\r\n", __FUNCTION__, __LINE__);
 	#endif 
