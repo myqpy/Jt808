@@ -50,7 +50,7 @@ void TIM4_SetARR(u16 period)
 //psc：时钟预分频数		 
 void TIM4_Init(u16 arr,u16 psc)
 {	
-		NVIC_InitTypeDef NVIC_InitStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
     TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE); //时钟使能//TIM4时钟使能

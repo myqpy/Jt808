@@ -57,14 +57,27 @@ int main(void)
 	NVIC_Configuration(); //设置NVIC中断分组2:2位抢占优先级，2位响应优先级
 
 	delay_init(); //延时函数初始化	
-
-	PC_Config(&GPIO_InitStructure);
+	GPIO_Config(&GPIO_InitStructure); 
+	
+	GPIO_SetBits(GPIOC, GPIO_Pin_1);	
+	delay_ms(1000);
 
 	uart_init(115200); 
 	USART2_Init(115200);
 	GPS_Config();
-	LED_GPIO_Config(&GPIO_InitStructure); 
 
+//	GPIO_SetBits(GPIOC, GPIO_Pin_5);	
+//	delay_ms(500);
+//	GPIO_ResetBits(GPIOC, GPIO_Pin_5);
+
+	
+	
+	GPIO_SetBits(GPIOA, GPIO_Pin_0);
+
+	GPIO_SetBits(GPIOA, GPIO_Pin_1);	
+	delay_ms(500);
+	GPIO_ResetBits(GPIOA, GPIO_Pin_1);
+	
 	printf("\r\n");
 	printf("SYSTEM INIT SUCCESS\r\n");
 	printf("\r\n");

@@ -27,7 +27,7 @@ enum SupportedCommands
   kGetTerminalParameters = 0x8104,          // 查询终端参数.
   kGetSpecificTerminalParameters = 0x8106,  // 查询指定终端参数.
   kGetTerminalParametersResponse = 0x0104,  // 查询终端参数应答.
-  kTerminalControl = 0x8105,                //终端控制
+  kTerminalControl = 0x8105,                // 终端控制
   kTerminalUpgrade = 0x8108,                // 下发终端升级包.
   kTerminalUpgradeResultReport = 0x0108,    // 终端升级结果通知.
   kLocationReport = 0x0200,                 // 位置信息汇报.

@@ -129,7 +129,7 @@
 /*!< Vector Table base offset field. 
 This value must be a multiple of 0x200. */
 
-#define VECT_TAB_OFFSET  0x4000
+#define VECT_TAB_OFFSET 0x14000
 
 
 /**

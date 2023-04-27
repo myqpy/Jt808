@@ -54,7 +54,7 @@
 
 
 
-void LED_GPIO_Config(GPIO_InitTypeDef *GPIO_InitStructure);
-void PC_Config(GPIO_InitTypeDef *GPIO_InitStructure);
+void GPIO_Config(GPIO_InitTypeDef *GPIO_InitStructure);
+//void PC_Config(GPIO_InitTypeDef *GPIO_InitStructure);
 
 #endif /* __LED_H */
