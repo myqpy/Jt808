@@ -69,13 +69,13 @@ int FlashWrite()
 	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
 	
 // 研究院平台
-	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
+	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"124.222.183.168", sizeof("124.222.183.168"));
 //	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"http://jt808.gps.ciicp.com", sizeof("http://jt808.gps.ciicp.com"));
 	
 //	天瑞平台
 //	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
 
-	parameter_.parse.terminal_parameters.ServerPort = 17611;
+	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
 	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 5;
 
@@ -92,7 +92,7 @@ int FlashWrite()
 	parameter_.parse.terminal_parameters.initFactoryParameters = 1;
 	
 	memset(parameter_.parse.terminal_parameters.version,0,sizeof(parameter_.parse.terminal_parameters.version));
-	memcpy(parameter_.parse.terminal_parameters.version, "v1.2", 5);
+	memcpy(parameter_.parse.terminal_parameters.version, "v1.0", 5);
 	
 	parameter_.parse.terminal_parameters.bootLoaderFlag = 0XFFFFFFFF;
 	
@@ -102,10 +102,10 @@ int FlashWrite()
 	memset(parameter_.parse.terminal_parameters.TerminalId,0, 8);
 
 	
-	memcpy(parameter_.parse.terminal_parameters.PhoneNumber, "100221000211" , 12);
-	memcpy(parameter_.parse.terminal_parameters.TerminalId, "1000211" , 8);
+	memcpy(parameter_.parse.terminal_parameters.PhoneNumber, "100211232098" , 12);
+	memcpy(parameter_.parse.terminal_parameters.TerminalId, "1232098" , 8);
 //	ff_convert(parameter_.parse.terminal_parameters.CarPlateNum,0);
-	memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "测试211", 9);
+	memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "豫A02098", 9);
 	
 	FLASH_WriteByte(FLASH_ADDR , (uint8_t*)&parameter_.parse.terminal_parameters , sizeof(parameter_.parse.terminal_parameters));	
 	printf("FLASH_Write SUCCESS!!!!!!\r\n");

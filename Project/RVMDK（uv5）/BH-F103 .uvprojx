@@ -341,7 +341,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD, USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\User\FATFS;..\..\User\FATFS\option;..\..\User\Bsp;..\..\User\nmea_decode\include;..\..\system;..\..\User\jt808\include</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\User\FATFS;..\..\User\FATFS\option;..\..\User\Bsp;..\..\User\nmea_decode\include;..\..\system;..\..\User\jt808\include;..\..\User\APP</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -610,6 +610,21 @@
               <FileType>1</FileType>
               <FilePath>..\..\User\Bsp\timer\timer.c</FilePath>
             </File>
+            <File>
+              <FileName>adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\Bsp\ADC\adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>ST7567a.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\Bsp\LCD\ST7567a.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\Bsp\RTC\rtc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -754,6 +769,16 @@
               <FileName>cc936.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\FATFS\option\cc936.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>APP</GroupName>
+          <Files>
+            <File>
+              <FileName>displayLCD.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\APP\displayLCD.c</FilePath>
             </File>
           </Files>
         </Group>

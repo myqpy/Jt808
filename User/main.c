@@ -6,6 +6,8 @@
 #include "./ec20/ec20.h"
 #include "./IWDG/iwdg.h"
 #include "./timer/timer.h"
+#include "./ADC/adc.h"
+#include "./LCD/ST7567a.h"
 
 /*********SYSTEM headers***********/
 #include "./delay/delay.h"
@@ -16,6 +18,7 @@
 /*********JT808 headers***********/
 #include "client_manager.h"
 #include "protocol_parameter.h"
+#include "displayLCD.h"
 
 extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude,
 							float *v_speed, float *v_bearing, unsigned char *v_timestamp,
@@ -46,7 +49,8 @@ int main(void)
 	float v_bearing;
 	float m_bearing;
 	unsigned char v_timestamp[13] = "700101000000"; // 1970-01-01-00-00-00.
-
+	u8 VoltageAD = 0;
+	
 	GPIO_InitTypeDef GPIO_InitStructure;
 
 	uint8_t new_parse = 0; // 是否有新的解码数据标志
@@ -61,11 +65,12 @@ int main(void)
 	
 	GPIO_SetBits(GPIOC, GPIO_Pin_1);	
 	delay_ms(1000);
-
+	
 	uart_init(115200); 
 	USART2_Init(115200);
 	GPS_Config();
-
+	Adc_Init();
+	LcdInitial();
 //	GPIO_SetBits(GPIOC, GPIO_Pin_5);	
 //	delay_ms(500);
 //	GPIO_ResetBits(GPIOC, GPIO_Pin_5);
@@ -144,28 +149,35 @@ int main(void)
 		Tim3_Int_Init(10000 - 1, 7199);
 		while (1)
 		{
-			IWDG_Feed();
-			new_parse = gpsData_Receive(&new_parse);
-
-			if (new_parse == 1)
+//			IWDG_Feed();
+			VoltageAD = (float) (Get_Adc_Average(ADC_Channel_6,10) * 3.3 /4096) ;
+			showMainMenu();
+//			new_parse = gpsData_Receive(&new_parse);
+			
+			if (VoltageAD>1.7)
 			{
-				/* 进行nmea格式解码 */
-				isNewLocationParse = nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp, new_parse);
-				updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
-				new_parse = 0;
+				system_reboot();
 			}
+//			printf("VoltageAD = %f\r\n",(float) (Get_Adc_Average(ADC_Channel_6,10) * 3.3 /4096));
+//			if (new_parse == 1)
+//			{
+//				/* 进行nmea格式解码 */
+//				isNewLocationParse = nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp, new_parse);
+//				updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
+//				new_parse = 0;
+//			}
 
-			//拐弯时上报位置数据
-			//需修改 协议为连续3s角度大于15上报
-			if ((fabs(v_bearing - m_bearing)) >= parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle)
-			{
-				m_bearing = v_bearing;
+//			//拐弯时上报位置数据
+//			//需修改 协议为连续3s角度大于15上报
+//			if ((fabs(v_bearing - m_bearing)) >= parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle)
+//			{
+//				m_bearing = v_bearing;
 
-				printf("fabs(v_bearing - m_bearing)) > %d trigger LocationReport SUCCESS\r\n", parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
-				jt808LocationReport();
-//				LocationReportCounter++;
-//				printf("m_bearing ===== %f  \r\n", m_bearing);
-			}
+//				printf("fabs(v_bearing - m_bearing)) > %d trigger LocationReport SUCCESS\r\n", parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
+//				jt808LocationReport();
+////				LocationReportCounter++;
+////				printf("m_bearing ===== %f  \r\n", m_bearing);
+//			}
 
 //			if((fabs(v_bearing - m_bearing)) >= parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle)
 //			{
@@ -225,31 +237,31 @@ int main(void)
 						USART2_RX_STA = 0;
 					}
 
-					if (parameter_.parse.msg_head.msg_id == kSetTerminalParameters)
-					{
-						printf("SetTerminalParameters parse SUCCESS!!!!\r\n ");
-						printf("\r\n");
-						jt808TerminalLogOut();
-
-						break;
-					}
-
-					if ((parameter_.parse.respone_result == kSuccess) &&(parameter_.parse.msg_head.msg_id==kTerminalUpgrade))
-					{
-						printf("kTerminalUpgrade parse SUCCESS!!!!\r\n ");
-						printf("\r\n");
-
+//					if (parameter_.parse.msg_head.msg_id == kSetTerminalParameters)
+//					{
+//						printf("SetTerminalParameters parse SUCCESS!!!!\r\n ");
+//						printf("\r\n");
 //						jt808TerminalLogOut();
-//						break;
-					}
 
-					if ((parameter_.parse.respone_result == kSuccess) && (parameter_.parse.respone_msg_id == kTerminalLogOut))
-					{
-						printf("jt808TerminalLogOut parse SUCCESS!!!! \r\n ");
-						printf("\r\n");
-						USART2_RX_STA = 0;
-						system_reboot();
-					}
+//						break;
+//					}
+
+//					if ((parameter_.parse.respone_result == kSuccess) &&(parameter_.parse.msg_head.msg_id==kTerminalUpgrade))
+//					{
+//						printf("kTerminalUpgrade parse SUCCESS!!!!\r\n ");
+//						printf("\r\n");
+
+////						jt808TerminalLogOut();
+////						break;
+//					}
+
+//					if ((parameter_.parse.respone_result == kSuccess) && (parameter_.parse.respone_msg_id == kTerminalLogOut))
+//					{
+//						printf("jt808TerminalLogOut parse SUCCESS!!!! \r\n ");
+//						printf("\r\n");
+//						USART2_RX_STA = 0;
+//						system_reboot();
+//					}
 				}
 
 				USART2_RX_STA = 0;
