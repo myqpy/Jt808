@@ -7,6 +7,7 @@
 #include "client_manager.h"
 #include "protocol_parameter.h"
 #include "terminal_register.h"
+#include "./RTC/rtc.h"
 
 // 所有终端数据打包命令.
 unsigned short kTerminalPackagerCMD[PACKAGER_NUM] = {
@@ -42,7 +43,7 @@ void bufferSendPushByte(unsigned char byte)
 
 int bufferSendPushBytes(const unsigned char *bytes, unsigned int size)
 {
-		unsigned int i;
+    unsigned int i;
     if (bytes == NULL)
     {
         return 0;
@@ -86,24 +87,24 @@ int copyU32ToU8ArrayToBufferSend(const unsigned char *u8array)
 // 终端通用应答.
 int handle_kTerminalGeneralResponse(struct ProtocolParameter *para)
 {
-    
+
 
     int msg_len = 5;
     union U16ToU8Array u16converter;
-		printf("[%s]  msg_id = 0x%04x \r\n", __FUNCTION__, kTerminalGeneralResponse);
+    printf("[%s]  msg_id = 0x%04x \r\n", __FUNCTION__, kTerminalGeneralResponse);
     // 应答消息流水号.
     u16converter.u16val = EndianSwap16(para->parse.msg_head.msg_flow_num);
     copyU16ToU8ArrayToBufferSend(u16converter.u8array);
-		printf(" flow_num == 0x%04x \r\n", para->parse.msg_head.msg_flow_num);
+    printf(" flow_num == 0x%04x \r\n", para->parse.msg_head.msg_flow_num);
 
     // 应答消息ID.
     u16converter.u16val = EndianSwap16(para->parse.msg_head.msg_id);
     copyU16ToU8ArrayToBufferSend(u16converter.u8array);
-		printf(" msg_id == 0x%04x \r\n", para->parse.msg_head.msg_id);
+    printf(" msg_id == 0x%04x \r\n", para->parse.msg_head.msg_id);
 
     // 应答结果.
     bufferSendPushByte(para->respone_result);
-		printf(" respone_result == 0x%02x \r\n", para->parse.respone_result);
+    printf(" respone_result == 0x%02x \r\n", para->parse.respone_result);
 
     return msg_len;
 }
@@ -111,18 +112,18 @@ int handle_kTerminalGeneralResponse(struct ProtocolParameter *para)
 // 终端心跳.
 int handle_kTerminalHeartBeat(struct ProtocolParameter *para)
 {
-		#ifdef __JT808_DEBUG
-			printf("[%s] <no message body>  msg_id = 0x%04x \r\n ", __FUNCTION__, kTerminalHeartBeat);
-		#endif
+#ifdef __JT808_DEBUG
+    printf("[%s] <no message body>  msg_id = 0x%04x \r\n ", __FUNCTION__, kTerminalHeartBeat);
+#endif
     return 0;
 }
 
 // 终端注册.
 int handle_kTerminalRegister(struct ProtocolParameter *para)
 {
-	int msg_len;
-	union U16ToU8Array u16converter;
-	
+    int msg_len;
+    union U16ToU8Array u16converter;
+
     printf("[%s] msg_id = 0x%04x \r\n", __FUNCTION__, kTerminalRegister);
 
     initRegisterInfo(para); //初始化注册参数
@@ -173,7 +174,7 @@ int handle_kTerminalLogOut(struct ProtocolParameter *para)
 int handle_kTerminalAuthentication(struct ProtocolParameter *para)
 {
     int msg_len = strlen(para->parse.authentication_code);
-	printf("[%s] msg_id = 0x%04x \r\n", __FUNCTION__, kTerminalAuthentication);
+    printf("[%s] msg_id = 0x%04x \r\n", __FUNCTION__, kTerminalAuthentication);
     // 鉴权码.
     bufferSendPushBytes(para->parse.authentication_code, msg_len);
 
@@ -183,139 +184,141 @@ int handle_kTerminalAuthentication(struct ProtocolParameter *para)
 // 查询终端参数应答.
 int handle_kGetTerminalParametersResponse(struct ProtocolParameter *para)
 {
-	printf("[%s] msg_id = 0x%04x\n", __FUNCTION__, kGetTerminalParametersResponse);
-	return 0;
+    printf("[%s] msg_id = 0x%04x\n", __FUNCTION__, kGetTerminalParametersResponse);
+    return 0;
 }
 
 // 终端升级结果通知.
 int handle_kTerminalUpgradeResultReport(struct ProtocolParameter *para)
 {
-	
-	int msg_len = 2;
-	int result = 0;
-	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalUpgradeResultReport);
-	bufferSendPushByte(kTerminal);              //升级类型 终端
-	msg_len += 1;
-	
-	
-	//升级结果 0成功 1失败 2取消
-	if(result == 0)
-	{
-		bufferSendPushByte(kTerminalUpgradeSuccess);
-	}
-	else if(result == 1)
-	{
-		bufferSendPushByte(kTerminalUpgradeFailed);
-	}
-	else
-	{
-		bufferSendPushByte(kTerminalUpgradeCancel);
-	}
-	msg_len += 1;
 
-	return msg_len;
+    int msg_len = 2;
+    int result = 0;
+    printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalUpgradeResultReport);
+    bufferSendPushByte(kTerminal);              //升级类型 终端
+    msg_len += 1;
+
+
+    //升级结果 0成功 1失败 2取消
+    if(result == 0)
+    {
+        bufferSendPushByte(kTerminalUpgradeSuccess);
+    }
+    else if(result == 1)
+    {
+        bufferSendPushByte(kTerminalUpgradeFailed);
+    }
+    else
+    {
+        bufferSendPushByte(kTerminalUpgradeCancel);
+    }
+    msg_len += 1;
+
+    return msg_len;
 }
 
 // 位置信息汇报.
 int handle_kLocationReport(struct ProtocolParameter *para)
 {
-	unsigned char time_bcd[6] = {0};
-	int msg_len = 28;
-	union U32ToU8Array u32converter;
-	union U16ToU8Array u16converter;
-	
-	#ifdef JT808_DEBUG
-	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kLocationReport);
-	#endif
+    unsigned char time_bcd[6] = {0};
+    int msg_len = 28;
+    union U32ToU8Array u32converter;
+    union U16ToU8Array u16converter;
 
-	// 报警标志.
-	u32converter.u32val = EndianSwap32(para->location_info.alarm.value);
-	copyU32ToU8ArrayToBufferSend(u32converter.u8array);
-	// 状态.
-	u32converter.u32val = EndianSwap32(para->location_info.status.value);
-	copyU32ToU8ArrayToBufferSend(u32converter.u8array);
-	// 纬度.
-	u32converter.u32val = EndianSwap32(para->location_info.latitude);
-	copyU32ToU8ArrayToBufferSend(u32converter.u8array);
-	// 经度.
-	u32converter.u32val = EndianSwap32(para->location_info.longitude);
-	copyU32ToU8ArrayToBufferSend(u32converter.u8array);
-	//union U16ToU8Array u16converter;
-	// 海拔高程.
-	u16converter.u16val = EndianSwap16(para->location_info.altitude);
-	copyU16ToU8ArrayToBufferSend(u16converter.u8array);
-	// 速度.
-	u16converter.u16val = EndianSwap16(para->location_info.speed);
-	copyU16ToU8ArrayToBufferSend(u16converter.u8array);
-	// 方向.
-	u16converter.u16val = EndianSwap16(para->location_info.bearing);
-	copyU16ToU8ArrayToBufferSend(u16converter.u8array);
-	
+#ifdef JT808_DEBUG
+    printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kLocationReport);
+#endif
+
+    // 报警标志.
+    u32converter.u32val = EndianSwap32(para->location_info.alarm.value);
+    copyU32ToU8ArrayToBufferSend(u32converter.u8array);
+    // 状态.
+    u32converter.u32val = EndianSwap32(para->location_info.status.value);
+    copyU32ToU8ArrayToBufferSend(u32converter.u8array);
+    // 纬度.
+    u32converter.u32val = EndianSwap32(para->location_info.latitude);
+    copyU32ToU8ArrayToBufferSend(u32converter.u8array);
+    // 经度.
+    u32converter.u32val = EndianSwap32(para->location_info.longitude);
+    copyU32ToU8ArrayToBufferSend(u32converter.u8array);
+    //union U16ToU8Array u16converter;
+    // 海拔高程.
+    u16converter.u16val = EndianSwap16(para->location_info.altitude);
+    copyU16ToU8ArrayToBufferSend(u16converter.u8array);
+    // 速度.
+    u16converter.u16val = EndianSwap16(para->location_info.speed);
+    copyU16ToU8ArrayToBufferSend(u16converter.u8array);
+    // 方向.
+    u16converter.u16val = EndianSwap16(para->location_info.bearing);
+    copyU16ToU8ArrayToBufferSend(u16converter.u8array);
+
+	sprintf(para->location_info.time,"%02d%02d%02d%02d%02d%02d",calendar.w_year,calendar.w_month,calendar.w_date,calendar.hour,calendar.min,calendar.sec);
+    printf("para->location_info.time: %s \r\n",para->location_info.time);
 	jt808StringToBcdCompress(para->location_info.time, time_bcd, strlen(para->location_info.time));
-	bufferSendPushBytes(time_bcd, 6);
-	
-	bufferSendPushByte(kNetworkQuantity); //附加信息ID 0x30
-	bufferSendPushByte(1);               //附加信息长度
-	bufferSendPushByte(0x53);              //附加信息，无线信号强度
-	msg_len += 3;
+    bufferSendPushBytes(time_bcd, 6);
 
-	bufferSendPushByte(kGnssSatellites); //附加信息ID  0x31
-	bufferSendPushByte(1);               //附加信息长度
-	bufferSendPushByte(11);              //附加信息，卫星数量
-	msg_len += 3;
+    bufferSendPushByte(kNetworkQuantity); //附加信息ID 0x30
+    bufferSendPushByte(1);               //附加信息长度
+    bufferSendPushByte(0x53);              //附加信息，无线信号强度
+    msg_len += 3;
 
-	bufferSendPushByte(kCustomInformationLength); //附加信息ID  0xe0
-	bufferSendPushByte(1);                        //附加信息长度
-	bufferSendPushByte(3);                        //附加信息，后续数据长度
-	msg_len += 3;
+    bufferSendPushByte(kGnssSatellites); //附加信息ID  0x31
+    bufferSendPushByte(1);               //附加信息长度
+    bufferSendPushByte(11);              //附加信息，卫星数量
+    msg_len += 3;
 
-	bufferSendPushByte(kPositioningStatus); //附加信息ID  0xee
-	bufferSendPushByte(1);                  //附加信息长度
-	bufferSendPushByte(2);                  //附加信息，定位解状态
-	msg_len += 3;
-	
-	return msg_len;
+    bufferSendPushByte(kCustomInformationLength); //附加信息ID  0xe0
+    bufferSendPushByte(1);                        //附加信息长度
+    bufferSendPushByte(3);                        //附加信息，后续数据长度
+    msg_len += 3;
+
+    bufferSendPushByte(kPositioningStatus); //附加信息ID  0xee
+    bufferSendPushByte(1);                  //附加信息长度
+    bufferSendPushByte(2);                  //附加信息，定位解状态
+    msg_len += 3;
+
+    return msg_len;
 }
 
 // 位置信息查询应答.
 int handle_kGetLocationInformationResponse(struct ProtocolParameter *para)
 {
     printf("[%s] msg_id = 0x%04x\n", __FUNCTION__, kGetLocationInformationResponse);
-		return 0;
+    return 0;
 }
 
 int jt808FrameBodyPackage(struct ProtocolParameter *para)
 {
     unsigned short msg_id = para->msg_head.msg_id;
-		int result = -1;
-		#ifdef __JT808_DEBUG
-			printf("[jt808FrameBodyPackage] msg_id: 0x%04x\r\n", para->msg_head.msg_id);
-    #endif
+    int result = -1;
+#ifdef __JT808_DEBUG
+    printf("[jt808FrameBodyPackage] msg_id: 0x%04x\r\n", para->msg_head.msg_id);
+#endif
 
     switch (msg_id)
     {
-        // 终端通用应答.
+    // 终端通用应答.
     case kTerminalGeneralResponse:
     {
         result = handle_kTerminalGeneralResponse(para);
     }
     break;
 
-        // 终端心跳.
+    // 终端心跳.
     case kTerminalHeartBeat:
     {
         result = handle_kTerminalHeartBeat(para);
     }
     break;
 
-        // 终端注册.
+    // 终端注册.
     case kTerminalRegister:
     {
         result = handle_kTerminalRegister(para);
     }
     break;
 
-        // 终端注销.
+    // 终端注销.
     case kTerminalLogOut:
     {
         result = handle_kTerminalLogOut(para);
@@ -367,44 +370,44 @@ int jt808FrameBodyPackage(struct ProtocolParameter *para)
 // 消息内容长度修正.
 int jt808MsgBodyLengthFix(struct MsgHead *msg_head, unsigned int msgBody_len)
 {
-	union U16ToU8Array u16converter;
-	union MsgBodyAttribute msgbody_attr;
-	if (RealBufferSendSize < 12)
-	{
-		printf("%d \r\n", RealBufferSendSize);
-		return -1;
-	}
-        
+    union U16ToU8Array u16converter;
+    union MsgBodyAttribute msgbody_attr;
+    if (RealBufferSendSize < 12)
+    {
+        printf("%d \r\n", RealBufferSendSize);
+        return -1;
+    }
+
     msgbody_attr = msg_head->msgbody_attr;
     msgbody_attr.bit.msglen = msgBody_len;
     //union U16ToU8Array u16converter;
     u16converter.u16val = EndianSwap16(msgbody_attr.u16val);
     BufferSend[3] = u16converter.u8array[0];
     BufferSend[4] = u16converter.u8array[1];
-		
-	#ifdef __JT808_DEBUG
-		printf("[%s] OK !\r\n",__FUNCTION__);
-	#endif
+
+#ifdef __JT808_DEBUG
+    printf("[%s] OK !\r\n",__FUNCTION__);
+#endif
     return 0;
 }
 
 // JT808协议转义.
 int jt808MsgEscape()
 {
-	unsigned int outBufferSize;
-	unsigned char *outBuffer;
+    unsigned int outBufferSize;
+    unsigned char *outBuffer;
     BufferSend[0] = 0x00;
     BufferSend[RealBufferSendSize - 1] = 0x00;
 
     outBufferSize = RealBufferSendSize * 2;
     outBuffer = (unsigned char *)malloc(outBufferSize);
 
-	if (Escape_C(BufferSend, RealBufferSendSize, outBuffer, &outBufferSize) < 0)
-	{
-		printf("[%s] FAILED \r\n",__FUNCTION__);
-		return -1;
-	}
-       
+    if (Escape_C(BufferSend, RealBufferSendSize, outBuffer, &outBufferSize) < 0)
+    {
+        printf("[%s] FAILED \r\n",__FUNCTION__);
+        return -1;
+    }
+
 
     *(outBuffer + 0) = PROTOCOL_SIGN;
     *(outBuffer + (outBufferSize - 1)) = PROTOCOL_SIGN;
@@ -416,11 +419,11 @@ int jt808MsgEscape()
     {
         free(outBuffer);
         outBuffer = NULL;
-				
+
     }
-	#ifdef __JT808_DEBUG
-		printf("[%s] OK !\r\n",__FUNCTION__);
-	#endif
+#ifdef __JT808_DEBUG
+    printf("[%s] OK !\r\n",__FUNCTION__);
+#endif
     return 0;
 }
 
@@ -435,7 +438,7 @@ void jt808SetFrameFlagHeader()
 int jt808FrameHeadPackage(struct MsgHead *msg_head)
 {
     union U16ToU8Array u16converter;
-	unsigned char phone_num_bcd[6]= {0};
+    unsigned char phone_num_bcd[6]= {0};
     // 1消息ID.
     u16converter.u16val = EndianSwap16(msg_head->msg_id);
     copyU16ToU8ArrayToBufferSend(u16converter.u8array);
@@ -456,7 +459,7 @@ int jt808FrameHeadPackage(struct MsgHead *msg_head)
 
     // 5封包项.
     if ((msg_head->msgbody_attr.bit.packet == 1) &&
-        (msg_head->total_packet > 1))
+            (msg_head->total_packet > 1))
     {
         u16converter.u16val = EndianSwap16(msg_head->total_packet);
 
@@ -470,28 +473,28 @@ int jt808FrameHeadPackage(struct MsgHead *msg_head)
 
 int jt808FramePackage(struct ProtocolParameter *para)
 {
-		int ret;
-		unsigned char valueCheck;
+    int ret;
+    unsigned char valueCheck;
     // 清空发送缓存，避免缓存中会有前一次的数据
     clearBufferSend();
     // 0、设置头标志位
     jt808SetFrameFlagHeader();
 
-		#ifdef __JT808_DEBUG
-			printf("[jt808SetFrameFlagHeader] OK !\r\n");	
-		#endif
-	
+#ifdef __JT808_DEBUG
+    printf("[jt808SetFrameFlagHeader] OK !\r\n");
+#endif
+
     // 1、生成消息头
     if (jt808FrameHeadPackage(&(para->msg_head)) < 0)
-		{
-			printf("jt808FrameHeadPackage FAILED \r\n");
-			return -1;
-		}
-        
-		#ifdef __JT808_DEBUG
-			printf("[jt808FrameHeadPackage] OK !\r\n");
-		#endif
-		
+    {
+        printf("jt808FrameHeadPackage FAILED \r\n");
+        return -1;
+    }
+
+#ifdef __JT808_DEBUG
+    printf("[jt808FrameHeadPackage] OK !\r\n");
+#endif
+
     // 2、封装消息内容.
     ret = jt808FrameBodyPackage(para);
 
@@ -499,27 +502,27 @@ int jt808FramePackage(struct ProtocolParameter *para)
     {
         // 3、修正消息长度.
         if (jt808MsgBodyLengthFix(&(para->msg_head), ret) < 0)
-				{
-					printf("jt808FrameHeadPackage FAILED \r\n");
-					return -1;
-				}
+        {
+            printf("jt808FrameHeadPackage FAILED \r\n");
+            return -1;
+        }
 
         // 4、获取校验码，并将其写入发送缓存.
         //valueCheck = BccCheckSum(BufferSend, RealBufferSendSize);
-		valueCheck = BccCheckSum((BufferSend+1), (RealBufferSendSize-1));//参考接收解析
+        valueCheck = BccCheckSum((BufferSend+1), (RealBufferSendSize-1));//参考接收解析
         bufferSendPushByte(valueCheck);
 
         // 5、写入发送缓存结束标识位.
         bufferSendPushByte(PROTOCOL_SIGN);
-				#ifdef __JT808_DEBUG
-					printf("[Write buffersend end PROTOCOL_SIGN] OK !\r\n");
-				#endif
+#ifdef __JT808_DEBUG
+        printf("[Write buffersend end PROTOCOL_SIGN] OK !\r\n");
+#endif
         // 6、处理转义.
         if (jt808MsgEscape() < 0)
-				{
-					printf("[jt808MsgEscape] FAILED");
-					return -1;
-				} 
+        {
+            printf("[jt808MsgEscape] FAILED");
+            return -1;
+        }
         return 0;
     }
 

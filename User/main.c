@@ -8,6 +8,8 @@
 #include "./timer/timer.h"
 #include "./ADC/adc.h"
 #include "./LCD/ST7567a.h"
+#include "./RTC/rtc.h" 		    
+
 
 /*********SYSTEM headers***********/
 #include "./delay/delay.h"
@@ -21,271 +23,177 @@
 #include "displayLCD.h"
 
 extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude,
-							float *v_speed, float *v_bearing, unsigned char *v_timestamp,
-							uint8_t new_parse);
-							
+                            float *v_speed, float *v_bearing, unsigned char *v_timestamp,
+                            uint8_t new_parse);
+
 extern uint8_t gpsData_Receive(uint8_t *new_parse);
-extern nmeaPARSER parser;      //解码时使用的数据结构  
+extern nmeaPARSER parser;      //解码时使用的数据结构
 extern nmeaINFO info;          //GPS解码后得到的信息
 
 int time_1s = 0;
 
 int main(void)
 {
-	int isTCPconnected = 0;
-	int isRegistered = 0;
-	int isAuthenticated = 0;
-	int LocationReportCounter = 0;
-	int HeartBeatCounter = 0;
+    int isTCPconnected = 0;
+    int isRegistered = 0;
+    int isAuthenticated = 0;
+    int LocationReportCounter = 0;
+    int HeartBeatCounter = 0;
 //	int CornerPointRetransmission=0;
-	int isNewLocationParse = 0;
-	unsigned int v_alarm_value = 0;
-	unsigned int v_status_value = 0;
+    int isNewLocationParse = 0;
+    unsigned int v_alarm_value = 0;
+    unsigned int v_status_value = 0;
 
-	double v_latitude;
-	double v_longitude;
-	float v_altitude;
-	float v_speed;
-	float v_bearing;
-	float m_bearing;
-	unsigned char v_timestamp[13] = "700101000000"; // 1970-01-01-00-00-00.
-	u8 VoltageAD = 0;
-	
-	GPIO_InitTypeDef GPIO_InitStructure;
+//    double v_latitude;
+//    double v_longitude;
+//    float v_altitude;
+//    float v_speed;
+//    float v_bearing;
+//    float m_bearing;
+//    unsigned char v_timestamp[13] = "700101000000"; // 1970-01-01-00-00-00.
+    u8 VoltageAD = 0;
 
-	uint8_t new_parse = 0; // 是否有新的解码数据标志
-	/* 初始化GPS数据结构 */
-	nmea_zero_INFO(&info);
-	nmea_parser_init(&parser);
+    GPIO_InitTypeDef GPIO_InitStructure;
 
-	NVIC_Configuration(); //设置NVIC中断分组2:2位抢占优先级，2位响应优先级
+//	uint8_t new_parse = 0; // 是否有新的解码数据标志
+//	/* 初始化GPS数据结构 */
+//	nmea_zero_INFO(&info);
+//	nmea_parser_init(&parser);
 
-	delay_init(); //延时函数初始化	
-	GPIO_Config(&GPIO_InitStructure); 
-	
-	GPIO_SetBits(GPIOC, GPIO_Pin_1);	
-	delay_ms(1000);
-	
-	uart_init(115200); 
-	USART2_Init(115200);
-	GPS_Config();
-	Adc_Init();
-	LcdInitial();
-//	GPIO_SetBits(GPIOC, GPIO_Pin_5);	
+    NVIC_Configuration(); //设置NVIC中断分组2:2位抢占优先级，2位响应优先级
+
+    delay_init(); //延时函数初始化
+    GPIO_Config(&GPIO_InitStructure);
+
+    GPIO_SetBits(GPIOC, GPIO_Pin_1);
+    delay_ms(1000);
+
+    uart_init(115200);
+    USART2_Init(115200);
+    GPS_Config();
+    Adc_Init();
+    LcdInitial();
+//	GPIO_SetBits(GPIOC, GPIO_Pin_5);
 //	delay_ms(500);
 //	GPIO_ResetBits(GPIOC, GPIO_Pin_5);
 
-	
-	
-	GPIO_SetBits(GPIOA, GPIO_Pin_0);
 
-	GPIO_SetBits(GPIOA, GPIO_Pin_1);	
-	delay_ms(500);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_1);
-	
-	printf("\r\n");
-	printf("SYSTEM INIT SUCCESS\r\n");
-	printf("\r\n");
 
-//	IWDG_Init(6,4095); 
-	while (1)
-	{
-		HeartBeatCounter = 0;
-		LocationReportCounter = 0;
-//		CornerPointRetransmission = 0;
-		time_1s = 0;
-		initSystemParameters(1); // //0 烧写出厂参数 1 不烧写出厂参数
-		//设置手机号（唯一识别id）
-		setUUID();
+    GPIO_SetBits(GPIOA, GPIO_Pin_0);
 
-		//连接服务器
-		if (isTCPconnected == 0)
-		{
-			if (ec20_init(parameter_.parse.terminal_parameters.MainServerAddress, parameter_.parse.terminal_parameters.ServerPort) == SUCCESS)
-			{
-				printf("server connected\r\n");
-				isTCPconnected = 1;
-				delay_ms(2000);
-			}
+    GPIO_SetBits(GPIOA, GPIO_Pin_1);
+    delay_ms(500);
+    GPIO_ResetBits(GPIOA, GPIO_Pin_1);
 
-			else
-			{
-				IPFlashWrite();
-				isTCPconnected = 0;
-				system_reboot();
-				continue;
-			}
-		}
+    printf("\r\n");
+    printf("SYSTEM INIT SUCCESS\r\n");
+    printf("\r\n");
+	RTC_Init(2000,1,1,0,0,0);	  			//RTC初始化
+//	IWDG_Init(6,4095);
+    Tim3_Int_Init(10000 - 1, 7199);
+    ReadLocation(); 						//读取3399发来的最后一条位置数据
+    while (1)
+    {
+//        showMainMenu();
+        HeartBeatCounter = 0;
+        LocationReportCounter = 0;
+        time_1s = 0;
+        initSystemParameters(1); // //0 烧写出厂参数 1 不烧写出厂参数
+        //设置手机号（唯一识别id）
+        setUUID();
 
-		//终端注册
-		if (isRegistered == 0)
-		{
-			jt808TerminalRegister(&isRegistered);
-			if (isRegistered == 0)
-			{
-//				isTCPconnected=0;
-				system_reboot();
-				continue;
-			}
-		}
+        //连接服务器
+        if (isTCPconnected == 0)
+        {
+            if (ec20_init(parameter_.parse.terminal_parameters.MainServerAddress, parameter_.parse.terminal_parameters.ServerPort) == SUCCESS)
+            {
+                printf("server connected\r\n");
+                isTCPconnected = 1;
+                delay_ms(2000);
+            }
 
-		//终端鉴权
-		if (isAuthenticated == 0)
-		{
-			jt808TerminalAuthentication(&isAuthenticated);
-			if (isAuthenticated == 0)
-			{
-//				isRegistered=0;
-//				isTCPconnected=0;
-				system_reboot();
-				continue;
-			}
-		}
+            else
+            {
+                IPFlashWrite();
+                isTCPconnected = 0;
+                system_reboot();
+                continue;
+            }
+        }
 
-		//设置位置上报警报位、状态位
-		initLocationInfo(v_alarm_value, v_status_value);
-		setStatusBit();
+        //终端注册
+        if (isRegistered == 0)
+        {
+            jt808TerminalRegister(&isRegistered);
+            if (isRegistered == 0) system_reboot();
+        }
 
-		Tim3_Int_Init(10000 - 1, 7199);
-		while (1)
-		{
+        //终端鉴权
+        if (isAuthenticated == 0)
+        {
+            jt808TerminalAuthentication(&isAuthenticated);
+            if (isAuthenticated == 0) system_reboot();           
+        }
+
+        //设置位置上报警报位、状态位
+        initLocationInfo(v_alarm_value, v_status_value);
+        setStatusBit();
+
+
+        while (1)
+        {
 //			IWDG_Feed();
-			VoltageAD = (float) (Get_Adc_Average(ADC_Channel_6,10) * 3.3 /4096) ;
-			showMainMenu();
-//			new_parse = gpsData_Receive(&new_parse);
-			
-			if (VoltageAD>1.7)
-			{
-				system_reboot();
-			}
-//			printf("VoltageAD = %f\r\n",(float) (Get_Adc_Average(ADC_Channel_6,10) * 3.3 /4096));
-//			if (new_parse == 1)
-//			{
-//				/* 进行nmea格式解码 */
-//				isNewLocationParse = nmea_decode_test(&v_latitude, &v_longitude, &v_altitude, &v_speed, &v_bearing, v_timestamp, new_parse);
-//				updateLocation(v_latitude, v_longitude, v_altitude, v_speed, v_bearing, v_timestamp);
-//				new_parse = 0;
-//			}
+            VoltageAD = (float) (Get_Adc_Average(ADC_Channel_6,10) * 3.3 /4096) ;
+            showMainMenu();
 
-//			//拐弯时上报位置数据
-//			//需修改 协议为连续3s角度大于15上报
-//			if ((fabs(v_bearing - m_bearing)) >= parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle)
-//			{
-//				m_bearing = v_bearing;
+            if (VoltageAD>1.7) system_reboot();
+            
+            //当计时器达到缺省时间上报间隔时上报位置数据
+            if (time_1s >= parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval)
+            {
+                    printf("locationReport!!!!!!!!!!!!!!!!! SUCCESS\r\n");
+                    jt808LocationReport();
+                    time_1s = 0;
+                    LocationReportCounter++;
+            }
 
-//				printf("fabs(v_bearing - m_bearing)) > %d trigger LocationReport SUCCESS\r\n", parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
-//				jt808LocationReport();
-////				LocationReportCounter++;
-////				printf("m_bearing ===== %f  \r\n", m_bearing);
-//			}
+            if (USART2_RX_STA & 0X8000)
+            {
+                USART2_RX_STA = USART2_RX_STA & 0x7FFF;
+                if ((USART2_RX_BUF[0] == 0x7e) && (USART2_RX_BUF[USART2_RX_STA - 1] == 0x7e))
+                {
+                    parsingMessage(USART2_RX_BUF, USART2_RX_STA);
+                    if ((parameter_.parse.respone_result == kSuccess) && (parameter_.parse.respone_msg_id == kLocationReport))
+                    {
+                        LocationReportCounter = 0;
+                        printf("Platform general response location report parse SUCCESS!!!!\r\n ");
+                        printf("\r\n");
+                        USART2_RX_STA = 0;
+                    }
+                }
 
-//			if((fabs(v_bearing - m_bearing)) >= parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle)
-//			{
-//				m_bearing = v_bearing;
-//				CornerPointRetransmission++;
-//				//printf("m_bearing ===== %f  \r\n", m_bearing);
-//			}
+                USART2_RX_STA = 0;
+            }
 
-//			if(CornerPointRetransmission>=3)
-//			{
-//				printf("fabs(v_bearing - m_bearing)) > %d trigger LocationReport SUCCESS\r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
-//				jt808LocationReport();
-//				CornerPointRetransmission = 0;
-//			}
+            //现行逻辑位如果上报5次未收到平台响应消息则重新连接服务器
 
-			//当计时器达到缺省时间上报间隔时上报位置数据
-			if (time_1s >= parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval)
-			{
-
-				if (isNewLocationParse == 1)
-				{
-					printf("locationReport!!!!!!!!!!!!!!!!! SUCCESS\r\n");
-					jt808LocationReport();
-					time_1s = 0;
-					LocationReportCounter++;
-					GPIO_SetBits(GPIOA, GPIO_Pin_8);
-				}
-				else
-				{
-					printf("HeartBeatReport!!!!!!!!!!!!!!!!! SUCCESS\r\n");
-					jt808TerminalHeartBeat();
-					time_1s = 0;
-					HeartBeatCounter++;
-					GPIO_ResetBits(GPIOA, GPIO_Pin_8);
-				}
-			}
-
-			if (USART2_RX_STA & 0X8000) 
-			{
-				USART2_RX_STA = USART2_RX_STA & 0x7FFF; 
-				if ((USART2_RX_BUF[0] == 0x7e) && (USART2_RX_BUF[USART2_RX_STA - 1] == 0x7e))
-				{
-					parsingMessage(USART2_RX_BUF, USART2_RX_STA); 
-					if ((parameter_.parse.respone_result == kSuccess) && (parameter_.parse.respone_msg_id == kLocationReport))
-					{
-						LocationReportCounter = 0;
-						printf("Platform general response location report parse SUCCESS!!!!\r\n ");
-						printf("\r\n");
-						USART2_RX_STA = 0;
-					}
-
-					if ((parameter_.parse.respone_result == kSuccess) && (parameter_.parse.respone_msg_id == kTerminalHeartBeat))
-					{
-						HeartBeatCounter = 0;
-						printf("jt808TerminalHeartBeat report parse SUCCESS!!!! \r\n ");
-						printf("\r\n");
-						USART2_RX_STA = 0;
-					}
-
-//					if (parameter_.parse.msg_head.msg_id == kSetTerminalParameters)
-//					{
-//						printf("SetTerminalParameters parse SUCCESS!!!!\r\n ");
-//						printf("\r\n");
-//						jt808TerminalLogOut();
-
-//						break;
-//					}
-
-//					if ((parameter_.parse.respone_result == kSuccess) &&(parameter_.parse.msg_head.msg_id==kTerminalUpgrade))
-//					{
-//						printf("kTerminalUpgrade parse SUCCESS!!!!\r\n ");
-//						printf("\r\n");
-
-////						jt808TerminalLogOut();
-////						break;
-//					}
-
-//					if ((parameter_.parse.respone_result == kSuccess) && (parameter_.parse.respone_msg_id == kTerminalLogOut))
-//					{
-//						printf("jt808TerminalLogOut parse SUCCESS!!!! \r\n ");
-//						printf("\r\n");
-//						USART2_RX_STA = 0;
-//						system_reboot();
-//					}
-				}
-
-				USART2_RX_STA = 0;
-			}
-
-			//现行逻辑位如果上报5次未收到平台响应消息则重新连接服务器
-
-			if (LocationReportCounter >= 5 || HeartBeatCounter >= 5)
-			{
-				printf("LocationReportCounter == %d \r\n", LocationReportCounter);
-				printf("HeartBeatCounter == %d \r\n", HeartBeatCounter);
-				printf("\r\n");
-				system_reboot();
-				break;
-			}
-		}
-	}
+            if (LocationReportCounter >= 5 || HeartBeatCounter >= 5)
+            {
+                printf("LocationReportCounter == %d \r\n", LocationReportCounter);
+                printf("HeartBeatCounter == %d \r\n", HeartBeatCounter);
+                printf("\r\n");
+                system_reboot();
+                break;
+            }
+        }
+    }
 }
 
 void TIM3_IRQHandler(void)
 {
-	if (TIM_GetITStatus(TIM3, TIM_IT_Update) == 1)
-	{
-		time_1s += 1;
-		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
-	}
+    if (TIM_GetITStatus(TIM3, TIM_IT_Update) == 1)
+    {
+        time_1s += 1;
+        TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
+    }
 }
