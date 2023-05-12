@@ -123,8 +123,6 @@ unsigned char BccCheckSum(const unsigned char *src, unsigned long len)
 		printf("[BccCheckSum] OK !\r\n");
 	#endif
   return checksum;
-	
-	
 }
 
 // } // namespace libjt808

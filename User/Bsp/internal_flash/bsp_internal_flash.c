@@ -1,5 +1,5 @@
-#include "bsp_internal_flash.h"   
-#include "usart.h"
+#include "./internal_flash/bsp_internal_flash.h"   
+#include "./usart/usart.h"
 #include "string.h"
 
 //int InternalFlash_Test(uint8_t Data)
