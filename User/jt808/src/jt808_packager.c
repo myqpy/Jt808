@@ -173,12 +173,21 @@ int handle_kTerminalLogOut(struct ProtocolParameter *para)
 // 终端鉴权.
 int handle_kTerminalAuthentication(struct ProtocolParameter *para)
 {
-    int msg_len = strlen(para->parse.authentication_code);
+    unsigned char msg_len = strlen(para->parse.authentication_code);
     printf("[%s] msg_id = 0x%04x \r\n", __FUNCTION__, kTerminalAuthentication);
+	// 鉴权码长度
+	bufferSendPushByte(msg_len);
+	
     // 鉴权码.
     bufferSendPushBytes(para->parse.authentication_code, msg_len);
-
-    return msg_len;
+	
+	//终端IMEI
+	bufferSendPushBytes(para->IMEI, 15);
+	
+	//软件版本号
+	bufferSendPushBytes(para->softwareVersion,20);
+	
+    return 0;
 }
 
 // 查询终端参数应答.
@@ -438,7 +447,7 @@ void jt808SetFrameFlagHeader()
 int jt808FrameHeadPackage(struct MsgHead *msg_head)
 {
     union U16ToU8Array u16converter;
-    unsigned char phone_num_bcd[6]= {0};
+    unsigned char phone_num_bcd[10]= {0};
     // 1消息ID.
     u16converter.u16val = EndianSwap16(msg_head->msg_id);
     copyU16ToU8ArrayToBufferSend(u16converter.u8array);
@@ -446,12 +455,15 @@ int jt808FrameHeadPackage(struct MsgHead *msg_head)
     // 2消息体属性.
     u16converter.u16val = EndianSwap16(msg_head->msgbody_attr.u16val);
     copyU16ToU8ArrayToBufferSend(u16converter.u8array);
+	
+	// 协议版本号
+	bufferSendPushByte(msg_head->Protocolversion);
 
     // 3终端手机号(BCD码).
     // msg_head->phone_num = "17737702736"; //测试用2022.10.25
     //unsigned char phone_num_bcd[6] = {0};
     jt808StringToBcdCompress(msg_head->phone_num, phone_num_bcd, strlen(msg_head->phone_num));
-    bufferSendPushBytes(phone_num_bcd, 6);
+    bufferSendPushBytes(phone_num_bcd, 10);
 
     // 4消息流水号.
     u16converter.u16val = EndianSwap16(msg_head->msg_flow_num);

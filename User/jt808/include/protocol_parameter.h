@@ -140,18 +140,20 @@ enum ProtocolEscapeFlag
 // 消息头.
 struct MsgHead
 {
-  // 消息ID.
-  unsigned short msg_id;
-  // 消息体属性.
-  union MsgBodyAttribute msgbody_attr;
-  // 终端手机号.
-  unsigned char phone_num[13];
-  // 消息流水号.
-  unsigned short msg_flow_num;
-  // 总包数, 分包情况下使用.
-  unsigned short total_packet;
-  // 当前包编号, 分包情况下使用.
-  unsigned short packet_seq;
+	// 消息ID.
+	unsigned short msg_id;
+	// 消息体属性.
+	union MsgBodyAttribute msgbody_attr;
+	//协议版本号
+	uint8_t Protocolversion;
+	// 终端手机号.
+	uint8_t phone_num[20];
+	// 消息流水号.
+	unsigned short msg_flow_num;
+	// 总包数, 分包情况下使用.
+	unsigned short total_packet;
+	// 当前包编号, 分包情况下使用.
+	unsigned short packet_seq;
 };
 
 // 注册信息.
@@ -164,25 +166,25 @@ struct RegisterInfo
   unsigned short city_id;
 
   // 制造商ID, 固定5个字节.
-  unsigned char manufacturer_id[5];
+  uint8_t manufacturer_id[11];
 
   // 终端型号, 固定20个字节, 位数不足后补0x00.
-  unsigned char terminal_model[20];
+  uint8_t terminal_model[30];
 
   // 终端ID, 固定7个字节, 位数不足后补0x00.
-  unsigned char terminal_id[7];
+  uint8_t terminal_id[30];
 
   // 车牌颜色, 0表示未上牌.
-  unsigned char car_plate_color;
+  uint8_t car_plate_color;
 
   // 车辆标识, 仅在上牌时使用.
-  unsigned char car_plate_num[12];
+  uint8_t car_plate_num[12];
 };
 
 //struct RegisterID
 //{
-//	unsigned char PhoneNumber[20];
-//	unsigned char TerminalId[20];
+//	uint8_t PhoneNumber[20];
+//	uint8_t TerminalId[20];
 //};
 
 // 升级类型.
@@ -211,19 +213,19 @@ enum kTerminalUpgradeResultType
 struct UpgradeInfo
 {
 	// 升级类型.
-	unsigned char upgrade_type;
+	uint8_t upgrade_type;
 	// 升级结果.
-	unsigned char upgrade_result;
+	uint8_t upgrade_result;
 	// 制造商ID, 固定5个字节.
-	unsigned char manufacturer_id[6];
+	uint8_t manufacturer_id[6];
 	//版本号长度
-	unsigned char version_id_len;
+	uint8_t version_id_len;
 	// 升级版本号.
-	unsigned char *version_id;
+	uint8_t *version_id;
 	// 升级包总长度.
 	unsigned int upgrade_data_total_len;
 	// 升级数据包.
-	unsigned char *upgrade_data;
+	uint8_t *upgrade_data;
 };
 
 // 补传分包信息.
@@ -238,7 +240,7 @@ struct FillPacket
 // 协议格式、各消息ID等相关参数.
 struct ProtocolParameter
 {
-  unsigned char respone_result;
+  uint8_t respone_result;
   unsigned short respone_msg_id;
   unsigned short respone_flow_num;
   // 消息头.
@@ -247,7 +249,13 @@ struct ProtocolParameter
   struct RegisterInfo register_info;
 //	struct RegisterID register_id;
   // 平台随机生成鉴权码.
-  unsigned char *authentication_code;
+  uint8_t *authentication_code;
+	
+	//IMEI
+	uint8_t IMEI[15];
+	//软件版本号
+	uint8_t softwareVersion[20];
+	
   // 设置终端参数项.
   struct TerminalParameters terminal_parameters;
   // 查询终端参数ID列表.
@@ -273,7 +281,7 @@ struct ProtocolParameter
   // 用于解析消息.
   struct
   {
-    unsigned char respone_result;
+    uint8_t respone_result;
     unsigned short respone_msg_id;
     unsigned short respone_flow_num;
     // 解析出的消息头.
@@ -282,7 +290,7 @@ struct ProtocolParameter
     struct RegisterInfo register_info;
     // 解析出的鉴权码.
     // 平台随机生成鉴权码.
-    unsigned char *authentication_code;
+    uint8_t *authentication_code;
     // 解析出的设置终端参数项.
     struct TerminalParameters terminal_parameters;
     // 解析出的查询终端参数ID列表.
