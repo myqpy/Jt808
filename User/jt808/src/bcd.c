@@ -67,3 +67,51 @@
     }
     return dst;
   }
+  
+  int BCD2String(char *pcBCDData, int iBCDDataLen, char *strDigitBuf, int iBufLen)
+{
+    int  iPosFlag = 0;
+    char cBCD     = 0;
+
+    if (pcBCDData==NULL || strDigitBuf==NULL)
+    {
+        printf("BCD2String: pcBCDData==NULL || strDigitBuf==NULL!\n");
+        return -1;
+    }
+	
+    if (2 * iBCDDataLen > iBufLen)
+    {
+        printf("BCD2String: 2 * iBCDDataLen(%d) > iBufLen(%d)!\n", iBCDDataLen, iBufLen);
+        return -1;
+    }
+	
+    for (iPosFlag = 0; iPosFlag < iBCDDataLen; iPosFlag++)
+    {
+        cBCD = (pcBCDData[iPosFlag] >> 4);
+        if (0x0f == cBCD)
+        {
+            break;
+        }
+        strDigitBuf[2 * iPosFlag] = cBCD + '0';
+        if (!isdigit(strDigitBuf[2 * iPosFlag]))
+        {
+            printf("BCD2String: strDigitBuf[2 * %d] is not digit!\n", iPosFlag);
+            return -2;
+        }
+
+        cBCD = (pcBCDData[iPosFlag] & 0x0f);
+        if (0x0f == cBCD)
+        {
+            break;
+        }
+        strDigitBuf[2 * iPosFlag + 1] = cBCD + '0';
+        if (!isdigit(strDigitBuf[2 * iPosFlag + 1]))
+        {
+            printf("BCD2String: strDigitBuf[2 * %d + 1] is not digit!\n", iPosFlag);
+            return -2;
+        }
+    }
+    
+    return 0;
+}
+

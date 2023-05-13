@@ -1,7 +1,5 @@
 #include "terminal_register.h"  
-#include "ff.h"
 #include "string.h"
-//#include "protocol_parameter.h"
 
 struct RegisterInfo registerInfo_;
 
@@ -18,19 +16,20 @@ void initRegisterInfo(struct ProtocolParameter *para)
 	printf("para->register_info.city_id = %04d\r\n", para->register_info.city_id);
 
 	//制造商ID
-	lenManufacturer=sizeof("XINDA");
-	lenManufacturer=(lenManufacturer>5)?5:lenManufacturer;
-
+	
+//	lenManufacturer=sizeof("410102XINDA");
+	lenManufacturer=(lenManufacturer>11)?11:lenManufacturer;
+	sprintf(para->register_info.manufacturer_id,"%03d%03dXINDA",para->register_info.province_id,para->register_info.city_id);
 	memset(para->register_info.manufacturer_id, 0, lenManufacturer);
-	memcpy(para->register_info.manufacturer_id, "XINDA", lenManufacturer);
+	memcpy(para->register_info.manufacturer_id, "410102XINDA", lenManufacturer);
 	printf("para->register_info.manufacturer_id = %s\r\n", para->register_info.manufacturer_id);
 
 	//终端型号
-	lenTModel=sizeof("ZXIAT-CZ01");
-	lenTModel=(lenTModel>20)?20:lenTModel;
+	lenTModel=sizeof("XINDA-CZ03");
+	lenTModel=(lenTModel>30)?30:lenTModel;
 	
 	memset(para->register_info.terminal_model, 0, lenTModel);
-	memcpy(para->register_info.terminal_model, "ZXIAT-CZ01", lenTModel);	
+	memcpy(para->register_info.terminal_model, "XINDA-CZ03", lenTModel);	
 	printf("para->register_info.terminal_model = %s\r\n", para->register_info.terminal_model);
 
 //	//终端ID

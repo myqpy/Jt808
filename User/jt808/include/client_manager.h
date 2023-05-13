@@ -11,7 +11,7 @@
 //#include "./sys/sys.h"
 
 
-//#define __JT808_DEBUG
+#define __JT808_DEBUG
 #define FLASH_ADDR (uint32_t)0x08034000
 #define FLASH_GPS_ADDR (uint32_t)0x08034800
 #define FLASH_BUFFER_SIZE 128

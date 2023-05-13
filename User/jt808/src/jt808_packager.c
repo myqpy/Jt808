@@ -4,7 +4,6 @@
 #include "util.h"
 #include "bcd.h"
 #include "terminal_parameter.h"
-#include "client_manager.h"
 #include "protocol_parameter.h"
 #include "terminal_register.h"
 #include "./RTC/rtc.h"
@@ -128,7 +127,7 @@ int handle_kTerminalRegister(struct ProtocolParameter *para)
 
     initRegisterInfo(para); //初始化注册参数
 
-    msg_len= 37;
+    msg_len= 76;
 
     // 省域ID.
     u16converter.u16val = EndianSwap16(para->register_info.province_id);
@@ -173,21 +172,26 @@ int handle_kTerminalLogOut(struct ProtocolParameter *para)
 // 终端鉴权.
 int handle_kTerminalAuthentication(struct ProtocolParameter *para)
 {
-    unsigned char msg_len = strlen(para->parse.authentication_code);
+	uint32_t msg_len=0;
+    int length = strlen(para->parse.authentication_code);
     printf("[%s] msg_id = 0x%04x \r\n", __FUNCTION__, kTerminalAuthentication);
 	// 鉴权码长度
-	bufferSendPushByte(msg_len);
+	bufferSendPushByte(length);
+	msg_len++;
 	
     // 鉴权码.
-    bufferSendPushBytes(para->parse.authentication_code, msg_len);
+    bufferSendPushBytes(para->parse.authentication_code, length);
+	msg_len+=length;
 	
 	//终端IMEI
 	bufferSendPushBytes(para->IMEI, 15);
+	msg_len+=15;
 	
 	//软件版本号
 	bufferSendPushBytes(para->softwareVersion,20);
+	msg_len+=20;
 	
-    return 0;
+    return length;
 }
 
 // 查询终端参数应答.
@@ -377,7 +381,7 @@ int jt808FrameBodyPackage(struct ProtocolParameter *para)
 }
 
 // 消息内容长度修正.
-int jt808MsgBodyLengthFix(struct MsgHead *msg_head, unsigned int msgBody_len)
+int jt808MsgBodyLengthFix(struct ProtocolParameter *para, unsigned int msgBody_len)
 {
     union U16ToU8Array u16converter;
     union MsgBodyAttribute msgbody_attr;
@@ -387,7 +391,7 @@ int jt808MsgBodyLengthFix(struct MsgHead *msg_head, unsigned int msgBody_len)
         return -1;
     }
 
-    msgbody_attr = msg_head->msgbody_attr;
+    msgbody_attr = para->msg_head.msgbody_attr;
     msgbody_attr.bit.msglen = msgBody_len;
     //union U16ToU8Array u16converter;
     u16converter.u16val = EndianSwap16(msgbody_attr.u16val);
@@ -444,43 +448,54 @@ void jt808SetFrameFlagHeader()
     bufferSendChangeByte(PROTOCOL_SIGN, 0);
 }
 
-int jt808FrameHeadPackage(struct MsgHead *msg_head)
+int jt808FrameHeadPackage(struct ProtocolParameter *para)
 {
+	int msg_len;
     union U16ToU8Array u16converter;
     unsigned char phone_num_bcd[10]= {0};
     // 1消息ID.
-    u16converter.u16val = EndianSwap16(msg_head->msg_id);
+    u16converter.u16val = EndianSwap16(para->msg_head.msg_id);
     copyU16ToU8ArrayToBufferSend(u16converter.u8array);
+	msg_len+=2;
 
     // 2消息体属性.
-    u16converter.u16val = EndianSwap16(msg_head->msgbody_attr.u16val);
+	para->msg_head.msgbody_attr.bit.pVersion = 1;
+    u16converter.u16val = EndianSwap16(para->msg_head.msgbody_attr.u16val);
     copyU16ToU8ArrayToBufferSend(u16converter.u8array);
+	msg_len+=2;
 	
 	// 协议版本号
-	bufferSendPushByte(msg_head->Protocolversion);
+	bufferSendPushByte(para->msg_head.Protocolversion);
+	msg_len++;
 
     // 3终端手机号(BCD码).
     // msg_head->phone_num = "17737702736"; //测试用2022.10.25
     //unsigned char phone_num_bcd[6] = {0};
-    jt808StringToBcdCompress(msg_head->phone_num, phone_num_bcd, strlen(msg_head->phone_num));
-    bufferSendPushBytes(phone_num_bcd, 10);
+//	memcpy(para->msg_head.phone_num,"00000000100211232019",20);
+	printf("para->register_info.phone_num = %s\r\n", para->msg_head.phone_num);
+    jt808StringToBcdCompress(para->msg_head.phone_num, phone_num_bcd, strlen(para->msg_head.phone_num));
+	bufferSendPushBytes(phone_num_bcd, 10);
+	msg_len+=10;
 
     // 4消息流水号.
-    u16converter.u16val = EndianSwap16(msg_head->msg_flow_num);
+    u16converter.u16val = EndianSwap16(para->msg_head.msg_flow_num);
     bufferSendPushBytes(u16converter.u8array, 2);
+	msg_len+=2;
 
     // 5封包项.
-    if ((msg_head->msgbody_attr.bit.packet == 1) &&
-            (msg_head->total_packet > 1))
+    if ((para->msg_head.msgbody_attr.bit.packet == 1) &&
+            (para->msg_head.total_packet > 1))
     {
-        u16converter.u16val = EndianSwap16(msg_head->total_packet);
+        u16converter.u16val = EndianSwap16(para->msg_head.total_packet);
 
         bufferSendPushBytes(u16converter.u8array, 2);
+		msg_len+=2;
 
-        u16converter.u16val = EndianSwap16(msg_head->packet_seq);
+        u16converter.u16val = EndianSwap16(para->msg_head.packet_seq);
         bufferSendPushBytes(u16converter.u8array, 2);
+		msg_len+=2;
     }
-    return 0;
+    return msg_len;
 }
 
 int jt808FramePackage(struct ProtocolParameter *para)
@@ -497,7 +512,7 @@ int jt808FramePackage(struct ProtocolParameter *para)
 #endif
 
     // 1、生成消息头
-    if (jt808FrameHeadPackage(&(para->msg_head)) < 0)
+    if (jt808FrameHeadPackage(para) < 0)
     {
         printf("jt808FrameHeadPackage FAILED \r\n");
         return -1;
@@ -513,7 +528,7 @@ int jt808FramePackage(struct ProtocolParameter *para)
     if (ret >= 0)
     {
         // 3、修正消息长度.
-        if (jt808MsgBodyLengthFix(&(para->msg_head), ret) < 0)
+        if (jt808MsgBodyLengthFix(para, ret) < 0)
         {
             printf("jt808FrameHeadPackage FAILED \r\n");
             return -1;

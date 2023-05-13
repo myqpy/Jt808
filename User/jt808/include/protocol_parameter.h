@@ -115,8 +115,10 @@ union MsgBodyAttribute
     unsigned short encrypt : 3;
     // 分包标记.
     unsigned short packet : 1;
-    // 保留2位.
-    unsigned short retain : 2;
+	//版本标识
+	unsigned short pVersion : 1;
+    // 保留1位.
+    unsigned short retain : 1;
   } bit;
   unsigned short u16val;
 };
@@ -124,8 +126,8 @@ union MsgBodyAttribute
 // 消息内容起始位置.
 enum MsgBodyPos
 {
-  MSGBODY_NOPACKET_POS = 13, // 短消息体消息内容起始位置.SMS
-  MSGBODY_PACKET_POS = 17,   // 长消息体消息内容起始位置.
+  MSGBODY_NOPACKET_POS = 18, // 短消息体消息内容起始位置.SMS
+  MSGBODY_PACKET_POS = 22,   // 长消息体消息内容起始位置.
 };
 
 // 转义相关标识.
@@ -249,7 +251,7 @@ struct ProtocolParameter
   struct RegisterInfo register_info;
 //	struct RegisterID register_id;
   // 平台随机生成鉴权码.
-  uint8_t *authentication_code;
+  uint8_t authentication_code[40];
 	
 	//IMEI
 	uint8_t IMEI[15];
@@ -290,7 +292,7 @@ struct ProtocolParameter
     struct RegisterInfo register_info;
     // 解析出的鉴权码.
     // 平台随机生成鉴权码.
-    uint8_t *authentication_code;
+    uint8_t authentication_code[40];
     // 解析出的设置终端参数项.
     struct TerminalParameters terminal_parameters;
     // 解析出的查询终端参数ID列表.

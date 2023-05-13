@@ -1,10 +1,6 @@
 #ifndef JT808_TERMINAL_REGISTER_H_
 #define JT808_TERMINAL_REGISTER_H_
 
-
-#include <stdio.h>
-#include <stdlib.h>
-//#include <memory.h>
 #include <string.h>
 #include "protocol_parameter.h"
 

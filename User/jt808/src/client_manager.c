@@ -82,7 +82,7 @@ int FlashWrite()
 
     memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
 
-	// 研究院平台
+    // 研究院平台
     memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"124.222.183.168", sizeof("124.222.183.168"));
 //	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"http://jt808.gps.ciicp.com", sizeof("http://jt808.gps.ciicp.com"));
 
@@ -116,10 +116,10 @@ int FlashWrite()
     memset(parameter_.parse.terminal_parameters.TerminalId,0, 8);
 
 
-    memcpy(parameter_.parse.terminal_parameters.PhoneNumber, "100211232098", 12);
-    memcpy(parameter_.parse.terminal_parameters.TerminalId, "1232098", 8);
+    memcpy(parameter_.parse.terminal_parameters.PhoneNumber, "00000000100211232019", 20);
+    memcpy(parameter_.parse.terminal_parameters.TerminalId, "1232019", 8);
 //	ff_convert(parameter_.parse.terminal_parameters.CarPlateNum,0);
-    memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "豫A02098", 9);
+    memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "测试2019", 9);
 
     FLASH_WriteByte(FLASH_ADDR, (uint8_t*)&parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
     printf("FLASH_Write SUCCESS!!!!!!\r\n");
@@ -157,7 +157,7 @@ void setUUID(void)
 {
     Internal_ReadFlash(FLASH_ADDR, (uint8_t *) &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
 
-    setTerminalPhoneNumber(parameter_.parse.terminal_parameters.PhoneNumber, 12);
+    setTerminalPhoneNumber(parameter_.parse.terminal_parameters.PhoneNumber, 20);
     setTerminalId(parameter_.parse.terminal_parameters.TerminalId, 8);
 
 }
@@ -175,9 +175,8 @@ void boot_loader_flag()
 /// @param phone
 void setTerminalPhoneNumber(unsigned char *phone_num, unsigned int phoneSize)
 {
-    memset(parameter_.msg_head.phone_num, 0, 13);
-    memcpy(parameter_.msg_head.phone_num, phone_num, phoneSize);
-//	parameter_.msg_head.phone_num = (unsigned char *)phone_num;
+	memset(parameter_.msg_head.phone_num, 0, 20);
+    memcpy(parameter_.msg_head.phone_num, phone_num, 20);
     printf("parameter_.msg_head.phone_num = %s\r\n", parameter_.msg_head.phone_num);
 }
 
@@ -307,9 +306,17 @@ int findParameterIDFromArray(unsigned int para_id)
 int jt808TerminalRegister(int *isRegistered)
 {
     int i=0;
+    uint8_t j=0;
     while(i<3)
     {
         packagingMessage(kTerminalRegister);
+#ifdef __JT808_DEBUG
+        for(j=0; j<RealBufferSendSize; j++)
+        {
+            printf("%02x ",BufferSend[j]);
+        }
+        printf("\r\n");
+#endif
         Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
         delay_ms(1000);
 
@@ -329,7 +336,7 @@ int jt808TerminalRegister(int *isRegistered)
         }
         USART2_RX_STA=0;
         printf("\r\n");
-        printf("TerminalRegister SUCCESS!!!!!!\r\n");
+        printf("TerminalRegister FAILED!!!!!!\r\n");
         printf("\r\n");
         i++;
     }
@@ -342,9 +349,19 @@ int jt808TerminalRegister(int *isRegistered)
 int jt808TerminalAuthentication(int *isAuthenticated)
 {
     int i=0;
+	uint8_t j=0;
     while(i<3)
     {
         packagingMessage(kTerminalAuthentication);
+
+#ifdef __JT808_DEBUG
+        for(j=0; j<RealBufferSendSize; j++)
+        {
+            printf("%02x ",BufferSend[j]);
+        }
+        printf("\r\n");
+#endif
+		
         Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
         delay_ms(1000);
 
