@@ -43,7 +43,7 @@ int main(void)
     int isNewLocationParse = 0;
     unsigned int v_alarm_value = 0;
     unsigned int v_status_value = 0;
-
+	uint8_t ACC = 0;
 //    double v_latitude;
 //    double v_longitude;
 //    float v_altitude;
@@ -98,7 +98,7 @@ int main(void)
         HeartBeatCounter = 0;
         LocationReportCounter = 0;
         time_1s = 0;
-        initSystemParameters(0); // //0 烧写出厂参数 1 不烧写出厂参数
+        initSystemParameters(1); // //0 烧写出厂参数 1 不烧写出厂参数
         //设置手机号（唯一识别id）
         setUUID();
 
@@ -152,9 +152,19 @@ int main(void)
         {
 //			IWDG_Feed();
             VoltageAD = (float) (Get_Adc_Average(ADC_Channel_6,10) * 3.3 /4096) ;
+			ACC = (GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_0));
             showMainMenu();
 
-            if (VoltageAD>1.7) system_reboot();
+            if (VoltageAD>1.7) parameter_.location_info.alarm.bit.power_low =1;
+			else parameter_.location_info.alarm.bit.power_low = 1;
+			
+			/*车辆熄火*/
+			if(ACC == 0) parameter_.location_info.alarm.bit.power_cut = 1;
+			else parameter_.location_info.alarm.bit.power_cut = 0;
+			
+			if((VoltageAD>1.7)&& (ACC == 0)) system_reboot();
+			
+			
             
             //当计时器达到缺省时间上报间隔时上报位置数据
             if (time_1s >= parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval)
@@ -163,6 +173,7 @@ int main(void)
                     jt808LocationReport();
                     time_1s = 0;
                     LocationReportCounter++;
+				printf("%x%x\r\n", VoltageAD, ACC);
             }
 
             if (USART2_RX_STA & 0X8000)

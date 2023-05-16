@@ -116,10 +116,10 @@ int FlashWrite()
     memset(parameter_.parse.terminal_parameters.TerminalId,0, 8);
 
 
-    memcpy(parameter_.parse.terminal_parameters.PhoneNumber, "00000000100211232019", 20);
-    memcpy(parameter_.parse.terminal_parameters.TerminalId, "1232019", 8);
+    memcpy(parameter_.parse.terminal_parameters.PhoneNumber, "00000000100211603908", 20);
+    memcpy(parameter_.parse.terminal_parameters.TerminalId, "1603908", 8);
 //	ff_convert(parameter_.parse.terminal_parameters.CarPlateNum,0);
-    memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "²âÊÔ2019", 9);
+    memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "Ô¥A3908X", 9);
 
     FLASH_WriteByte(FLASH_ADDR, (uint8_t*)&parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
     printf("FLASH_Write SUCCESS!!!!!!\r\n");
@@ -131,10 +131,10 @@ int FlashWrite()
 int IPFlashWrite()
 {
     memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
-    memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
+    memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"124.222.183.168", sizeof("124.222.183.168"));
 //	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
 
-    parameter_.parse.terminal_parameters.ServerPort = 17611;
+    parameter_.parse.terminal_parameters.ServerPort = 7611;
 
     parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 5;
 

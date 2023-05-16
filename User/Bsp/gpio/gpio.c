@@ -35,6 +35,12 @@ void GPIO_Config(GPIO_InitTypeDef *GPIO_InitStructure)
 	GPIO_InitStructure->GPIO_Speed = GPIO_Speed_50MHz;		 
 	GPIO_Init(GPIOF, GPIO_InitStructure);
 	
+	//PD-0 init
+	RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOD ,ENABLE);
+	GPIO_InitStructure->GPIO_Pin  = GPIO_Pin_0;
+	GPIO_InitStructure->GPIO_Mode = GPIO_Mode_IPU; //设置成上拉输入
+ 	GPIO_Init(GPIOD, GPIO_InitStructure);
+	
 	//PD-2 init
 //	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;	    		 
 //	GPIO_Init(GPIOD, &GPIO_InitStructure);	  				 
