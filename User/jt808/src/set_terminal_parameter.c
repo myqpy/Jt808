@@ -3,6 +3,7 @@
 #include "client_manager.h"
 
 unsigned short kParameterSettingCMD[PARA_SETTING_LIMIT] = {
+	
 	kTerminalHeartBeatInterval, // DWORD, 终端心跳发送间隔(s).
 	kMainServerAddress,//STRING, 主服务器地址,IP 或域名
 	kServerPort,//DWORD, 服务器 TCP 端口		

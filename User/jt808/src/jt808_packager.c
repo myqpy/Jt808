@@ -264,8 +264,8 @@ int handle_kLocationReport(struct ProtocolParameter *para)
     // 方向.
     u16converter.u16val = EndianSwap16(para->location_info.bearing);
     copyU16ToU8ArrayToBufferSend(u16converter.u8array);
-
-	sprintf(para->location_info.time,"%02d%02d%02d%02d%02d%02d",calendar.w_year,calendar.w_month,calendar.w_date,calendar.hour,calendar.min,calendar.sec);
+//	calendar.w_year = calendar.w_year - 2000;
+	sprintf(para->location_info.time,"%02d%02d%02d%02d%02d%02d",calendar.w_year-2000,calendar.w_month,calendar.w_date,calendar.hour,calendar.min,calendar.sec);
     printf("para->location_info.time: %s \r\n",para->location_info.time);
 	jt808StringToBcdCompress(para->location_info.time, time_bcd, strlen(para->location_info.time));
     bufferSendPushBytes(time_bcd, 6);
@@ -472,7 +472,7 @@ int jt808FrameHeadPackage(struct ProtocolParameter *para)
     // msg_head->phone_num = "17737702736"; //测试用2022.10.25
     //unsigned char phone_num_bcd[6] = {0};
 //	memcpy(para->msg_head.phone_num,"00000000100211232019",20);
-	printf("para->register_info.phone_num = %s\r\n", para->msg_head.phone_num);
+//	printf("para->register_info.phone_num = %s\r\n", para->msg_head.phone_num);
     jt808StringToBcdCompress(para->msg_head.phone_num, phone_num_bcd, strlen(para->msg_head.phone_num));
 	bufferSendPushBytes(phone_num_bcd, 10);
 	msg_len+=10;

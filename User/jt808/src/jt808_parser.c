@@ -205,25 +205,20 @@ int handle_kSetTerminalParameters(struct ProtocolParameter *para)
 	jt808TerminalGeneralResponse();
 	
 	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kSetTerminalParameters);
-	if (para == NULL){
-			return -1;
-	}
+	if (para == NULL) return -1;
+	
 	pos = MSGBODY_NOPACKET_POS;
-	if (para->parse.msg_head.msgbody_attr.bit.packet == 1){
-			pos = MSGBODY_PACKET_POS;
-	}
+	if (para->parse.msg_head.msgbody_attr.bit.packet == 1) pos = MSGBODY_PACKET_POS;
+	
 	msg_len = para->parse.msg_head.msgbody_attr.bit.msglen;
-	if (msg_len < 1){
-			return -1;
-	}
+	if (msg_len < 1) return -1;
+	
 	// 解析设置的参数总个数.
 	cnt = BufferReceive[pos];
 	pos++;
 
-	if(cnt<=0)
-	{
-		return -1;
-	}
+	if(cnt<=0) return -1;
+	
 
 	for(i=0;i<cnt;++i)
 	{
@@ -235,10 +230,8 @@ int handle_kSetTerminalParameters(struct ProtocolParameter *para)
 		isFind=findParameterIDFromArray(p_id);
 		len=BufferReceive[pos];
 		pos++;
-		if(isFind==1)
-		{
-			jt808ParameterSettingParse(p_id,(BufferReceive+pos),len,para);
-		}
+		if(isFind==1) jt808ParameterSettingParse(p_id,(BufferReceive+pos),len,para);
+		
 		pos+=len;
 	}
 	

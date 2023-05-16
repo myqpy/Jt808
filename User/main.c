@@ -94,8 +94,7 @@ int main(void)
     ReadLocation(); 						//读取3399发来的最后一条位置数据
     while (1)
     {
-//        showMainMenu();
-        HeartBeatCounter = 0;
+//        HeartBeatCounter = 0;
         LocationReportCounter = 0;
         time_1s = 0;
         initSystemParameters(1); // //0 烧写出厂参数 1 不烧写出厂参数
@@ -169,11 +168,11 @@ int main(void)
             //当计时器达到缺省时间上报间隔时上报位置数据
             if (time_1s >= parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval)
             {
-                    printf("locationReport!!!!!!!!!!!!!!!!! SUCCESS\r\n");
-                    jt808LocationReport();
-                    time_1s = 0;
-                    LocationReportCounter++;
-				printf("%x%x\r\n", VoltageAD, ACC);
+				printf("locationReport!!!!!!!!!!!!!!!!! SUCCESS\r\n");
+				jt808LocationReport();
+				time_1s = 0;
+				LocationReportCounter++;
+//				printf("%x%x\r\n", VoltageAD, ACC);
             }
 
             if (USART2_RX_STA & 0X8000)
@@ -190,6 +189,17 @@ int main(void)
                         USART2_RX_STA = 0;
                     }
                 }
+				
+				if(parameter_.parse.msg_head.msg_id==kSetTerminalParameters)
+				{
+					printf("\r\n");
+					printf("SetTerminalParameters parse SUCCESS!!!!\r\n ");
+					printf("\r\n");
+
+					jt808TerminalLogOut();
+					
+					break;
+				}
 
                 USART2_RX_STA = 0;
             }

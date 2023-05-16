@@ -306,7 +306,7 @@ int findParameterIDFromArray(unsigned int para_id)
 int jt808TerminalRegister(int *isRegistered)
 {
     int i=0;
-    uint8_t j=0;
+//    uint8_t j=0;
     while(i<3)
     {
         packagingMessage(kTerminalRegister);
@@ -349,18 +349,18 @@ int jt808TerminalRegister(int *isRegistered)
 int jt808TerminalAuthentication(int *isAuthenticated)
 {
     int i=0;
-	uint8_t j=0;
+//	uint8_t j=0;
     while(i<3)
     {
         packagingMessage(kTerminalAuthentication);
 
-#ifdef __JT808_DEBUG
-        for(j=0; j<RealBufferSendSize; j++)
-        {
-            printf("%02x ",BufferSend[j]);
-        }
-        printf("\r\n");
-#endif
+//#ifdef __JT808_DEBUG
+//        for(j=0; j<RealBufferSendSize; j++)
+//        {
+//            printf("%02x ",BufferSend[j]);
+//        }
+//        printf("\r\n");
+//#endif
 		
         Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
         delay_ms(1000);

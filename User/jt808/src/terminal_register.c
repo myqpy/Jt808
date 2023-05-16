@@ -19,7 +19,7 @@ void initRegisterInfo(struct ProtocolParameter *para)
 	
 //	lenManufacturer=sizeof("410102XINDA");
 	lenManufacturer=(lenManufacturer>11)?11:lenManufacturer;
-	sprintf(para->register_info.manufacturer_id,"%03d%03dXINDA",para->register_info.province_id,para->register_info.city_id);
+//	sprintf(para->register_info.manufacturer_id,"%03d%03dXINDA",para->register_info.province_id,para->register_info.city_id);
 	memset(para->register_info.manufacturer_id, 0, lenManufacturer);
 	memcpy(para->register_info.manufacturer_id, "410102XINDA", lenManufacturer);
 	printf("para->register_info.manufacturer_id = %s\r\n", para->register_info.manufacturer_id);
