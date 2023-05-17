@@ -259,6 +259,7 @@ int handle_kLocationReport(struct ProtocolParameter *para)
     u16converter.u16val = EndianSwap16(para->location_info.altitude);
     copyU16ToU8ArrayToBufferSend(u16converter.u8array);
     // 速度.
+	para->location_info.speed = 10;
     u16converter.u16val = EndianSwap16(para->location_info.speed);
     copyU16ToU8ArrayToBufferSend(u16converter.u8array);
     // 方向.

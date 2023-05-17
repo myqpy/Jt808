@@ -306,7 +306,7 @@ int findParameterIDFromArray(unsigned int para_id)
 int jt808TerminalRegister(int *isRegistered)
 {
     int i=0;
-//    uint8_t j=0;
+    uint8_t j=0;
     while(i<3)
     {
         packagingMessage(kTerminalRegister);
@@ -349,7 +349,7 @@ int jt808TerminalRegister(int *isRegistered)
 int jt808TerminalAuthentication(int *isAuthenticated)
 {
     int i=0;
-//	uint8_t j=0;
+	uint8_t j=0;
     while(i<3)
     {
         packagingMessage(kTerminalAuthentication);
