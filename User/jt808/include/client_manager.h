@@ -3,17 +3,13 @@
 //#ifndef JT808_CLIENT_MANAGER_H_
 //#define JT808_CLIENT_MANAGER_H_
 
-
-
-//#include <stdio.h>
-//#include <stdint.h>
-//#include <stdlib.h>
-//#include "./sys/sys.h"
+#include "./sys/sys.h"
 
 
 //#define __JT808_DEBUG
 #define FLASH_ADDR (uint32_t)0x08034000
 #define FLASH_GPS_ADDR (uint32_t)0x08034800
+#define FLASH_WakeUp_ADDR (uint32_t)0x08035000
 #define FLASH_BUFFER_SIZE 128
 
 
@@ -68,4 +64,7 @@ void updateLocation(double const v_latitude, double const v_longitude, float con
                     float const v_speed, float const v_bearing, unsigned char *v_timestamp);
 void boot_loader_flag(void);
 void ReadLocation(void);
+void ReadWakeUp(void);
+void MENU_processing(uint8_t Condition);
+int WakeUpIntervalDetect(void);
 //#endif // JT808_CLIENT_MANAGER_H_

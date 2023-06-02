@@ -15,7 +15,7 @@ extern unsigned char car_IO_status[][24];
 extern unsigned char changeLoadingStatus[][24];
 
 void LCD_Clear(void);
-void showMainMenu(void);
+int showMainMenu(void);
 void displayEmpty(unsigned char page,unsigned char CaddrH,unsigned char CaddrL);
 void displayChinese_16x16(unsigned char page,unsigned char CaddrH,unsigned char CaddrL,unsigned char arr[][24],unsigned char startWord, unsigned char endWord);
 

@@ -346,6 +346,87 @@ int handle_kGetLocationInformation(struct ProtocolParameter *para)
 	return 0;
 }
 
+//–›√ﬂªΩ–—ƒ£ Ω ˝æ›.
+int handle_kWakeUp(struct ProtocolParameter *para)
+{
+	uint8_t pos;
+	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalUpgrade);
+	
+	if (para == NULL)
+	{
+		return -1;
+	}
+	pos = MSGBODY_NOPACKET_POS;
+	if (para->parse.msg_head.msgbody_attr.bit.packet == 1)
+	{
+		pos = MSGBODY_PACKET_POS;
+	}
+	
+	jt808TerminalGeneralResponse();
+	
+//	para->parse.WakeUp.WakeUpMode.value = BufferReceive[pos];
+	pos++;
+	
+	para->parse.WakeUp.WakeUpConditonType.value = BufferReceive[pos];
+	pos++;
+	
+	para->parse.WakeUp.setWakeUpDay.value = BufferReceive[pos];
+	pos++;
+	
+	para->parse.WakeUp.WakeUpDay.timeWakeUpFlag.value = BufferReceive[pos];
+	pos++;
+	
+	para->parse.WakeUp.WakeUpDay.time1WakeUpTime.HH = BcdToHex(BufferReceive[pos]);
+	pos++;
+	
+	para->parse.WakeUp.WakeUpDay.time1WakeUpTime.MM = BcdToHex(BufferReceive[pos]);
+	pos++;
+	
+	para->parse.WakeUp.WakeUpDay.time1ShutDownTime.HH = BcdToHex(BufferReceive[pos]);
+	pos++;
+	
+	para->parse.WakeUp.WakeUpDay.time1ShutDownTime.MM = BcdToHex(BufferReceive[pos]);
+	pos++;
+	
+	para->parse.WakeUp.WakeUpDay.time2WakeUpTime.HH = BcdToHex(BufferReceive[pos]);
+	pos++;
+	
+	para->parse.WakeUp.WakeUpDay.time2WakeUpTime.MM = BcdToHex(BufferReceive[pos]);
+	pos++;
+	
+	para->parse.WakeUp.WakeUpDay.time2ShutDownTime.HH = BcdToHex(BufferReceive[pos]);
+	pos++;
+	
+	para->parse.WakeUp.WakeUpDay.time2ShutDownTime.MM = BcdToHex(BufferReceive[pos]);
+	pos++;
+	
+	para->parse.WakeUp.WakeUpDay.time3WakeUpTime.HH = BcdToHex(BufferReceive[pos]);
+	pos++;
+	
+	para->parse.WakeUp.WakeUpDay.time3WakeUpTime.MM = BcdToHex(BufferReceive[pos]);
+	pos++;
+	
+	para->parse.WakeUp.WakeUpDay.time3ShutDownTime.HH = BcdToHex(BufferReceive[pos]);
+	pos++;
+	
+	para->parse.WakeUp.WakeUpDay.time3ShutDownTime.MM = BcdToHex(BufferReceive[pos]);
+	pos++;
+	
+	para->parse.WakeUp.WakeUpDay.time4WakeUpTime.HH = BcdToHex(BufferReceive[pos]);
+	pos++;
+	
+	para->parse.WakeUp.WakeUpDay.time4WakeUpTime.MM = BcdToHex(BufferReceive[pos]);
+	pos++;
+	
+	para->parse.WakeUp.WakeUpDay.time4ShutDownTime.HH = BcdToHex(BufferReceive[pos]);
+	pos++;
+	
+	para->parse.WakeUp.WakeUpDay.time4ShutDownTime.MM = BcdToHex(BufferReceive[pos]);
+	pos++;
+	
+	return pos;
+}
+
 int jt808FrameBodyParse(struct ProtocolParameter *para)
 {
 	unsigned short msg_id = para->parse.msg_head.msg_id;
@@ -417,6 +498,13 @@ int jt808FrameBodyParse(struct ProtocolParameter *para)
 	case kGetLocationInformation:
 	{
 		result = handle_kGetLocationInformation(para);
+	}
+	break;
+	
+	//÷’∂ÀªΩ–—
+	case kWakeUp:
+	{
+		result = handle_kWakeUp(para);
 	}
 	break;
 

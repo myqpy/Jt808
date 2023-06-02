@@ -9,7 +9,8 @@
 #include "./ADC/adc.h"
 #include "./LCD/ST7567a.h"
 #include "./RTC/rtc.h" 		    
-
+#include "./internal_flash/bsp_internal_flash.h"
+#include "./key/key.h"
 
 /*********SYSTEM headers***********/
 #include "./delay/delay.h"
@@ -44,6 +45,13 @@ int main(void)
     unsigned int v_alarm_value = 0;
     unsigned int v_status_value = 0;
 	uint8_t ACC = 0;
+	uint8_t doorOpen = 0;
+	uint8_t messageReceived = 0;
+	
+	uint8_t WakeUpbyCondition;
+	uint8_t WakeUpbyTime;
+	uint8_t WakeUpbyManual;
+	
 //    double v_latitude;
 //    double v_longitude;
 //    float v_altitude;
@@ -91,7 +99,16 @@ int main(void)
 	RTC_Init(2000,1,1,0,0,0);	  			//RTC初始化
 //	IWDG_Init(6,4095);
     Tim3_Int_Init(10000 - 1, 7199);
+	Tim5_Int_Init(9, 7199);	//定时计数器，一毫秒
+	KEY_Init();
     ReadLocation(); 						//读取3399发来的最后一条位置数据
+	ReadWakeUp();
+	
+	WakeUpbyCondition = parameter_.parse.WakeUp.WakeUpMode.bit.conditionWakeUp;
+	WakeUpbyTime = parameter_.parse.WakeUp.WakeUpMode.bit.timeWakeUp;
+	WakeUpbyManual = parameter_.parse.WakeUp.WakeUpMode.bit.manualWakeUp;
+	parameter_.parse.WakeUp.WakeUpMode.value = 0;
+	
     while (1)
     {
 //        HeartBeatCounter = 0;
@@ -152,7 +169,7 @@ int main(void)
 //			IWDG_Feed();
             VoltageAD = (float) (Get_Adc_Average(ADC_Channel_6,10) * 3.3 /4096) ;
 			ACC = (GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_0));
-            showMainMenu();
+            MENU_processing(WakeUpbyCondition);
 
             if (VoltageAD>1.7) parameter_.location_info.alarm.bit.power_low =1;
 			else parameter_.location_info.alarm.bit.power_low = 1;
@@ -163,8 +180,43 @@ int main(void)
 			
 			if((VoltageAD>1.7)&& (ACC == 0)) system_reboot();
 			
-			
+			/*车门打开*/
+			if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_5)) doorOpen = 0;
+			else	doorOpen = 1;
             
+			if(doorOpen == 1)
+			{
+				if(WakeUpbyCondition == 1)
+				{
+					parameter_.parse.WakeUp.WakeUpConditonType.bit.doorOpen = 1;
+					parameter_.parse.WakeUp.WakeUpMode.bit.conditionWakeUp = 1;
+					FLASH_WriteByte(FLASH_WakeUp_ADDR, (uint8_t*)&parameter_.parse.WakeUp, sizeof(parameter_.parse.WakeUp));
+					system_reboot();
+				}
+			}
+			
+			if(messageReceived == 1)
+			{
+				if(WakeUpbyManual == 1)
+				{
+					parameter_.parse.WakeUp.WakeUpMode.bit.manualWakeUp = 1;
+					FLASH_WriteByte(FLASH_WakeUp_ADDR, (uint8_t*)&parameter_.parse.WakeUp, sizeof(parameter_.parse.WakeUp));
+					system_reboot();
+				}
+			}
+			
+			if(WakeUpIntervalDetect())
+			{
+				if(WakeUpbyTime == 1)
+				{
+					parameter_.parse.WakeUp.WakeUpMode.bit.timeWakeUp = 1;
+					FLASH_WriteByte(FLASH_WakeUp_ADDR, (uint8_t*)&parameter_.parse.WakeUp, sizeof(parameter_.parse.WakeUp));
+					system_reboot();
+				}
+			}
+			
+			
+			
             //当计时器达到缺省时间上报间隔时上报位置数据
             if (time_1s >= parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval)
             {
@@ -196,7 +248,7 @@ int main(void)
 					printf("SetTerminalParameters parse SUCCESS!!!!\r\n ");
 					printf("\r\n");
 
-					jt808TerminalLogOut();
+//					jt808TerminalLogOut();
 					
 					break;
 				}

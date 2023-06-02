@@ -3,7 +3,9 @@
 #include "./usart2/usart2.h"
 #include "./internal_flash/bsp_internal_flash.h"
 #include "./IWDG/iwdg.h"
-
+#include "./key/key.h"
+#include "displayLCD.h"
+#include "./RTC/rtc.h"
 
 /*********common headers***********/
 #include "util.h"
@@ -19,7 +21,10 @@
 #include "jt808_packager.h"
 
 struct ProtocolParameter parameter_;
-
+u8 key_text=0;
+u16 time_1ms=0;
+u16 up_down_pressed=0;
+int weekday;
 
 void system_reboot(void)
 {
@@ -75,6 +80,10 @@ void ReadLocation(void)
     printf("para->time = %s\r\n", parameter_.location_info.time);
 }
 
+void ReadWakeUp(void)
+{
+	Internal_ReadFlash(FLASH_GPS_ADDR, (uint8_t*)&parameter_.parse.WakeUp, sizeof(parameter_.parse.WakeUp));
+}
 
 int FlashWrite()
 {
@@ -116,10 +125,10 @@ int FlashWrite()
     memset(parameter_.parse.terminal_parameters.TerminalId,0, 8);
 
 
-    memcpy(parameter_.parse.terminal_parameters.PhoneNumber, "00000000100211603908", 20);
-    memcpy(parameter_.parse.terminal_parameters.TerminalId, "1603908", 8);
+    memcpy(parameter_.parse.terminal_parameters.PhoneNumber, "00000000100211602092", 20);
+    memcpy(parameter_.parse.terminal_parameters.TerminalId, "1602092", 8);
 //	ff_convert(parameter_.parse.terminal_parameters.CarPlateNum,0);
-    memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "豫A3908X", 9);
+    memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "豫A02092", 9);
 
     FLASH_WriteByte(FLASH_ADDR, (uint8_t*)&parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
     printf("FLASH_Write SUCCESS!!!!!!\r\n");
@@ -306,11 +315,12 @@ int findParameterIDFromArray(unsigned int para_id)
 int jt808TerminalRegister(int *isRegistered)
 {
     int i=0;
-    uint8_t j=0;
+    
     while(i<3)
     {
         packagingMessage(kTerminalRegister);
 #ifdef __JT808_DEBUG
+		uint8_t j=0;
         for(j=0; j<RealBufferSendSize; j++)
         {
             printf("%02x ",BufferSend[j]);
@@ -349,12 +359,13 @@ int jt808TerminalRegister(int *isRegistered)
 int jt808TerminalAuthentication(int *isAuthenticated)
 {
     int i=0;
-	uint8_t j=0;
+	
     while(i<3)
     {
         packagingMessage(kTerminalAuthentication);
 
 //#ifdef __JT808_DEBUG
+//		uint8_t j=0;
 //        for(j=0; j<RealBufferSendSize; j++)
 //        {
 //            printf("%02x ",BufferSend[j]);
@@ -436,6 +447,145 @@ int jt808TerminalGeneralResponse()
     return 0;
 }
 
+void MENU_processing(uint8_t Condition)
+{
+
+    key_text=KEY_Scan(1);		//得到键值
+	
+	/*********按键后重新计时*********/
+    if(key_text!=0)time_1ms = 0;	
+
+	/*********当计时大于10秒时重置*********/
+    if(time_1ms>=10000)
+    {
+		TIM_Cmd(TIM5,DISABLE);
+		/*********重新计时*********/
+		time_1ms = 0;
+		up_down_pressed=0;
+    }
+	
+	showMainMenu();
+	switch(key_text)
+	{
+	case KEY_up_down_PRES:
+		TIM_Cmd(TIM5,ENABLE);
+		printf("up_down_pressed = %d\r\n",up_down_pressed);
+		if(up_down_pressed>=3000)
+		{
+			printf("SOS!!!!!!!!! \r\n");
+			if(Condition == 1)
+			{
+				parameter_.parse.WakeUp.WakeUpConditonType.bit.sosWakeUp = 1;
+				parameter_.parse.WakeUp.WakeUpMode.bit.conditionWakeUp = 1;
+				FLASH_WriteByte(FLASH_WakeUp_ADDR, (uint8_t*)&parameter_.parse.WakeUp, sizeof(parameter_.parse.WakeUp));
+				system_reboot();
+			}
+			up_down_pressed = 0;
+			TIM_Cmd(TIM5,DISABLE);
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+int WakeUpIntervalClockDetect(void)
+{
+	if(calendar.hour == parameter_.parse.WakeUp.WakeUpDay.time1WakeUpTime.HH)
+	{
+		if(calendar.min == parameter_.parse.WakeUp.WakeUpDay.time1WakeUpTime.MM)
+		{
+			return 1;
+		}
+	}
+	
+	else if(calendar.hour == parameter_.parse.WakeUp.WakeUpDay.time2WakeUpTime.HH)
+	{
+		if(calendar.min == parameter_.parse.WakeUp.WakeUpDay.time2WakeUpTime.MM)
+		{
+			return 1;
+		}
+	}
+	
+	else if(calendar.hour == parameter_.parse.WakeUp.WakeUpDay.time3WakeUpTime.HH)
+	{
+		if(calendar.min == parameter_.parse.WakeUp.WakeUpDay.time3WakeUpTime.MM)
+		{
+			return 1;
+		}
+	}
+	
+	else if(calendar.hour == parameter_.parse.WakeUp.WakeUpDay.time4WakeUpTime.HH)
+	{
+		if(calendar.min == parameter_.parse.WakeUp.WakeUpDay.time4WakeUpTime.MM)
+		{
+			return 1;
+		}
+	}
+	
+	return 0;
+}
+
+int WakeUpIntervalDetect(void)
+{
+	weekday=showMainMenu();
+	if(parameter_.parse.WakeUp.setWakeUpDay.bit.Mon==1)
+	{
+		if(weekday==1)
+		{
+			return WakeUpIntervalClockDetect();
+		}
+	}
+	
+	if(parameter_.parse.WakeUp.setWakeUpDay.bit.Tue==1)
+	{
+		if(weekday==2)
+		{
+			return WakeUpIntervalClockDetect();
+		}
+	}
+	
+	if(parameter_.parse.WakeUp.setWakeUpDay.bit.Wed==1)
+	{
+		if(weekday==3)
+		{
+			return WakeUpIntervalClockDetect();
+		}
+	}
+	
+	if(parameter_.parse.WakeUp.setWakeUpDay.bit.Thurs==1)
+	{
+		if(weekday==4)
+		{
+			return WakeUpIntervalClockDetect();
+		}
+	}
+	
+	if(parameter_.parse.WakeUp.setWakeUpDay.bit.Fri==1)
+	{
+		if(weekday==5)
+		{
+			return WakeUpIntervalClockDetect();
+		}
+	}
+	
+	if(parameter_.parse.WakeUp.setWakeUpDay.bit.Sat==1)
+	{
+		if(weekday==6)
+		{
+			return WakeUpIntervalClockDetect();
+		}
+	}
+	
+	if(parameter_.parse.WakeUp.setWakeUpDay.bit.Sun==1)
+	{
+		if(weekday==7)
+		{
+			return WakeUpIntervalClockDetect();
+		}
+	}
+	return 0;
+}
 
 void File_upload()
 {
@@ -529,3 +679,19 @@ int parsingMessage(const unsigned char *in, unsigned int in_len)
 
     return 0;
 }
+
+
+//定时器5中断服务程序
+void TIM5_IRQHandler(void)
+{
+    if (TIM_GetITStatus(TIM5, TIM_IT_Update) != RESET) //检查指定的TIM中断发生与否:TIM 中断源
+    {
+        TIM_ClearITPendingBit(TIM5, TIM_IT_Update);  //清除TIMx的中断待处理位:TIM 中断源
+        time_1ms++;
+		if(key_text == KEY_up_down_PRES)
+		{
+			up_down_pressed++;
+		}
+    }
+}
+

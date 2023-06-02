@@ -15,26 +15,26 @@
 // 已支持的协议命令.
 enum SupportedCommands
 {
-  kTerminalGeneralResponse = 0x0001,        // 终端通用应答.
-  kPlatformGeneralResponse = 0x8001,        // 平台通用应答.
-  kTerminalHeartBeat = 0x0002,              // 终端心跳.
-  kFillPacketRequest = 0x8003,              // 补传分包请求.
-  kTerminalRegister = 0x0100,               // 终端注册.
-  kTerminalRegisterResponse = 0x8100,       // 终端注册应答.
-  kTerminalLogOut = 0x0003,                 // 终端注销.
-  kTerminalAuthentication = 0x0102,         // 终端鉴权.
-  kSetTerminalParameters = 0x8103,          // 设置终端参数.
-  kGetTerminalParameters = 0x8104,          // 查询终端参数.
-  kGetSpecificTerminalParameters = 0x8106,  // 查询指定终端参数.
-  kGetTerminalParametersResponse = 0x0104,  // 查询终端参数应答.
-  kTerminalControl = 0x8105,                // 终端控制
-  kTerminalUpgrade = 0x8108,                // 下发终端升级包.
-  kTerminalUpgradeResultReport = 0x0108,    // 终端升级结果通知.
-  kLocationReport = 0x0200,                 // 位置信息汇报.
-  kGetLocationInformation = 0x8201,         // 位置信息查询.
-  kGetLocationInformationResponse = 0x0201, // 位置信息查询应答.
-  kLocationTrackingControl = 0x8202,        // 临时位置跟踪控制.
-
+	kTerminalGeneralResponse = 0x0001,        // 终端通用应答.
+	kPlatformGeneralResponse = 0x8001,        // 平台通用应答.
+	kTerminalHeartBeat = 0x0002,              // 终端心跳.
+	kFillPacketRequest = 0x8003,              // 补传分包请求.
+	kTerminalRegister = 0x0100,               // 终端注册.
+	kTerminalRegisterResponse = 0x8100,       // 终端注册应答.
+	kTerminalLogOut = 0x0003,                 // 终端注销.
+	kTerminalAuthentication = 0x0102,         // 终端鉴权.
+	kSetTerminalParameters = 0x8103,          // 设置终端参数.
+	kGetTerminalParameters = 0x8104,          // 查询终端参数.
+	kGetSpecificTerminalParameters = 0x8106,  // 查询指定终端参数.
+	kGetTerminalParametersResponse = 0x0104,  // 查询终端参数应答.
+	kTerminalControl = 0x8105,                // 终端控制
+	kTerminalUpgrade = 0x8108,                // 下发终端升级包.
+	kTerminalUpgradeResultReport = 0x0108,    // 终端升级结果通知.
+	kLocationReport = 0x0200,                 // 位置信息汇报.
+	kGetLocationInformation = 0x8201,         // 位置信息查询.
+	kGetLocationInformationResponse = 0x0201, // 位置信息查询应答.
+	kLocationTrackingControl = 0x8202,        // 临时位置跟踪控制.
+	kWakeUp = 0x007C,							//终端唤醒
 };
 
 // // 所有应答命令.
@@ -239,6 +239,90 @@ struct FillPacket
   const char packet_id[50];
 };
 
+/*休眠唤醒模式*/
+union UN_WakeUpMode
+{
+	struct
+	{
+		uint8_t conditionWakeUp:1;
+		uint8_t timeWakeUp:1;
+		uint8_t	manualWakeUp:1;
+	} bit;
+	uint8_t value;
+};
+
+/*唤醒条件类型*/
+union UN_WakeUpConditonType
+{
+	struct
+	{
+		uint8_t sosWakeUp:1;
+		uint8_t CollisionRollover:1;
+		uint8_t	doorOpen:1;
+	} bit;
+	uint8_t value;
+};
+
+/*定时唤醒日设置*/
+union UN_setWakeUpDay
+{
+	struct
+	{
+		uint8_t Mon:1;
+		uint8_t Tue:1;
+		uint8_t	Wed:1;
+		uint8_t Thurs:1;
+		uint8_t Fri:1;
+		uint8_t	Sat:1;
+		uint8_t	Sun:1;
+	} bit;
+	uint8_t value;
+};
+
+/*定时唤醒启用标志*/
+union UN_timeWakeUpFlag
+{
+	struct
+	{
+		uint8_t Time1:1;
+		uint8_t Time2:1;
+		uint8_t	Time3:1;
+		uint8_t Time4:1;
+	} bit;
+	uint8_t value;
+};
+
+/*时间段唤醒*/
+typedef struct Str_WakeUpInterval
+{
+	uint8_t HH;
+	uint8_t MM;
+}WakeUpInterval;
+	
+#pragma pack(push)
+#pragma pack(1) // 结构体1字节对齐	
+/*终端休眠唤醒模式设置数据格式*/
+typedef struct Struct_ARM_WakeUp
+{
+	union UN_WakeUpMode 		WakeUpMode;
+	union UN_WakeUpConditonType	WakeUpConditonType;
+	union UN_setWakeUpDay		setWakeUpDay;
+	struct str_WakeUpDay
+	{
+		union UN_timeWakeUpFlag timeWakeUpFlag;
+		WakeUpInterval	time1WakeUpTime;
+		WakeUpInterval	time1ShutDownTime;
+		WakeUpInterval	time2WakeUpTime;
+		WakeUpInterval	time2ShutDownTime;
+		WakeUpInterval	time3WakeUpTime;
+		WakeUpInterval	time3ShutDownTime;
+		WakeUpInterval	time4WakeUpTime;
+		WakeUpInterval	time4ShutDownTime;
+	}WakeUpDay;
+} ARM_WakeUp;
+
+#pragma pack() // 恢复默认字节对齐
+
 // 协议格式、各消息ID等相关参数.
 struct ProtocolParameter
 {
@@ -312,6 +396,8 @@ struct ProtocolParameter
     //终端控制
     struct TerminalControl terminal_control;
 
+	/*终端休眠唤醒模式设置数据格式*/
+	ARM_WakeUp WakeUp;
     // 解析出的保留字段.
     // std::vector<unsigned  char > retain;
 

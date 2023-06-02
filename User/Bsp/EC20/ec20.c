@@ -75,7 +75,7 @@ u8 ec20_send_cmd(u8 *cmd,u8 *Re1,u8 *Re2,u8 *Re3,u16 waittime)
             if(BT_Scan_mode)//蓝牙扫描模式
             {
                 res=KEY_Scan(0);//返回上一级
-                if(res==WKUP_PRES)return 2;
+//                if(res==WKUP_PRES)return 2;
             }
             delay_ms(10);
             if(USART2_RX_STA&0X8000)//接收到期待的应答结果
@@ -108,14 +108,14 @@ u8 ec20_send_cmd(u8 *cmd,u8 *Re1,u8 *Re2,u8 *Re3,u16 waittime)
 u8 ec20_wait_request(u8 *request ,u16 waittime)
 {
     u8 res = 1;
-    u8 key;
+//    u8 key;
     if(request && waittime)
     {
         while(--waittime)
         {
-            key=KEY_Scan(0);
-            if(key==WKUP_PRES) return 2;//返回上一级
-            delay_ms(10);
+//            key=KEY_Scan(0);
+//            if(key==WKUP_PRES) return 2;//返回上一级
+//            delay_ms(10);
             if(USART2_RX_STA &0x8000)//接收到期待的应答结果
             {
                 if(ec20_check_cmd(request)) break;//得到有效数据

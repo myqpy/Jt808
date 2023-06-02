@@ -248,7 +248,7 @@ unsigned char car_IO_status[][24]= {
 {0x10,0xD2,0x32,0x92,0x10,0x00,0x08,0xFF,0x08,0x08,0xF8,0x00,0x03,0x02,0x02,0x02,0x03,0x08,0x06,0x01,0x08,0x08,0x07,0x00},/*"¶¯",15*/
 };
 
-int weekday = 0;
+int weekday_get = 0;
 int time_h=0,time_m=0,time_s=0;
 char display_string[100];
 
@@ -313,20 +313,22 @@ void displayChinese_16x16(unsigned char page,unsigned char CaddrH,unsigned char 
 	}
 }
 
-void showMainMenu()
+int showMainMenu()
 {
 //	printf("%04d-%02d-%02d,%02d:%02d:%02d \r\n",calendar.w_year,calendar.w_month,calendar.w_date,calendar.hour,calendar.min,calendar.sec);
 
 
-    weekday = WeekYearday(calendar.w_year,calendar.w_month,calendar.w_date);
-	if(weekday == 0) weekday = 7;
+    weekday_get = WeekYearday(calendar.w_year,calendar.w_month,calendar.w_date);
+	if(weekday_get == 0) weekday_get = 7;
 
 	displayIcon(0xB0,0x14, 0x0,icon_battery);
 	
-    displayWeekday(0xB4,0x10,0x0,weekday);
+    displayWeekday(0xB4,0x10,0x0,weekday_get);
 
     sprintf(display_string,"%04d-%02d-%02d,%02d:%02d:%02d",calendar.w_year,calendar.w_month,calendar.w_date,calendar.hour,calendar.min,calendar.sec);
     ShowString(0xB6,0x10, 0x00,display_string,12);
+	
+	return weekday_get;
 }
 
 

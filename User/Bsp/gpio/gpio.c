@@ -15,6 +15,10 @@ void GPIO_Config(GPIO_InitTypeDef *GPIO_InitStructure)
 	GPIO_Init(GPIOA, GPIO_InitStructure);
 			 
 
+	//PA-5 开门开关量
+	GPIO_InitStructure->GPIO_Pin = GPIO_Pin_5;				 
+	GPIO_InitStructure->GPIO_Mode = GPIO_Mode_IPU; 			 
+	GPIO_Init(GPIOA, GPIO_InitStructure);
 
 
 	//PC-1 / PC-5  init
@@ -46,5 +50,7 @@ void GPIO_Config(GPIO_InitTypeDef *GPIO_InitStructure)
 //	GPIO_Init(GPIOD, &GPIO_InitStructure);	  				 
 //	GPIO_SetBits(GPIOD,GPIO_Pin_2); 						 
 }
+
+
 
 /*********************************************END OF FILE**********************/
