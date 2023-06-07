@@ -338,6 +338,19 @@ ErrorStatus ec20_init(unsigned char *IPSERVER, int PORTSERVER)
     ec20_send_cmd("AT+QICLOSE=0\r\n","OK","NULL","NULL",2000);
     USART2_RX_STA=0;
     delay_ms(200);
+	ec20_send_cmd("AT+CMGF=1\r\n","OK","NULL","NULL",2000);
+    USART2_RX_STA=0;
+    delay_ms(200);
+	ec20_send_cmd("AT+CSCS=\"GSM\"\r\n","OK","NULL","NULL",2000);
+    USART2_RX_STA=0;
+    delay_ms(200);
+	ec20_send_cmd("AT+CNMI=1,2,0,1,0 \r\n","OK","NULL","NULL",2000);
+    USART2_RX_STA=0;
+    delay_ms(200);
+	ec20_send_cmd("AT+QURCCFG=\"urcport\",\"uart1\" \r\n","OK","NULL","NULL",2000);
+	USART2_RX_STA=0;
+    delay_ms(200);
+	
     memset(atstr,0,BUFLEN);
     sprintf(atstr,"AT+QIOPEN=1,0,\"TCP\",\"%s\",%d,0,2\r\n",IPSERVER,PORTSERVER);
     data=ec20_send_cmd((u8*)atstr,"CONNECT","OK","NULL",2000);

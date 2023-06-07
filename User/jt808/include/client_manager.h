@@ -65,6 +65,8 @@ void updateLocation(double const v_latitude, double const v_longitude, float con
 void boot_loader_flag(void);
 void ReadLocation(void);
 void ReadWakeUp(void);
-void MENU_processing(uint8_t Condition);
+void MENU_processing(void);
 int WakeUpIntervalDetect(void);
+void text_process(void);
+
 //#endif // JT808_CLIENT_MANAGER_H_

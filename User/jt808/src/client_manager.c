@@ -11,6 +11,7 @@
 #include "util.h"
 #include "bcd.h"
 #include "./delay/delay.h"
+#include <stdlib.h>
 
 /*********JT808 headers***********/
 
@@ -25,6 +26,13 @@ u8 key_text=0;
 u16 time_1ms=0;
 u16 up_down_pressed=0;
 int weekday;
+int text_position = 0;
+char str_wakeupTime[6];
+const char wakeupCMD[10] = "WAKEUP";
+uint32_t wakeupTimeLength = 0;
+//uint16_t wakeupTime = 0;
+uint32_t i;
+
 
 void system_reboot(void)
 {
@@ -82,7 +90,7 @@ void ReadLocation(void)
 
 void ReadWakeUp(void)
 {
-	Internal_ReadFlash(FLASH_GPS_ADDR, (uint8_t*)&parameter_.parse.WakeUp, sizeof(parameter_.parse.WakeUp));
+	Internal_ReadFlash(FLASH_WakeUp_ADDR, (uint8_t*)&parameter_.parse.WakeUp, sizeof(parameter_.parse.WakeUp));
 }
 
 int FlashWrite()
@@ -447,7 +455,7 @@ int jt808TerminalGeneralResponse()
     return 0;
 }
 
-void MENU_processing(uint8_t Condition)
+void MENU_processing()
 {
 
     key_text=KEY_Scan(1);		//得到键值
@@ -473,11 +481,12 @@ void MENU_processing(uint8_t Condition)
 		if(up_down_pressed>=3000)
 		{
 			printf("SOS!!!!!!!!! \r\n");
-			if(Condition == 1)
+			if(parameter_.parse.WakeUp.WakeUpMode.bit.conditionWakeUp == 1)
 			{
 				parameter_.parse.WakeUp.WakeUpConditonType.bit.sosWakeUp = 1;
-				parameter_.parse.WakeUp.WakeUpMode.bit.conditionWakeUp = 1;
+				parameter_.parse.WakeUp.WakeUpMode_MCU.bit.conditionWakeUp = 1;
 				FLASH_WriteByte(FLASH_WakeUp_ADDR, (uint8_t*)&parameter_.parse.WakeUp, sizeof(parameter_.parse.WakeUp));
+				printf("sosWakeUp");
 				system_reboot();
 			}
 			up_down_pressed = 0;
@@ -678,6 +687,32 @@ int parsingMessage(const unsigned char *in, unsigned int in_len)
 
 
     return 0;
+}
+
+
+void text_process(void)
+{
+	//有短信接入
+	if((strstr((const char*)USART2_RX_BUF,"+CMT:"))!=NULL)
+	{
+		printf((const char*)USART2_RX_BUF,"\r\n");
+		text_position =  strStr((const char*)USART2_RX_BUF, wakeupCMD);
+		printf("position:%d\r\n",text_position);
+		printf("strlen(haystack):%d\r\n",strlen((const char*)USART2_RX_BUF));
+		wakeupTimeLength = strlen((const char*)USART2_RX_BUF) - 1 - 6 - text_position;
+		printf("wakeupTimeLength:%d\r\n",wakeupTimeLength);
+		for(i=0;i<wakeupTimeLength;i++)
+		{	
+			str_wakeupTime[i] = USART2_RX_BUF[text_position+i+6];
+		} 
+		
+		
+		for(i=0;i<6;i++) printf("%02x ",str_wakeupTime[i]);
+		printf("\r\n");
+		parameter_.parse.WakeUp.WakeUpDuration = atoi(str_wakeupTime);
+		if(parameter_.parse.WakeUp.WakeUpDuration>65535) parameter_.parse.WakeUp.WakeUpDuration = 65535;
+		printf("wakeupTime=%d\r\n",parameter_.parse.WakeUp.WakeUpDuration);
+	}	
 }
 
 

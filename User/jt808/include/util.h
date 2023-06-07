@@ -47,6 +47,9 @@ int ReverseEscape_C(unsigned char *in, unsigned int inlen, unsigned char *out, u
 // 异或校验.
 unsigned char BccCheckSum(const unsigned char *src, unsigned long len);
 
+//处理字符串，返回子串在母串的第一个字符的位置
+int strStr(const char * haystack,  const char * needle);
+
 // } // namespace libjt808
 
 #endif // JT808_UTIL_H_

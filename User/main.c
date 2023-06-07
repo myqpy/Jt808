@@ -48,10 +48,6 @@ int main(void)
 	uint8_t doorOpen = 0;
 	uint8_t messageReceived = 0;
 	
-	uint8_t WakeUpbyCondition;
-	uint8_t WakeUpbyTime;
-	uint8_t WakeUpbyManual;
-	
 //    double v_latitude;
 //    double v_longitude;
 //    float v_altitude;
@@ -104,10 +100,8 @@ int main(void)
     ReadLocation(); 						//读取3399发来的最后一条位置数据
 	ReadWakeUp();
 	
-	WakeUpbyCondition = parameter_.parse.WakeUp.WakeUpMode.bit.conditionWakeUp;
-	WakeUpbyTime = parameter_.parse.WakeUp.WakeUpMode.bit.timeWakeUp;
-	WakeUpbyManual = parameter_.parse.WakeUp.WakeUpMode.bit.manualWakeUp;
-	parameter_.parse.WakeUp.WakeUpMode.value = 0;
+//	memset((uint8_t*)&parameter_.parse.WakeUp,0,sizeof(parameter_.parse.WakeUp));
+//	FLASH_WriteByte(FLASH_WakeUp_ADDR, (uint8_t*)&parameter_.parse.WakeUp, sizeof(parameter_.parse.WakeUp));
 	
     while (1)
     {
@@ -169,7 +163,7 @@ int main(void)
 //			IWDG_Feed();
             VoltageAD = (float) (Get_Adc_Average(ADC_Channel_6,10) * 3.3 /4096) ;
 			ACC = (GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_0));
-            MENU_processing(WakeUpbyCondition);
+            MENU_processing();
 
             if (VoltageAD>1.7) parameter_.location_info.alarm.bit.power_low =1;
 			else parameter_.location_info.alarm.bit.power_low = 1;
@@ -178,39 +172,46 @@ int main(void)
 			if(ACC == 0) parameter_.location_info.alarm.bit.power_cut = 1;
 			else parameter_.location_info.alarm.bit.power_cut = 0;
 			
-			if((VoltageAD>1.7)&& (ACC == 0)) system_reboot();
+			if((VoltageAD>1.7)&& (ACC == 0)) 
+			{
+				printf("voltage && ACC");
+				system_reboot();
+			}
 			
 			/*车门打开*/
 			if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_5)) doorOpen = 0;
 			else	doorOpen = 1;
             
-			if(doorOpen == 1)
+			if(doorOpen == 0)
 			{
-				if(WakeUpbyCondition == 1)
+				if(parameter_.parse.WakeUp.WakeUpMode.bit.conditionWakeUp == 1)
 				{
 					parameter_.parse.WakeUp.WakeUpConditonType.bit.doorOpen = 1;
-					parameter_.parse.WakeUp.WakeUpMode.bit.conditionWakeUp = 1;
+					parameter_.parse.WakeUp.WakeUpMode_MCU.bit.conditionWakeUp = 1;
 					FLASH_WriteByte(FLASH_WakeUp_ADDR, (uint8_t*)&parameter_.parse.WakeUp, sizeof(parameter_.parse.WakeUp));
+					printf("doorOpen");
 					system_reboot();
 				}
 			}
 			
 			if(messageReceived == 1)
 			{
-				if(WakeUpbyManual == 1)
+				if(parameter_.parse.WakeUp.WakeUpMode.bit.manualWakeUp == 1)
 				{
-					parameter_.parse.WakeUp.WakeUpMode.bit.manualWakeUp = 1;
+					parameter_.parse.WakeUp.WakeUpMode_MCU.bit.manualWakeUp = 1;
 					FLASH_WriteByte(FLASH_WakeUp_ADDR, (uint8_t*)&parameter_.parse.WakeUp, sizeof(parameter_.parse.WakeUp));
+					printf("messageReceived");
 					system_reboot();
 				}
 			}
 			
 			if(WakeUpIntervalDetect())
 			{
-				if(WakeUpbyTime == 1)
+				if(parameter_.parse.WakeUp.WakeUpMode.bit.timeWakeUp == 1)
 				{
-					parameter_.parse.WakeUp.WakeUpMode.bit.timeWakeUp = 1;
+					parameter_.parse.WakeUp.WakeUpMode_MCU.bit.timeWakeUp = 1;
 					FLASH_WriteByte(FLASH_WakeUp_ADDR, (uint8_t*)&parameter_.parse.WakeUp, sizeof(parameter_.parse.WakeUp));
+					printf("WakeUpIntervalDetect");
 					system_reboot();
 				}
 			}
@@ -230,6 +231,9 @@ int main(void)
             if (USART2_RX_STA & 0X8000)
             {
                 USART2_RX_STA = USART2_RX_STA & 0x7FFF;
+				
+				text_process();
+				
                 if ((USART2_RX_BUF[0] == 0x7e) && (USART2_RX_BUF[USART2_RX_STA - 1] == 0x7e))
                 {
                     parsingMessage(USART2_RX_BUF, USART2_RX_STA);

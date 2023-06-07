@@ -319,6 +319,8 @@ typedef struct Struct_ARM_WakeUp
 		WakeUpInterval	time4WakeUpTime;
 		WakeUpInterval	time4ShutDownTime;
 	}WakeUpDay;
+	union UN_WakeUpMode 		WakeUpMode_MCU;
+	uint16_t WakeUpDuration;
 } ARM_WakeUp;
 
 #pragma pack() // 恢复默认字节对齐
