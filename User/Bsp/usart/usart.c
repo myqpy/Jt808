@@ -144,7 +144,7 @@ void USART1_IRQHandler(void)                	//串口1中断服务程序
 
 
 /*****************  发送一个字符 **********************/
-static void Usart_SendByte( USART_TypeDef * pUSARTx, uint8_t ch )
+void Usart_SendByte( USART_TypeDef * pUSARTx, uint8_t ch )
 {
     /* 发送一个字节数据到USART1 */
     USART_SendData(pUSARTx,ch);
@@ -173,3 +173,5 @@ void Usart_SendString( USART_TypeDef * pUSARTx, char *str)
         k++;
     } while(*(str + k)!='\0');
 }
+
+

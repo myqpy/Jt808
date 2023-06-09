@@ -32,7 +32,10 @@ const char wakeupCMD[10] = "WAKEUP";
 uint32_t wakeupTimeLength = 0;
 //uint16_t wakeupTime = 0;
 uint32_t i;
-
+extern u8 uart2_cmd[1024];
+extern u16 receiveBuffersize;
+extern unsigned int textPosition;
+uint16_t msgRecvLength;
 
 void system_reboot(void)
 {
@@ -323,36 +326,53 @@ int findParameterIDFromArray(unsigned int para_id)
 int jt808TerminalRegister(int *isRegistered)
 {
     int i=0;
-    
+	uint8_t j=0;
     while(i<3)
     {
         packagingMessage(kTerminalRegister);
 #ifdef __JT808_DEBUG
-		uint8_t j=0;
+		
         for(j=0; j<RealBufferSendSize; j++)
         {
             printf("%02x ",BufferSend[j]);
         }
         printf("\r\n");
 #endif
-        Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
-        delay_ms(1000);
+		UartSend_Non_transliterated(USART2,BufferSend,RealBufferSendSize);
+		
+		while(1)
+		{
+			
+			if(USART2_RX_STA&0X8000)    //接收到数据
+			{
+				USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
+				
+				msgRecvLength = UartRecv_Non_transliterated();
+				printf("msgLength:%d\r\n",msgRecvLength);
+				
+				if(msgRecvLength!=0)
+				{
+					USART2_RX_STA=0;
+					break;
+				}					
+				
+				USART2_RX_STA=0;
+			}
+		}
+		
+		parsingMessage(Non_transliterated_receive,msgRecvLength);//校验
 
-        if(USART2_RX_STA&0X8000)    //接收到数据
-        {
-            USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
-            parsingMessage(USART2_RX_BUF, USART2_RX_STA);//校验
-            if((parameter_.parse.respone_result == kRegisterSuccess)&&(parameter_.parse.msg_head.msg_id==kTerminalRegisterResponse))
-            {
-                *isRegistered = 1;
-                printf("\r\n");
-                printf("TerminalRegister SUCCESS!!!!!!!!!!\r\n");
-                printf("\r\n");
-                USART2_RX_STA=0;
-                break;
-            }
-        }
-        USART2_RX_STA=0;
+		if((parameter_.parse.respone_result == kRegisterSuccess)&&(parameter_.parse.msg_head.msg_id==kTerminalRegisterResponse))
+		{
+			*isRegistered = 1;
+			printf("\r\n");
+			printf("TerminalRegister SUCCESS!!!!!!!!!!\r\n");
+			printf("\r\n");
+			USART2_RX_STA=0;
+			break;
+		}
+        
+       
         printf("\r\n");
         printf("TerminalRegister FAILED!!!!!!\r\n");
         printf("\r\n");
@@ -380,24 +400,40 @@ int jt808TerminalAuthentication(int *isAuthenticated)
 //        }
 //        printf("\r\n");
 //#endif
+		UartSend_Non_transliterated(USART2,BufferSend,RealBufferSendSize);
+//        Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+        
+		while(1)
+		{
+			
+			if(USART2_RX_STA&0X8000)    //接收到数据
+			{
+				USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
+				
+				msgRecvLength = UartRecv_Non_transliterated();
+				printf("msgLength:%d\r\n",msgRecvLength);
+				
+				if(msgRecvLength!=0)
+				{
+					USART2_RX_STA=0;
+					break;
+				}					
+				
+				USART2_RX_STA=0;
+			}
+		}
 		
-        Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
-        delay_ms(1000);
-
-        if(USART2_RX_STA&0X8000)    //接收到数据
-        {
-            USART2_RX_STA = USART2_RX_STA&0x7FFF;//获取到实际字符数量
-            parsingMessage(USART2_RX_BUF, USART2_RX_STA);//校验
-            if((parameter_.parse.respone_result	 == kSuccess)&&(parameter_.parse.respone_msg_id==kTerminalAuthentication))
-            {
-                *isAuthenticated = 1;
-                printf("\r\n");
-                printf("TerminalAuthentication SUCCESS!!!!!!!!\r\n");
-                printf("\r\n");
-                USART2_RX_STA=0;
-                break;
-            }
-        }
+		parsingMessage(Non_transliterated_receive,msgRecvLength);//校验
+		if((parameter_.parse.respone_result== kSuccess)&&(parameter_.parse.respone_msg_id==kTerminalAuthentication))
+		{
+			*isAuthenticated = 1;
+			printf("\r\n");
+			printf("TerminalAuthentication SUCCESS!!!!!!!!\r\n");
+			printf("\r\n");
+			USART2_RX_STA=0;
+			break;
+		}
+        
         USART2_RX_STA=0;
         i++;
         printf("\r\n");
@@ -410,7 +446,8 @@ int jt808TerminalAuthentication(int *isAuthenticated)
 int jt808LocationReport()
 {
     packagingMessage(kLocationReport);
-    Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+//    Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	UartSend_Non_transliterated(USART2,BufferSend,RealBufferSendSize);
 //	printf("latitude * 1e6 	= %d\r\n", parameter_.location_info.latitude);
 //	printf("longitude * 1e6 = %d\r\n", parameter_.location_info.longitude);
 //	printf("altitude = %d\r\n", parameter_.location_info.altitude);
@@ -422,7 +459,8 @@ int jt808LocationReport()
 int jt808TerminalHeartBeat()
 {
     packagingMessage(kTerminalHeartBeat);
-    Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+//    Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	UartSend_Non_transliterated(USART2,BufferSend,RealBufferSendSize);
 
     return 0;
 }
@@ -430,7 +468,8 @@ int jt808TerminalHeartBeat()
 int jt808TerminalUpgradeResultReport()
 {
     packagingMessage(kTerminalUpgradeResultReport);
-    Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+//    Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	UartSend_Non_transliterated(USART2,BufferSend,RealBufferSendSize);
     printf("jt808TerminalUpgradeResultReport report SUCCESS!!! \r\n");
     return 0;
 }
@@ -439,7 +478,8 @@ int jt808TerminalUpgradeResultReport()
 int jt808TerminalLogOut()
 {
     packagingMessage(kTerminalLogOut);
-    Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+//    Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	UartSend_Non_transliterated(USART2,BufferSend,RealBufferSendSize);
     printf("jt808TerminalLogOut report SUCCESS!!! \r\n");
     return 0;
 }
@@ -449,7 +489,8 @@ int jt808TerminalLogOut()
 int jt808TerminalGeneralResponse()
 {
     packagingMessage(kTerminalGeneralResponse);
-    Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+//    Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	UartSend_Non_transliterated(USART2,BufferSend,RealBufferSendSize);
     printf("jt808TerminalGeneralResponse report SUCCESS!\r\n");
     delay_ms(1000);
     return 0;

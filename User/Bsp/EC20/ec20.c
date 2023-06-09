@@ -352,7 +352,7 @@ ErrorStatus ec20_init(unsigned char *IPSERVER, int PORTSERVER)
     delay_ms(200);
 	
     memset(atstr,0,BUFLEN);
-    sprintf(atstr,"AT+QIOPEN=1,0,\"TCP\",\"%s\",%d,0,2\r\n",IPSERVER,PORTSERVER);
+    sprintf(atstr,"AT+QIOPEN=1,0,\"TCP\",\"%s\",%d,0,0\r\n",IPSERVER,PORTSERVER);
     data=ec20_send_cmd((u8*)atstr,"CONNECT","OK","NULL",2000);
     USART2_RX_STA=0;
     delay_ms(200);

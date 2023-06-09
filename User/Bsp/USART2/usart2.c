@@ -5,14 +5,17 @@
 #include "string.h"
 //#include "./ec20/ec20.h"
 #include "./timer/timer.h"
-
+#include "./usart/usart.h"
+#include "util.h"
 
 //´®¿Ú·¢ËÍ»º´æÇø 	
 __align(8) u8 USART2_TX_BUF[USART2_MAX_SEND_LEN]; 	//·¢ËÍ»º³å,×î´óUSART2_MAX_SEND_LEN×Ö½Ú
 #ifdef USART2_RX_EN   								//Èç¹ûÊ¹ÄÜÁË½ÓÊÕ   	  
 //´®¿Ú½ÓÊÕ»º´æÇø 	
 u8 USART2_RX_BUF[USART2_MAX_RECV_LEN]; 				//½ÓÊÕ»º³å,×î´óUSART2_MAX_RECV_LEN¸ö×Ö½Ú.
-
+u8 uart2_cmd[1024];
+u8 uart2_msg[4];
+u8 temp[1024]; 				//½ÓÊÕ»º³å,×î´óUSART2_MAX_RECV_LEN¸ö×Ö½Ú.
 
 //À¶ÑÀÉ¨ÃèÏÂ£º   timer=1S
 //·ÇÀ¶ÑÀÉ¨ÃèÏÂ£º timer=10ms
@@ -22,7 +25,11 @@ u8 USART2_RX_BUF[USART2_MAX_RECV_LEN]; 				//½ÓÊÕ»º³å,×î´óUSART2_MAX_RECV_LEN¸ö×
 //½ÓÊÕµ½µÄÊı¾İ×´Ì¬
 //[15]:0,Ã»ÓĞ½ÓÊÕµ½Êı¾İ;1,½ÓÊÕµ½ÁËÒ»ÅúÊı¾İ.
 //[14:0]:½ÓÊÕµ½µÄÊı¾İ³¤¶È
-u16 USART2_RX_STA=0;   	 
+u16 USART2_RX_STA=0;   	
+
+
+uint8_t Non_transliterated_receive[1024];
+u16 receiveBuffersize;
 void USART2_IRQHandler(void)
 {
     u8 res;
@@ -172,9 +179,56 @@ void UART_DMA_Enable(DMA_Channel_TypeDef*DMA_CHx,u16 len)
 }	   
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 									 
 
+void UartSend_Non_transliterated(USART_TypeDef * pUSARTx,u8* msg, uint16_t number)
+{
+	sprintf(uart2_cmd,"AT+QISEND=0,%d",number);
+	u2_printf("%s\r\n",uart2_cmd);
+	delay_ms(10);
+	Usart_SendStr_length(pUSARTx,msg,number);
+	delay_ms(10);
+	Usart_SendByte(pUSARTx,0x1A);
+	delay_ms(10);
+}
 
+int UartRecv_Non_transliterated()
+{
+	unsigned int msgLength;
+	unsigned int textPosition = 0;
+	unsigned int lengthPosition = 0;
+	unsigned int msgLocationLength;
+	if((strstr((const char*)USART2_RX_BUF,"+QIURC:"))!=NULL)
+	{
+//		printf("+QIURC:get %d\r\n");
+		sprintf(uart2_cmd,"AT+QIRD=0,1500");
+		u2_printf("%s\r\n",uart2_cmd);
+	}
+	
+	if((strstr((const char*)USART2_RX_BUF,"+QIRD:"))!=NULL)
+	{
+		memset(temp,0,sizeof(USART2_RX_BUF));
+		/*ÒòÎª½ÓÊÕµ½µÄQIRD×Ö·û´®Îª\r\n¿ªÍ·µÄ£¬ĞèÅÅ³ı¸ÉÈÅ*/
+		memcpy(temp,USART2_RX_BUF+2,sizeof(USART2_RX_BUF)-2);			
+		/*ÕÒµ½+QIRD:Î»ÖÃ*/
+		textPosition = strStr((const char*)USART2_RX_BUF, "+QIRD:");
+		/*ÕÒµ½³¤¶ÈÇ°µÄ\r\nÎ»ÖÃ*/
+		lengthPosition = strStr((const char*)temp, "\r\n");
 
-
+		/*Ëã³ö½ÓÊÕbuffer³¤¶È*/
+		memset(uart2_msg,0,4);
+		memcpy(uart2_msg,temp+7,2);
+		msgLength = atoi(uart2_msg);
+		
+		/*½ØÈ¡ĞÂµÄ½ÓÊÕbuffer*/
+		memset(Non_transliterated_receive,0,sizeof(Non_transliterated_receive));
+		memcpy(Non_transliterated_receive,temp+lengthPosition+2,msgLength);
+//		for(receiveBuffersize=0; receiveBuffersize<msgLength; receiveBuffersize++)
+//		{
+//			printf("0x%02x ",Non_transliterated_receive[receiveBuffersize]);
+//		}
+		return msgLength;
+	}
+	return 0;
+}
 
 
 void ClearRAM(u8* ram,u32 n)

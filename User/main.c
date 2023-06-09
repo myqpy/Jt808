@@ -22,6 +22,7 @@
 #include "client_manager.h"
 #include "protocol_parameter.h"
 #include "displayLCD.h"
+#include "jt808_packager.h"
 
 extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude,
                             float *v_speed, float *v_bearing, unsigned char *v_timestamp,
@@ -30,9 +31,11 @@ extern int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_al
 extern uint8_t gpsData_Receive(uint8_t *new_parse);
 extern nmeaPARSER parser;      //解码时使用的数据结构
 extern nmeaINFO info;          //GPS解码后得到的信息
-
+//extern u8 uart2_cmd[1024];
 int time_1s = 0;
-
+extern uint16_t msgRecvLength;
+//int test = 0;
+							
 int main(void)
 {
     int isTCPconnected = 0;
@@ -119,7 +122,7 @@ int main(void)
             {
                 printf("server connected\r\n");
                 isTCPconnected = 1;
-                delay_ms(2000);
+                delay_ms(4000);
             }
 
             else
@@ -130,12 +133,13 @@ int main(void)
                 continue;
             }
         }
+		
 
+		
         //终端注册
         if (isRegistered == 0)
         {
 			parameter_.msg_head.Protocolversion = 1;
-			
             jt808TerminalRegister(&isRegistered);
 			
             if (isRegistered == 0) system_reboot();
@@ -234,27 +238,24 @@ int main(void)
 				
 				text_process();
 				
-                if ((USART2_RX_BUF[0] == 0x7e) && (USART2_RX_BUF[USART2_RX_STA - 1] == 0x7e))
-                {
-                    parsingMessage(USART2_RX_BUF, USART2_RX_STA);
-                    if ((parameter_.parse.respone_result == kSuccess) && (parameter_.parse.respone_msg_id == kLocationReport))
+				msgRecvLength = UartRecv_Non_transliterated();
+				if(msgRecvLength!=0)
+				{
+					parsingMessage(Non_transliterated_receive,msgRecvLength);//校验
+					if ((parameter_.parse.respone_result == kSuccess) && (parameter_.parse.respone_msg_id == kLocationReport))
                     {
                         LocationReportCounter = 0;
                         printf("Platform general response location report parse SUCCESS!!!!\r\n ");
                         printf("\r\n");
-                        USART2_RX_STA = 0;
+                        
                     }
-                }
-				
-				if(parameter_.parse.msg_head.msg_id==kSetTerminalParameters)
-				{
-					printf("\r\n");
-					printf("SetTerminalParameters parse SUCCESS!!!!\r\n ");
-					printf("\r\n");
-
-//					jt808TerminalLogOut();
-					
-					break;
+					if(parameter_.parse.msg_head.msg_id==kSetTerminalParameters)
+					{
+						printf("\r\n");
+						printf("SetTerminalParameters parse SUCCESS!!!!\r\n ");
+						printf("\r\n");
+					}
+					USART2_RX_STA = 0;
 				}
 
                 USART2_RX_STA = 0;

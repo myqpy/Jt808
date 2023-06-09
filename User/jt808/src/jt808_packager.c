@@ -7,6 +7,7 @@
 #include "protocol_parameter.h"
 #include "terminal_register.h"
 #include "./RTC/rtc.h"
+#include "client_manager.h"
 
 // 所有终端数据打包命令.
 unsigned short kTerminalPackagerCMD[PACKAGER_NUM] = {

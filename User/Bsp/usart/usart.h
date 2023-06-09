@@ -15,6 +15,8 @@ void uart_init(u32 bound);
 
 void Usart_SendStr_length( USART_TypeDef * pUSARTx, uint8_t *str,uint32_t strlen );
 void Usart_SendString( USART_TypeDef * pUSARTx, char *str);
+void Usart_SendByte( USART_TypeDef * pUSARTx, uint8_t ch );
+
 #endif
 
 
