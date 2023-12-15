@@ -1,13 +1,6 @@
-
-
-// #include "jt808/util.h"
-// #include "jt808/protocol_parameter.h"
-
 #include "util.h"
 #include "protocol_parameter.h"
 #include "client_manager.h"
-#include <stdbool.h>
-//#include <memory.h>
 
 union U16ToU8Array u16converter;
 union U32ToU8Array u32converter;
@@ -124,8 +117,9 @@ unsigned char BccCheckSum(const unsigned char *src, unsigned long len)
 		printf("[BccCheckSum] OK !\r\n");
 	#endif
   return checksum;
+	
+	
 }
-
 //处理字符串，返回子串在母串的第一个字符的位置
 int strStr(const char * haystack,  const char * needle)
 {
@@ -168,5 +162,3 @@ int strStr(const char * haystack,  const char * needle)
 		return i;
 	}
 }
-
-// } // namespace libjt808

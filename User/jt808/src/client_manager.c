@@ -1,177 +1,131 @@
-/*********BSP headers***********/
-#include "./usart/usart.h"
-#include "./usart2/usart2.h"
-#include "./internal_flash/bsp_internal_flash.h"
-#include "./IWDG/iwdg.h"
-#include "./key/key.h"
-#include "displayLCD.h"
-#include "./RTC/rtc.h"
-
-/*********common headers***********/
-#include "util.h"
-#include "bcd.h"
-#include "./delay/delay.h"
-#include <stdlib.h>
-
-/*********JT808 headers***********/
-
+#include "./ec20/ec20.h"
 #include "client_manager.h"
 #include "protocol_parameter.h"
 #include "set_terminal_parameter.h"
 #include "jt808_parser.h"
+#include "util.h"
+#include "./delay/delay.h"
+#include "bcd.h"
 #include "jt808_packager.h"
+#include "jt808_parser.h"
+#include "./usart/usart.h"
+#include "./usart2/usart2.h"
+#include "./internal_flash/bsp_internal_flash.h" 
+#include "ff.h"
+#include "./usart2/usart2.h"
 
+extern uint8_t Non_transliterated_receive[1024];
 struct ProtocolParameter parameter_;
-u8 key_text=0;
-u16 time_1ms=0;
-u16 up_down_pressed=0;
-int weekday;
-int text_position = 0;
-char str_wakeupTime[6];
-const char wakeupCMD[10] = "WAKEUP";
-uint32_t wakeupTimeLength = 0;
-//uint16_t wakeupTime = 0;
-uint32_t i;
-extern u8 uart2_cmd[1024];
-extern u16 receiveBuffersize;
-extern unsigned int textPosition;
-uint16_t msgRecvLength;
 
 void system_reboot(void)
 {
-    __set_FAULTMASK(1);
-    NVIC_SystemReset();
+	__set_FAULTMASK(1); 
+	NVIC_SystemReset();
 }
 
 
 
 void initSystemParameters(int i)
 {
-    Internal_ReadFlash(FLASH_ADDR, (uint8_t*)&parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
-    parameter_.parse.terminal_parameters.initFactoryParameters = i;
+	Internal_ReadFlash(FLASH_ADDR, (uint8_t*)&parameter_.parse.terminal_parameters , sizeof(parameter_.parse.terminal_parameters));
+	parameter_.parse.terminal_parameters.initFactoryParameters = i;
 
-    printf("initFactoryParameters == %d \r\n",parameter_.parse.terminal_parameters.initFactoryParameters);
-
-    if(parameter_.parse.terminal_parameters.initFactoryParameters == 0)
-    {
-        FlashWrite();
-        Internal_ReadFlash(FLASH_ADDR, (uint8_t*)&parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
-    }
-    printf("-->---------------------------\r\n");
-    printf("-->                           \r\n");
-    printf("-->       Version = %s     		\r\n", parameter_.parse.terminal_parameters.version);
-    printf("-->                           \r\n");
-    printf("-->---------------------------\r\n");
-    printf("HeartBeatInterval == %d \r\n",parameter_.parse.terminal_parameters.HeartBeatInterval);
-    printf("MainServerAddress == \"%s\" \r\n",parameter_.parse.terminal_parameters.MainServerAddress);
-    printf("ServerPort == %d \r\n",parameter_.parse.terminal_parameters.ServerPort);
-    printf("DefaultTimeReportTimeInterval == %d \r\n",parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval);
-    printf("CornerPointRetransmissionAngle == %d \r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
-    printf("MaxSpeed == %d \r\n",parameter_.parse.terminal_parameters.MaxSpeed);
-    printf("ProvinceID == %d \r\n",parameter_.parse.terminal_parameters.ProvinceID);
-    printf("CityID == %d \r\n",parameter_.parse.terminal_parameters.CityID);
-    printf("CarPlateNum == %s \r\n",parameter_.parse.terminal_parameters.CarPlateNum);
-    printf("CarPlateColor == %02x \r\n",parameter_.parse.terminal_parameters.CarPlateColor);
-    printf("boot_loader_flag  =  0x%lx \r\n", parameter_.parse.terminal_parameters.bootLoaderFlag);
-    printf("\r\n");
-    printf("initSystemParameters SUCCESS!!!!!!\r\n");
-    printf("\r\n");
-
-}
-
-void ReadLocation(void)
-{
-    Internal_ReadFlash(FLASH_GPS_ADDR, (uint8_t*)&parameter_.location_info, sizeof(parameter_.location_info));
-
-    printf("para->latitude = %d\r\n", parameter_.location_info.latitude);
-    printf("para->longitude = %d\r\n", parameter_.location_info.longitude);
-    printf("para->altitude = %d\r\n", parameter_.location_info.altitude);
-    printf("para->speed = %d\r\n", parameter_.location_info.speed);
-    printf("para->bearing = %d\r\n", parameter_.location_info.bearing);
-    printf("para->time = %s\r\n", parameter_.location_info.time);
-}
-
-void ReadWakeUp(void)
-{
-	Internal_ReadFlash(FLASH_WakeUp_ADDR, (uint8_t*)&parameter_.parse.WakeUp, sizeof(parameter_.parse.WakeUp));
+	printf("initFactoryParameters == %d \r\n",parameter_.parse.terminal_parameters.initFactoryParameters);
+	
+	if(parameter_.parse.terminal_parameters.initFactoryParameters == 0)
+	{
+		FlashWrite();
+		Internal_ReadFlash(FLASH_ADDR, (uint8_t*)&parameter_.parse.terminal_parameters , sizeof(parameter_.parse.terminal_parameters));
+	}
+	printf("-->---------------------------\r\n");
+	printf("-->                           \r\n");
+	printf("-->       Version = %s     		\r\n", parameter_.parse.terminal_parameters.version);
+	printf("-->                           \r\n");
+	printf("-->---------------------------\r\n");
+	printf("HeartBeatInterval == %d \r\n",parameter_.parse.terminal_parameters.HeartBeatInterval);
+	printf("MainServerAddress == \"%s\" \r\n",parameter_.parse.terminal_parameters.MainServerAddress);
+	printf("ServerPort == %d \r\n",parameter_.parse.terminal_parameters.ServerPort);
+	printf("DefaultTimeReportTimeInterval == %d \r\n",parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval);
+	printf("CornerPointRetransmissionAngle == %d \r\n",parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle);
+	printf("MaxSpeed == %d \r\n",parameter_.parse.terminal_parameters.MaxSpeed);
+	printf("ProvinceID == %d \r\n",parameter_.parse.terminal_parameters.ProvinceID);
+	printf("CityID == %d \r\n",parameter_.parse.terminal_parameters.CityID);
+	printf("CarPlateNum == %s \r\n",parameter_.parse.terminal_parameters.CarPlateNum);
+	printf("CarPlateColor == %02x \r\n",parameter_.parse.terminal_parameters.CarPlateColor);
+	printf("boot_loader_flag  =  0x%lx \r\n", parameter_.parse.terminal_parameters.bootLoaderFlag);
+	printf("\r\n");
+	printf("initSystemParameters SUCCESS!!!!!!\r\n");
+	printf("\r\n");
+	
 }
 
 int FlashWrite()
 {
-    parameter_.parse.terminal_parameters.HeartBeatInterval = 2;
+	parameter_.parse.terminal_parameters.HeartBeatInterval = 2;
 
-    memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
-
-    // ÑĞ¾¿ÔºÆ½Ì¨
-    memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"124.222.183.168", sizeof("124.222.183.168"));
+	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
+	
+	// ç ”ç©¶é™¢å¹³å°
+	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.160.246.146", sizeof("123.160.246.146"));
 //	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"http://jt808.gps.ciicp.com", sizeof("http://jt808.gps.ciicp.com"));
-
-//	ÌìÈğÆ½Ì¨
+	
+//	//å®¢æˆ·å¹³å°
 //	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
 
-    parameter_.parse.terminal_parameters.ServerPort = 7611;
+	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
-    parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 5;
+	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 2;
 
-    parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle = 10;
+	parameter_.parse.terminal_parameters.CornerPointRetransmissionAngle = 10;
 
-    parameter_.parse.terminal_parameters.MaxSpeed = 60;
+	parameter_.parse.terminal_parameters.MaxSpeed = 60;
 
-    parameter_.parse.terminal_parameters.ProvinceID = 0x0029;
+	parameter_.parse.terminal_parameters.ProvinceID = 0x0029;
 
-    parameter_.parse.terminal_parameters.CityID = 0x0066;
+	parameter_.parse.terminal_parameters.CityID = 0x0066;
 
-    parameter_.parse.terminal_parameters.CarPlateColor = 0x02;
-
-    parameter_.parse.terminal_parameters.initFactoryParameters = 1;
-
-    memset(parameter_.parse.terminal_parameters.version,0,sizeof(parameter_.parse.terminal_parameters.version));
-    memcpy(parameter_.parse.terminal_parameters.version, "v1.0", 5);
-
-    parameter_.parse.terminal_parameters.bootLoaderFlag = 0XFFFFFFFF;
-
-
-    memset(parameter_.parse.terminal_parameters.PhoneNumber,0, 12);
+	parameter_.parse.terminal_parameters.CarPlateColor = 0x02;
+	
+	parameter_.parse.terminal_parameters.initFactoryParameters = 1;
+	
+	
+	memset(parameter_.parse.terminal_parameters.version,0,sizeof(parameter_.parse.terminal_parameters.version));
+	memcpy(parameter_.parse.terminal_parameters.version, "v1.2", 5);
+	
+	parameter_.parse.terminal_parameters.bootLoaderFlag = 0XFFFFFFFF;
+	
+	memset(parameter_.parse.terminal_parameters.PhoneNumber,0, 12);
     memset(parameter_.parse.terminal_parameters.CarPlateNum,0,sizeof(parameter_.parse.terminal_parameters.CarPlateNum));
     memset(parameter_.parse.terminal_parameters.TerminalId,0, 8);
 
 
-    memcpy(parameter_.parse.terminal_parameters.PhoneNumber, "00000000100211602092", 20);
-    memcpy(parameter_.parse.terminal_parameters.TerminalId, "1602092", 8);
+    memcpy(parameter_.parse.terminal_parameters.PhoneNumber, "00000000100211609999", 20);
+    memcpy(parameter_.parse.terminal_parameters.TerminalId, "1609999", 8);
 //	ff_convert(parameter_.parse.terminal_parameters.CarPlateNum,0);
-    memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "Ô¥A02092", 9);
+    memcpy(parameter_.parse.terminal_parameters.CarPlateNum, "STM32", 9);
+	
+	FLASH_WriteByte(FLASH_ADDR , (uint8_t*)&parameter_.parse.terminal_parameters , sizeof(parameter_.parse.terminal_parameters));	
+	printf("FLASH_Write SUCCESS!!!!!!\r\n");
+	printf("initFactoryParameters == %d \r\n",parameter_.parse.terminal_parameters.initFactoryParameters);
 
-    FLASH_WriteByte(FLASH_ADDR, (uint8_t*)&parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
-    printf("FLASH_Write SUCCESS!!!!!!\r\n");
-    printf("initFactoryParameters == %d \r\n",parameter_.parse.terminal_parameters.initFactoryParameters);
-
-    return 0;
+	return 0;
 }
 
 int IPFlashWrite()
 {
-    memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
-    memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"124.222.183.168", sizeof("124.222.183.168"));
-//	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
+	memset(parameter_.parse.terminal_parameters.MainServerAddress,0,sizeof(parameter_.parse.terminal_parameters.MainServerAddress));
+	//memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"121.5.140.126", sizeof("121.5.140.126"));
+	memcpy(parameter_.parse.terminal_parameters.MainServerAddress,"123.60.47.210", sizeof("123.60.47.210"));
+	
+	parameter_.parse.terminal_parameters.ServerPort = 7611;
 
-    parameter_.parse.terminal_parameters.ServerPort = 7611;
+	parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 5;
+	
+	FLASH_WriteByte(FLASH_ADDR , (uint8_t*)&parameter_.parse.terminal_parameters , sizeof(parameter_.parse.terminal_parameters));	
+	printf("IPFLASH_Write SUCCESS!!!!!!\r\n");
 
-    parameter_.parse.terminal_parameters.DefaultTimeReportTimeInterval = 5;
-
-    FLASH_WriteByte(FLASH_ADDR, (uint8_t*)&parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
-    printf("IPFLASH_Write SUCCESS!!!!!!\r\n");
-
-    return 0;
+	return 0;
 }
-
-void IWDG_ReBoot_Flag_FlashWrite(void)
-{
-    parameter_.parse.terminal_parameters.bootLoaderFlag = 0XCCCCCCCC;
-
-    FLASH_WriteByte(FLASH_ADDR, (uint8_t *) &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
-    printf("boot_loader_flag write SUCCESS!!!!!!\r\n");
-}
-
 
 void setUUID(void)
 {
@@ -179,38 +133,43 @@ void setUUID(void)
 
     setTerminalPhoneNumber(parameter_.parse.terminal_parameters.PhoneNumber, 20);
     setTerminalId(parameter_.parse.terminal_parameters.TerminalId, 8);
-
+	
+	memset(parameter_.IMEI,0,15);
+	memcpy(parameter_.IMEI,"100000000000000",15);
+	memset(parameter_.softwareVersion,0,20);
+	memcpy(parameter_.softwareVersion,"10000000000000000000",20);
 }
 
 void boot_loader_flag()
-{
-    parameter_.parse.terminal_parameters.bootLoaderFlag = 0XAAAAAAAA;
+{	
+	parameter_.parse.terminal_parameters.bootLoaderFlag = 0XAAAAAAAA;
+	
+	FLASH_WriteByte(FLASH_ADDR , (uint8_t *) &parameter_.parse.terminal_parameters , sizeof(parameter_.parse.terminal_parameters));	
+	printf("boot_loader_flag write SUCCESS!!!!!!\r\n");
+}	
 
-    FLASH_WriteByte(FLASH_ADDR, (uint8_t *) &parameter_.parse.terminal_parameters, sizeof(parameter_.parse.terminal_parameters));
-    printf("boot_loader_flag write SUCCESS!!!!!!\r\n");
-}
 
-
-/// @brief ÉèÖÃÖÕ¶ËÊÖ»úºÅ
+/// @brief è®¾ç½®ç»ˆç«¯æ‰‹æœºå·
 /// @param phone
-void setTerminalPhoneNumber(unsigned char *phone_num, unsigned int phoneSize)
+void setTerminalPhoneNumber(const char *phone_num, unsigned int phoneSize)
 {
-	memset(parameter_.msg_head.phone_num, 0, 20);
-    memcpy(parameter_.msg_head.phone_num, phone_num, 20);
-    printf("parameter_.msg_head.phone_num = %s\r\n", parameter_.msg_head.phone_num);
+  memset(parameter_.msg_head.phone_num, 0, 13);
+	memcpy(parameter_.msg_head.phone_num, phone_num, phoneSize);  
+//	parameter_.msg_head.phone_num = (unsigned char *)phone_num;
+	printf("parameter_.msg_head.phone_num = %s\r\n", parameter_.msg_head.phone_num);
 }
 
 
-void setTerminalId(unsigned char *TerminalId,unsigned int lenTerminalId)
+void setTerminalId(const char *TerminalId,unsigned int lenTerminalId)
 {
-    //ÖÕ¶ËID
+	//ç»ˆç«¯ID
 //	unsigned int lenTerminalId;
 //	lenTerminalId = sizeof(TerminalId);
 //	lenTerminalId	=(lenTerminalId>20)?20:lenTerminalId;
 
-    memset(parameter_.register_info.terminal_id, 0, lenTerminalId);
-    memcpy(parameter_.register_info.terminal_id, TerminalId, lenTerminalId);
-    printf("para->register_info.terminal_id = %s\r\n", parameter_.register_info.terminal_id);
+	memset(parameter_.register_info.terminal_id, 0, lenTerminalId);
+	memcpy(parameter_.register_info.terminal_id, TerminalId, lenTerminalId);
+	printf("para->register_info.terminal_id = %s\r\n", parameter_.register_info.terminal_id);
 }
 
 
@@ -223,7 +182,7 @@ int packagingAndSendMessage(unsigned int msg_id)
 
 void setStatusBit()
 {
-    parameter_.location_info.status.bit.positioning=1;
+		 parameter_.location_info.status.bit.positioning=1;
 }
 
 
@@ -231,12 +190,12 @@ void setStatusBit()
 
 void initLocationInfo(unsigned int v_alarm_value, unsigned int v_status_value)
 {
-
-    printf("\n\r[InitLocationInfo] OK !\r\n");
-    //±¨¾¯±êÖ¾
+		
+		printf("\n\r[InitLocationInfo] OK !\r\n");	
+    //æŠ¥è­¦æ ‡å¿—
     parameter_.location_info.alarm.value = v_alarm_value;
     printf("para->alarm.value = %d\r\n", parameter_.location_info.alarm.value);
-    //×´Ì¬
+    //çŠ¶æ€	
     parameter_.location_info.status.value = v_status_value;
     printf("para->status.value = %d\r\n", parameter_.location_info.status.value);
 }
@@ -244,60 +203,60 @@ void initLocationInfo(unsigned int v_alarm_value, unsigned int v_status_value)
 void updateLocation(double const v_latitude, double const v_longitude, float const v_altitude,
                     float const v_speed, float const v_bearing, unsigned char *v_timestamp)
 {
-#ifdef __JT808_DEBUG
-    printf("\n\r[updateLocationInfo] OK !\r\n");
-#endif
-//	if (speed >= 10) //Ä¬ÈÏ³µËÙ´óÓÚµÈÓÚ10¹«ÀïÊ±ÎªÕı³£ĞĞÊ»×´Ì¬
-//	{
-//	 isCarMoving.store(true);
-//	}
-//	else
-//	{
-//	 isCarMoving.store(false);
-//	}
-    parameter_.location_info.latitude = v_latitude * 1e6;
-    parameter_.location_info.longitude = v_longitude * 1e6;
-    parameter_.location_info.altitude = v_altitude;
-    parameter_.location_info.speed = v_speed * 10;
-    parameter_.location_info.bearing = v_bearing;
-    memcpy(parameter_.location_info.time, v_timestamp, 13);
-#ifdef __JT808_DEBUG
-    printf("para->latitude = %d\r\n", parameter_.location_info.latitude);
-    printf("para->longitude = %d\r\n", parameter_.location_info.longitude);
-    printf("para->altitude = %d\r\n", parameter_.location_info.altitude);
-    printf("para->speed = %d\r\n", parameter_.location_info.speed);
-    printf("para->bearing = %d\r\n", parameter_.location_info.bearing);
-    printf("para->time = %s\r\n", parameter_.location_info.time);
-#endif
+			#ifdef __JT808_DEBUG
+				printf("\n\r[updateLocationInfo] OK !\r\n");
+			#endif
+//			if (speed >= 10) //é»˜è®¤è½¦é€Ÿå¤§äºç­‰äº10å…¬é‡Œæ—¶ä¸ºæ­£å¸¸è¡Œé©¶çŠ¶æ€
+//			{
+//			 isCarMoving.store(true);
+//			}
+//			else
+//			{
+//			 isCarMoving.store(false);
+//			}
+			parameter_.location_info.latitude = v_latitude * 1e6;
+			parameter_.location_info.longitude = v_longitude * 1e6;
+			parameter_.location_info.altitude = v_altitude;
+			parameter_.location_info.speed = v_speed * 10;
+			parameter_.location_info.bearing = v_bearing;
+			memcpy(parameter_.location_info.time, v_timestamp, 13);
+		#ifdef __JT808_DEBUG
+		printf("para->latitude = %d\r\n", parameter_.location_info.latitude);
+		printf("para->longitude = %d\r\n", parameter_.location_info.longitude);
+		printf("para->altitude = %d\r\n", parameter_.location_info.altitude);
+		printf("para->speed = %d\r\n", parameter_.location_info.speed);	
+		printf("para->bearing = %d\r\n", parameter_.location_info.bearing);
+		printf("para->time = %s\r\n", parameter_.location_info.time);
+		#endif
 }
 
 
 int packagingMessage(unsigned int msg_id)
 {
-
-    //²éÕÒµ±Ç°msgIDÊÇ·ñ´æÔÚÓÚ´ı´ò°üÏûÏ¢IDÊı×éÖĞ
+		
+    //æŸ¥æ‰¾å½“å‰msgIDæ˜¯å¦å­˜åœ¨äºå¾…æ‰“åŒ…æ¶ˆæ¯IDæ•°ç»„ä¸­
     if (0 == findMsgIDFromTerminalPackagerCMD(msg_id))
     {
-        printf("[findMsgIDFromTerminalPackagerCMD] no msg_id \r\n");
-        return -1;
+			printf("[findMsgIDFromTerminalPackagerCMD] no msg_id \r\n");
+			return -1;
     }
-#ifdef __JT808_DEBUG
-    printf("[findMsgIDFromTerminalPackagerCMD] OK !\r\n");
-#endif
-    parameter_.msg_head.msg_id = msg_id; // ÉèÖÃÏûÏ¢ID.
+		#ifdef __JT808_DEBUG
+			printf("[findMsgIDFromTerminalPackagerCMD] OK !\r\n");
+		#endif
+    parameter_.msg_head.msg_id = msg_id; // è®¾ç½®æ¶ˆæ¯ID.
     if (jt808FramePackage(&parameter_) < 0)
     {
-        printf("[jt808FramePackage]: FAILED !!!\r\n");
-        return -1;
+			printf("[jt808FramePackage]: FAILED !!!\r\n");
+			return -1;
     }
-    ++parameter_.msg_head.msg_flow_num; // Ã¿ÕıÈ·Éú³ÉÒ»ÌõÃüÁî, ÏûÏ¢Á÷Ë®ºÅÔö¼Ó1.
+    ++parameter_.msg_head.msg_flow_num; // æ¯æ­£ç¡®ç”Ÿæˆä¸€æ¡å‘½ä»¤, æ¶ˆæ¯æµæ°´å·å¢åŠ 1.
     return 0;
 }
 
 int findMsgIDFromTerminalPackagerCMD(unsigned int msg_id)
 {
     int result = 0;
-    int i;
+		int i;
     for (i = 0; i < PACKAGER_NUM; ++i)
     {
         if (kTerminalPackagerCMD[i] == msg_id)
@@ -311,7 +270,7 @@ int findMsgIDFromTerminalPackagerCMD(unsigned int msg_id)
 int findParameterIDFromArray(unsigned int para_id)
 {
     int result = 0;
-    int i;
+		int i;
     for (i = 0; i < PARA_SETTING_LIMIT; ++i)
     {
         if (kParameterSettingCMD[i] == para_id)
@@ -326,53 +285,52 @@ int findParameterIDFromArray(unsigned int para_id)
 int jt808TerminalRegister(int *isRegistered)
 {
     int i=0;
-	uint8_t j=0;
+	uint16_t msgRecvLength;
     while(i<3)
     {
         packagingMessage(kTerminalRegister);
 #ifdef __JT808_DEBUG
-		
+        uint8_t j=0;
         for(j=0; j<RealBufferSendSize; j++)
         {
             printf("%02x ",BufferSend[j]);
         }
         printf("\r\n");
 #endif
-		UartSend_Non_transliterated(USART2,BufferSend,RealBufferSendSize);
-		
-		while(1)
-		{
-			
-			if(USART2_RX_STA&0X8000)    //½ÓÊÕµ½Êı¾İ
-			{
-				USART2_RX_STA = USART2_RX_STA&0x7FFF;//»ñÈ¡µ½Êµ¼Ê×Ö·ûÊıÁ¿
-				
-				msgRecvLength = UartRecv_Non_transliterated();
-				printf("msgLength:%d\r\n",msgRecvLength);
-				
-				if(msgRecvLength!=0)
-				{
-					USART2_RX_STA=0;
-					break;
-				}					
-				
-				USART2_RX_STA=0;
-			}
-		}
-		
-		parsingMessage(Non_transliterated_receive,msgRecvLength);//Ğ£Ñé
+        UartSend_Non_transliterated(USART2,BufferSend,RealBufferSendSize);
 
-		if((parameter_.parse.respone_result == kRegisterSuccess)&&(parameter_.parse.msg_head.msg_id==kTerminalRegisterResponse))
-		{
-			*isRegistered = 1;
-			printf("\r\n");
-			printf("TerminalRegister SUCCESS!!!!!!!!!!\r\n");
-			printf("\r\n");
-			USART2_RX_STA=0;
-			break;
-		}
-        
-       
+        while(1)
+        {
+
+            if(USART2_RX_STA&0X8000)    //æ¥æ”¶åˆ°æ•°æ®
+            {
+                USART2_RX_STA = USART2_RX_STA&0x7FFF;//è·å–åˆ°å®é™…å­—ç¬¦æ•°é‡
+
+                msgRecvLength = UartRecv_Non_transliterated();
+
+                if(msgRecvLength!=0)
+                {
+                    USART2_RX_STA=0;
+                    break;
+                }
+
+                USART2_RX_STA=0;
+            }
+        }
+
+        parsingMessage(Non_transliterated_receive,msgRecvLength);//æ ¡éªŒ
+
+        if((parameter_.parse.respone_result == kRegisterSuccess)&&(parameter_.parse.msg_head.msg_id==kTerminalRegisterResponse))
+        {
+            *isRegistered = 1;
+            printf("\r\n");
+            printf("TerminalRegister SUCCESS!!!!!!!!!!\r\n");
+            printf("\r\n");
+            USART2_RX_STA=0;
+            break;
+        }
+
+
         printf("\r\n");
         printf("TerminalRegister FAILED!!!!!!\r\n");
         printf("\r\n");
@@ -386,8 +344,8 @@ int jt808TerminalRegister(int *isRegistered)
 
 int jt808TerminalAuthentication(int *isAuthenticated)
 {
-    int i=0;
-	
+	int i=0;
+	uint16_t msgRecvLength;
     while(i<3)
     {
         packagingMessage(kTerminalAuthentication);
@@ -400,40 +358,39 @@ int jt808TerminalAuthentication(int *isAuthenticated)
 //        }
 //        printf("\r\n");
 //#endif
-		UartSend_Non_transliterated(USART2,BufferSend,RealBufferSendSize);
+        UartSend_Non_transliterated(USART2,BufferSend,RealBufferSendSize);
 //        Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
-        
-		while(1)
-		{
-			
-			if(USART2_RX_STA&0X8000)    //½ÓÊÕµ½Êı¾İ
-			{
-				USART2_RX_STA = USART2_RX_STA&0x7FFF;//»ñÈ¡µ½Êµ¼Ê×Ö·ûÊıÁ¿
-				
-				msgRecvLength = UartRecv_Non_transliterated();
-				printf("msgLength:%d\r\n",msgRecvLength);
-				
-				if(msgRecvLength!=0)
-				{
-					USART2_RX_STA=0;
-					break;
-				}					
-				
-				USART2_RX_STA=0;
-			}
-		}
-		
-		parsingMessage(Non_transliterated_receive,msgRecvLength);//Ğ£Ñé
-		if((parameter_.parse.respone_result== kSuccess)&&(parameter_.parse.respone_msg_id==kTerminalAuthentication))
-		{
-			*isAuthenticated = 1;
-			printf("\r\n");
-			printf("TerminalAuthentication SUCCESS!!!!!!!!\r\n");
-			printf("\r\n");
-			USART2_RX_STA=0;
-			break;
-		}
-        
+
+        while(1)
+        {
+
+            if(USART2_RX_STA&0X8000)    //æ¥æ”¶åˆ°æ•°æ®
+            {
+                USART2_RX_STA = USART2_RX_STA&0x7FFF;//è·å–åˆ°å®é™…å­—ç¬¦æ•°é‡
+
+                msgRecvLength = UartRecv_Non_transliterated();
+
+                if(msgRecvLength!=0)
+                {
+                    USART2_RX_STA=0;
+                    break;
+                }
+
+                USART2_RX_STA=0;
+            }
+        }
+
+        parsingMessage(Non_transliterated_receive,msgRecvLength);//æ ¡éªŒ
+        if((parameter_.parse.respone_result== kSuccess)&&(parameter_.parse.respone_msg_id==kTerminalAuthentication))
+        {
+            *isAuthenticated = 1;
+            printf("\r\n");
+            printf("TerminalAuthentication SUCCESS!!!!!!!!\r\n");
+            printf("\r\n");
+            USART2_RX_STA=0;
+            break;
+        }
+
         USART2_RX_STA=0;
         i++;
         printf("\r\n");
@@ -445,329 +402,143 @@ int jt808TerminalAuthentication(int *isAuthenticated)
 
 int jt808LocationReport()
 {
-    packagingMessage(kLocationReport);
-//    Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	packagingMessage(kLocationReport);
 	UartSend_Non_transliterated(USART2,BufferSend,RealBufferSendSize);
-//	printf("latitude * 1e6 	= %d\r\n", parameter_.location_info.latitude);
-//	printf("longitude * 1e6 = %d\r\n", parameter_.location_info.longitude);
-//	printf("altitude = %d\r\n", parameter_.location_info.altitude);
-//	printf("speed * 10 = %d\r\n", parameter_.location_info.speed);
-
-    return 0;
+	printf("latitude * 1e6 	= %d\r\n", parameter_.location_info.latitude);
+	printf("longitude * 1e6 = %d\r\n", parameter_.location_info.longitude);
+	printf("altitude = %d\r\n", parameter_.location_info.altitude);
+	printf("speed * 10 = %d\r\n", parameter_.location_info.speed);
+	
+	return 0;
 }
 
 int jt808TerminalHeartBeat()
 {
-    packagingMessage(kTerminalHeartBeat);
-//    Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	packagingMessage(kTerminalHeartBeat);
 	UartSend_Non_transliterated(USART2,BufferSend,RealBufferSendSize);
-
-    return 0;
+	return 0;
 }
 
 int jt808TerminalUpgradeResultReport()
 {
-    packagingMessage(kTerminalUpgradeResultReport);
-//    Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	packagingMessage(kTerminalUpgradeResultReport);
 	UartSend_Non_transliterated(USART2,BufferSend,RealBufferSendSize);
-    printf("jt808TerminalUpgradeResultReport report SUCCESS!!! \r\n");
-    return 0;
+	printf("jt808TerminalLogOut report SUCCESS!!! \r\n");
+	return 0;
 }
 
 
 int jt808TerminalLogOut()
 {
-    packagingMessage(kTerminalLogOut);
-//    Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	packagingMessage(kTerminalLogOut);
 	UartSend_Non_transliterated(USART2,BufferSend,RealBufferSendSize);
-    printf("jt808TerminalLogOut report SUCCESS!!! \r\n");
-    return 0;
+	printf("jt808TerminalLogOut report SUCCESS!!! \r\n");
+	return 0;
 }
 
 
 
 int jt808TerminalGeneralResponse()
 {
-    packagingMessage(kTerminalGeneralResponse);
-//    Usart_SendStr_length(USART2, BufferSend, RealBufferSendSize);
+	packagingMessage(kTerminalGeneralResponse);
 	UartSend_Non_transliterated(USART2,BufferSend,RealBufferSendSize);
-    printf("jt808TerminalGeneralResponse report SUCCESS!\r\n");
-    delay_ms(1000);
-    return 0;
-}
-
-void MENU_processing()
-{
-
-    key_text=KEY_Scan(1);		//µÃµ½¼üÖµ
-	
-	/*********°´¼üºóÖØĞÂ¼ÆÊ±*********/
-    if(key_text!=0)time_1ms = 0;	
-
-	/*********µ±¼ÆÊ±´óÓÚ10ÃëÊ±ÖØÖÃ*********/
-    if(time_1ms>=10000)
-    {
-		TIM_Cmd(TIM5,DISABLE);
-		/*********ÖØĞÂ¼ÆÊ±*********/
-		time_1ms = 0;
-		up_down_pressed=0;
-    }
-	
-	showMainMenu();
-	switch(key_text)
-	{
-	case KEY_up_down_PRES:
-		TIM_Cmd(TIM5,ENABLE);
-		printf("up_down_pressed = %d\r\n",up_down_pressed);
-		if(up_down_pressed>=3000)
-		{
-			printf("SOS!!!!!!!!! \r\n");
-			if(parameter_.parse.WakeUp.WakeUpMode.bit.conditionWakeUp == 1)
-			{
-				parameter_.parse.WakeUp.WakeUpConditonType.bit.sosWakeUp = 1;
-				parameter_.parse.WakeUp.WakeUpMode_MCU.bit.conditionWakeUp = 1;
-				FLASH_WriteByte(FLASH_WakeUp_ADDR, (uint8_t*)&parameter_.parse.WakeUp, sizeof(parameter_.parse.WakeUp));
-				printf("sosWakeUp");
-				system_reboot();
-			}
-			up_down_pressed = 0;
-			TIM_Cmd(TIM5,DISABLE);
-		}
-		break;
-	default:
-		break;
-	}
-}
-
-int WakeUpIntervalClockDetect(void)
-{
-	if(calendar.hour == parameter_.parse.WakeUp.WakeUpDay.time1WakeUpTime.HH)
-	{
-		if(calendar.min == parameter_.parse.WakeUp.WakeUpDay.time1WakeUpTime.MM)
-		{
-			return 1;
-		}
-	}
-	
-	else if(calendar.hour == parameter_.parse.WakeUp.WakeUpDay.time2WakeUpTime.HH)
-	{
-		if(calendar.min == parameter_.parse.WakeUp.WakeUpDay.time2WakeUpTime.MM)
-		{
-			return 1;
-		}
-	}
-	
-	else if(calendar.hour == parameter_.parse.WakeUp.WakeUpDay.time3WakeUpTime.HH)
-	{
-		if(calendar.min == parameter_.parse.WakeUp.WakeUpDay.time3WakeUpTime.MM)
-		{
-			return 1;
-		}
-	}
-	
-	else if(calendar.hour == parameter_.parse.WakeUp.WakeUpDay.time4WakeUpTime.HH)
-	{
-		if(calendar.min == parameter_.parse.WakeUp.WakeUpDay.time4WakeUpTime.MM)
-		{
-			return 1;
-		}
-	}
-	
+	printf("jt808TerminalGeneralResponse report SUCCESS!\r\n");
+	delay_ms(1000);
 	return 0;
 }
 
-int WakeUpIntervalDetect(void)
-{
-	weekday=showMainMenu();
-	if(parameter_.parse.WakeUp.setWakeUpDay.bit.Mon==1)
-	{
-		if(weekday==1)
-		{
-			return WakeUpIntervalClockDetect();
-		}
-	}
-	
-	if(parameter_.parse.WakeUp.setWakeUpDay.bit.Tue==1)
-	{
-		if(weekday==2)
-		{
-			return WakeUpIntervalClockDetect();
-		}
-	}
-	
-	if(parameter_.parse.WakeUp.setWakeUpDay.bit.Wed==1)
-	{
-		if(weekday==3)
-		{
-			return WakeUpIntervalClockDetect();
-		}
-	}
-	
-	if(parameter_.parse.WakeUp.setWakeUpDay.bit.Thurs==1)
-	{
-		if(weekday==4)
-		{
-			return WakeUpIntervalClockDetect();
-		}
-	}
-	
-	if(parameter_.parse.WakeUp.setWakeUpDay.bit.Fri==1)
-	{
-		if(weekday==5)
-		{
-			return WakeUpIntervalClockDetect();
-		}
-	}
-	
-	if(parameter_.parse.WakeUp.setWakeUpDay.bit.Sat==1)
-	{
-		if(weekday==6)
-		{
-			return WakeUpIntervalClockDetect();
-		}
-	}
-	
-	if(parameter_.parse.WakeUp.setWakeUpDay.bit.Sun==1)
-	{
-		if(weekday==7)
-		{
-			return WakeUpIntervalClockDetect();
-		}
-	}
-	return 0;
-}
 
 void File_upload()
 {
-
+	
 }
 
 int parsingMessage(const unsigned char *in, unsigned int in_len)
 {
-    unsigned short msg_id;
+		unsigned short msg_id;
     if (jt808FrameParse(in, in_len, &parameter_) < 0)
     {
-        printf("jt808FrameParse ERROR\r\n");
-        return -1;
+			printf("jt808FrameParse ERROR\r\n");
+			return -1;
     }
+		#ifdef __JT808_DEBUG
+			printf("ok parsing\r\n");
+		#endif
+		
     msg_id = parameter_.parse.msg_head.msg_id;
+		
+		#ifdef __JT808_DEBUG
+			printf("%s[%d]: [parameter_.parse.msg_head.msg_id] msg_id = 0x%02x \r\n", __FUNCTION__, __LINE__, msg_id);
+			switch (msg_id)
+			{
+			// +å¹³å°é€šç”¨åº”ç­”.
+			case kPlatformGeneralResponse:
+			{
+					printf("%s[%d]: [ kPlatformGeneralResponse ] parse done \r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-#ifdef __JT808_DEBUG
-    printf("ok parsing\r\n");
+			//  è¡¥ä¼ åˆ†åŒ…è¯·æ±‚.
+			case kFillPacketRequest:
+			{
+					printf("%s[%d]: [ kFillPacketRequest ] parse done \r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-    printf("%s[%d]: [parameter_.parse.msg_head.msg_id] msg_id = 0x%02x \r\n", __FUNCTION__, __LINE__, msg_id);
-    switch (msg_id)
-    {
-    // +Æ½Ì¨Í¨ÓÃÓ¦´ğ.
-    case kPlatformGeneralResponse:
-    {
-        printf("%s[%d]: [ kPlatformGeneralResponse ] msg_id = 0x%02x parse done \r\n", __FUNCTION__, __LINE__, msg_id);
-    }
-    break;
+			// ç»ˆç«¯æ³¨å†Œåº”ç­”..
+			case kTerminalRegisterResponse:
+			{
+					printf("%s[%d]: [ kTerminalRegisterResponse ] parse done \r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-    //  ²¹´«·Ö°üÇëÇó.
-    case kFillPacketRequest:
-    {
-        printf("%s[%d]: [ kFillPacketRequest ] msg_id = 0x%02x parse done \r\n", __FUNCTION__, __LINE__, msg_id);
-    }
-    break;
+			// è®¾ç½®ç»ˆç«¯å‚æ•°..
+			case kSetTerminalParameters:
+			{
+					printf("%s[%d]: [ kSetTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-    // ÖÕ¶Ë×¢²áÓ¦´ğ..
-    case kTerminalRegisterResponse:
-    {
-        printf("%s[%d]: [ kTerminalRegisterResponse ] msg_id = 0x%02x parse done \r\n", __FUNCTION__, __LINE__, msg_id);
-    }
-    break;
+			// æŸ¥è¯¢ç»ˆç«¯å‚æ•°..
+			case kGetTerminalParameters:
+			{
+					printf("%s[%d]: [ kGetTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-    // ÉèÖÃÖÕ¶Ë²ÎÊı..
-    case kSetTerminalParameters:
-    {
-        printf("%s[%d]: [ kSetTerminalParameters ] msg_id = 0x%02x parse done \r\n", __FUNCTION__, __LINE__, msg_id);
-    }
-    break;
+			//æŸ¥è¯¢æŒ‡å®šç»ˆç«¯å‚æ•°..
+			case kGetSpecificTerminalParameters:
+			{
+					printf("%s[%d]: [ kGetSpecificTerminalParameters ] parse done \r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-    // ²éÑ¯ÖÕ¶Ë²ÎÊı..
-    case kGetTerminalParameters:
-    {
-        printf("%s[%d]: [ kGetTerminalParameters ] msg_id = 0x%02x parse done \r\n", __FUNCTION__, __LINE__, msg_id);
-    }
-    break;
+			// ç»ˆç«¯æ§åˆ¶
+			case kTerminalControl: 
+			{
+					printf("%s[%d]: [ kTerminalControl ] parse done \r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-    //²éÑ¯Ö¸¶¨ÖÕ¶Ë²ÎÊı..
-    case kGetSpecificTerminalParameters:
-    {
-        printf("%s[%d]: [ kGetSpecificTerminalParameters ] msg_id = 0x%02x parse done \r\n", __FUNCTION__, __LINE__, msg_id);
-    }
-    break;
+			// ä¸‹å‘ç»ˆç«¯å‡çº§åŒ….
+			case kTerminalUpgrade:
+			{
+					printf("%s[%d]: [ kTerminalUpgrade ] parse done\r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-    // ÖÕ¶Ë¿ØÖÆ
-    case kTerminalControl:
-    {
-        printf("%s[%d]: [ kTerminalControl ] msg_id = 0x%02x parse done \r\n", __FUNCTION__, __LINE__, msg_id);
-    }
-    break;
+			//  ä½ç½®ä¿¡æ¯æŸ¥è¯¢..
+			case kGetLocationInformation:
+			{
+					printf("%s[%d]: [ kGetLocationInformation ] parse done\r\n", __FUNCTION__, __LINE__);
+			}
+			break;
 
-    // ÏÂ·¢ÖÕ¶ËÉı¼¶°ü.
-    case kTerminalUpgrade:
-    {
-        printf("%s[%d]: [ kTerminalUpgrade ] msg_id = 0x%02x parse done\r\n", __FUNCTION__, __LINE__, msg_id);
-    }
-    break;
-
-    //  Î»ÖÃĞÅÏ¢²éÑ¯..
-    case kGetLocationInformation:
-    {
-        printf("%s[%d]: [ kGetLocationInformation ] msg_id = 0x%02x parse done\r\n", __FUNCTION__, __LINE__, msg_id);
-    }
-    break;
-
-    default:
-        break;
-    }
-#endif
-
-
+			default:
+					break;
+			}
+			
+			
+		#endif
     return 0;
 }
-
-
-void text_process(void)
-{
-	//ÓĞ¶ÌĞÅ½ÓÈë
-	if((strstr((const char*)USART2_RX_BUF,"+CMT:"))!=NULL)
-	{
-		printf((const char*)USART2_RX_BUF,"\r\n");
-		text_position =  strStr((const char*)USART2_RX_BUF, wakeupCMD);
-		printf("position:%d\r\n",text_position);
-		printf("strlen(haystack):%d\r\n",strlen((const char*)USART2_RX_BUF));
-		wakeupTimeLength = strlen((const char*)USART2_RX_BUF) - 1 - 6 - text_position;
-		printf("wakeupTimeLength:%d\r\n",wakeupTimeLength);
-		for(i=0;i<wakeupTimeLength;i++)
-		{	
-			str_wakeupTime[i] = USART2_RX_BUF[text_position+i+6];
-		} 
-		
-		
-		for(i=0;i<6;i++) printf("%02x ",str_wakeupTime[i]);
-		printf("\r\n");
-		parameter_.parse.WakeUp.WakeUpDuration = atoi(str_wakeupTime);
-		if(parameter_.parse.WakeUp.WakeUpDuration>65535) parameter_.parse.WakeUp.WakeUpDuration = 65535;
-		printf("wakeupTime=%d\r\n",parameter_.parse.WakeUp.WakeUpDuration);
-	}	
-}
-
-
-//¶¨Ê±Æ÷5ÖĞ¶Ï·şÎñ³ÌĞò
-void TIM5_IRQHandler(void)
-{
-    if (TIM_GetITStatus(TIM5, TIM_IT_Update) != RESET) //¼ì²éÖ¸¶¨µÄTIMÖĞ¶Ï·¢ÉúÓë·ñ:TIM ÖĞ¶ÏÔ´
-    {
-        TIM_ClearITPendingBit(TIM5, TIM_IT_Update);  //Çå³ıTIMxµÄÖĞ¶Ï´ı´¦ÀíÎ»:TIM ÖĞ¶ÏÔ´
-        time_1ms++;
-		if(key_text == KEY_up_down_PRES)
-		{
-			up_down_pressed++;
-		}
-    }
-}
-

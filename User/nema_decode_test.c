@@ -1,43 +1,38 @@
+/**
+  ******************************************************************************
+  * @file    nmea_decode_test.c
+  * @author  WJSHM
+  * @version V1.0
+  * @date    2016-07-xx
+  * @brief   测试NEMA解码库
+  ******************************************************************************
+  * @attention
+  *
+  *
+  ******************************************************************************
+  */ 
+  
+#include "stm32f10x.h"
 #include "./usart/usart.h"
 #include "./gps/gps_config.h"
+#include "ff.h"
+#include "nmea/nmea.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-
-nmeaPARSER parser;      
-nmeaINFO info;  
-
 char bufTime[13]={0};
-
-uint8_t gpsData_Receive(uint8_t *new_parse)
-{
-	if(GPS_HalfTransferEnd)     
-	{
-	
-		nmea_parse(&parser, (const char*)&gps_rbuff[0], HALF_GPS_RBUFF_SIZE, &info);
-		
-		GPS_HalfTransferEnd = 0;  
-		*new_parse = 1;         
-	}
-	else if(GPS_TransferEnd)   
-	{
-		
-		nmea_parse(&parser, (const char*)&gps_rbuff[HALF_GPS_RBUFF_SIZE], HALF_GPS_RBUFF_SIZE, &info);
-	 
-		GPS_TransferEnd = 0;
-		*new_parse = 1;
-	}
-	return *new_parse;
-}
-
-
-
 int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude, 
 										float  *v_speed, float *v_bearing, unsigned char *v_timestamp,
-											uint8_t new_parse)
+											nmeaINFO info, uint8_t new_parse)
 {
 		double deg_lat;//转换成[degree].[degree]格式的纬度
 		double deg_lon;//转换成[degree].[degree]格式的经度
-
+//	  long m_lat=0;
+//		long m_lon=0;
+//		int m_alt=0;
+//		int m_speed=0;
+//		int m_bearing=0;
 	
     nmeaTIME beiJingTime;    //北京时间 
 
@@ -55,6 +50,11 @@ int nmea_decode_test(double *v_latitude, double *v_longitude, float *v_altitude,
 			deg_lat = nmea_ndeg2degree(info.lat);
 			deg_lon = nmea_ndeg2degree(info.lon);
 
+//			m_lat=(long)(deg_lat*(1e6));
+//			m_lon=(long)(deg_lon*1000000);
+//			m_alt=(int)(info.elv);
+//			m_speed=(int)(info.speed*10);
+//			m_bearing=(int)(info.direction);
 			
 			if(deg_lat!=0)
 			{

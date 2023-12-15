@@ -1,23 +1,28 @@
 
 
-//#ifndef JT808_CLIENT_MANAGER_H_
-//#define JT808_CLIENT_MANAGER_H_
+#ifndef JT808_CLIENT_MANAGER_H_
+#define JT808_CLIENT_MANAGER_H_
 
+
+
+#include <stdio.h>
+#include <stdint.h>
 #include "./sys/sys.h"
+#include <stdlib.h>
+#include "ff.h"
 
 
-#define __JT808_DEBUG
-#define FLASH_ADDR (uint32_t)0x08034000
-#define FLASH_GPS_ADDR (uint32_t)0x08034800
-#define FLASH_WakeUp_ADDR (uint32_t)0x08035000
+
+//#define __JT808_DEBUG
+#define FLASH_ADDR (uint32_t)0x0803c000
+//#define ID_FLASH_ADDR (uint32_t)0x0803b800
 #define FLASH_BUFFER_SIZE 128
-extern uint8_t Non_transliterated_receive[1024];
 
 
 
 extern struct ProtocolParameter parameter_;
 
-void setTerminalPhoneNumber(unsigned char *phone_num, unsigned int phoneSize);
+void setTerminalPhoneNumber(const char *phone_num, unsigned int phoneSize);
 
 /******************************************************************************
  * @description: 数据打包并发送接口
@@ -52,7 +57,7 @@ int jt808TerminalLogOut(void);
 int jt808TerminalHeartBeat(void);
 int jt808TerminalUpgradeResultReport(void);
 int jt808TerminalGeneralResponse(void);
-void setTerminalId(unsigned char *TerminalId, unsigned int lenTerminalId);
+void setTerminalId(const char *TerminalId, unsigned int lenTerminalId);
 void setStatusBit(void);
 int FlashWrite(void);
 void setUUID(void);
@@ -64,10 +69,5 @@ void initLocationInfo(unsigned int v_alarm_value, unsigned int v_status_value);
 void updateLocation(double const v_latitude, double const v_longitude, float const v_altitude,
                     float const v_speed, float const v_bearing, unsigned char *v_timestamp);
 void boot_loader_flag(void);
-void ReadLocation(void);
-void ReadWakeUp(void);
-void MENU_processing(void);
-int WakeUpIntervalDetect(void);
-void text_process(void);
 
-//#endif // JT808_CLIENT_MANAGER_H_
+#endif // JT808_CLIENT_MANAGER_H_

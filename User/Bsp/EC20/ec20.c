@@ -4,8 +4,6 @@
 #include "./key/key.h"	 	 	 	 	 
 #include "string.h"    
 #include "./usart2/usart2.h" 
-#include "./IWDG/iwdg.h"
-#include "./timer/timer.h"
 
 u8 Scan_Wtime = 0;//保存扫描需要的时间
 u8 BT_Scan_mode=0;//蓝牙扫描设备模式标志
@@ -50,7 +48,6 @@ u8 ec20_send_cmd(u8 *cmd,u8 *Re1,u8 *Re2,u8 *Re3,u16 waittime)
 {
     u8 res=0;
     USART2_RX_STA=0;
-		IWDG_Feed();
     if((u32)cmd<=0XFF)
     {
         while(DMA1_Channel7->CNDTR!=0);	//等待通道7传输完成
@@ -309,14 +306,14 @@ ErrorStatus ec20_init(unsigned char *IPSERVER, int PORTSERVER)
     u8 err=0;
     char atstr[BUFLEN];
     USART2_RX_STA=0;
-    if(ec20_send_cmd("AT","OK","NULL","NULL",1000))err|=1<<0;//?????????AT???
+    if(ec20_send_cmd("AT","OK","NULL","NULL",1000))err|=1<<0;//?ì2aê?·?ó|′eAT??á?
     USART2_RX_STA=0;
-    if(ec20_send_cmd("ATE0","OK","NULL","NULL",2000))err|=1<<1;//??????
+    if(ec20_send_cmd("ATE0","OK","NULL","NULL",2000))err|=1<<1;//2?????
     USART2_RX_STA=0;
-    if(ec20_send_cmd("AT+CPIN?","OK","NULL","NULL",2000))err|=1<<3;	//???SIM????????
+    if(ec20_send_cmd("AT+CPIN?","OK","NULL","NULL",2000))err|=1<<3;	//2é?ˉSIM?¨ê?·??ú??
     USART2_RX_STA=0;
     data = 0;
-    //???GSM?????????????????????
+    //2é?ˉGSMí???×￠2á×′ì?￡?è·è??òí?3é1|
     while (ec20_send_cmd("AT+CREG?\r\n","\r\n+CREG: 0,1","NULL","NULL",2000)!= 1 && data < 10)
     {
         USART2_RX_STA=0;
@@ -326,7 +323,7 @@ ErrorStatus ec20_init(unsigned char *IPSERVER, int PORTSERVER)
     USART2_RX_STA=0;
     if (data == 10)
     {
-        return ERROR;                                                                             //?????????g??????
+        return ERROR;                                                                             //?òí?2?3é1|?￡?é????
     }
     ec20_send_cmd("AT+CGATT?\r\n","+CGATT: 1","OK","NULL",2000);
     USART2_RX_STA=0;

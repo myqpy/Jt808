@@ -11,13 +11,9 @@
 #include "bcd.h"
 #include "ff.h"
 
-
-
 extern unsigned short kTerminalPackagerCMD[PACKAGER_NUM];
 extern unsigned char BufferSend[BUFFER_SIZE_SEND]; //发送缓存
 extern unsigned int RealBufferSendSize;
 
 int jt808FramePackage(struct ProtocolParameter *para);
-int jt808FrameHeadPackage(struct ProtocolParameter *para);
-int jt808MsgBodyLengthFix(struct ProtocolParameter *para, unsigned int msgBody_len);
 

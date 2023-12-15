@@ -2,87 +2,86 @@
 #include "set_terminal_parameter.h"
 #include "client_manager.h"
 #include "util.h"
+#include "ff.h"
 #include "bcd.h"
-#include "protocol_parameter.h"
 
-// ËùÓĞÖÕ¶Ë½âÎöÃüÁî.
+// æ‰€æœ‰ç»ˆç«¯è§£æå‘½ä»¤.
 unsigned short kTerminalParserCMD[PARSER_NUM] = {
-    kPlatformGeneralResponse,       //Æ½Ì¨Í¨ÓÃÓ¦´ğ
-    kFillPacketRequest,             // ²¹´«·Ö°üÇëÇó.
-    kTerminalRegisterResponse,      // ÖÕ¶Ë×¢²áÓ¦´ğ.
-    kSetTerminalParameters,         // ÉèÖÃÖÕ¶Ë²ÎÊı.
-    kGetTerminalParameters,         // ²éÑ¯ÖÕ¶Ë²ÎÊı.
-    kGetSpecificTerminalParameters, // ²éÑ¯Ö¸¶¨ÖÕ¶Ë²ÎÊı.
-    kTerminalControl,               //ÖÕ¶Ë¿ØÖÆ
-    kTerminalUpgrade,               // ÏÂ·¢ÖÕ¶ËÉı¼¶°ü.
-    kGetLocationInformation,        // Î»ÖÃĞÅÏ¢²éÑ¯.
+    kPlatformGeneralResponse,       //å¹³å°é€šç”¨åº”ç­”
+    kFillPacketRequest,             // è¡¥ä¼ åˆ†åŒ…è¯·æ±‚.
+    kTerminalRegisterResponse,      // ç»ˆç«¯æ³¨å†Œåº”ç­”.
+    kSetTerminalParameters,         // è®¾ç½®ç»ˆç«¯å‚æ•°.
+    kGetTerminalParameters,         // æŸ¥è¯¢ç»ˆç«¯å‚æ•°.
+    kGetSpecificTerminalParameters, // æŸ¥è¯¢æŒ‡å®šç»ˆç«¯å‚æ•°.
+    kTerminalControl,               //ç»ˆç«¯æ§åˆ¶
+    kTerminalUpgrade,               // ä¸‹å‘ç»ˆç«¯å‡çº§åŒ….
+    kGetLocationInformation,        // ä½ç½®ä¿¡æ¯æŸ¥è¯¢.
 };
 
-/// @brief ½ÓÊÕ»º´æ
+/// @brief æ¥æ”¶ç¼“å­˜
 unsigned char BufferReceive[BUFFER_SIZE_RECEIVE] = {0};
 
-/// @brief Êµ¼Ê½ÓÊÕµÄÊı¾İ³¤¶È
+/// @brief å®é™…æ¥æ”¶çš„æ•°æ®é•¿åº¦
 unsigned int RealBufferReceiveSize = 0;
 
-// ½âÎöÏûÏ¢Í·.
-int jt808FrameHeadParse(const unsigned char *in, unsigned int in_len, struct ProtocolParameter *para)
+// è§£ææ¶ˆæ¯å¤´.
+int jt808FrameHeadParse(const unsigned char *in, unsigned int in_len, struct MsgHead *msg_head)
 {
-    if (para == NULL || in_len < 15)
-	{
-		printf("msg_head == NULL || in_len < 15");
-		return -1;
-	}
-	
-    // ÏûÏ¢ID.	
-    para->parse.msg_head.msg_id = (in[1] << 8) + in[2];
+    if (msg_head == NULL || in_len < 15)
+		{
+			printf("msg_head == NULL || in_len < 15");
+			return -1;
+		}
+        
+    // æ¶ˆæ¯ID.
+    msg_head->msg_id = (in[1] << 8) + in[2];
 		
     
 
-    // ÏûÏ¢ÌåÊôĞÔ.
-    para->parse.msg_head.msgbody_attr.u16val = (in[3] << 8) + in[4];
+    // æ¶ˆæ¯ä½“å±æ€§.
+    msg_head->msgbody_attr.u16val = (in[3] << 8) + in[4];
     
-	para->parse.msg_head.Protocolversion = in[5];
-	
-    // ÖÕ¶ËÊÖ»úºÅ.
 
-    memset(para->parse.msg_head.phone_num, 0, 20);
+    // ç»ˆç«¯æ‰‹æœºå·.
 
-    if (jt808BcdToStringCompress((&(in[6])), para->parse.msg_head.phone_num, 10) == NULL)
+    memset(msg_head->phone_num, 0, 12);
+
+    if (jt808BcdToStringCompress((&(in[5])), msg_head->phone_num, 6) == NULL)
     {
-		printf("jt808BcdToStringCompress error \r\n");
-		return -1;
+			printf("jt808BcdToStringCompress error \r\n");
+      return -1;
     }
     
 
-    // ÏûÏ¢Á÷Ë®ºÅ.
-    para->parse.msg_head.msg_flow_num = (in[11] << 8) + in[12];
+    // æ¶ˆæ¯æµæ°´å·.
+    msg_head->msg_flow_num = (in[11] << 8) + in[12];
     
 
-    // ³öÏÖ·â°ü.
-    if ((para->parse.msg_head.msgbody_attr.bit.packet == 1) &&
-        ((in_len - 15 - para->parse.msg_head.msgbody_attr.bit.msglen) == 4))
+    // å‡ºç°å°åŒ….
+    if ((msg_head->msgbody_attr.bit.packet == 1) &&
+        ((in_len - 15 - msg_head->msgbody_attr.bit.msglen) == 4))
     {
-        para->parse.msg_head.total_packet = (in[13] << 8) + in[14];
-        para->parse.msg_head.packet_seq = (in[15] << 8) + in[16];
+        msg_head->total_packet = (in[13] << 8) + in[14];
+        msg_head->packet_seq = (in[15] << 8) + in[16];
     }
     else
     {
-        para->parse.msg_head.total_packet = 0;
-        para->parse.msg_head.packet_seq = 0;
+        msg_head->total_packet = 0;
+        msg_head->packet_seq = 0;
     }
 		
 		#ifdef __JT808_DEBUG
-			printf("[jt808FrameHeadParse] msg_head->msg_id = 0x%04x\r\n", para->parse.msg_head.msg_id);
-			printf("[jt808FrameHeadParse] msg_head->msgbody_attr.u16val = 0x%04x\r\n",para->parse.msg_head.msgbody_attr.u16val);
-			printf("[jt808FrameHeadParse] msg_head->phone_num = %s !!!\r\n", para->parse.msg_head.phone_num);
-			printf("[jt808FrameHeadParse] msg_head->msg_flow_num = 0x%04x !!!\r\n", para->parse.msg_head.msg_flow_num);
+			printf("[jt808FrameHeadParse] msg_head->msg_id = 0x%02x\r\n", msg_head->msg_id);
+			printf("[jt808FrameHeadParse] msg_head->msgbody_attr.u16val = 0x%02x\r\n", msg_head->msgbody_attr.u16val);
+			printf("[jt808FrameHeadParse] msg_head->phone_num = %s !!!\r\n", msg_head->phone_num);
+			printf("[jt808FrameHeadParse] msg_head->msg_flow_num = 0x%02x !!!\r\n", msg_head->msg_flow_num);
 		#endif
 		
 		
     return 0;
 }
 
-//Æ½Ì¨Í¨ÓÃÓ¦´ğ
+//å¹³å°é€šç”¨åº”ç­”
 int handle_kPlatformGeneralResponse(struct ProtocolParameter *para)
 {
 		uint16_t pos;
@@ -94,15 +93,15 @@ int handle_kPlatformGeneralResponse(struct ProtocolParameter *para)
     pos = MSGBODY_NOPACKET_POS;
     if (para->msg_head.msgbody_attr.bit.packet == 1)
         pos = MSGBODY_PACKET_POS;
-    // Ó¦´ğÁ÷Ë®ºÅ.
+    // åº”ç­”æµæ°´å·.
     para->parse.respone_flow_num = (BufferReceive[pos] << 8) + BufferReceive[pos + 1];
     
 
-    // Ó¦´ğÏûÏ¢ID.
+    // åº”ç­”æ¶ˆæ¯ID.
     para->parse.respone_msg_id = (BufferReceive[pos + 2] << 8) + BufferReceive[pos + 3];
     
 
-    // Ó¦´ğ½á¹û.
+    // åº”ç­”ç»“æœ.
     para->parse.respone_result = BufferReceive[pos + 4];
 		
 		#ifdef __JT808_DEBUG
@@ -114,53 +113,52 @@ int handle_kPlatformGeneralResponse(struct ProtocolParameter *para)
     return 0;
 }
 
-//  ²¹´«·Ö°üÇëÇó.
+//  è¡¥ä¼ åˆ†åŒ…è¯·æ±‚.
 int handle_kFillPacketRequest(struct ProtocolParameter *para)
 {
-//	uint16_t pos;
-//	unsigned short cnt;
-//	unsigned char i;
-//	unsigned short id;
-//	
-//	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kFillPacketRequest);
-//	
-//	if (para == NULL)
+	uint16_t pos;
+	unsigned short cnt;
+	unsigned char i;
+	unsigned short id;
+	
+	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kFillPacketRequest);
+	
+	if (para == NULL)
+	{
+		return -1;
+	}
+	pos = MSGBODY_NOPACKET_POS;
+	if (para->parse.msg_head.msgbody_attr.bit.packet == 1){
+			pos = MSGBODY_PACKET_POS;
+	}
+	
+  para->fill_packet.first_packet_msg_flow_num = (BufferReceive[pos] << 8) + BufferReceive[pos + 1];
+	pos += 2;
+	
+	cnt = BufferReceive[pos+2];
+	++pos;
+	
+//	if(para->msg_head.msgbody_attr.bit.msglen -3 != (cnt * 2))
 //	{
 //		return -1;
 //	}
-//	pos = MSGBODY_NOPACKET_POS;
-//	if (para->parse.msg_head.msgbody_attr.bit.packet == 1){
-//			pos = MSGBODY_PACKET_POS;
+//	
+////	memset(para->fill_packet.packet_id, 0, sizeof(para->fill_packet.packet_id));
+//	for(i=0;i<cnt;++i)
+//	{
+//		id = BufferReceive[pos + i * 2] + BufferReceive[pos + 1 + i * 2];
+//		memncpy(para->fill_packet.packet_id[pos], id, 2);
+//		pos += 2;
 //	}
-//	
-//  para->fill_packet.first_packet_msg_flow_num = (BufferReceive[pos] << 8) + BufferReceive[pos + 1];
-//	pos += 2;
-//	
-//	cnt = BufferReceive[pos+2];
-//	++pos;
-//	
-////	if(para->msg_head.msgbody_attr.bit.msglen -3 != (cnt * 2))
-////	{
-////		return -1;
-////	}
-////	
-//////	memset(para->fill_packet.packet_id, 0, sizeof(para->fill_packet.packet_id));
-////	for(i=0;i<cnt;++i)
-////	{
-////		id = BufferReceive[pos + i * 2] + BufferReceive[pos + 1 + i * 2];
-////		memncpy(para->fill_packet.packet_id[pos], id, 2);
-////		pos += 2;
-////	}
 
-//	File_upload();
-//	
+	File_upload();
+	
 	return 0;
 }
 
-// ÖÕ¶Ë×¢²áÓ¦´ğ..
+// ç»ˆç«¯æ³¨å†Œåº”ç­”..
 int handle_kTerminalRegisterResponse(struct ProtocolParameter *para)
 {
-		unsigned char *p=NULL;
 		unsigned short pos;
 		unsigned short len_code;
 	
@@ -171,27 +169,26 @@ int handle_kTerminalRegisterResponse(struct ProtocolParameter *para)
     pos = MSGBODY_NOPACKET_POS;
     if (para->parse.msg_head.msgbody_attr.bit.packet == 1)
         pos = MSGBODY_PACKET_POS;
-    // Ó¦´ğÁ÷Ë®ºÅ.
+    // åº”ç­”æµæ°´å·.
     para->parse.respone_flow_num = (BufferReceive[pos] << 8) + BufferReceive[pos + 1];
     printf("[%s] respone_flow_num  = 0x%04x\r\n", __FUNCTION__, para->parse.respone_flow_num);
-    // Ó¦´ğ½á¹û.
+    // åº”ç­”ç»“æœ.
     para->parse.respone_result = BufferReceive[pos + 2];
     printf("[%s] respone_result  = 0x%02x\r\n", __FUNCTION__, para->parse.respone_result);
-    // Ó¦´ğ½á¹ûÎª0(³É¹¦)Ê±½âÎö³ö¸½¼ÓµÄ¼øÈ¨Âë.
+    // åº”ç­”ç»“æœä¸º0(æˆåŠŸ)æ—¶è§£æå‡ºé™„åŠ çš„é‰´æƒç .
     if (para->parse.respone_result == kRegisterSuccess)
     {
         len_code = para->parse.msg_head.msgbody_attr.bit.msglen - 3;
-        p = (unsigned char *)malloc((len_code + 1) * sizeof(unsigned char));
-        memcpy(p, &(BufferReceive[pos + 3]), len_code);
-		memcpy(para->parse.authentication_code, p, len_code);
-		
+        para->parse.authentication_code = (unsigned char *)malloc((len_code + 1) * sizeof(unsigned char));
+        memcpy(para->parse.authentication_code, &(BufferReceive[pos + 3]), len_code);
+
         printf("[%s] authentication_code = %s\r\n", __FUNCTION__, para->parse.authentication_code);
     }
-	free(p);
+
     return 0;
 }
 
-// ÉèÖÃÖÕ¶Ë²ÎÊı..
+// è®¾ç½®ç»ˆç«¯å‚æ•°..
 int handle_kSetTerminalParameters(struct ProtocolParameter *para)
 {
 	uint16_t pos;
@@ -205,40 +202,47 @@ int handle_kSetTerminalParameters(struct ProtocolParameter *para)
 	jt808TerminalGeneralResponse();
 	
 	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kSetTerminalParameters);
-	if (para == NULL) return -1;
-	
+	if (para == NULL){
+			return -1;
+	}
 	pos = MSGBODY_NOPACKET_POS;
-	if (para->parse.msg_head.msgbody_attr.bit.packet == 1) pos = MSGBODY_PACKET_POS;
-	
+	if (para->parse.msg_head.msgbody_attr.bit.packet == 1){
+			pos = MSGBODY_PACKET_POS;
+	}
 	msg_len = para->parse.msg_head.msgbody_attr.bit.msglen;
-	if (msg_len < 1) return -1;
-	
-	// ½âÎöÉèÖÃµÄ²ÎÊı×Ü¸öÊı.
+	if (msg_len < 1){
+			return -1;
+	}
+	// è§£æè®¾ç½®çš„å‚æ•°æ€»ä¸ªæ•°.
 	cnt = BufferReceive[pos];
 	pos++;
 
-	if(cnt<=0) return -1;
-	
+	if(cnt<=0)
+	{
+		return -1;
+	}
 
 	for(i=0;i<cnt;++i)
 	{
-		//²éÕÒ²ÎÊıÏîµÄ²ÎÊıID
+		//æŸ¥æ‰¾å‚æ•°é¡¹çš„å‚æ•°ID
 		memcpy(u32converter.u8array,(BufferReceive+pos),4);
 		p_id=EndianSwap32(u32converter.u32val);
 		pos+=4;
-		//´ÓÒÑÖ§³ÖµÄ²ÎÊıÏîÊı×éÖĞ²éÕÒÊÇ·ñÓĞµ±Ç°²ÎÊıID
+		//ä»å·²æ”¯æŒçš„å‚æ•°é¡¹æ•°ç»„ä¸­æŸ¥æ‰¾æ˜¯å¦æœ‰å½“å‰å‚æ•°ID
 		isFind=findParameterIDFromArray(p_id);
 		len=BufferReceive[pos];
 		pos++;
-		if(isFind==1) jt808ParameterSettingParse(p_id,(BufferReceive+pos),len,para);
-		
+		if(isFind==1)
+		{
+			jt808ParameterSettingParse(p_id,(BufferReceive+pos),len,para);
+		}
 		pos+=len;
 	}
 	
 	return 0;
 }
 
-// ²éÑ¯ÖÕ¶Ë²ÎÊı..
+// æŸ¥è¯¢ç»ˆç«¯å‚æ•°..
 int handle_kGetTerminalParameters(struct ProtocolParameter *para)
 {
 	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kGetTerminalParameters);
@@ -246,7 +250,7 @@ int handle_kGetTerminalParameters(struct ProtocolParameter *para)
 	return 0;
 }
 
-//²éÑ¯Ö¸¶¨ÖÕ¶Ë²ÎÊı..
+//æŸ¥è¯¢æŒ‡å®šç»ˆç«¯å‚æ•°..
 int handle_kGetSpecificTerminalParameters(struct ProtocolParameter *para)
 {
 	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kGetSpecificTerminalParameters);
@@ -254,7 +258,7 @@ int handle_kGetSpecificTerminalParameters(struct ProtocolParameter *para)
 	return 0;
 }
 
-// ÖÕ¶Ë¿ØÖÆ
+// ç»ˆç«¯æ§åˆ¶
 int handle_kTerminalControl(struct ProtocolParameter *para)
 {
 	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalControl);
@@ -262,14 +266,14 @@ int handle_kTerminalControl(struct ProtocolParameter *para)
 	return 0;
 }
 
-// ÏÂ·¢ÖÕ¶ËÉı¼¶°ü.
+// ä¸‹å‘ç»ˆç«¯å‡çº§åŒ….
 int handle_kTerminalUpgrade(struct ProtocolParameter *para)
 {
-	union U32ToU8Array u32converter;
 	uint16_t pos;
+	uint16_t beg = pos;
 	int i;
 	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalUpgrade);
-	
+	jt808TerminalGeneralResponse();
 	if (para == NULL)
 	{
 		return -1;
@@ -281,150 +285,35 @@ int handle_kTerminalUpgrade(struct ProtocolParameter *para)
 		pos = MSGBODY_PACKET_POS;
 	}
 	
-	jt808TerminalGeneralResponse();
-	
-	// Éı¼¶ÀàĞÍ.
-	para->upgrade_info.upgrade_type = BufferReceive[pos];
-	pos++;
-	printf("para->upgrade_info.upgrade_type: %02x \r\n", para->upgrade_info.upgrade_type);
+	para->upgrade_info.upgrade_type = BufferReceive[pos++];
 
-	// ÖÆÔìÉÌID, ¹Ì¶¨5¸ö×Ö½Ú.
 	memset(para->upgrade_info.manufacturer_id, 0, sizeof(para->upgrade_info.manufacturer_id));
 	for(i=0;i<5;i++)
 	{
-		para->upgrade_info.manufacturer_id[i] = BufferReceive[pos];
-		pos++;
+		
 	}
-	printf("para->upgrade_info.manufacturer_id: %s \r\n", para->upgrade_info.manufacturer_id);
 	
-	//°æ±¾ºÅ³¤¶È
-	para->upgrade_info.version_id_len = BufferReceive[pos];
-	pos++;
-	printf("para->upgrade_info.version_id_len: %02x \r\n", para->upgrade_info.version_id_len);
-	
-	
-	// Éı¼¶°æ±¾ºÅ.
-	para->upgrade_info.version_id = (unsigned char *)malloc(sizeof(unsigned char)*(para->upgrade_info.version_id_len)+1);
-	memset(para->upgrade_info.version_id,0,para->upgrade_info.version_id_len);
-	memcpy(para->upgrade_info.version_id, &BufferReceive[pos], para->upgrade_info.version_id_len);
-	pos+=(para->upgrade_info.version_id_len);
-	printf("para->upgrade_info.version_id: %s \r\n", para->upgrade_info.version_id);	
-	//free(para->upgrade_info.version_id);
-	
-	// Éı¼¶°ü×Ü³¤¶È.
-	for(i=0;i<4;i++)
-	{
-		u32converter.u8array[i] = BufferReceive[pos];
-//		printf(("%02x "),u32converter.u8array[i]);
-		pos++;
-	}
-	para->upgrade_info.upgrade_data_total_len = EndianSwap32(u32converter.u32val);
-	printf("para->upgrade_info.upgrade_data_total_len: %d \r\n", para->upgrade_info.upgrade_data_total_len);
 
-	// Éı¼¶Êı¾İ°ü.
-	para->upgrade_info.upgrade_data = (unsigned char *)malloc(sizeof(unsigned char)*(para->upgrade_info.upgrade_data_total_len)+1);
-	memset(para->upgrade_info.upgrade_data,0,para->upgrade_info.upgrade_data_total_len);
-	memcpy(para->upgrade_info.upgrade_data, &BufferReceive[pos], para->upgrade_info.upgrade_data_total_len);
-	printf("para->upgrade_info.upgrade_data:");
-	for(i=0;i<para->upgrade_info.upgrade_data_total_len;i++)
-	{
-		printf(("%02x "),para->upgrade_info.upgrade_data[i]);
-	}
-	printf("\r\n");
-//	free(para->upgrade_info.upgrade_data);
-	
-//	jt808TerminalUpgradeResultReport();
-//	boot_loader_flag();					
+
+
+
+
+
+
+
+
+
+	jt808TerminalUpgradeResultReport();
+	boot_loader_flag();					
 	return 0;
 }
 
-//  Î»ÖÃĞÅÏ¢²éÑ¯..
+//  ä½ç½®ä¿¡æ¯æŸ¥è¯¢..
 int handle_kGetLocationInformation(struct ProtocolParameter *para)
 {
 	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kGetLocationInformation);
 
 	return 0;
-}
-
-//ĞİÃß»½ĞÑÄ£Ê½Êı¾İ.
-int handle_kWakeUp(struct ProtocolParameter *para)
-{
-	uint8_t pos;
-	printf("[%s] msg_id = 0x%04x\r\n", __FUNCTION__, kTerminalUpgrade);
-	
-	if (para == NULL)
-	{
-		return -1;
-	}
-	pos = MSGBODY_NOPACKET_POS;
-	if (para->parse.msg_head.msgbody_attr.bit.packet == 1)
-	{
-		pos = MSGBODY_PACKET_POS;
-	}
-	
-	jt808TerminalGeneralResponse();
-	
-//	para->parse.WakeUp.WakeUpMode.value = BufferReceive[pos];
-	pos++;
-	
-	para->parse.WakeUp.WakeUpConditonType.value = BufferReceive[pos];
-	pos++;
-	
-	para->parse.WakeUp.setWakeUpDay.value = BufferReceive[pos];
-	pos++;
-	
-	para->parse.WakeUp.WakeUpDay.timeWakeUpFlag.value = BufferReceive[pos];
-	pos++;
-	
-	para->parse.WakeUp.WakeUpDay.time1WakeUpTime.HH = BcdToHex(BufferReceive[pos]);
-	pos++;
-	
-	para->parse.WakeUp.WakeUpDay.time1WakeUpTime.MM = BcdToHex(BufferReceive[pos]);
-	pos++;
-	
-	para->parse.WakeUp.WakeUpDay.time1ShutDownTime.HH = BcdToHex(BufferReceive[pos]);
-	pos++;
-	
-	para->parse.WakeUp.WakeUpDay.time1ShutDownTime.MM = BcdToHex(BufferReceive[pos]);
-	pos++;
-	
-	para->parse.WakeUp.WakeUpDay.time2WakeUpTime.HH = BcdToHex(BufferReceive[pos]);
-	pos++;
-	
-	para->parse.WakeUp.WakeUpDay.time2WakeUpTime.MM = BcdToHex(BufferReceive[pos]);
-	pos++;
-	
-	para->parse.WakeUp.WakeUpDay.time2ShutDownTime.HH = BcdToHex(BufferReceive[pos]);
-	pos++;
-	
-	para->parse.WakeUp.WakeUpDay.time2ShutDownTime.MM = BcdToHex(BufferReceive[pos]);
-	pos++;
-	
-	para->parse.WakeUp.WakeUpDay.time3WakeUpTime.HH = BcdToHex(BufferReceive[pos]);
-	pos++;
-	
-	para->parse.WakeUp.WakeUpDay.time3WakeUpTime.MM = BcdToHex(BufferReceive[pos]);
-	pos++;
-	
-	para->parse.WakeUp.WakeUpDay.time3ShutDownTime.HH = BcdToHex(BufferReceive[pos]);
-	pos++;
-	
-	para->parse.WakeUp.WakeUpDay.time3ShutDownTime.MM = BcdToHex(BufferReceive[pos]);
-	pos++;
-	
-	para->parse.WakeUp.WakeUpDay.time4WakeUpTime.HH = BcdToHex(BufferReceive[pos]);
-	pos++;
-	
-	para->parse.WakeUp.WakeUpDay.time4WakeUpTime.MM = BcdToHex(BufferReceive[pos]);
-	pos++;
-	
-	para->parse.WakeUp.WakeUpDay.time4ShutDownTime.HH = BcdToHex(BufferReceive[pos]);
-	pos++;
-	
-	para->parse.WakeUp.WakeUpDay.time4ShutDownTime.MM = BcdToHex(BufferReceive[pos]);
-	pos++;
-	
-	return pos;
 }
 
 int jt808FrameBodyParse(struct ProtocolParameter *para)
@@ -438,78 +327,71 @@ int jt808FrameBodyParse(struct ProtocolParameter *para)
 
 	switch (msg_id)
 	{
-	// +Æ½Ì¨Í¨ÓÃÓ¦´ğ.
+	// +å¹³å°é€šç”¨åº”ç­”.
 	case kPlatformGeneralResponse:
 	{
-		result = handle_kPlatformGeneralResponse(para);
+			result = handle_kPlatformGeneralResponse(para);
 	}
 	break;
 
-	//  ²¹´«·Ö°üÇëÇó.
+	//  è¡¥ä¼ åˆ†åŒ…è¯·æ±‚.
 	case kFillPacketRequest:
 	{
-		result = handle_kFillPacketRequest(para);
+			result = handle_kFillPacketRequest(para);
 	}
 	break;
 
-	// ÖÕ¶Ë×¢²áÓ¦´ğ..
+	// ç»ˆç«¯æ³¨å†Œåº”ç­”..
 	case kTerminalRegisterResponse:
 	{
-		result = handle_kTerminalRegisterResponse(para);
+			result = handle_kTerminalRegisterResponse(para);
 	}
 	break;
 
-	// ÉèÖÃÖÕ¶Ë²ÎÊı..
+	// è®¾ç½®ç»ˆç«¯å‚æ•°..
 	case kSetTerminalParameters:
 	{
-		result = handle_kSetTerminalParameters(para);
+			result = handle_kSetTerminalParameters(para);
 	}
 	break;
 
-	// ²éÑ¯ÖÕ¶Ë²ÎÊı..
+	// æŸ¥è¯¢ç»ˆç«¯å‚æ•°..
 	case kGetTerminalParameters:
 	{
-		result = handle_kGetTerminalParameters(para);
+			result = handle_kGetTerminalParameters(para);
 	}
 	break;
 
-	//	²éÑ¯Ö¸¶¨ÖÕ¶Ë²ÎÊı..
+	//æŸ¥è¯¢æŒ‡å®šç»ˆç«¯å‚æ•°..
 	case kGetSpecificTerminalParameters:
 	{
-		result = handle_kGetSpecificTerminalParameters(para);
+			result = handle_kGetSpecificTerminalParameters(para);
 	}
 	break;
 
-	// ÖÕ¶Ë¿ØÖÆ
+	// ç»ˆç«¯æ§åˆ¶
 	case kTerminalControl:
 	{
-		result = handle_kTerminalControl(para);
+			result = handle_kTerminalControl(para);
 	}
 	break;
 
-	// ÏÂ·¢ÖÕ¶ËÉı¼¶°ü.
+	// ä¸‹å‘ç»ˆç«¯å‡çº§åŒ….
 	case kTerminalUpgrade:
 	{
-		result = handle_kTerminalUpgrade(para);
+			result = handle_kTerminalUpgrade(para);
 	}
 	break;
 
-	//  Î»ÖÃĞÅÏ¢²éÑ¯..
+	//  ä½ç½®ä¿¡æ¯æŸ¥è¯¢..
 	case kGetLocationInformation:
 	{
-		result = handle_kGetLocationInformation(para);
-	}
-	break;
-	
-	//ÖÕ¶Ë»½ĞÑ
-	case kWakeUp:
-	{
-		result = handle_kWakeUp(para);
+			result = handle_kGetLocationInformation(para);
 	}
 	break;
 
 	default:
-		break;
+			break;
 	}
 
 	return result;
@@ -517,66 +399,66 @@ int jt808FrameBodyParse(struct ProtocolParameter *para)
 
 int jt808FrameParse(const unsigned char *in, unsigned int in_len, struct ProtocolParameter *para)
 {
-	int ret;
-	unsigned int outBufferSize;
-	unsigned char *outBuffer;
+		int ret;
+		unsigned int outBufferSize;
+		unsigned char *outBuffer;
 	
-	#ifdef __JT808_DEBUG
-		printf("%s[%d]: jt808FrameParse -->1 !!! \r\n", __FUNCTION__, __LINE__);
-	#endif
+		#ifdef __JT808_DEBUG
+			printf("%s[%d]: jt808FrameParse -->1 !!! \r\n", __FUNCTION__, __LINE__);
+		#endif
     if (para == NULL)
-	{
-		printf("para == NULL \r\n");
-		return -1;
-	}
+		{
+			printf("para == NULL \r\n");
+			return -1;
+		}
     memcpy(BufferReceive, in, in_len);
     RealBufferReceiveSize = in_len;
     outBufferSize = RealBufferReceiveSize;
     outBuffer = (unsigned char *)malloc(outBufferSize * sizeof(unsigned char));
     memset(outBuffer, 0, outBufferSize);
 
-	#ifdef __JT808_DEBUG
-		printf("%s[%d]: outBufferSize = %d \r\n", __FUNCTION__, __LINE__, outBufferSize);
-	#endif
+		#ifdef __JT808_DEBUG
+			printf("%s[%d]: outBufferSize = %d \r\n", __FUNCTION__, __LINE__, outBufferSize);
+		#endif
 		
-    // Äæ×ªÒå.
+    // é€†è½¬ä¹‰.
     if (ReverseEscape_C(BufferReceive, RealBufferReceiveSize, outBuffer, &outBufferSize) < 0)
-	{
-		printf("ReverseEscape_C ERROR\r\n");
-		return -1;
-	}
+		{
+			printf("ReverseEscape_C ERROR\r\n");
+			return -1;
+		}
         
     RealBufferReceiveSize = outBufferSize;
 		
-	#ifdef __JT808_DEBUG
-		printf("%s[%d]: ReverseEscape_C.  outBufferSize = %d  !!!\r\n", __FUNCTION__, __LINE__, outBufferSize);
-	#endif 
-	
-    // Òì»òĞ£Ñé¼ì²é.
-    if (BccCheckSum(&(outBuffer[1]), (outBufferSize - 3)) != *(outBuffer + outBufferSize - 2))
-	{
-		printf("BccCheckSum ERROR\r\n");
-		return -1;
-	}
+		#ifdef __JT808_DEBUG
+			printf("%s[%d]: ReverseEscape_C.  outBufferSize = %d  !!!\r\n", __FUNCTION__, __LINE__, outBufferSize);
+		#endif 
 		
-	#ifdef __JT808_DEBUG
-		printf("%s[%d]: BccCheckSum. -->3 !!!\r\n", __FUNCTION__, __LINE__);
-	#endif
-    // ½âÎöÏûÏ¢Í·.
-    if (jt808FrameHeadParse(outBuffer, outBufferSize, para) != 0)
+    // å¼‚æˆ–æ ¡éªŒæ£€æŸ¥.
+    if (BccCheckSum(&(outBuffer[1]), (outBufferSize - 3)) != *(outBuffer + outBufferSize - 2))
+		{
+			printf("BccCheckSum ERROR\r\n");
+			return -1;
+		}
+		
+		#ifdef __JT808_DEBUG
+			printf("%s[%d]: BccCheckSum. -->3 !!!\r\n", __FUNCTION__, __LINE__);
+		#endif
+    // è§£ææ¶ˆæ¯å¤´.
+    if (jt808FrameHeadParse(outBuffer, outBufferSize, &(para->parse.msg_head)) != 0)
     {
-		printf("jt808FrameHeadParse ERROR\r\n");
-		return -1;
-	}
-	#ifdef __JT808_DEBUG
-		printf("%s[%d]:  jt808FrameHeadParse. -->4 !!!\r\n", __FUNCTION__, __LINE__);
-	#endif 
-//	memcpy(para->msg_head.phone_num, para->parse.msg_head.phone_num, 20);
+			printf("jt808FrameHeadParse ERROR\r\n");
+			return -1;
+		}
+		#ifdef __JT808_DEBUG
+			printf("%s[%d]:  jt808FrameHeadParse. -->4 !!!\r\n", __FUNCTION__, __LINE__);
+		#endif 
+    memcpy(para->msg_head.phone_num, para->parse.msg_head.phone_num, 11);
 
-    // ½âÎöÏûÏ¢ÄÚÈİ.
+    // è§£ææ¶ˆæ¯å†…å®¹.
     ret = jt808FrameBodyParse(para);
 
-    //ÊÍ·Å»º´æ
+    //é‡Šæ”¾ç¼“å­˜
     if (outBuffer != NULL)
     {
         free(outBuffer);

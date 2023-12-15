@@ -1,11 +1,10 @@
 #include "./delay/delay.h"
 #include "./usart2/usart2.h"
-#include "stdarg.h"	 	 
-#include "stdio.h"	 	 
-#include "string.h"
-//#include "./ec20/ec20.h"
-#include "./timer/timer.h"
-#include "./usart/usart.h"
+#include <stdarg.h>	 	 
+#include <stdio.h> 	 
+#include <string.h>
+#include <stdlib.h>
+#include "./ec20/ec20.h"
 #include "util.h"
 
 //´®¿Ú·¢ËÍ»º´æÇø 	
@@ -16,6 +15,8 @@ u8 USART2_RX_BUF[USART2_MAX_RECV_LEN]; 				//½ÓÊÕ»º³å,×î´óUSART2_MAX_RECV_LEN¸ö×
 u8 uart2_cmd[1024];
 u8 uart2_msg[4];
 u8 temp[1024]; 				//½ÓÊÕ»º³å,×î´óUSART2_MAX_RECV_LEN¸ö×Ö½Ú.
+uint8_t Non_transliterated_receive[1024];
+u8 receiveBuffersize;
 
 //À¶ÑÀÉ¨ÃèÏÂ£º   timer=1S
 //·ÇÀ¶ÑÀÉ¨ÃèÏÂ£º timer=10ms
@@ -25,11 +26,7 @@ u8 temp[1024]; 				//½ÓÊÕ»º³å,×î´óUSART2_MAX_RECV_LEN¸ö×Ö½Ú.
 //½ÓÊÕµ½µÄÊı¾İ×´Ì¬
 //[15]:0,Ã»ÓĞ½ÓÊÕµ½Êı¾İ;1,½ÓÊÕµ½ÁËÒ»ÅúÊı¾İ.
 //[14:0]:½ÓÊÕµ½µÄÊı¾İ³¤¶È
-u16 USART2_RX_STA=0;   	
-
-
-uint8_t Non_transliterated_receive[1024];
-u16 receiveBuffersize;
+u16 USART2_RX_STA=0;   	 
 void USART2_IRQHandler(void)
 {
     u8 res;
@@ -104,7 +101,7 @@ void USART2_Init(u32 bound)
 }
 //´®¿Ú2,printf º¯Êı
 //È·±£Ò»´Î·¢ËÍÊı¾İ²»³¬¹ıUSART2_MAX_SEND_LEN×Ö½Ú
-void u2_printf(char* fmt,...)  
+	void u2_printf(char* fmt,...)  
 {  
     va_list ap;
     va_start(ap,fmt);
@@ -144,6 +141,52 @@ void TIM4_IRQHandler(void)
         }
     }
 }
+//ÉèÖÃTIM4µÄ¿ª¹Ø
+//sta:0£¬¹Ø±Õ;1,¿ªÆô;
+void TIM4_Set(u8 sta)
+{
+    if(sta)
+    {
+
+        TIM_SetCounter(TIM4,0);  //¼ÆÊıÆ÷Çå¿Õ
+        TIM_Cmd(TIM4, ENABLE);   //Ê¹ÄÜTIMx
+    }else TIM_Cmd(TIM4, DISABLE);//¹Ø±Õ¶¨Ê±Æ÷4
+}
+//ÅäÖÃTIM4Ô¤×°ÔØÖÜÆÚÖµ
+void TIM4_SetARR(u16 period)
+{
+    TIM_SetCounter(TIM4,0); //¼ÆÊıÆ÷Çå¿Õ
+    TIM4->ARR&=0x00;        //ÏÈÇåÔ¤×°ÔØÖÜÆÚÖµÎª0
+    TIM4->ARR|= period;     //¸üĞÂÔ¤×°ÔØÖÜÆÚÖµ
+}
+//Í¨ÓÃ¶¨Ê±Æ÷ÖĞ¶Ï³õÊ¼»¯
+//ÕâÀïÊ¼ÖÕÑ¡ÔñÎªAPB1µÄ2±¶£¬¶øAPB1Îª36M
+//arr£º×Ô¶¯ÖØ×°Öµ¡£
+//psc£ºÊ±ÖÓÔ¤·ÖÆµÊı		 
+void TIM4_Init(u16 arr,u16 psc)
+{	
+		NVIC_InitTypeDef NVIC_InitStructure;
+    TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
+
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE); //Ê±ÖÓÊ¹ÄÜ//TIM4Ê±ÖÓÊ¹ÄÜ
+
+    //¶¨Ê±Æ÷TIM4³õÊ¼»¯
+    TIM_TimeBaseStructure.TIM_Period = arr; //ÉèÖÃÔÚÏÂÒ»¸ö¸üĞÂÊÂ¼ş×°Èë»î¶¯µÄ×Ô¶¯ÖØ×°ÔØ¼Ä´æÆ÷ÖÜÆÚµÄÖµ
+    TIM_TimeBaseStructure.TIM_Prescaler =psc; //ÉèÖÃÓÃÀ´×÷ÎªTIMxÊ±ÖÓÆµÂÊ³ıÊıµÄÔ¤·ÖÆµÖµ
+    TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; //ÉèÖÃÊ±ÖÓ·Ö¸î:TDTS = Tck_tim
+    TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  //TIMÏòÉÏ¼ÆÊıÄ£Ê½
+    TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure); //¸ù¾İÖ¸¶¨µÄ²ÎÊı³õÊ¼»¯TIMxµÄÊ±¼ä»ùÊıµ¥Î»
+
+    TIM_ITConfig(TIM4,TIM_IT_Update,ENABLE ); //Ê¹ÄÜÖ¸¶¨µÄTIM4ÖĞ¶Ï,ÔÊĞí¸üĞÂÖĞ¶Ï
+
+
+    NVIC_InitStructure.NVIC_IRQChannel = TIM4_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=1 ;//ÇÀÕ¼ÓÅÏÈ¼¶3
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;		//×ÓÓÅÏÈ¼¶3
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			//IRQÍ¨µÀÊ¹ÄÜ
+    NVIC_Init(&NVIC_InitStructure);	//¸ù¾İÖ¸¶¨µÄ²ÎÊı³õÊ¼»¯VIC¼Ä´æÆ÷
+
+}
 #endif		 
 ///////////////////////////////////////USART2 DMA·¢ËÍÅäÖÃ²¿·Ö//////////////////////////////////	   		    
 //DMA1µÄ¸÷Í¨µÀÅäÖÃ
@@ -178,6 +221,50 @@ void UART_DMA_Enable(DMA_Channel_TypeDef*DMA_CHx,u16 len)
     DMA_Cmd(DMA_CHx, ENABLE);           //¿ªÆôDMA´«Êä
 }	   
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 									 
+
+
+
+/*****************  ·¢ËÍÒ»¸ö×Ö·û **********************/
+static void Usart_SendByte( USART_TypeDef * pUSARTx, uint8_t ch )
+{
+    /* ·¢ËÍÒ»¸ö×Ö½ÚÊı¾İµ½USART1 */
+    USART_SendData(pUSARTx,ch);
+
+    /* µÈ´ı·¢ËÍÍê±Ï */
+    while (USART_GetFlagStatus(pUSARTx, USART_FLAG_TXE) == RESET);
+}
+/*****************  Ö¸¶¨³¤¶ÈµÄ·¢ËÍ×Ö·û´® **********************/
+void Usart_SendStr_length( USART_TypeDef * pUSARTx, uint8_t *str,uint32_t strlen )
+{
+    unsigned int k=0;
+    do 
+    {
+        Usart_SendByte( pUSARTx, *(str + k) );
+        k++;
+    } while(k < strlen);
+}
+
+/*****************  ·¢ËÍ×Ö·û´® **********************/
+void Usart_SendString( USART_TypeDef * pUSARTx, char *str)
+{
+    unsigned int k=0;
+    do 
+    {
+        Usart_SendByte( pUSARTx, *(str + k) );
+        k++;
+    } while(*(str + k)!='\0');
+}
+
+
+void ClearRAM(u8* ram,u32 n)
+{
+    u32 i;
+    for (i = 0;i < n;i++)
+    {
+        ram[i] = 0x00;
+    }
+}
+
 
 void UartSend_Non_transliterated(USART_TypeDef * pUSARTx,u8* msg, uint16_t number)
 {
@@ -221,27 +308,15 @@ int UartRecv_Non_transliterated()
 		/*½ØÈ¡ĞÂµÄ½ÓÊÕbuffer*/
 		memset(Non_transliterated_receive,0,sizeof(Non_transliterated_receive));
 		memcpy(Non_transliterated_receive,temp+lengthPosition+2,msgLength);
-//		for(receiveBuffersize=0; receiveBuffersize<msgLength; receiveBuffersize++)
-//		{
-//			printf("0x%02x ",Non_transliterated_receive[receiveBuffersize]);
-//		}
+		for(receiveBuffersize=0; receiveBuffersize<msgLength; receiveBuffersize++)
+		{
+			printf("0x%02x ",Non_transliterated_receive[receiveBuffersize]);
+		}
+		printf("\r\n");
 		return msgLength;
 	}
 	return 0;
 }
-
-
-void ClearRAM(u8* ram,u32 n)
-{
-    u32 i;
-    for (i = 0;i < n;i++)
-    {
-        ram[i] = 0x00;
-    }
-}
-
-
-
 
 
 

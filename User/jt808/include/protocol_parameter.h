@@ -1,9 +1,9 @@
 #ifndef JT808_PROTOCOL_PARAMETER_H_
 #define JT808_PROTOCOL_PARAMETER_H_
 
-//#include <stdio.h>
-//#include <stdint.h>
-//#include <stdlib.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
 
 #include "location_report.h"
 #include "terminal_parameter.h"
@@ -15,26 +15,26 @@
 // 已支持的协议命令.
 enum SupportedCommands
 {
-	kTerminalGeneralResponse = 0x0001,        // 终端通用应答.
-	kPlatformGeneralResponse = 0x8001,        // 平台通用应答.
-	kTerminalHeartBeat = 0x0002,              // 终端心跳.
-	kFillPacketRequest = 0x8003,              // 补传分包请求.
-	kTerminalRegister = 0x0100,               // 终端注册.
-	kTerminalRegisterResponse = 0x8100,       // 终端注册应答.
-	kTerminalLogOut = 0x0003,                 // 终端注销.
-	kTerminalAuthentication = 0x0102,         // 终端鉴权.
-	kSetTerminalParameters = 0x8103,          // 设置终端参数.
-	kGetTerminalParameters = 0x8104,          // 查询终端参数.
-	kGetSpecificTerminalParameters = 0x8106,  // 查询指定终端参数.
-	kGetTerminalParametersResponse = 0x0104,  // 查询终端参数应答.
-	kTerminalControl = 0x8105,                // 终端控制
-	kTerminalUpgrade = 0x8108,                // 下发终端升级包.
-	kTerminalUpgradeResultReport = 0x0108,    // 终端升级结果通知.
-	kLocationReport = 0x0200,                 // 位置信息汇报.
-	kGetLocationInformation = 0x8201,         // 位置信息查询.
-	kGetLocationInformationResponse = 0x0201, // 位置信息查询应答.
-	kLocationTrackingControl = 0x8202,        // 临时位置跟踪控制.
-	kWakeUp = 0x007C,							//终端唤醒
+    kTerminalGeneralResponse = 0x0001,        // 终端通用应答.
+    kPlatformGeneralResponse = 0x8001,        // 平台通用应答.
+    kTerminalHeartBeat = 0x0002,              // 终端心跳.
+    kFillPacketRequest = 0x8003,              // 补传分包请求.
+    kTerminalRegister = 0x0100,               // 终端注册.
+    kTerminalRegisterResponse = 0x8100,       // 终端注册应答.
+    kTerminalLogOut = 0x0003,                 // 终端注销.
+    kTerminalAuthentication = 0x0102,         // 终端鉴权.
+    kSetTerminalParameters = 0x8103,          // 设置终端参数.
+    kGetTerminalParameters = 0x8104,          // 查询终端参数.
+    kGetSpecificTerminalParameters = 0x8106,  // 查询指定终端参数.
+    kGetTerminalParametersResponse = 0x0104,  // 查询终端参数应答.
+    kTerminalControl = 0x8105,                //终端控制
+    kTerminalUpgrade = 0x8108,                // 下发终端升级包.
+    kTerminalUpgradeResultReport = 0x0108,    // 终端升级结果通知.
+    kLocationReport = 0x0200,                 // 位置信息汇报.
+    kGetLocationInformation = 0x8201,         // 位置信息查询.
+    kGetLocationInformationResponse = 0x0201, // 位置信息查询应答.
+    kLocationTrackingControl = 0x8202,        // 临时位置跟踪控制.
+
 };
 
 // // 所有应答命令.
@@ -75,337 +75,241 @@ enum SupportedCommands
 // 车牌颜色.
 enum VehiclePlateColor
 {
-  kVin 	= 0x0, // 车辆未上牌.
-  kBlue,
-  kYellow,
-  kBlack,
-  kWhite,
-  kOther
+    kVin 	= 0x0, // 车辆未上牌.
+    kBlue,
+    kYellow,
+    kBlack,
+    kWhite,
+    kOther
 };
 
 // 通用应答结果.
 enum GeneralResponseResult
 {
-  kSuccess = 0x0,             				// 成功/确认.
-  kFailure = 0x1,                   	// 失败.
-  kMessageHasWrong =0x2,           		// 消息有误.
-  kNotSupport = 0x3,                	// 不支持.
-  kAlarmHandlingConfirmation = 0x4, 	// 报警处理确认, 仅平台应答使用.
+    kSuccess = 0x0,             				// 成功/确认.
+    kFailure = 0x1,                   	// 失败.
+    kMessageHasWrong =0x2,           		// 消息有误.
+    kNotSupport = 0x3,                	// 不支持.
+    kAlarmHandlingConfirmation = 0x4, 	// 报警处理确认, 仅平台应答使用.
 };
 
 // 注册应答结果.
 enum RegisterResponseResult
 {
-  kRegisterSuccess = 0x0,       // 成功.
-  kVehiclesHaveBeenRegistered = 0x1,  // 车辆已被注册.
-  kNoSuchVehicleInTheDatabase =0x2,  // 数据库中无该车辆.
-  kTerminalHaveBeenRegistered = 0x3,  // 终端已被注册.
-  kNoSuchTerminalInTheDatabase = 0x4, // 数据库中无该终端.
+    kRegisterSuccess = 0x0,       // 成功.
+    kVehiclesHaveBeenRegistered = 0x1,  // 车辆已被注册.
+    kNoSuchVehicleInTheDatabase =0x2,  // 数据库中无该车辆.
+    kTerminalHaveBeenRegistered = 0x3,  // 终端已被注册.
+    kNoSuchTerminalInTheDatabase = 0x4, // 数据库中无该终端.
 };
 
 // 消息体属性.
 union MsgBodyAttribute
 {
-  struct
-  {
-    // 消息体长度, 占用10bit.
-    unsigned short msglen : 10;
-    // 数据加密方式, 当此三位都为0, 表示消息体不加密,
-    // 当第10位为1, 表示消息体经过RSA算法加密.
-    unsigned short encrypt : 3;
-    // 分包标记.
-    unsigned short packet : 1;
-	//版本标识
-	unsigned short pVersion : 1;
-    // 保留1位.
-    unsigned short retain : 1;
-  } bit;
-  unsigned short u16val;
+    struct
+    {
+        // 消息体长度, 占用10bit.
+        unsigned short msglen : 10;
+        // 数据加密方式, 当此三位都为0, 表示消息体不加密,
+        // 当第10位为1, 表示消息体经过RSA算法加密.
+        unsigned short encrypt : 3;
+        // 分包标记.
+        unsigned short packet : 1;
+        // 保留2位.
+        unsigned short retain : 2;
+    } bit;
+    unsigned short u16val;
 };
 
 // 消息内容起始位置.
 enum MsgBodyPos
 {
-  MSGBODY_NOPACKET_POS = 18, // 短消息体消息内容起始位置.SMS
-  MSGBODY_PACKET_POS = 22,   // 长消息体消息内容起始位置.
+    MSGBODY_NOPACKET_POS = 13, // 短消息体消息内容起始位置.SMS
+    MSGBODY_PACKET_POS = 17,   // 长消息体消息内容起始位置.
 };
 
 // 转义相关标识.
 enum ProtocolEscapeFlag
 {
-  PROTOCOL_SIGN = 0x7E,          // 标识位.
-  PROTOCOL_ESCAPE = 0x7D,        // 转义标识.
-  PROTOCOL_ESCAPE_SIGN = 0x02,   // 0x7E<-->0x7D后紧跟一个0x02.
-  PROTOCOL_ESCAPE_ESCAPE = 0x01, // 0x7D<-->0x7D后紧跟一个0x01.
+    PROTOCOL_SIGN = 0x7E,          // 标识位.
+    PROTOCOL_ESCAPE = 0x7D,        // 转义标识.
+    PROTOCOL_ESCAPE_SIGN = 0x02,   // 0x7E<-->0x7D后紧跟一个0x02.
+    PROTOCOL_ESCAPE_ESCAPE = 0x01, // 0x7D<-->0x7D后紧跟一个0x01.
 };
 
 // 消息头.
 struct MsgHead
 {
-	// 消息ID.
-	unsigned short msg_id;
-	// 消息体属性.
-	union MsgBodyAttribute msgbody_attr;
-	//协议版本号
-	uint8_t Protocolversion;
-	// 终端手机号.
-	uint8_t phone_num[20];
-	// 消息流水号.
-	unsigned short msg_flow_num;
-	// 总包数, 分包情况下使用.
-	unsigned short total_packet;
-	// 当前包编号, 分包情况下使用.
-	unsigned short packet_seq;
+    // 消息ID.
+    unsigned short msg_id;
+    // 消息体属性.
+    union MsgBodyAttribute msgbody_attr;
+    // 终端手机号.
+    unsigned char phone_num[13];
+    // 消息流水号.
+    unsigned short msg_flow_num;
+    // 总包数, 分包情况下使用.
+    unsigned short total_packet;
+    // 当前包编号, 分包情况下使用.
+    unsigned short packet_seq;
 };
 
 // 注册信息.
 struct RegisterInfo
 {
-  // 省域ID.
-  unsigned short province_id;
+    // 省域ID.
+    unsigned short province_id;
 
-  // 市县域ID.
-  unsigned short city_id;
+    // 市县域ID.
+    unsigned short city_id;
 
-  // 制造商ID, 固定5个字节.
-  uint8_t manufacturer_id[11];
+    // 制造商ID, 固定5个字节.
+    unsigned char manufacturer_id[5];
 
-  // 终端型号, 固定20个字节, 位数不足后补0x00.
-  uint8_t terminal_model[30];
+    // 终端型号, 固定20个字节, 位数不足后补0x00.
+    unsigned char terminal_model[20];
 
-  // 终端ID, 固定7个字节, 位数不足后补0x00.
-  uint8_t terminal_id[30];
+    // 终端ID, 固定7个字节, 位数不足后补0x00.
+    unsigned char terminal_id[7];
 
-  // 车牌颜色, 0表示未上牌.
-  uint8_t car_plate_color;
+    // 车牌颜色, 0表示未上牌.
+    unsigned char car_plate_color;
 
-  // 车辆标识, 仅在上牌时使用.
-  uint8_t car_plate_num[12];
+    // 车辆标识, 仅在上牌时使用.
+    unsigned char car_plate_num[12];
 };
 
 //struct RegisterID
 //{
-//	uint8_t PhoneNumber[20];
-//	uint8_t TerminalId[20];
+//	unsigned char PhoneNumber[20];
+//	unsigned char TerminalId[20];
 //};
 
 // 升级类型.
 enum kTerminalUpgradeType
 {
-  // 终端.
-  kTerminal = 0x0,
-  // 道路运输证 IC 卡读卡器
-  kICCardReader = 0xc,
-  // 北斗卫星定位模块.
-  kGNSS = 0x34,
+    // 终端.
+    kTerminal = 0x0,
+    // 道路运输证 IC 卡读卡器
+    kICCardReader = 0xc,
+    // 北斗卫星定位模块.
+    kGNSS = 0x34,
 };
 
 // 升级结果.
 enum kTerminalUpgradeResultType
 {
-  // 终端升级成功.
-  kTerminalUpgradeSuccess = 0x0,
-  // 终端升级失败.
-  kTerminalUpgradeFailed,
-  // 终端升级取消.
-  kTerminalUpgradeCancel
+    // 终端升级成功.
+    kTerminalUpgradeSuccess = 0x0,
+    // 终端升级失败.
+    kTerminalUpgradeFailed,
+    // 终端升级取消.
+    kTerminalUpgradeCancel
 };
 
 // 升级信息.
 struct UpgradeInfo
 {
-	// 升级类型.
-	uint8_t upgrade_type;
-	// 升级结果.
-	uint8_t upgrade_result;
-	// 制造商ID, 固定5个字节.
-	uint8_t manufacturer_id[6];
-	//版本号长度
-	uint8_t version_id_len;
-	// 升级版本号.
-	uint8_t *version_id;
-	// 升级包总长度.
-	unsigned int upgrade_data_total_len;
-	// 升级数据包.
-	uint8_t *upgrade_data;
+    // 升级类型.
+    unsigned char upgrade_type;
+    // 升级结果.
+    unsigned char upgrade_result;
+    // 制造商ID, 固定5个字节.
+    unsigned char manufacturer_id[5];
+    // 升级版本号.
+    const char *version_id;
+    // 升级包总长度.
+    unsigned int upgrade_data_total_len;
+    // 升级数据包.
+    char *upgrade_data;
 };
 
 // 补传分包信息.
 struct FillPacket
 {
-  // 分包数据首包的消息流水号.
-  unsigned short first_packet_msg_flow_num;
-  // 需要重传包的ID.
-  const char packet_id[50];
+    // 分包数据首包的消息流水号.
+    unsigned short first_packet_msg_flow_num;
+    // 需要重传包的ID.
+    const char packet_id[50];
 };
-
-/*休眠唤醒模式*/
-union UN_WakeUpMode
-{
-	struct
-	{
-		uint8_t conditionWakeUp:1;
-		uint8_t timeWakeUp:1;
-		uint8_t	manualWakeUp:1;
-	} bit;
-	uint8_t value;
-};
-
-/*唤醒条件类型*/
-union UN_WakeUpConditonType
-{
-	struct
-	{
-		uint8_t sosWakeUp:1;
-		uint8_t CollisionRollover:1;
-		uint8_t	doorOpen:1;
-	} bit;
-	uint8_t value;
-};
-
-/*定时唤醒日设置*/
-union UN_setWakeUpDay
-{
-	struct
-	{
-		uint8_t Mon:1;
-		uint8_t Tue:1;
-		uint8_t	Wed:1;
-		uint8_t Thurs:1;
-		uint8_t Fri:1;
-		uint8_t	Sat:1;
-		uint8_t	Sun:1;
-	} bit;
-	uint8_t value;
-};
-
-/*定时唤醒启用标志*/
-union UN_timeWakeUpFlag
-{
-	struct
-	{
-		uint8_t Time1:1;
-		uint8_t Time2:1;
-		uint8_t	Time3:1;
-		uint8_t Time4:1;
-	} bit;
-	uint8_t value;
-};
-
-/*时间段唤醒*/
-typedef struct Str_WakeUpInterval
-{
-	uint8_t HH;
-	uint8_t MM;
-}WakeUpInterval;
-	
-#pragma pack(push)
-#pragma pack(1) // 结构体1字节对齐	
-/*终端休眠唤醒模式设置数据格式*/
-typedef struct Struct_ARM_WakeUp
-{
-	union UN_WakeUpMode 		WakeUpMode;
-	union UN_WakeUpConditonType	WakeUpConditonType;
-	union UN_setWakeUpDay		setWakeUpDay;
-	struct str_WakeUpDay
-	{
-		union UN_timeWakeUpFlag timeWakeUpFlag;
-		WakeUpInterval	time1WakeUpTime;
-		WakeUpInterval	time1ShutDownTime;
-		WakeUpInterval	time2WakeUpTime;
-		WakeUpInterval	time2ShutDownTime;
-		WakeUpInterval	time3WakeUpTime;
-		WakeUpInterval	time3ShutDownTime;
-		WakeUpInterval	time4WakeUpTime;
-		WakeUpInterval	time4ShutDownTime;
-	}WakeUpDay;
-	union UN_WakeUpMode 		WakeUpMode_MCU;
-	uint16_t WakeUpDuration;
-} ARM_WakeUp;
-
-#pragma pack() // 恢复默认字节对齐
 
 // 协议格式、各消息ID等相关参数.
 struct ProtocolParameter
 {
-  uint8_t respone_result;
-  unsigned short respone_msg_id;
-  unsigned short respone_flow_num;
-  // 消息头.
-  struct MsgHead msg_head;
-  // 终端注册时需填充注册信息.
-  struct RegisterInfo register_info;
-//	struct RegisterID register_id;
-  // 平台随机生成鉴权码.
-  uint8_t authentication_code[40];
-	
-	//IMEI
-	uint8_t IMEI[15];
-	//软件版本号
-	uint8_t softwareVersion[20];
-	
-  // 设置终端参数项.
-  struct TerminalParameters terminal_parameters;
-  // 查询终端参数ID列表.
-  // std::vector<unsigned  int> terminal_parameter_ids;
-  // 位置上报时填充位置基本信息, 必须项.
-  struct LocationBasicInformation location_info;
-  // 位置上报时填充位置附加信息, 可选项.
-  // LocationExtensions location_extension;
-  // 临时位置跟踪控制信息.
-  struct LocationTrackingControl location_tracking_control;
-
-  // 升级信息.
-  struct UpgradeInfo upgrade_info;
-  // 补传分包信息.
-  struct FillPacket fill_packet;
-
-  //终端控制
-  struct TerminalControl terminal_control;
-
-  // // 保留字段.
-  // std::vector<unsigned  char > retain;
-
-  // 用于解析消息.
-  struct
-  {
-    uint8_t respone_result;
+    unsigned char respone_result;
     unsigned short respone_msg_id;
     unsigned short respone_flow_num;
-    // 解析出的消息头.
+    // 消息头.
     struct MsgHead msg_head;
-    // 解析出的注册信息.
+    // 终端注册时需填充注册信息.
     struct RegisterInfo register_info;
-    // 解析出的鉴权码.
+//	struct RegisterID register_id;
     // 平台随机生成鉴权码.
     uint8_t authentication_code[40];
-    // 解析出的设置终端参数项.
+
+    //IMEI
+    uint8_t 	IMEI[15];
+    //软件版本号
+    uint8_t softwareVersion[20];
+    // 设置终端参数项.
     struct TerminalParameters terminal_parameters;
-    // 解析出的查询终端参数ID列表.
+    // 查询终端参数ID列表.
     // std::vector<unsigned  int> terminal_parameter_ids;
-    // 解析出的位置基本信息.
+    // 位置上报时填充位置基本信息, 必须项.
     struct LocationBasicInformation location_info;
-    // 解析出的位置附加信息.
+    // 位置上报时填充位置附加信息, 可选项.
     // LocationExtensions location_extension;
-    // 解析出的临时位置跟踪控制信息.
+    // 临时位置跟踪控制信息.
     struct LocationTrackingControl location_tracking_control;
 
-    // 解析出的升级信息.
+    // 升级信息.
     struct UpgradeInfo upgrade_info;
-    // 解析出的补传分包信息.
+    // 补传分包信息.
     struct FillPacket fill_packet;
 
     //终端控制
     struct TerminalControl terminal_control;
 
-	/*终端休眠唤醒模式设置数据格式*/
-	ARM_WakeUp WakeUp;
-    // 解析出的保留字段.
+    // // 保留字段.
     // std::vector<unsigned  char > retain;
 
-  } parse;
+    // 用于解析消息.
+    struct
+    {
+        unsigned char respone_result;
+        unsigned short respone_msg_id;
+        unsigned short respone_flow_num;
+        // 解析出的消息头.
+        struct MsgHead msg_head;
+        // 解析出的注册信息.
+        struct RegisterInfo register_info;
+        // 解析出的鉴权码.
+        // 平台随机生成鉴权码.
+        unsigned char *authentication_code;
+        // 解析出的设置终端参数项.
+        struct TerminalParameters terminal_parameters;
+        // 解析出的查询终端参数ID列表.
+        // std::vector<unsigned  int> terminal_parameter_ids;
+        // 解析出的位置基本信息.
+        struct LocationBasicInformation location_info;
+        // 解析出的位置附加信息.
+        // LocationExtensions location_extension;
+        // 解析出的临时位置跟踪控制信息.
+        struct LocationTrackingControl location_tracking_control;
+
+        // 解析出的升级信息.
+        struct UpgradeInfo upgrade_info;
+        // 解析出的补传分包信息.
+        struct FillPacket fill_packet;
+
+        //终端控制
+        struct TerminalControl terminal_control;
+
+        // 解析出的保留字段.
+        // std::vector<unsigned  char > retain;
+
+    } parse;
 };
 
-//struct ProtocolParameter parameter_;
 
 #endif // JT808_PROTOCOL_PARAMETER_H_

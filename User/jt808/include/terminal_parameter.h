@@ -62,7 +62,7 @@ struct TerminalParameters
 	unsigned int MaxSpeed;
 
 	// WORD, 车辆所在的省域 ID
-	unsigned short ProvinceID;
+  unsigned short ProvinceID;
 	
 	// WORD, 车辆所在的市域 ID
 	unsigned short CityID;
